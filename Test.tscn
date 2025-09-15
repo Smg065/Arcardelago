@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://bobesgom0g6b7"]
+
+[ext_resource type="Script" uid="uid://m53kn2m5hvp6" path="res://Scripts/WordPool.gd" id="1_myinc"]
+[ext_resource type="JSON" path="res://Resources/english_words_dictionary.json" id="2_njov2"]
+
+[node name="Control" type="Control" node_paths=PackedStringArray("httpRequest")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_myinc")
+englishJson = ExtResource("2_njov2")
+httpRequest = NodePath("HTTPRequest")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[connection signal="request_completed" from="HTTPRequest" to="." method="dictionary_http_request_completed"]

@@ -163,7 +163,7 @@ func _on_locinfo(json: Dictionary) -> void:
 		for proc in _scout_queue.get(locid, []):
 			proc.call(_scout_cache[locid])
 		_scout_queue.erase(locid)
-	if locs.size() == slot_locations.size():
+	if locs.size() == slot_locations.size() - 1:
 		all_scout_cached.emit()
 func force_scout_all() -> void: ## Scouts every location into the local cache
 	Archipelago.send_command("LocationScouts", {"locations": slot_locations.keys(), "create_as_hint": 0})

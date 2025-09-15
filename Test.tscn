@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://m53kn2m5hvp6" path="res://Scripts/WordPool.gd" id="1_myinc"]
 [ext_resource type="JSON" path="res://Resources/english_words_dictionary.json" id="2_njov2"]
 
-[node name="Control" type="Control" node_paths=PackedStringArray("httpRequest")]
+[node name="WordPool" type="Control" node_paths=PackedStringArray("httpRequest", "requestCooldown")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,7 +13,12 @@ grow_vertical = 2
 script = ExtResource("1_myinc")
 englishJson = ExtResource("2_njov2")
 httpRequest = NodePath("HTTPRequest")
+requestCooldown = NodePath("RequestCooldown")
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
+[node name="RequestCooldown" type="Timer" parent="."]
+wait_time = 0.5
+
 [connection signal="request_completed" from="HTTPRequest" to="." method="dictionary_http_request_completed"]
+[connection signal="timeout" from="RequestCooldown" to="." method="dictionary_api_delay"]

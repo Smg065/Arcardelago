@@ -163,6 +163,8 @@ func _on_locinfo(json: Dictionary) -> void:
 		for proc in _scout_queue.get(locid, []):
 			proc.call(_scout_cache[locid])
 		_scout_queue.erase(locid)
+	print(locs.size())
+	print(slot_locations.size())
 	if locs.size() == slot_locations.size() - 1:
 		all_scout_cached.emit()
 func force_scout_all() -> void: ## Scouts every location into the local cache

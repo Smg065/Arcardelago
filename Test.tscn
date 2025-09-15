@@ -19,6 +19,7 @@ requestCooldown = NodePath("RequestCooldown")
 
 [node name="RequestCooldown" type="Timer" parent="."]
 wait_time = 0.5
+one_shot = true
 
 [connection signal="request_completed" from="HTTPRequest" to="." method="dictionary_http_request_completed"]
 [connection signal="timeout" from="RequestCooldown" to="." method="dictionary_api_delay"]

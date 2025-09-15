@@ -23,7 +23,6 @@ func _init(jsonData : Array):
 	definitions = cleanup_packed_string(definitions)
 	examples = cleanup_packed_string(examples)
 	audioUrls = cleanup_packed_string(audioUrls)
-	
 
 static func cleanup_packed_string(inPacked : PackedStringArray) -> PackedStringArray:
 	var outUnique : PackedStringArray = PackedStringArray([""])

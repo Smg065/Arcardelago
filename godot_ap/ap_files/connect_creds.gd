@@ -35,6 +35,8 @@ func update(nip: String, nport: String, nslot: String, npwd: String = ""):
 	pwd = npwd
 	updated.emit(self)
 
+func matches(nip: String, nport: String, nslot: String, npwd: String = ""):
+	return ip == nip and port == nport and slot == nslot and pwd == npwd
+
 func _to_string():
 	return "APCREDS(%s:%s,%s,%s)" % [ip,port,slot,pwd]
-

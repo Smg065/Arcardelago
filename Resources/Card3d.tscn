@@ -1,0 +1,53 @@
+[gd_scene load_steps=3 format=3 uid="uid://rg3fvtrre46q"]
+
+[ext_resource type="Texture2D" uid="uid://dqag26jiqd610" path="res://Sprites/Card.png" id="1_ae73r"]
+[ext_resource type="Texture2D" uid="uid://dlp7mysr04id6" path="res://Sprites/CardEdge.png" id="2_r1ih1"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="CardName" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
+alpha_cut = 1
+render_priority = 2
+outline_render_priority = 1
+modulate = Color(0, 0, 0, 1)
+outline_modulate = Color(0.75, 0.75, 0.75, 1)
+text = "CARD_NAME_GOES_HERE"
+outline_size = 8
+autowrap_mode = 1
+width = 400.0
+
+[node name="PhoneticSymbols" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+alpha_cut = 1
+render_priority = 2
+outline_render_priority = 1
+modulate = Color(0, 0, 0, 1)
+outline_modulate = Color(0.75, 0.75, 0.75, 1)
+text = "Noun - Verb - Adjective - Proverb"
+font_size = 24
+outline_size = 6
+autowrap_mode = 1
+width = 400.0
+
+[node name="PartsOfSpeech" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.11948037, 0)
+alpha_cut = 1
+render_priority = 2
+outline_render_priority = 1
+modulate = Color(0, 0, 0, 1)
+outline_modulate = Color(0.75, 0.75, 0.75, 1)
+text = "Noun - Verb - Adjective - Proverb"
+font_size = 24
+outline_size = 6
+autowrap_mode = 1
+width = 400.0
+
+[node name="Card" type="Sprite3D" parent="."]
+alpha_cut = 1
+texture = ExtResource("1_ae73r")
+
+[node name="CardEdge" type="Sprite3D" parent="Card"]
+modulate = Color(0.7976585, 0.79765844, 0.7976585, 1)
+alpha_cut = 1
+texture = ExtResource("2_r1ih1")

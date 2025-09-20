@@ -83,6 +83,7 @@ signal refresh_items(items: Array[NetworkItem]) ## Emitted when the server re-se
 signal on_hint_update(hints: Array[NetworkHint]) ## Emitted when hints relevant to this client change
 
 signal all_scout_cached ## Emitted when a scout packet containing ALL locations is received (see `force_scout_all`)
+signal new_scouts_cached
 @warning_ignore_restore("unused_signal")
 # Outgoing server packets
 var _notified_keys: Dictionary[String, bool] = {}
@@ -157,16 +158,16 @@ func scout(location: int, create_as_hint: int, proc: Callable) -> void:
 		else: _scout_queue[location].append(proc)
 func _on_locinfo(json: Dictionary) -> void:
 	var locs = json.get("locations", [])
+	var startingCached : int = _scout_cache.size()
 	for loc in locs:
 		var locid = loc["location"] as int
 		_scout_cache[locid] = NetworkItem.from(loc, false)
 		for proc in _scout_queue.get(locid, []):
 			proc.call(_scout_cache[locid])
 		_scout_queue.erase(locid)
-	print(locs.size())
-	print(slot_locations.size())
-	if locs.size() == slot_locations.size() - 1:
-		all_scout_cached.emit()
+	
+	if startingCached != _scout_cache.size():
+		new_scouts_cached.emit()
 func force_scout_all() -> void: ## Scouts every location into the local cache
 	Archipelago.send_command("LocationScouts", {"locations": slot_locations.keys(), "create_as_hint": 0})
 

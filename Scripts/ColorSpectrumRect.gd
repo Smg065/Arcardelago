@@ -11,8 +11,10 @@ const ORANGE = ColorCatagory.ColorTypes.ORANGE
 const BLUE = ColorCatagory.ColorTypes.BLUE
 const YELLOW = ColorCatagory.ColorTypes.YELLOW
 
-func build() -> void:
+func build(dirAngle : float) -> void:
 	var gradTex : GradientTexture2D = texture
+	while gradTex.gradient.get_point_count() > 1:
+		gradTex.gradient.remove_point(1)
 	var colorSpectrum := PackedColorArray()
 	#Set the color flags
 	if colors & 0b000001:
@@ -37,9 +39,6 @@ func build() -> void:
 	for colorIndex in range(1, colorSpectrum.size()):
 		var setPoint : float = float(colorIndex) / (colorSpectrum.size() - 1)
 		gradTex.gradient.add_point(setPoint, colorSpectrum[colorIndex])
-		print(setPoint)
-	var rndGradAngle = Vector2.from_angle(randf_range(0, 2*PI)) / 2.0
+	var rndGradAngle = Vector2.from_angle(dirAngle) / 2.0
 	gradTex.fill_from = CENTER + rndGradAngle
 	gradTex.fill_to = CENTER - rndGradAngle
-	print(gradTex.fill_from)
-	print(gradTex.fill_to)

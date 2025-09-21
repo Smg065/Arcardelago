@@ -24,16 +24,16 @@ enum SourcePref {NULL, LOCAL, EXTERNAL}
 static func get_color(inColorType : ColorTypes) -> Color:
 	match inColorType:
 		RED:
-			return Color.hex(0xC3727EFF)
+			return Color.RED
 		GREEN:
-			return Color.hex(0x76C173FF)
+			return Color.GREEN
 		VIOLET:
-			return Color.hex(0xC894C4FF)
+			return Color.VIOLET
 		ORANGE:
-			return Color.hex(0xD8A07FFF)
+			return Color.ORANGE
 		BLUE:
-			return Color.hex(0x767EBDFF)
+			return Color.BLUE
 		YELLOW:
-			return Color.hex(0xEEE391FF)
+			return Color.YELLOW
 		_:
 			return Color.BLACK

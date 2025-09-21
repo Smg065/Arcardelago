@@ -7,6 +7,16 @@ var nameData : NameData
 var apId : int
 var apItemFlags : int
 var enemyCard : bool
+var fadeAngle : float
+
+@export_flags("Red", "Green", "Violet", "Orange", "Blue", "Yellow") var colors : int = 0
+
+const RED = ColorCatagory.ColorTypes.RED
+const GREEN = ColorCatagory.ColorTypes.GREEN
+const VIOLET = ColorCatagory.ColorTypes.VIOLET
+const ORANGE = ColorCatagory.ColorTypes.ORANGE
+const BLUE = ColorCatagory.ColorTypes.BLUE
+const YELLOW = ColorCatagory.ColorTypes.YELLOW
 
 static func build(newApItemFlags : int, newApId : int, newData : NameData, newGameCardset : GameCardset, newPlayer : String, newEnemyCard : bool = false) -> CardData:
 	var cardData := CardData.new()
@@ -16,6 +26,8 @@ static func build(newApItemFlags : int, newApId : int, newData : NameData, newGa
 	cardData.nameData = newData
 	cardData.enemyCard = newEnemyCard
 	cardData.apItemFlags = newApItemFlags
+	cardData.fadeAngle = randf_range(0, 2*PI)
+	cardData.colors = randi_range(0, 63)
 	#Enemy cards are the locations of your items
 	if cardData.enemyCard:
 		cardData.gameCardset.enemyCards.append(cardData)
@@ -30,7 +42,9 @@ func json_save():
 		"apId" : apId,
 		"nameData" : nameData.name,
 		"apItemFlags" : apItemFlags,
-		"enemyCard" : enemyCard
+		"enemyCard" : enemyCard,
+		"fadeAngle" : fadeAngle,
+		"colors" : colors
 	}
 	return saveOutput
 
@@ -40,6 +54,8 @@ static func json_load(inDict, gameData : GameData) -> CardData:
 	cardData.apId = inDict["apId"]
 	cardData.apItemFlags = inDict["apItemFlags"]
 	cardData.enemyCard = inDict["enemyCard"]
+	cardData.fadeAngle = inDict["fadeAngle"]
+	cardData.colors = inDict["colors"]
 	cardData.nameData = gameData.existingNames[inDict["nameData"]]
 	for eachGame in gameData.gameCardsets:
 		if gameData.gameCardsets[eachGame].players.has(cardData.playerName):

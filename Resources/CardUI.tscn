@@ -1,10 +1,13 @@
-[gd_scene load_steps=10 format=3 uid="uid://dk6dmv5557rf6"]
+[gd_scene load_steps=13 format=3 uid="uid://dk6dmv5557rf6"]
 
 [ext_resource type="Script" uid="uid://kmrp78w2pwog" path="res://Scripts/CardUI.gd" id="1_xvg67"]
 [ext_resource type="Texture2D" uid="uid://dqag26jiqd610" path="res://Sprites/Card.png" id="2_2be0t"]
+[ext_resource type="Texture2D" uid="uid://bm5uad6odmdt5" path="res://Sprites/ColorPip.png" id="2_xvg67"]
 [ext_resource type="PackedScene" uid="uid://djgh8f765g4f3" path="res://Resources/ColorPip.tscn" id="3_jqbn0"]
+[ext_resource type="Texture2D" uid="uid://ch1osftycds72" path="res://Sprites/EnemyPip.png" id="3_ny8h8"]
 [ext_resource type="Texture2D" uid="uid://dlp7mysr04id6" path="res://Sprites/CardEdge.png" id="3_xvg67"]
 [ext_resource type="Texture2D" uid="uid://cgckn8fmp8xav" path="res://Sprites/CardTexture.png" id="4_2n3nw"]
+[ext_resource type="Texture2D" uid="uid://b8ihd5q3rb3dc" path="res://Sprites/BossPip.png" id="4_dgc14"]
 [ext_resource type="Script" uid="uid://leehmvr1x5lu" path="res://addons/AutoSizeText/ui/AutoSizeRichTextLabel.gd" id="6_2n3nw"]
 [ext_resource type="Script" uid="uid://c2oydyjvp4cw6" path="res://Scripts/ColorSpectrumRect.gd" id="6_5f00q"]
 
@@ -31,6 +34,9 @@ uiCardPhoneticsLabel = NodePath("CardContainer/PhoneticScroll")
 uiCardGameLabel = NodePath("CardContainer/GameName")
 uiCardBackColor = NodePath("CardContainer/CardBack/ColorSpectrum")
 uiCardPipColor = NodePath("CardContainer/ColorPipDisplay")
+playerPip = ExtResource("2_xvg67")
+enemyPip = ExtResource("3_ny8h8")
+bossPip = ExtResource("4_dgc14")
 metadata/_edit_use_anchors_ = true
 
 [node name="CardContainer" type="Control" parent="."]
@@ -85,7 +91,7 @@ expand_mode = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="ColorSpectrum" type="TextureRect" parent="CardContainer/CardBack"]
-modulate = Color(1, 1, 1, 0.49803922)
+modulate = Color(1, 1, 1, 0.27450982)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -188,9 +194,8 @@ layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.04951812
 anchor_top = 0.9
-anchor_right = 0.50000006
+anchor_right = 0.95048195
 anchor_bottom = 0.9575
-offset_right = 128.99998
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_font_sizes/normal_font_size = 16
@@ -203,6 +208,7 @@ text = "[bgcolor=BLACK][left]Banjo-Tooie (Smg065)"
 script = ExtResource("6_2n3nw")
 watch_text_change = true
 metadata/_custom_type_script = "uid://leehmvr1x5lu"
+metadata/_edit_use_anchors_ = true
 
 [node name="RichTextLabel" type="RichTextLabel" parent="CardContainer"]
 layout_mode = 1

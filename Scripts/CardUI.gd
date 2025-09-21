@@ -9,27 +9,24 @@ class_name CardUI
 @export var uiCardGameLabel : AutoSizeRichTextLabel
 @export var uiCardBackColor : ColorSpectrumRect
 @export var uiCardPipColor : ColorPipDisplay
-
-@export_flags("Red", "Green", "Violet", "Orange", "Blue", "Yellow") var colors : int = 0
-
-const RED = ColorCatagory.ColorTypes.RED
-const GREEN = ColorCatagory.ColorTypes.GREEN
-const VIOLET = ColorCatagory.ColorTypes.VIOLET
-const ORANGE = ColorCatagory.ColorTypes.ORANGE
-const BLUE = ColorCatagory.ColorTypes.BLUE
-const YELLOW = ColorCatagory.ColorTypes.YELLOW
+@export var playerPip : Texture2D
+@export var enemyPip : Texture2D
+@export var bossPip : Texture2D
 
 var cardData : CardData
 
-func _ready() -> void:
-	colors = randi_range(0, 63)
-	uiCardBackColor.colors = colors
-	uiCardBackColor.build()
-	uiCardPipColor.colors = colors
-	uiCardPipColor.build()
-
 func build(nCardData : CardData):
 	cardData = nCardData
+	uiCardBackColor.colors = cardData.colors
+	uiCardPipColor.colors = cardData.colors
+	uiCardBackColor.build(cardData.fadeAngle)
+	if cardData.enemyCard:
+		if cardData.apItemFlags == 3:
+			uiCardPipColor.build(bossPip)
+		else:
+			uiCardPipColor.build(enemyPip)
+	else:
+		uiCardPipColor.build(playerPip)
 	update_rich_texts()
 
 func update_rich_texts():

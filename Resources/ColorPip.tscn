@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://djgh8f765g4f3"]
+[gd_scene load_steps=2 format=3 uid="uid://djgh8f765g4f3"]
 
 [ext_resource type="Script" uid="uid://dpw65kft7puww" path="res://Scripts/ColorPipDisplay.gd" id="1_ub6dq"]
-[ext_resource type="Texture2D" uid="uid://bm5uad6odmdt5" path="res://Sprites/ColorPip.png" id="2_itumv"]
 
 [node name="ColorPipDisplay" type="AspectRatioContainer"]
 anchors_preset = -1
@@ -10,8 +9,4 @@ anchor_bottom = 0.3475
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ub6dq")
-pipImage = ExtResource("2_itumv")
 metadata/_edit_use_anchors_ = true
-
-[node name="Container" type="Control" parent="."]
-layout_mode = 2

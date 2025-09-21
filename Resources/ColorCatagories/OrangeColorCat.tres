@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ColorCatagory" load_steps=3 format=3 uid="uid://b2g5amqfgqxp1"]
+
+[ext_resource type="Script" uid="uid://dt6bcuot6d2k" path="res://Scripts/ColorCatagory.gd" id="1_4p0c6"]
+[ext_resource type="Script" uid="uid://byt0cotie0pr4" path="res://Scripts/WordWeight.gd" id="1_gj8v7"]
+
+[resource]
+script = ExtResource("1_4p0c6")
+colorType = 3
+color = Color(0.84705883, 0.627451, 0.49019608, 1)
+description = "Color of Proguseful Items/Debug Messages.
+
+Focuses on rarity and powerful effects."
+itemQualityFlags = PackedInt32Array(3)
+metadata/_custom_type_script = "uid://dt6bcuot6d2k"

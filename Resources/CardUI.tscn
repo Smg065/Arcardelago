@@ -1,19 +1,216 @@
-[gd_scene format=3 uid="uid://dk6dmv5557rf6"]
+[gd_scene load_steps=10 format=3 uid="uid://dk6dmv5557rf6"]
 
-[node name="Control" type="Control"]
-layout_mode = 3
+[ext_resource type="Script" uid="uid://kmrp78w2pwog" path="res://Scripts/CardUI.gd" id="1_xvg67"]
+[ext_resource type="Texture2D" uid="uid://dqag26jiqd610" path="res://Sprites/Card.png" id="2_2be0t"]
+[ext_resource type="PackedScene" uid="uid://djgh8f765g4f3" path="res://Resources/ColorPip.tscn" id="3_jqbn0"]
+[ext_resource type="Texture2D" uid="uid://dlp7mysr04id6" path="res://Sprites/CardEdge.png" id="3_xvg67"]
+[ext_resource type="Texture2D" uid="uid://cgckn8fmp8xav" path="res://Sprites/CardTexture.png" id="4_2n3nw"]
+[ext_resource type="Script" uid="uid://leehmvr1x5lu" path="res://addons/AutoSizeText/ui/AutoSizeRichTextLabel.gd" id="6_2n3nw"]
+[ext_resource type="Script" uid="uid://c2oydyjvp4cw6" path="res://Scripts/ColorSpectrumRect.gd" id="6_5f00q"]
+
+[sub_resource type="Gradient" id="Gradient_2n3nw"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5f00q"]
+gradient = SubResource("Gradient_2n3nw")
+fill_to = Vector2(1, 1)
+
+[node name="CardAspectMaintainer" type="AspectRatioContainer" node_paths=PackedStringArray("uiCardNameLabel", "uiCardItemFlagLabel", "uiCardWordTypesLabel", "uiCardPhoneticsLabel", "uiCardGameLabel", "uiCardBackColor", "uiCardPipColor")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+ratio = 0.7159
+script = ExtResource("1_xvg67")
+uiCardNameLabel = NodePath("CardContainer/CardNameContainer/CardName")
+uiCardItemFlagLabel = NodePath("CardContainer/APItemType")
+uiCardWordTypesLabel = NodePath("CardContainer/WordTypes")
+uiCardPhoneticsLabel = NodePath("CardContainer/PhoneticScroll")
+uiCardGameLabel = NodePath("CardContainer/GameName")
+uiCardBackColor = NodePath("CardContainer/CardBack/ColorSpectrum")
+uiCardPipColor = NodePath("CardContainer/ColorPipDisplay")
+metadata/_edit_use_anchors_ = true
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
+[node name="CardContainer" type="Control" parent="."]
+layout_mode = 2
+
+[node name="ColorPipDisplay" parent="CardContainer" instance=ExtResource("3_jqbn0")]
+layout_mode = 1
+anchor_left = 0.059994444
+anchor_top = 0.04
+anchor_right = 0.20666298
+anchor_bottom = 0.14999999
+colors = 3
+
+[node name="CardBack" type="TextureRect" parent="CardContainer"]
+clip_children = 1
+z_index = -1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = ExtResource("2_2be0t")
+expand_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="CardTexture" type="TextureRect" parent="CardContainer/CardBack"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 100.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(243.18, 300)
+texture = ExtResource("4_2n3nw")
+stretch_mode = 1
+
+[node name="CardOutline" type="TextureRect" parent="CardContainer/CardBack"]
+self_modulate = Color(0.5, 0.5, 0.5, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_xvg67")
+expand_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorSpectrum" type="TextureRect" parent="CardContainer/CardBack"]
+modulate = Color(1, 1, 1, 0.49803922)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_5f00q")
+script = ExtResource("6_5f00q")
+
+[node name="CardNameContainer" type="Control" parent="CardContainer"]
+clip_children = 1
+layout_mode = 1
+anchor_left = 0.22412352
+anchor_top = 0.0425
+anchor_right = 0.91905296
+anchor_bottom = 0.14750001
+metadata/_edit_use_anchors_ = true
+
+[node name="CardName" type="RichTextLabel" parent="CardContainer/CardNameContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 22
+theme_override_font_sizes/bold_font_size = 22
+theme_override_font_sizes/bold_italics_font_size = 22
+theme_override_font_sizes/italics_font_size = 22
+theme_override_font_sizes/mono_font_size = 22
 bbcode_enabled = true
-text = "[hint=(Egip)]ba[/hint]"
+text = "[bgcolor=BLACK][center]CARD_NAME_HERE"
+script = ExtResource("6_2n3nw")
+watch_text_change = true
+max_font_size = 200
+metadata/_custom_type_script = "uid://leehmvr1x5lu"
+
+[node name="APItemType" type="RichTextLabel" parent="CardContainer"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.04999998
+anchor_top = 0.18
+anchor_right = 0.33286074
+anchor_bottom = 0.2375
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_font_sizes/normal_font_size = 14
+theme_override_font_sizes/bold_font_size = 14
+theme_override_font_sizes/bold_italics_font_size = 14
+theme_override_font_sizes/italics_font_size = 14
+theme_override_font_sizes/mono_font_size = 14
+bbcode_enabled = true
+text = "[bgcolor=BLACK]ITEM_TYPE"
+script = ExtResource("6_2n3nw")
+watch_text_change = true
+metadata/_custom_type_script = "uid://leehmvr1x5lu"
+
+[node name="WordTypes" type="RichTextLabel" parent="CardContainer"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.33237886
+anchor_top = 0.18
+anchor_right = 0.94747174
+anchor_bottom = 0.2375
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_font_sizes/normal_font_size = 38
+theme_override_font_sizes/bold_font_size = 38
+theme_override_font_sizes/bold_italics_font_size = 38
+theme_override_font_sizes/italics_font_size = 38
+theme_override_font_sizes/mono_font_size = 38
+bbcode_enabled = true
+text = "[bgcolor=BLACK][center][font_size=16]WORD_TYPE"
+script = ExtResource("6_2n3nw")
+watch_text_change = true
+metadata/_custom_type_script = "uid://leehmvr1x5lu"
+
+[node name="PhoneticScroll" type="RichTextLabel" parent="CardContainer"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.04999998
+anchor_top = 0.81
+anchor_right = 0.95048195
+anchor_bottom = 0.89
+grow_horizontal = 2
+theme_override_font_sizes/normal_font_size = 23
+theme_override_font_sizes/bold_font_size = 23
+theme_override_font_sizes/bold_italics_font_size = 23
+theme_override_font_sizes/italics_font_size = 23
+theme_override_font_sizes/mono_font_size = 23
+bbcode_enabled = true
+text = "[color=black]JAMES"
+script = ExtResource("6_2n3nw")
+watch_text_change = true
+metadata/_custom_type_script = "uid://leehmvr1x5lu"
+metadata/_edit_use_anchors_ = true
+
+[node name="GameName" type="RichTextLabel" parent="CardContainer"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.04951812
+anchor_top = 0.9
+anchor_right = 0.50000006
+anchor_bottom = 0.9575
+offset_right = 128.99998
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/normal_font_size = 16
+theme_override_font_sizes/bold_font_size = 16
+theme_override_font_sizes/bold_italics_font_size = 16
+theme_override_font_sizes/italics_font_size = 16
+theme_override_font_sizes/mono_font_size = 16
+bbcode_enabled = true
+text = "[bgcolor=BLACK][left]Banjo-Tooie (Smg065)"
+script = ExtResource("6_2n3nw")
+watch_text_change = true
+metadata/_custom_type_script = "uid://leehmvr1x5lu"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CardContainer"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.04951812
+anchor_top = 0.25
+anchor_right = 0.95048195
+anchor_bottom = 0.81
+bbcode_enabled = true
+text = "[color=BLACK]When you"
+metadata/_edit_use_anchors_ = true

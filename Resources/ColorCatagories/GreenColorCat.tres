@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ColorCatagory" load_steps=3 format=3 uid="uid://phrybrlhjuue"]
+
+[ext_resource type="Script" uid="uid://dt6bcuot6d2k" path="res://Scripts/ColorCatagory.gd" id="1_3x53w"]
+[ext_resource type="Script" uid="uid://byt0cotie0pr4" path="res://Scripts/WordWeight.gd" id="1_8llx3"]
+
+[resource]
+script = ExtResource("1_3x53w")
+colorType = 1
+color = Color(0.45882353, 0.7607843, 0.45490196, 1)
+description = "Color of Locations.
+
+Focuses on enemies cards, locations and having few cards in your deck."
+metadata/_custom_type_script = "uid://dt6bcuot6d2k"

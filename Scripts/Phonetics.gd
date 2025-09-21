@@ -147,7 +147,8 @@ class PhoneticFlag:
 	func hint_text():
 		return ""
 	
-	func rich_text(hintText : String = "") -> String:
+	func rich_text(count : int = 1) -> String:
+		var hintText : String = ""
 		var color : String = "BLACK"
 		match type:
 			PhoneticType.PULMONIC_CONSONANT:
@@ -205,7 +206,9 @@ class PhoneticFlag:
 			PhoneticType.UNKNOWN:
 				print(name)
 				color = "MAGENTA"
-		return "[color=%s][hint=\"%s\"]%s[/hint][/color]" % [color, PhoneticType.keys()[type].capitalize() + hintText, name]
+		var appliedText : String = name
+		appliedText += "x" + str(count)
+		return "[color=%s][hint=\"%s\"]%s[/hint][/color]" % [color, PhoneticType.keys()[type].capitalize() + hintText, appliedText]
 
 #/Phonemic/, [Phonetic]
 enum Transcription {PHONEMIC, PHONETIC, UNKNOWN}

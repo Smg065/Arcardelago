@@ -6,6 +6,7 @@ var words : PackedStringArray
 var fictionalWords : PackedStringArray
 var numbers : PackedInt32Array
 var nameFlags : Array[NameFlagBase]
+var uniquePhonetics : Dictionary
 var _waitingForNameflags : bool = false
 var _awaitingWords : PackedStringArray
 var _flagOrderHint : PackedStringArray
@@ -97,7 +98,7 @@ static func build(inName : String, wordPool : WordPool) -> NameData:
 	if newNameData._waitingForNameflags:
 		wordPool.new_word_flags.connect(newNameData.check_has_word)
 	wordPool.garbage_word.connect(newNameData.check_garbage_words)
-	
+	newNameData.get_phonetic_counts()
 	return newNameData
 
 func check_has_word(incomingWord : String, incomingFlags : NameFlagBase):
@@ -132,50 +133,28 @@ func try_awaited_clear():
 		_waitingForNameflags = false
 		all_words_found.emit(self)
 
-func build_rich_text_labels() -> Dictionary[String, RichTextLabel]:
-	var richTextFullName : String = name
-	var richTextPhonetics : String
-	var richTextSynonyms : String = ""
-	var richTextAntonyms : String = ""
-	var replaceFlagsName = []
-	var replaceFlagsPhonemics = []
+func get_phonetic_counts():
+	uniquePhonetics.clear()
+	var allPhonetics : Array = []
 	for eachFlag in nameFlags:
-		var startIndex : int = richTextFullName.findn(eachFlag.word)
-		if startIndex != -1:
-			var replaceStr = richTextFullName.substr(startIndex, eachFlag.word.length())
-			var insertOffset : int = 0
-			if startIndex != 0:
-				insertOffset = richTextFullName.count("%s", 0, startIndex)
-			replaceFlagsName.insert(insertOffset, eachFlag.rich_text_name(replaceStr))
-			replaceFlagsPhonemics.insert(insertOffset, eachFlag.rich_text_phonetics())
-			richTextSynonyms += "\n".join(eachFlag.get_synonyms())
-			richTextAntonyms += "\n".join(eachFlag.get_antonyms())
-			richTextFullName = replace_first(richTextFullName, eachFlag.word, "%s")
-	richTextFullName = richTextFullName % replaceFlagsName
-	richTextPhonetics = "  ".join(replaceFlagsPhonemics)
-	richTextSynonyms = "[color=GREEN]" + richTextSynonyms + "[/color]"
-	richTextAntonyms = "[color=RED]" + richTextAntonyms + "[/color]"
-	var outDict : Dictionary[String,RichTextLabel] = {
-		"name" : build_rich_text_label(richTextFullName, 32),
-		"phonetics" : build_rich_text_label(richTextPhonetics, 24),
-		"synonyms" : build_rich_text_label(richTextSynonyms, 16),
-		"antonyms" : build_rich_text_label(richTextAntonyms, 16)
-	}
-	return outDict
+		allPhonetics.append_array(eachFlag.get_phonetics())
+	for eachPhonetic in allPhonetics:
+		if not uniquePhonetics.has(eachPhonetic):
+			uniquePhonetics[eachPhonetic] = 1
+		else:
+			uniquePhonetics[eachPhonetic] += 1
 
-static func replace_first(from : String, what: String, forwhat : String) -> String:
-	var index := from.findn(what)
-	if index == -1:
-		return from
-	return from.substr(0, index) + forwhat + from.substr(what.length() + index)
+func rich_text_unique_phonetics() -> PackedStringArray:
+	var outStrings := PackedStringArray([])
+	for eachPhonetic in uniquePhonetics:
+		outStrings.append(eachPhonetic.rich_text(uniquePhonetics[eachPhonetic]))
+	return outStrings
 
-func build_rich_text_label(inText : String, textSize : int) -> RichTextLabel:
-	var newRichText := RichTextLabel.new()
-	newRichText.text = "[font_size=%d]%s[/font_size]" % [textSize, inText]
-	newRichText.bbcode_enabled = true
-	newRichText.fit_content = true
-	newRichText.autowrap_mode = TextServer.AUTOWRAP_OFF
-	return newRichText
+func get_parts_of_speech() -> PackedStringArray:
+	var outParts : PackedStringArray
+	for eachFlag in nameFlags:
+		outParts.append_array(eachFlag.get_parts_of_speech())
+	return outParts
 
 func json_save():
 	var saveOutput : Dictionary = {
@@ -196,4 +175,5 @@ static func json_load(inDict, gameData : GameData) -> NameData:
 		newNameData.nameFlags.append(gameData.existingWords[eachFlag])
 	for eachFlag in inDict["fictionalWords"]:
 		newNameData.nameFlags.append(gameData.fictionalWords[eachFlag])
+	newNameData.get_phonetic_counts()
 	return newNameData

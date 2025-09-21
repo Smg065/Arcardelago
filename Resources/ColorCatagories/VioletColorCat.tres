@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ColorCatagory" load_steps=3 format=3 uid="uid://cpk6luucltmtw"]
+
+[ext_resource type="Script" uid="uid://dt6bcuot6d2k" path="res://Scripts/ColorCatagory.gd" id="1_bvwly"]
+[ext_resource type="Script" uid="uid://byt0cotie0pr4" path="res://Scripts/WordWeight.gd" id="1_n46dx"]
+
+[resource]
+script = ExtResource("1_bvwly")
+colorType = 2
+color = Color(0.7882353, 0.5803922, 0.7607843, 1)
+description = "Color of Player's Name and Progressive Items.
+
+Focues on progressive items, your own items and local enemies."
+itemQualityFlags = PackedInt32Array(1)
+itemSourcePref = 1
+metadata/_custom_type_script = "uid://dt6bcuot6d2k"

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ColorCatagory" load_steps=3 format=3 uid="uid://b08h6rksm0yer"]
+
+[ext_resource type="Script" uid="uid://dt6bcuot6d2k" path="res://Scripts/ColorCatagory.gd" id="1_ptdfw"]
+[ext_resource type="Script" uid="uid://byt0cotie0pr4" path="res://Scripts/WordWeight.gd" id="1_to8bt"]
+
+[resource]
+script = ExtResource("1_ptdfw")
+colorType = 5
+color = Color(0.93333334, 0.8901961, 0.5686275, 1)
+description = "Color of Other Players.
+
+Focused on releasing items, items recieved and external enemies."
+itemSourcePref = 2
+metadata/_custom_type_script = "uid://dt6bcuot6d2k"

@@ -3,9 +3,10 @@ class_name WordPool
 
 var game : GameData
 @export_category("UI")
+@export var progressControl : Control
 @export var progressBar : ProgressBar
 @export var progressLabel : Label
-@export var debugTextHolder : VBoxContainer
+@export var debugCard : CardUI
 @export_category("Dictionary Connection Info")
 var wordsEnglish : Array[String] = []
 @export var httpRequest : HTTPRequest
@@ -21,6 +22,7 @@ var awaitingDictionaryApi : bool
 @export var slot : String = "Smg065"
 @export var password : String = ""
 var conn : ConnectionInfo
+var curCard : int = 0
 
 signal garbage_word(clearWord : String)
 signal new_word_flags(newWord : String, newFlags : NameFlagBase)
@@ -36,6 +38,14 @@ func _ready() -> void:
 	Archipelago.set_tags([])
 	Archipelago.ap_connect(ip, port, slot, password)
 	Archipelago.connected.connect(on_connection)
+
+func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed("Left"):
+		curCard -= 1
+		debug_text_holder()
+	if Input.is_action_just_pressed("Right"):
+		curCard += 1
+		debug_text_holder()
 
 func on_connection(inConn: ConnectionInfo, json: Dictionary):
 	conn = inConn
@@ -303,13 +313,10 @@ func save_game_as_new():
 	debug_text_holder()
 
 func debug_text_holder():
-	for eachName in game.existingNames:
-		var nameData : NameData = game.existingNames[eachName]
-		var richLabels : Dictionary[String, RichTextLabel] = nameData.build_rich_text_labels()
-		debugTextHolder.add_child(richLabels["name"])
-		debugTextHolder.add_child(richLabels["phonetics"])
-		debugTextHolder.add_child(richLabels["synonyms"])
-		debugTextHolder.add_child(richLabels["antonyms"])
+	if game != null:
+		progressControl.hide()
+		curCard = wrapi(curCard, 0, game.allCards.size())
+		debugCard.build(game.allCards[curCard])
 
 func dictionary_api_delay() -> void:
 	try_request()

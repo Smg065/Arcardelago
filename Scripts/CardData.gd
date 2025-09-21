@@ -50,3 +50,37 @@ static func json_load(inDict, gameData : GameData) -> CardData:
 				gameData.gameCardsets[eachGame].playerCards.append(cardData)
 				break
 	return cardData
+
+
+
+func rich_item_flags() -> String:
+	#Proguseful
+	if apItemFlags == 3:
+		return "[hint=An item that is critical for progression][bgcolor=GOLD][color=BLACK]Proguseful"
+	#Trap
+	elif apItemFlags >= 4:
+		return "[hint=An item that actively hinders the owner][bgcolor=SALMON][color=BLACK]Trap"
+	#Progression
+	elif apItemFlags == 1:
+		return "[hint=An item that can unlock checks][bgcolor=PLUM][color=BLACK]Progression"
+	#Useful
+	elif apItemFlags == 2:
+		return "[hint=An item that while not required, is especially useful][bgcolor=SLATEBLUE][color=WHITE]Useful"
+	#Filler
+	return "[hint=An unimportant item][bgcolor=CYAN][color=BLACK]Filler"
+
+func rich_phonetic_symbols() -> PackedStringArray:
+	return nameData.rich_text_unique_phonetics()
+
+func unique_parts_of_speech():
+	var allParts = nameData.get_parts_of_speech()
+	var uniqueDict : Dictionary[String, int] = {}
+	for eachPart in allParts:
+		if not uniqueDict.has(eachPart):
+			uniqueDict[eachPart] = 1
+		else:
+			uniqueDict[eachPart] += 1
+	var outString := PackedStringArray([])
+	for eachUnique in uniqueDict:
+		outString.append(eachUnique.capitalize() + " x" + str(uniqueDict[eachUnique]))
+	return outString

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ColorCatagory" load_steps=3 format=3 uid="uid://dfknjeg1c2tf4"]
+
+[ext_resource type="Script" uid="uid://byt0cotie0pr4" path="res://Scripts/WordWeight.gd" id="1_1f3sf"]
+[ext_resource type="Script" uid="uid://dt6bcuot6d2k" path="res://Scripts/ColorCatagory.gd" id="1_gb2qe"]
+
+[resource]
+script = ExtResource("1_gb2qe")
+color = Color(0.7882353, 0.45882353, 0.50980395, 1)
+description = "Color of Traps.
+
+Focuses on trade offs and high risk, high reward."
+itemQualityFlags = PackedInt32Array(4, 5, 6, 7)
+metadata/_custom_type_script = "uid://dt6bcuot6d2k"

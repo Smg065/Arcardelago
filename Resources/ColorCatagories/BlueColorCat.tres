@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ColorCatagory" load_steps=3 format=3 uid="uid://d2lodvhnq5cer"]
+
+[ext_resource type="Script" uid="uid://byt0cotie0pr4" path="res://Scripts/WordWeight.gd" id="1_dsw3l"]
+[ext_resource type="Script" uid="uid://dt6bcuot6d2k" path="res://Scripts/ColorCatagory.gd" id="1_hmtjg"]
+
+[resource]
+script = ExtResource("1_hmtjg")
+colorType = 4
+color = Color(0.4627451, 0.49411765, 0.7411765, 1)
+description = "Color of Useful Items/Filler Items.
+
+Focuses on having lots of cards in your deck and low-quality items."
+itemQualityFlags = PackedInt32Array(0, 2)
+metadata/_custom_type_script = "uid://dt6bcuot6d2k"

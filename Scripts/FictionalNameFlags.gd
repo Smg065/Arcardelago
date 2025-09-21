@@ -35,18 +35,11 @@ func check_has_word(incomingWord : String, incomingFlags : NameFlagBase):
 			nameFlags.append(incomingFlags)
 	try_awaited_clear()
 
-func rich_text_name(inStr : String = word.capitalize().replace(" ", "")) -> String:
-	var hintText : String = "Fictional Word"
-	for eachIndex in weights.size():
-		hintText += "\n%1.2f %s %s" % [weights[eachIndex], realNames[eachIndex], " ".join(nameFlags[eachIndex].phonetics)]
-	hintText = String.chr(34) + hintText + String.chr(34)
-	return "[color=GRAY][hint=%s]%s[/hint][/color]" % [hintText, inStr]
-
-func rich_text_phonetics() -> String:
-	var phonetics := PackedStringArray([])
+func get_phonetics() -> Array:
+	var phonetics : Array
 	for eachFlag in nameFlags:
-		phonetics.append(eachFlag.rich_text_phonetics())
-	return " ".join(phonetics)
+		phonetics.append_array(eachFlag.get_phonetics())
+	return phonetics
 
 func get_synonyms() -> PackedStringArray:
 	var synonyms := PackedStringArray([])
@@ -59,6 +52,12 @@ func get_antonyms() -> PackedStringArray:
 	for eachFlag in nameFlags:
 		antonyms.append_array(eachFlag.antonyms)
 	return antonyms
+
+func get_parts_of_speech() -> PackedStringArray:
+	var partsOfSpeech := PackedStringArray([])
+	for eachFlag in nameFlags:
+		partsOfSpeech.append_array(eachFlag.partsOfSpeech)
+	return partsOfSpeech
 
 func check_garbage_words(incomingWord : String):
 	#Cleanup garbage words

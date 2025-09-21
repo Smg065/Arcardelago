@@ -2,8 +2,7 @@ extends NameFlagBase
 class_name NameFlags
 
 var phonetics : PackedStringArray
-var richPhonetics : PackedStringArray
-var deconstructedPhonetics : Array
+var deconstructedPhonetics : Array[Dictionary]
 var synonyms : PackedStringArray
 var antonyms : PackedStringArray
 var partsOfSpeech : PackedStringArray
@@ -63,34 +62,22 @@ func deconstruct_phonetics():
 	for eachPhonetic in phonetics:
 		var newDict : Dictionary = Phonetics.phonetic_breakdown(eachPhonetic)
 		deconstructedPhonetics.append(newDict)
-		var richText : String = ""
-		match newDict["Transcription"]:
-			Phonetics.Transcription.PHONEMIC:
-				richText += "[bgcolor=SLATE_GRAY]"
-			Phonetics.Transcription.PHONETIC:
-				richText += "[bgcolor=MIDNIGHT_BLUE]"
-			Phonetics.Transcription.UNKNOWN:
-				richText += "[bgcolor=MAGENTA]"
-		for eachChar in newDict["Flags"]:
-			richText += eachChar.rich_text()
-		richText += "[/bgcolor]"
-		richPhonetics.append(richText)
 
-func rich_text_name(inStr : String = word.capitalize().replace(" ", "")) -> String:
-	var hintText : String = "\n".join(definitions).replace("[", "[lb]").replace("]", "[rb]").replace(String.chr(34), "''")
-	hintText = String.chr(34) + hintText + String.chr(34)
-	return "[hint=%s]%s[/hint]" % [hintText, inStr]
-
-func rich_text_phonetics() -> String:
-	if richPhonetics.size() == 0:
-		return "[hint=%s][bgcolor=BLACK][color=WHITE]N/A[/color][/bgcolor][/hint]" % word
-	return "/".join(richPhonetics)
+func get_phonetics() -> Array:
+	var outPhonetics : Array = []
+	for eachDecon in deconstructedPhonetics:
+		for eachFlag in eachDecon["Flags"]:
+			outPhonetics.append(eachFlag)
+	return outPhonetics
 
 func get_synonyms() -> PackedStringArray:
 	return synonyms
 
 func get_antonyms() -> PackedStringArray:
 	return antonyms
+
+func get_parts_of_speech() -> PackedStringArray:
+	return partsOfSpeech
 
 func json_save() -> Dictionary:
 	var saveOutput : Dictionary = {

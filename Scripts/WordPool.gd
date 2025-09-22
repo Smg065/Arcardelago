@@ -88,11 +88,12 @@ func scouts_updated():
 func build_enemies(enemies : Array):
 	for eachEnemy in enemies:
 		var eachPlayer = conn.get_player(int(eachEnemy[0]))
+		var local = eachPlayer == conn.get_player()
 		var playerName : String = eachPlayer.name
 		var itemNameData : NameData = get_name_data(eachEnemy[1])
 		var cardset : GameCardset = game.gameCardsets[eachPlayer.get_slot().game]
 		#Create card data from this information
-		var cardData : CardData = CardData.build(eachEnemy[2], -1, itemNameData, cardset, playerName, true)
+		var cardData : CardData = CardData.build(eachEnemy[2], -1, itemNameData, cardset, playerName, local, true)
 		game.allCards.append(cardData)
 
 func scouts_to_cards():
@@ -105,7 +106,7 @@ func scouts_to_cards():
 		var itemNameData : NameData = get_name_data(eachItem.get_name())
 		var cardset : GameCardset = game.gameCardsets[eachPlayer.get_slot().game]
 		#Create card data from this information
-		var cardData : CardData = CardData.build(eachItem.flags, eachEntry, itemNameData, cardset, playerName)
+		var cardData : CardData = CardData.build(eachItem.flags, eachEntry, itemNameData, cardset, playerName, eachItem.is_local())
 		game.allCards.append(cardData)
 	_initalWordQueueSize = _wordQueue.size()
 	progressBar.max_value = _initalWordQueueSize + game.fictionalWords.size()

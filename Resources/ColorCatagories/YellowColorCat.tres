@@ -1,7 +1,151 @@
-[gd_resource type="Resource" script_class="ColorCatagory" load_steps=3 format=3 uid="uid://b08h6rksm0yer"]
+[gd_resource type="Resource" script_class="ColorCatagory" load_steps=27 format=3 uid="uid://b08h6rksm0yer"]
 
 [ext_resource type="Script" uid="uid://dt6bcuot6d2k" path="res://Scripts/ColorCatagory.gd" id="1_ptdfw"]
 [ext_resource type="Script" uid="uid://byt0cotie0pr4" path="res://Scripts/WordWeight.gd" id="1_to8bt"]
+
+[sub_resource type="Resource" id="Resource_to8bt"]
+script = ExtResource("1_to8bt")
+word = "yellow"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_7cniq"]
+script = ExtResource("1_to8bt")
+word = "mustard"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_4qe22"]
+script = ExtResource("1_to8bt")
+word = "sand"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_f8u4k"]
+script = ExtResource("1_to8bt")
+word = "wheat"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_db2a0"]
+script = ExtResource("1_to8bt")
+word = "lemon"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_mbfyu"]
+script = ExtResource("1_to8bt")
+word = "sun"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_1uaoj"]
+script = ExtResource("1_to8bt")
+word = "swamp"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_rh7ul"]
+script = ExtResource("1_to8bt")
+word = "olive"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_y2kh7"]
+script = ExtResource("1_to8bt")
+word = "chartreuse"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_t4ym8"]
+script = ExtResource("1_to8bt")
+word = "ocher"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_drhtr"]
+script = ExtResource("1_to8bt")
+word = "peach"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_cof48"]
+script = ExtResource("1_to8bt")
+word = "apricot"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_be3rm"]
+script = ExtResource("1_to8bt")
+word = "bronze"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_wmlun"]
+script = ExtResource("1_to8bt")
+word = "tan"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_e466k"]
+script = ExtResource("1_to8bt")
+word = "beige"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_rhcjl"]
+script = ExtResource("1_to8bt")
+word = "khaki"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_b8ppa"]
+script = ExtResource("1_to8bt")
+word = "eggshell"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_bw3u3"]
+script = ExtResource("1_to8bt")
+word = "dirt"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_wtxie"]
+script = ExtResource("1_to8bt")
+word = "mud"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_sbsbv"]
+script = ExtResource("1_to8bt")
+word = "puce"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_hsmg4"]
+script = ExtResource("1_to8bt")
+word = "goldenrod"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_x0vsk"]
+script = ExtResource("1_to8bt")
+word = "mocha"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_861x7"]
+script = ExtResource("1_to8bt")
+word = "white"
+weight = -0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_o80nd"]
+script = ExtResource("1_to8bt")
+word = "rainbow"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
 
 [resource]
 script = ExtResource("1_ptdfw")
@@ -10,5 +154,37 @@ color = Color(0.93333334, 0.8901961, 0.5686275, 1)
 description = "Color of Other Players.
 
 Focused on releasing items, items recieved and external enemies."
+lookupTagsColor = Array[ExtResource("1_to8bt")]([SubResource("Resource_to8bt"), SubResource("Resource_7cniq"), SubResource("Resource_4qe22"), SubResource("Resource_f8u4k"), SubResource("Resource_db2a0"), SubResource("Resource_mbfyu"), SubResource("Resource_1uaoj"), SubResource("Resource_rh7ul"), SubResource("Resource_y2kh7"), SubResource("Resource_t4ym8"), SubResource("Resource_drhtr"), SubResource("Resource_cof48"), SubResource("Resource_be3rm"), SubResource("Resource_wmlun"), SubResource("Resource_e466k"), SubResource("Resource_rhcjl"), SubResource("Resource_b8ppa"), SubResource("Resource_bw3u3"), SubResource("Resource_wtxie"), SubResource("Resource_sbsbv"), SubResource("Resource_hsmg4"), SubResource("Resource_x0vsk"), SubResource("Resource_861x7"), SubResource("Resource_o80nd")])
+lookupTagsParts = Dictionary[String, float]({
+"adjective": 5.0,
+"adnoun": 10.0,
+"adverb": 10.0,
+"auxiliary verb": 10.0,
+"determiner": 10.0,
+"gerund": 5.0,
+"indefinite pronoun": 10.0,
+"infinitive": 5.0,
+"interrogative pronoun": 30.0,
+"intransitive verb": 5.0,
+"noun": 5.0,
+"part of speech": 10.0,
+"participle": 10.0,
+"personal pronoun": 10.0,
+"phrasal preposition": -10.0,
+"possessive adjective": 20.0,
+"possessive determiner": 20.0,
+"possessive pronoun": 20.0,
+"pronominal phrase": 20.0,
+"pronoun": 20.0,
+"quasi-adjective": 20.0,
+"reciprocal pronoun": 30.0,
+"reflexive pronoun": -20.0,
+"relative adjective": 20.0,
+"relative pronoun": 20.0,
+"shadow pronoun": -10.0,
+"transitive": 5.0,
+"transitive verb": 5.0,
+"verbal noun": 10.0
+})
 itemSourcePref = 2
 metadata/_custom_type_script = "uid://dt6bcuot6d2k"

@@ -1,7 +1,133 @@
-[gd_resource type="Resource" script_class="ColorCatagory" load_steps=3 format=3 uid="uid://b2g5amqfgqxp1"]
+[gd_resource type="Resource" script_class="ColorCatagory" load_steps=24 format=3 uid="uid://b2g5amqfgqxp1"]
 
 [ext_resource type="Script" uid="uid://dt6bcuot6d2k" path="res://Scripts/ColorCatagory.gd" id="1_4p0c6"]
 [ext_resource type="Script" uid="uid://byt0cotie0pr4" path="res://Scripts/WordWeight.gd" id="1_gj8v7"]
+
+[sub_resource type="Resource" id="Resource_gj8v7"]
+script = ExtResource("1_gj8v7")
+word = "orange"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_4p6eu"]
+script = ExtResource("1_gj8v7")
+word = "golden"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_en3i7"]
+script = ExtResource("1_gj8v7")
+word = "gold"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_s07ac"]
+script = ExtResource("1_gj8v7")
+word = "tangerine"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_42end"]
+script = ExtResource("1_gj8v7")
+word = "pumpkin"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_2hik5"]
+script = ExtResource("1_gj8v7")
+word = "umber"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_bmfps"]
+script = ExtResource("1_gj8v7")
+word = "sienna"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_l38tv"]
+script = ExtResource("1_gj8v7")
+word = "terracotta"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_hage4"]
+script = ExtResource("1_gj8v7")
+word = "bronze"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_expce"]
+script = ExtResource("1_gj8v7")
+word = "peach"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_4bgmk"]
+script = ExtResource("1_gj8v7")
+word = "apricot"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_7xkmr"]
+script = ExtResource("1_gj8v7")
+word = "brown"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_daaow"]
+script = ExtResource("1_gj8v7")
+word = "chocolate"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_5hc7m"]
+script = ExtResource("1_gj8v7")
+word = "coral"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_8ns8o"]
+script = ExtResource("1_gj8v7")
+word = "vermilion"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_i7w0n"]
+script = ExtResource("1_gj8v7")
+word = "dirt"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_mt8kw"]
+script = ExtResource("1_gj8v7")
+word = "mud"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_lvk35"]
+script = ExtResource("1_gj8v7")
+word = "puce"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_p1c0t"]
+script = ExtResource("1_gj8v7")
+word = "mocha"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_o80nd"]
+script = ExtResource("1_gj8v7")
+word = "rainbow"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_pxsl8"]
+script = ExtResource("1_gj8v7")
+word = "white"
+weight = -0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
 
 [resource]
 script = ExtResource("1_4p0c6")
@@ -10,5 +136,38 @@ color = Color(0.84705883, 0.627451, 0.49019608, 1)
 description = "Color of Proguseful Items/Debug Messages.
 
 Focuses on rarity and powerful effects."
+lookupTagsColor = Array[ExtResource("1_gj8v7")]([SubResource("Resource_gj8v7"), SubResource("Resource_4p6eu"), SubResource("Resource_en3i7"), SubResource("Resource_s07ac"), SubResource("Resource_42end"), SubResource("Resource_2hik5"), SubResource("Resource_bmfps"), SubResource("Resource_l38tv"), SubResource("Resource_hage4"), SubResource("Resource_expce"), SubResource("Resource_4bgmk"), SubResource("Resource_7xkmr"), SubResource("Resource_daaow"), SubResource("Resource_5hc7m"), SubResource("Resource_8ns8o"), SubResource("Resource_i7w0n"), SubResource("Resource_mt8kw"), SubResource("Resource_lvk35"), SubResource("Resource_p1c0t"), SubResource("Resource_o80nd"), SubResource("Resource_pxsl8")])
+lookupTagsParts = Dictionary[String, float]({
+"adfix": 10.0,
+"adjective": 5.0,
+"cardinal number": -5.0,
+"collective numeral": -10.0,
+"demonstrative determiner": 5.0,
+"demonstrative pronoun": 5.0,
+"determinative": 5.0,
+"determiner": 5.0,
+"fractional number": -10.0,
+"indefinite pronoun": -10.0,
+"interjection": 20.0,
+"interjectional phrase": 20.0,
+"multiplicative number": 15.0,
+"multiplicative numeral": 15.0,
+"noun": 5.0,
+"number": 5.0,
+"numeral": 5.0,
+"ordinal": -10.0,
+"ordinal number": -10.0,
+"part of speech": 30.0,
+"particle": -15.0,
+"possessional adjective": 10.0,
+"predicative": 10.0,
+"privative adjective": -10.0,
+"speech disfluency": -10.0,
+"substantive": -10.0,
+"transitive": 10.0,
+"transitive verb": 20.0,
+"verbal noun": -5.0
+})
+itemQualityMulti = 4
 itemQualityFlags = PackedInt32Array(3)
 metadata/_custom_type_script = "uid://dt6bcuot6d2k"

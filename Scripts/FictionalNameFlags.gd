@@ -93,3 +93,10 @@ static func json_load(inDict, gameData : GameData) -> FictionalNameFlags:
 
 func get_flag_type():
 	return FlagType.FICTIONAL_NAME_FLAG
+
+func get_score(baseColor : ColorCatagory) -> float:
+	var outScore : float = 0
+	#You only get the amount of score based to the size
+	for index in weights.size():
+		outScore += nameFlags[index].get_score(baseColor) * weights[index]
+	return outScore

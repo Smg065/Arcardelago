@@ -1,7 +1,157 @@
-[gd_resource type="Resource" script_class="ColorCatagory" load_steps=3 format=3 uid="uid://cpk6luucltmtw"]
+[gd_resource type="Resource" script_class="ColorCatagory" load_steps=28 format=3 uid="uid://cpk6luucltmtw"]
 
 [ext_resource type="Script" uid="uid://dt6bcuot6d2k" path="res://Scripts/ColorCatagory.gd" id="1_bvwly"]
 [ext_resource type="Script" uid="uid://byt0cotie0pr4" path="res://Scripts/WordWeight.gd" id="1_n46dx"]
+
+[sub_resource type="Resource" id="Resource_n46dx"]
+script = ExtResource("1_n46dx")
+word = "violet"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_4o1xg"]
+script = ExtResource("1_n46dx")
+word = "fuchsia"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_u0isj"]
+script = ExtResource("1_n46dx")
+word = "wine"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_8cqqx"]
+script = ExtResource("1_n46dx")
+word = "merlot"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_ba6my"]
+script = ExtResource("1_n46dx")
+word = "grape"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_hq3cw"]
+script = ExtResource("1_n46dx")
+word = "plum"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_t812i"]
+script = ExtResource("1_n46dx")
+word = "velvet"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_d276p"]
+script = ExtResource("1_n46dx")
+word = "eggplant"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_6pu75"]
+script = ExtResource("1_n46dx")
+word = "magenta"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_wm60x"]
+script = ExtResource("1_n46dx")
+word = "lilac"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_2un3b"]
+script = ExtResource("1_n46dx")
+word = "lavender"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_dhvr5"]
+script = ExtResource("1_n46dx")
+word = "amethyst"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_rb7h1"]
+script = ExtResource("1_n46dx")
+word = "barney"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_q7f8u"]
+script = ExtResource("1_n46dx")
+word = "barbie"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_c3k87"]
+script = ExtResource("1_n46dx")
+word = "liliac"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_x18le"]
+script = ExtResource("1_n46dx")
+word = "wisteria"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_6qp04"]
+script = ExtResource("1_n46dx")
+word = "indigo"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_fb8xa"]
+script = ExtResource("1_n46dx")
+word = "periwinkle"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_b2ql4"]
+script = ExtResource("1_n46dx")
+word = "cornflower"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_jva4u"]
+script = ExtResource("1_n46dx")
+word = "blurple"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_rb5n6"]
+script = ExtResource("1_n46dx")
+word = "ultramarine"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_7tv8q"]
+script = ExtResource("1_n46dx")
+word = "iris"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_o80nd"]
+script = ExtResource("1_n46dx")
+word = "rainbow"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_x0aak"]
+script = ExtResource("1_n46dx")
+word = "white"
+weight = -0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_5m3dc"]
+script = ExtResource("1_n46dx")
+word = "pink"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
 
 [resource]
 script = ExtResource("1_bvwly")
@@ -10,6 +160,37 @@ color = Color(0.7882353, 0.5803922, 0.7607843, 1)
 description = "Color of Player's Name and Progressive Items.
 
 Focues on progressive items, your own items and local enemies."
+lookupTagsColor = Array[ExtResource("1_n46dx")]([SubResource("Resource_n46dx"), SubResource("Resource_4o1xg"), SubResource("Resource_u0isj"), SubResource("Resource_8cqqx"), SubResource("Resource_ba6my"), SubResource("Resource_hq3cw"), SubResource("Resource_t812i"), SubResource("Resource_d276p"), SubResource("Resource_6pu75"), SubResource("Resource_wm60x"), SubResource("Resource_2un3b"), SubResource("Resource_dhvr5"), SubResource("Resource_rb7h1"), SubResource("Resource_q7f8u"), SubResource("Resource_c3k87"), SubResource("Resource_x18le"), SubResource("Resource_6qp04"), SubResource("Resource_fb8xa"), SubResource("Resource_b2ql4"), SubResource("Resource_jva4u"), SubResource("Resource_rb5n6"), SubResource("Resource_7tv8q"), SubResource("Resource_o80nd"), SubResource("Resource_x0aak"), SubResource("Resource_5m3dc")])
+lookupTagsParts = Dictionary[String, float]({
+"adjective": 5.0,
+"adnoun": 10.0,
+"auxiliary verb": 10.0,
+"determiner": 10.0,
+"gerund": 5.0,
+"indefinite pronoun": 10.0,
+"infinitive": 5.0,
+"interrogative pronoun": -10.0,
+"intransitive verb": 5.0,
+"noun": 5.0,
+"part of speech": 10.0,
+"participle": 10.0,
+"personal pronoun": 10.0,
+"phrasal preposition": -10.0,
+"possessive adjective": 20.0,
+"possessive determiner": 20.0,
+"possessive pronoun": 20.0,
+"pronominal phrase": 20.0,
+"pronoun": 20.0,
+"quasi-adjective": -20.0,
+"reciprocal pronoun": 30.0,
+"reflexive pronoun": 20.0,
+"relative adjective": -10.0,
+"relative pronoun": -10.0,
+"shadow pronoun": -10.0,
+"transitive": 5.0,
+"transitive verb": 5.0,
+"verbal noun": 10.0
+})
 itemQualityFlags = PackedInt32Array(1)
 itemSourcePref = 1
 metadata/_custom_type_script = "uid://dt6bcuot6d2k"

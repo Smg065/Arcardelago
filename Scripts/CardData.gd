@@ -8,6 +8,7 @@ var apId : int
 var apItemFlags : int
 var enemyCard : bool
 var fadeAngle : float
+var isLocal : bool
 
 @export_flags("Red", "Green", "Violet", "Orange", "Blue", "Yellow") var colors : int = 0
 
@@ -18,7 +19,7 @@ const ORANGE = ColorCatagory.ColorTypes.ORANGE
 const BLUE = ColorCatagory.ColorTypes.BLUE
 const YELLOW = ColorCatagory.ColorTypes.YELLOW
 
-static func build(newApItemFlags : int, newApId : int, newData : NameData, newGameCardset : GameCardset, newPlayer : String, newEnemyCard : bool = false) -> CardData:
+static func build(newApItemFlags : int, newApId : int, newData : NameData, newGameCardset : GameCardset, newPlayer : String, newIsLocal : bool, newEnemyCard : bool = false) -> CardData:
 	var cardData := CardData.new()
 	cardData.playerName = newPlayer
 	cardData.apId = newApId
@@ -27,13 +28,14 @@ static func build(newApItemFlags : int, newApId : int, newData : NameData, newGa
 	cardData.enemyCard = newEnemyCard
 	cardData.apItemFlags = newApItemFlags
 	cardData.fadeAngle = randf_range(0, 2*PI)
-	cardData.colors = randi_range(0, 63)
+	cardData.isLocal = newIsLocal
 	#Enemy cards are the locations of your items
 	if cardData.enemyCard:
 		cardData.gameCardset.enemyCards.append(cardData)
 	#Player cards are your items
 	else:
 		cardData.gameCardset.playerCards.append(cardData)
+	cardData.colors = cardData.calculate_color()
 	return cardData
 
 func json_save():
@@ -44,7 +46,7 @@ func json_save():
 		"apItemFlags" : apItemFlags,
 		"enemyCard" : enemyCard,
 		"fadeAngle" : fadeAngle,
-		"colors" : colors
+		"isLocal" : isLocal
 	}
 	return saveOutput
 
@@ -55,7 +57,7 @@ static func json_load(inDict, gameData : GameData) -> CardData:
 	cardData.apItemFlags = inDict["apItemFlags"]
 	cardData.enemyCard = inDict["enemyCard"]
 	cardData.fadeAngle = inDict["fadeAngle"]
-	cardData.colors = inDict["colors"]
+	cardData.isLocal = inDict["isLocal"]
 	cardData.nameData = gameData.existingNames[inDict["nameData"]]
 	for eachGame in gameData.gameCardsets:
 		if gameData.gameCardsets[eachGame].players.has(cardData.playerName):
@@ -65,6 +67,7 @@ static func json_load(inDict, gameData : GameData) -> CardData:
 			else:
 				gameData.gameCardsets[eachGame].playerCards.append(cardData)
 				break
+	cardData.colors = cardData.calculate_color()
 	return cardData
 
 
@@ -100,3 +103,27 @@ func unique_parts_of_speech():
 	for eachUnique in uniqueDict:
 		outString.append(eachUnique.capitalize() + " x" + str(uniqueDict[eachUnique]))
 	return outString
+
+func calculate_color() -> int:
+	var colorScore : Dictionary[ColorCatagory.ColorTypes, float] = {}
+	for baseColor in ColorCatagory.BASE_COLORS:
+		#Oh sweet lordy
+		var colorType : ColorCatagory.ColorTypes = baseColor.colorType
+		colorScore[colorType] = 0
+		#Source Pref Flags
+		match baseColor.itemSourcePref:
+			ColorCatagory.SourcePref.LOCAL:
+				if isLocal:
+					colorScore[colorType] += ColorCatagory.MULTI_SOURCE
+			ColorCatagory.SourcePref.EXTERNAL:
+				if not isLocal:
+					colorScore[colorType] += ColorCatagory.MULTI_SOURCE
+		#Item Quality Flags
+		if baseColor.itemQualityFlags.has(apItemFlags):
+			colorScore[colorType] += ColorCatagory.MULTI_ITEM_FLAGS * baseColor.itemQualityMulti
+		#Go over the name flags
+		for eachFlag in nameData.nameFlags:
+			colorScore[colorType] += eachFlag.get_score(baseColor)
+	
+	print(nameData.name + "," + ",".join(colorScore.values()))
+	return randi_range(0, 63)

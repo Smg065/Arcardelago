@@ -34,7 +34,7 @@ func update_rich_texts():
 	uiCardItemFlagLabel.text = "[center]" + cardData.rich_item_flags()
 	uiCardWordTypesLabel.text = "[center][bgcolor=snow][color=black]" + "/".join(cardData.unique_parts_of_speech())
 	uiCardPhoneticsLabel.text = "[center][bgcolor=slategray]" + ", ".join(cardData.rich_phonetic_symbols())
-	uiCardGameLabel.text = "[center][i][u][color=black]" + cardData.gameCardset.game + " - (" + cardData.playerName + ")"
+	uiCardGameLabel.text = "[center][i][u][color=black]" + cardData.gameCardset.game + " - (" + cardData.playerName.replace("[", "[lb]") + ")"
 	uiCardNameLabel.do_resize_text()
 	uiCardItemFlagLabel.do_resize_text()
 	uiCardWordTypesLabel.do_resize_text()

@@ -1,7 +1,144 @@
-[gd_resource type="Resource" script_class="ColorCatagory" load_steps=3 format=3 uid="uid://d2lodvhnq5cer"]
+[gd_resource type="Resource" script_class="ColorCatagory" load_steps=26 format=3 uid="uid://d2lodvhnq5cer"]
 
 [ext_resource type="Script" uid="uid://byt0cotie0pr4" path="res://Scripts/WordWeight.gd" id="1_dsw3l"]
 [ext_resource type="Script" uid="uid://dt6bcuot6d2k" path="res://Scripts/ColorCatagory.gd" id="1_hmtjg"]
+
+[sub_resource type="Resource" id="Resource_dsw3l"]
+script = ExtResource("1_dsw3l")
+word = "blue"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_7wdv0"]
+script = ExtResource("1_dsw3l")
+word = "teal"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_su8lk"]
+script = ExtResource("1_dsw3l")
+word = "sapphire"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_m7d7f"]
+script = ExtResource("1_dsw3l")
+word = "marine"
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_55s32"]
+script = ExtResource("1_dsw3l")
+word = "cobalt"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_dj2q1"]
+script = ExtResource("1_dsw3l")
+word = "teal"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_j8bd5"]
+script = ExtResource("1_dsw3l")
+word = "cerulean"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_ytqqu"]
+script = ExtResource("1_dsw3l")
+word = "aqua"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_a6vwb"]
+script = ExtResource("1_dsw3l")
+word = "turquoise"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_2japw"]
+script = ExtResource("1_dsw3l")
+word = "seafoam"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_rkb5u"]
+script = ExtResource("1_dsw3l")
+word = "indigo"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_7eev6"]
+script = ExtResource("1_dsw3l")
+word = "periwinkle"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_6rug8"]
+script = ExtResource("1_dsw3l")
+word = "cornflower"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_iaabs"]
+script = ExtResource("1_dsw3l")
+word = "sky"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_w66rl"]
+script = ExtResource("1_dsw3l")
+word = "blurple"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_p1tnj"]
+script = ExtResource("1_dsw3l")
+word = "ultramarine"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_6r5wv"]
+script = ExtResource("1_dsw3l")
+word = "iris"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_qt4tb"]
+script = ExtResource("1_dsw3l")
+word = "ocean"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_3t80f"]
+script = ExtResource("1_dsw3l")
+word = "sea"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_5orbt"]
+script = ExtResource("1_dsw3l")
+word = "blueberry"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_0b3aa"]
+script = ExtResource("1_dsw3l")
+word = "prussian"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_o80nd"]
+script = ExtResource("1_dsw3l")
+word = "rainbow"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_x1l72"]
+script = ExtResource("1_dsw3l")
+word = "white"
+weight = -0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
 
 [resource]
 script = ExtResource("1_hmtjg")
@@ -10,5 +147,36 @@ color = Color(0.4627451, 0.49411765, 0.7411765, 1)
 description = "Color of Useful Items/Filler Items.
 
 Focuses on having lots of cards in your deck and low-quality items."
+lookupTagsColor = Array[ExtResource("1_dsw3l")]([SubResource("Resource_dsw3l"), SubResource("Resource_7wdv0"), SubResource("Resource_su8lk"), SubResource("Resource_m7d7f"), SubResource("Resource_55s32"), SubResource("Resource_dj2q1"), SubResource("Resource_j8bd5"), SubResource("Resource_ytqqu"), SubResource("Resource_a6vwb"), SubResource("Resource_2japw"), SubResource("Resource_rkb5u"), SubResource("Resource_7eev6"), SubResource("Resource_6rug8"), SubResource("Resource_iaabs"), SubResource("Resource_w66rl"), SubResource("Resource_p1tnj"), SubResource("Resource_6r5wv"), SubResource("Resource_qt4tb"), SubResource("Resource_3t80f"), SubResource("Resource_5orbt"), SubResource("Resource_0b3aa"), SubResource("Resource_o80nd"), SubResource("Resource_x1l72")])
+lookupTagsParts = Dictionary[String, float]({
+"adjective": -5.0,
+"adverb": 10.0,
+"article": 0.0,
+"cardinal number": 10.0,
+"collective numeral": 20.0,
+"conjunction": 20.0,
+"conjunctional phrase": 20.0,
+"demonstrative determiner": 5.0,
+"demonstrative pronoun": 5.0,
+"determinative": 5.0,
+"determiner": 5.0,
+"fractional number": 10.0,
+"indefinite pronoun": 10.0,
+"intransitive verb": -5.0,
+"multiplicative number": 15.0,
+"multiplicative numeral": 15.0,
+"noun": 5.0,
+"number": 5.0,
+"numeral": 5.0,
+"ordinal": 10.0,
+"ordinal number": 10.0,
+"part of speech": 10.0,
+"particle": 15.0,
+"predicative": 10.0,
+"relative adjective": 10.0,
+"substantive": 20.0,
+"transitive": 10.0,
+"verbal noun": -5.0
+})
 itemQualityFlags = PackedInt32Array(0, 2)
 metadata/_custom_type_script = "uid://dt6bcuot6d2k"

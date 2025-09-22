@@ -1,7 +1,139 @@
-[gd_resource type="Resource" script_class="ColorCatagory" load_steps=3 format=3 uid="uid://phrybrlhjuue"]
+[gd_resource type="Resource" script_class="ColorCatagory" load_steps=25 format=3 uid="uid://phrybrlhjuue"]
 
 [ext_resource type="Script" uid="uid://dt6bcuot6d2k" path="res://Scripts/ColorCatagory.gd" id="1_3x53w"]
 [ext_resource type="Script" uid="uid://byt0cotie0pr4" path="res://Scripts/WordWeight.gd" id="1_8llx3"]
+
+[sub_resource type="Resource" id="Resource_8llx3"]
+script = ExtResource("1_8llx3")
+word = "green"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_rsuo1"]
+script = ExtResource("1_8llx3")
+word = "lime"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_jejam"]
+script = ExtResource("1_8llx3")
+word = "emerald"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_k01j5"]
+script = ExtResource("1_8llx3")
+word = "moss"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_f1htw"]
+script = ExtResource("1_8llx3")
+word = "spruce"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_yu6b0"]
+script = ExtResource("1_8llx3")
+word = "kiwi"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_pu0he"]
+script = ExtResource("1_8llx3")
+word = "sage"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_csugl"]
+script = ExtResource("1_8llx3")
+word = "camo"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_gi7ot"]
+script = ExtResource("1_8llx3")
+word = "avocado"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_di2ms"]
+script = ExtResource("1_8llx3")
+word = "chartreuse"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_mhl4i"]
+script = ExtResource("1_8llx3")
+word = "olive"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_kro80"]
+script = ExtResource("1_8llx3")
+word = "seafoam"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_gj6fo"]
+script = ExtResource("1_8llx3")
+word = "turquoise"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_dubag"]
+script = ExtResource("1_8llx3")
+word = "mint"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_naoi1"]
+script = ExtResource("1_8llx3")
+word = "forest"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_wov6v"]
+script = ExtResource("1_8llx3")
+word = "shamrock"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_0pd3q"]
+script = ExtResource("1_8llx3")
+word = "army"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_oplsn"]
+script = ExtResource("1_8llx3")
+word = "jade"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_kgwb2"]
+script = ExtResource("1_8llx3")
+word = "swamp"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_uwe4p"]
+script = ExtResource("1_8llx3")
+word = "jungle"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_o80nd"]
+script = ExtResource("1_8llx3")
+word = "rainbow"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_5pt1l"]
+script = ExtResource("1_8llx3")
+word = "white"
+weight = -0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
 
 [resource]
 script = ExtResource("1_3x53w")
@@ -10,4 +142,22 @@ color = Color(0.45882353, 0.7607843, 0.45490196, 1)
 description = "Color of Locations.
 
 Focuses on enemies cards, locations and having few cards in your deck."
+lookupTagsColor = Array[ExtResource("1_8llx3")]([SubResource("Resource_8llx3"), SubResource("Resource_rsuo1"), SubResource("Resource_jejam"), SubResource("Resource_k01j5"), SubResource("Resource_f1htw"), SubResource("Resource_yu6b0"), SubResource("Resource_pu0he"), SubResource("Resource_csugl"), SubResource("Resource_gi7ot"), SubResource("Resource_di2ms"), SubResource("Resource_mhl4i"), SubResource("Resource_kro80"), SubResource("Resource_gj6fo"), SubResource("Resource_dubag"), SubResource("Resource_naoi1"), SubResource("Resource_wov6v"), SubResource("Resource_0pd3q"), SubResource("Resource_oplsn"), SubResource("Resource_kgwb2"), SubResource("Resource_uwe4p"), SubResource("Resource_o80nd"), SubResource("Resource_5pt1l")])
+lookupTagsParts = Dictionary[String, float]({
+"adverb": 20.0,
+"article": 10.0,
+"collective numeral": 10.0,
+"noun": 5.0,
+"number": 5.0,
+"numeral": 5.0,
+"ordinal": 20.0,
+"ordinal number": 20.0,
+"part of speech": 10.0,
+"phrasal preposition": 30.0,
+"postposition": 20.0,
+"preposition": 20.0,
+"relative adjective": 10.0,
+"shadow pronoun": 20.0,
+"substantive": 10.0
+})
 metadata/_custom_type_script = "uid://dt6bcuot6d2k"

@@ -107,3 +107,34 @@ static func json_load(inDict) -> NameFlags:
 
 func get_flag_type():
 	return FlagType.NAME_FLAG
+
+func get_score(baseColor : ColorCatagory) -> float:
+	##The score these name flag's give
+	var score : float = 0
+	#The name of the card's the most important part
+	score += baseColor.get_word_score(word) * baseColor.MULTI_CARD_NAME
+	#Just get the most value you can from the synonyms
+	var bestSynonymScore : float = 0
+	for syn in synonyms:
+		var eachScore = baseColor.get_word_score(syn) * baseColor.MULTI_SYNONYMS
+		bestSynonymScore = max(bestSynonymScore, eachScore)
+	score += bestSynonymScore
+	#Likewise for the anyonyms
+	var bestAntonymScore : float = 0
+	for ant in antonyms:
+		var eachScore = baseColor.get_word_score(ant) * baseColor.MULTI_ANTONYMS
+		bestAntonymScore = min(bestAntonymScore, eachScore)
+	score += bestAntonymScore
+	for parts in partsOfSpeech:
+		#Lookup Parts
+		if baseColor.lookupTagsParts.has(parts):
+			score += baseColor.lookupTagsParts[parts] / partsOfSpeech.size()
+	for defs in definitions:
+		score += baseColor.get_words_score(defs.to_lower()) * baseColor.MULTI_DEFINITION / definitions.size()
+	for eggs in examples:
+		score += baseColor.get_words_score(eggs.to_lower()) * baseColor.MULTI_EXAMPLE / examples.size()
+	#Phonetics
+	for eachDecon in deconstructedPhonetics:
+		for phonFlags in eachDecon["Flags"]:
+			score += baseColor.get_phonetic_score(phonFlags) * baseColor.MULTI_PHONETIC / (eachDecon["Flags"].size() * deconstructedPhonetics.size())
+	return score

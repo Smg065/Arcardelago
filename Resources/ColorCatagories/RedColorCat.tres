@@ -1,7 +1,168 @@
-[gd_resource type="Resource" script_class="ColorCatagory" load_steps=3 format=3 uid="uid://dfknjeg1c2tf4"]
+[gd_resource type="Resource" script_class="ColorCatagory" load_steps=30 format=3 uid="uid://dfknjeg1c2tf4"]
 
 [ext_resource type="Script" uid="uid://byt0cotie0pr4" path="res://Scripts/WordWeight.gd" id="1_1f3sf"]
 [ext_resource type="Script" uid="uid://dt6bcuot6d2k" path="res://Scripts/ColorCatagory.gd" id="1_gb2qe"]
+
+[sub_resource type="Resource" id="Resource_1f3sf"]
+script = ExtResource("1_1f3sf")
+word = "red"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_fog0h"]
+script = ExtResource("1_1f3sf")
+word = "blood"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_pd8cb"]
+script = ExtResource("1_1f3sf")
+word = "maroon"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_4k1vf"]
+script = ExtResource("1_1f3sf")
+word = "scarlet"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_cpir4"]
+script = ExtResource("1_1f3sf")
+word = "rose"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_xsopo"]
+script = ExtResource("1_1f3sf")
+word = "tomato"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_7jhn1"]
+script = ExtResource("1_1f3sf")
+word = "raspberry"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_mcbn1"]
+script = ExtResource("1_1f3sf")
+word = "cranberry"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_wh4a7"]
+script = ExtResource("1_1f3sf")
+word = "cherry"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_ngrfg"]
+script = ExtResource("1_1f3sf")
+word = "lipstick"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_jhdjn"]
+script = ExtResource("1_1f3sf")
+word = "salmon"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_5von5"]
+script = ExtResource("1_1f3sf")
+word = "carnation"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_ihwvu"]
+script = ExtResource("1_1f3sf")
+word = "wine"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_bx7rv"]
+script = ExtResource("1_1f3sf")
+word = "brown"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_khl6h"]
+script = ExtResource("1_1f3sf")
+word = "chocolate"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_cweri"]
+script = ExtResource("1_1f3sf")
+word = "coral"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_62vr1"]
+script = ExtResource("1_1f3sf")
+word = "vermilion"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_s13kj"]
+script = ExtResource("1_1f3sf")
+word = "burgundy"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_ocpgf"]
+script = ExtResource("1_1f3sf")
+word = "bubblegum"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_yeavg"]
+script = ExtResource("1_1f3sf")
+word = "gum"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_a71uy"]
+script = ExtResource("1_1f3sf")
+word = "pink"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_qp4k6"]
+script = ExtResource("1_1f3sf")
+word = "cerise"
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_246y7"]
+script = ExtResource("1_1f3sf")
+word = "white"
+weight = -0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_o80nd"]
+script = ExtResource("1_1f3sf")
+word = "rainbow"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_ebon3"]
+script = ExtResource("1_1f3sf")
+word = "black"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_jvtmk"]
+script = ExtResource("1_1f3sf")
+word = "midnight"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
+[sub_resource type="Resource" id="Resource_gsw7c"]
+script = ExtResource("1_1f3sf")
+word = "dark"
+weight = 0.5
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
 
 [resource]
 script = ExtResource("1_gb2qe")
@@ -9,5 +170,25 @@ color = Color(0.7882353, 0.45882353, 0.50980395, 1)
 description = "Color of Traps.
 
 Focuses on trade offs and high risk, high reward."
+lookupTagsColor = Array[ExtResource("1_1f3sf")]([SubResource("Resource_1f3sf"), SubResource("Resource_fog0h"), SubResource("Resource_pd8cb"), SubResource("Resource_4k1vf"), SubResource("Resource_cpir4"), SubResource("Resource_xsopo"), SubResource("Resource_7jhn1"), SubResource("Resource_mcbn1"), SubResource("Resource_wh4a7"), SubResource("Resource_ngrfg"), SubResource("Resource_jhdjn"), SubResource("Resource_5von5"), SubResource("Resource_ihwvu"), SubResource("Resource_bx7rv"), SubResource("Resource_khl6h"), SubResource("Resource_cweri"), SubResource("Resource_62vr1"), SubResource("Resource_s13kj"), SubResource("Resource_ocpgf"), SubResource("Resource_yeavg"), SubResource("Resource_a71uy"), SubResource("Resource_qp4k6"), SubResource("Resource_246y7"), SubResource("Resource_o80nd"), SubResource("Resource_ebon3"), SubResource("Resource_jvtmk"), SubResource("Resource_gsw7c")])
+lookupTagsParts = Dictionary[String, float]({
+"adfix": 10.0,
+"auxiliary verb": 10.0,
+"conjunction": 10.0,
+"conjunctional phrase": 10.0,
+"gerund": 15.0,
+"infinitive": 10.0,
+"interjection": 20.0,
+"interjectional phrase": 20.0,
+"part of speech": 10.0,
+"possessional adjective": 10.0,
+"predicative": 10.0,
+"privative adjective": 30.0,
+"speech disfluency": 30.0,
+"transitive": 20.0,
+"transitive verb": 20.0,
+"verbal noun": 20.0
+})
+itemQualityMulti = 4
 itemQualityFlags = PackedInt32Array(4, 5, 6, 7)
 metadata/_custom_type_script = "uid://dt6bcuot6d2k"

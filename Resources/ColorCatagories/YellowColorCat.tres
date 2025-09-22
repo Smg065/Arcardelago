@@ -189,6 +189,7 @@ lookupTagsParts = Dictionary[String, float]({
 phonName = PackedStringArray("j", "u")
 phonTypes = Array[int]([15, 6, 13, 14])
 phonDiacriticCommand = PackedStringArray("Voiced", "Egressive airflow", "Sliding articulation", "Labial spreading")
+phonVowelGoal = PackedVector2Array(1, -1)
 phonConsonantVoiced = Array[int]([2])
 itemSourcePref = 2
 metadata/_custom_type_script = "uid://dt6bcuot6d2k"

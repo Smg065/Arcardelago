@@ -181,6 +181,7 @@ lookupTagsParts = Dictionary[String, float]({
 phonName = PackedStringArray("ɛ", "ɑ")
 phonTypes = Array[int]([18, 13, 3])
 phonDiacriticCommand = PackedStringArray("Weak articulation", "Centralized", "Lowered", "No audible release", "Mid-centralized")
+phonVowelGoal = PackedVector2Array(0, 0)
 phonConsonantShape = Array[int]([0])
 phonToneGoal = PackedFloat32Array(0)
 itemQualityFlags = PackedInt32Array(0, 2)

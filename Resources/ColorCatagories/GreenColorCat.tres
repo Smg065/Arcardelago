@@ -163,6 +163,7 @@ lookupTagsParts = Dictionary[String, float]({
 phonName = PackedStringArray("ʔ")
 phonTypes = Array[int]([9, 10, 11])
 phonDiacriticCommand = PackedStringArray("Less rounded", "Velarized or pharyngealized", "Pharyngealized")
+phonVowelGoal = PackedVector2Array(-1, 1)
 phonVowelRoundPref = Array[bool]([false])
 phonConsonantSound = Array[int]([5])
 phonToneGoal = PackedFloat32Array(-1)

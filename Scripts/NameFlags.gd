@@ -136,5 +136,5 @@ func get_score(baseColor : ColorCatagory) -> float:
 	#Phonetics
 	for eachDecon in deconstructedPhonetics:
 		for phonFlags in eachDecon["Flags"]:
-			score += baseColor.get_phonetic_score(phonFlags) * baseColor.MULTI_PHONETIC / (eachDecon["Flags"].size() * deconstructedPhonetics.size())
+			score += baseColor.get_phonetic_score(phonFlags) * baseColor.MULTI_PHONETIC / deconstructedPhonetics.size()
 	return score

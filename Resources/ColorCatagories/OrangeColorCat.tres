@@ -168,6 +168,11 @@ lookupTagsParts = Dictionary[String, float]({
 "transitive verb": 20.0,
 "verbal noun": -5.0
 })
+phonName = PackedStringArray("u")
+phonTypes = Array[int]([17, 7, 14, 21])
+phonDiacriticCommand = PackedStringArray("Strong articulation", "More rounded", "Raised", "Whistled articulation")
+phonVowelRoundPref = Array[bool]([true])
+phonToneGoal = PackedFloat32Array(1)
 itemQualityMulti = 4
 itemQualityFlags = PackedInt32Array(3)
 metadata/_custom_type_script = "uid://dt6bcuot6d2k"

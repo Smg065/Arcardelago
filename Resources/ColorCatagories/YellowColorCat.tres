@@ -186,5 +186,9 @@ lookupTagsParts = Dictionary[String, float]({
 "transitive verb": 5.0,
 "verbal noun": 10.0
 })
+phonName = PackedStringArray("j", "u")
+phonTypes = Array[int]([15, 6, 13, 14])
+phonDiacriticCommand = PackedStringArray("Voiced", "Egressive airflow", "Sliding articulation", "Labial spreading")
+phonConsonantVoiced = Array[int]([2])
 itemSourcePref = 2
 metadata/_custom_type_script = "uid://dt6bcuot6d2k"

@@ -43,6 +43,7 @@ const MULTI_ANTONYMS = -5 ##-50 if Color and -25 if Typing
 const MULTI_DEFINITION = 1 ##10 if Color and 5 if Typing
 const MULTI_EXAMPLE = 1 ##1 if Color and 5 if Typing
 #Phonetic Score Applications
+const PHSCR_NAME = 2
 const PHSCR_TYPE = 5
 const PHSCR_DIACRITIC = 10
 const PHSCR_VOWEL_ROUNDED = 1
@@ -61,6 +62,8 @@ const MULTI_PHSCR_TONE_GOAL = 5
 ##Parts of Speech are worth fixed points
 @export var lookupTagsParts : Dictionary[String, float]
 @export_group("Phonetic Tags", "phon")
+##The name of the exact phonetic you want
+@export var phonName : PackedStringArray
 ##If you're of the given type give 5 score
 @export var phonTypes : Array[Phonetics.PhoneticType]
 ##Matching Diacritical Commands gives 10 points
@@ -131,7 +134,10 @@ func get_words_score(words : String):
 ##Phonetic score calculation
 func get_phonetic_score(phonetic : Phonetics.PhoneticFlag) -> float:
 	var score : float = 0
-	#Phonetic Type Matces
+	#Phonetic Directly Matches
+	if phonName.has(phonetic.name):
+		score += PHSCR_NAME
+	#Phonetic Type Matches
 	if phonTypes.has(phonetic.type):
 		score += PHSCR_TYPE
 	#Phonetic Flags

@@ -160,4 +160,10 @@ lookupTagsParts = Dictionary[String, float]({
 "shadow pronoun": 20.0,
 "substantive": 10.0
 })
+phonName = PackedStringArray("ʔ")
+phonTypes = Array[int]([9, 10, 11])
+phonDiacriticCommand = PackedStringArray("Less rounded", "Velarized or pharyngealized", "Pharyngealized")
+phonVowelRoundPref = Array[bool]([false])
+phonConsonantSound = Array[int]([5])
+phonToneGoal = PackedFloat32Array(-1)
 metadata/_custom_type_script = "uid://dt6bcuot6d2k"

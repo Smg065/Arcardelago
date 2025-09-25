@@ -1,0 +1,204 @@
+[gd_scene load_steps=11 format=3 uid="uid://riptfjpym813"]
+
+[ext_resource type="Texture2D" uid="uid://3t3lacpksiuy" path="res://Sprites/WordEditorBackdrop.png" id="1_ck1ld"]
+[ext_resource type="PackedScene" uid="uid://dei0s4cn4omxt" path="res://Resources/WordGroupWordEntry.tscn" id="2_srvvy"]
+[ext_resource type="Script" uid="uid://dn052w10ojsfu" path="res://Scripts/UI/UIWordGroupCreator.gd" id="2_utdho"]
+[ext_resource type="Texture2D" uid="uid://d3ckrrc5u438d" path="res://Sprites/Add.png" id="3_ldo4l"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ldo4l"]
+bg_color = Color(0.5, 0.5, 0.5, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_utdho"]
+bg_color = Color(0.7, 0.7, 0.7, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o44ue"]
+bg_color = Color(0.85, 0.85, 0.85, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yt6qk"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g8y5w"]
+bg_color = Color(0.8, 0.8, 0.8, 1)
+
+[sub_resource type="Theme" id="Theme_16b4f"]
+Button/styles/disabled = SubResource("StyleBoxFlat_ldo4l")
+Button/styles/focus = SubResource("StyleBoxFlat_utdho")
+Button/styles/hover = SubResource("StyleBoxFlat_o44ue")
+Button/styles/normal = SubResource("StyleBoxFlat_yt6qk")
+Button/styles/pressed = SubResource("StyleBoxFlat_g8y5w")
+
+[node name="WordGroupCreator" type="TextureRect" node_paths=PackedStringArray("nameInput", "entryHolder", "editorSaveButton", "editorLoadButton")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_ck1ld")
+stretch_mode = 1
+script = ExtResource("2_utdho")
+nameInput = NodePath("NameBackdrop/WordGroupInput")
+wordEntryPrefab = ExtResource("2_srvvy")
+entryHolder = NodePath("ColorRect/EntryScroll/EntryList")
+editorSaveButton = NodePath("SavingBar/HGroupAlign/SaveEditor")
+editorLoadButton = NodePath("SavingBar/HGroupAlign/LoadEditor")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 70.0
+offset_right = -16.0
+offset_bottom = -70.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.5, 0.5, 0.5, 0.5882353)
+
+[node name="EntryScroll" type="ScrollContainer" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -32.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="EntryList" type="VBoxContainer" parent="ColorRect/EntryScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Add" type="Button" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -17.0
+offset_bottom = 17.0
+grow_horizontal = 0
+grow_vertical = 2
+tooltip_text = "Add Woed"
+theme = SubResource("Theme_16b4f")
+icon = ExtResource("3_ldo4l")
+
+[node name="NameBackdrop" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 16.0
+offset_top = 3.0
+offset_right = -16.0
+offset_bottom = 66.0
+grow_horizontal = 2
+color = Color(1, 1, 1, 0.63529414)
+
+[node name="WordGroupInput" type="LineEdit" parent="NameBackdrop"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 186.0
+offset_top = -25.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 24
+placeholder_text = "Word Group Name"
+
+[node name="WordGroupLabel" type="Label" parent="NameBackdrop"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -17.5
+offset_right = -532.0
+offset_bottom = 17.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Word Group Name: "
+
+[node name="SavingBar" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -66.0
+offset_right = -16.0
+offset_bottom = -3.0
+grow_horizontal = 2
+color = Color(0, 0, 0, 0.63529414)
+
+[node name="HGroupAlign" type="HBoxContainer" parent="SavingBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 2
+
+[node name="SaveEditor" type="Button" parent="SavingBar/HGroupAlign"]
+visible = false
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Save Resource"
+
+[node name="LoadEditor" type="Button" parent="SavingBar/HGroupAlign"]
+visible = false
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Load Resource"
+
+[node name="SaveJson" type="Button" parent="SavingBar/HGroupAlign"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Save Json"
+
+[node name="LoadJson" type="Button" parent="SavingBar/HGroupAlign"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Load Json"
+
+[node name="SaveLoad" type="Node" parent="."]
+
+[node name="JsonSave" type="FileDialog" parent="SaveLoad"]
+access = 2
+filters = PackedStringArray("*.json")
+use_native_dialog = true
+
+[node name="JsonLoad" type="FileDialog" parent="SaveLoad"]
+title = "Open a File"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.json")
+use_native_dialog = true
+
+[node name="ResourceSave" type="FileDialog" parent="SaveLoad"]
+access = 2
+filters = PackedStringArray("*.tres")
+use_native_dialog = true
+
+[node name="ResourceLoad" type="FileDialog" parent="SaveLoad"]
+title = "Open a File"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.tres")
+use_native_dialog = true
+
+[connection signal="pressed" from="ColorRect/Add" to="." method="add_pressed"]
+[connection signal="pressed" from="SavingBar/HGroupAlign/SaveEditor" to="SaveLoad/ResourceSave" method="show"]
+[connection signal="pressed" from="SavingBar/HGroupAlign/LoadEditor" to="SaveLoad/ResourceLoad" method="show"]
+[connection signal="pressed" from="SavingBar/HGroupAlign/SaveJson" to="SaveLoad/JsonSave" method="show"]
+[connection signal="pressed" from="SavingBar/HGroupAlign/LoadJson" to="SaveLoad/JsonLoad" method="show"]
+[connection signal="file_selected" from="SaveLoad/JsonSave" to="." method="json_save"]
+[connection signal="file_selected" from="SaveLoad/JsonLoad" to="." method="json_load"]
+[connection signal="file_selected" from="SaveLoad/ResourceSave" to="." method="res_save"]
+[connection signal="file_selected" from="SaveLoad/ResourceLoad" to="." method="res_load"]

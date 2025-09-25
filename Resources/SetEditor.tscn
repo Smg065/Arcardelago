@@ -1,0 +1,86 @@
+[gd_scene load_steps=3 format=3 uid="uid://bmb3omoxm7f1c"]
+
+[ext_resource type="Texture2D" uid="uid://bhg3kt4vjpsks" path="res://Sprites/SetEditorBackdrop.png" id="1_n5704"]
+[ext_resource type="Script" uid="uid://d11kfgsd6jgt" path="res://addons/AutoSizeText/ui/AutoSizeLabel.gd" id="2_qhme0"]
+
+[node name="SetEditorBackdrop" type="TextureRect"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_n5704")
+stretch_mode = 1
+
+[node name="Header" type="Control" parent="."]
+layout_mode = 1
+anchor_right = 1.0
+offset_bottom = 56.0
+grow_horizontal = 2
+
+[node name="Header Backdrop" type="ColorRect" parent="Header"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.66, 0.66, 0.66, 0.6117647)
+
+[node name="HeaderAlignment" type="HBoxContainer" parent="Header"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="GameLabelColor" type="ColorRect" parent="Header/HeaderAlignment"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+color = Color(0.8, 0.8, 0.8, 1)
+
+[node name="GameLabel" type="Label" parent="Header/HeaderAlignment/GameLabelColor"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 28
+text = "Game:"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 3
+script = ExtResource("2_qhme0")
+metadata/_custom_type_script = "uid://d11kfgsd6jgt"
+
+[node name="SetName" type="LineEdit" parent="Header/HeaderAlignment"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+placeholder_text = "Name Here"
+expand_to_text_length = true
+
+[node name="ContentsVisual" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 69.00001
+offset_right = -16.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0.8235294)

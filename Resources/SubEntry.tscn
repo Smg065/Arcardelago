@@ -1,0 +1,74 @@
+[gd_scene load_steps=11 format=3 uid="uid://cwtt7orxvibcr"]
+
+[ext_resource type="Script" uid="uid://drpsu6a5mvkko" path="res://Scripts/UI/SubEntry.gd" id="1_0aaq4"]
+[ext_resource type="Texture2D" uid="uid://bvk0r51iqvs2g" path="res://Sprites/UpArrow.png" id="2_eoscj"]
+[ext_resource type="Texture2D" uid="uid://dtqui7or2ldis" path="res://Sprites/DownArrow.png" id="3_mt5da"]
+[ext_resource type="Texture2D" uid="uid://bdro4mvx8dgjy" path="res://Sprites/Delete.png" id="4_rmdh6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4x5yi"]
+bg_color = Color(0.5, 0.5, 0.5, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dxv06"]
+bg_color = Color(0.7, 0.7, 0.7, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rades"]
+bg_color = Color(0.85, 0.85, 0.85, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_djbt3"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xbroo"]
+bg_color = Color(0.8, 0.8, 0.8, 1)
+
+[sub_resource type="Theme" id="Theme_ue8ul"]
+Button/styles/disabled = SubResource("StyleBoxFlat_4x5yi")
+Button/styles/focus = SubResource("StyleBoxFlat_dxv06")
+Button/styles/hover = SubResource("StyleBoxFlat_rades")
+Button/styles/normal = SubResource("StyleBoxFlat_djbt3")
+Button/styles/pressed = SubResource("StyleBoxFlat_xbroo")
+
+[node name="SubEntry" type="HBoxContainer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 32.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+script = ExtResource("1_0aaq4")
+
+[node name="NudgeControl" type="Control" parent="."]
+custom_minimum_size = Vector2(34, 0)
+layout_mode = 2
+
+[node name="NudgeUp" type="Button" parent="NudgeControl"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.50000006
+offset_bottom = -1.5258789e-05
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_ue8ul")
+icon = ExtResource("2_eoscj")
+metadata/_edit_use_anchors_ = true
+
+[node name="NudgeDown" type="Button" parent="NudgeControl"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -1.5258789e-05
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_ue8ul")
+icon = ExtResource("3_mt5da")
+icon_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Delete" type="Button" parent="."]
+layout_mode = 2
+tooltip_text = "Delete"
+theme = SubResource("Theme_ue8ul")
+icon = ExtResource("4_rmdh6")
+
+[connection signal="pressed" from="Delete" to="." method="delete_pressed"]

@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="ColorCatagory" load_steps=26 format=3 uid="uid://d2lodvhnq5cer"]
+[gd_resource type="Resource" script_class="ColorCatagory" load_steps=27 format=3 uid="uid://d2lodvhnq5cer"]
 
+[ext_resource type="Script" uid="uid://3slsv11kg0rw" path="res://Scripts/ArbitraryWordGroups.gd" id="1_7wdv0"]
 [ext_resource type="Script" uid="uid://byt0cotie0pr4" path="res://Scripts/WordWeight.gd" id="1_dsw3l"]
 [ext_resource type="Script" uid="uid://dt6bcuot6d2k" path="res://Scripts/ColorCatagory.gd" id="1_hmtjg"]
 
@@ -142,6 +143,7 @@ metadata/_custom_type_script = "uid://byt0cotie0pr4"
 
 [resource]
 script = ExtResource("1_hmtjg")
+name = "Blue"
 colorType = 4
 color = Color(0.4627451, 0.49411765, 0.7411765, 1)
 description = "Color of Useful Items/Filler Items.

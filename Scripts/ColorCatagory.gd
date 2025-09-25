@@ -17,7 +17,8 @@ enum ColorTypes {
 	VIOLET, ##Yourself & Progressive Items
 	ORANGE, ##Proguseful & Power
 	BLUE, ##Filler, Useful & High Card Count
-	YELLOW ##Other Players & Item Sending
+	YELLOW, ##Other Players & Item Sending
+	CUSTOM ##A color made by others
 }
 const RED = ColorTypes.RED
 const GREEN = ColorTypes.GREEN
@@ -26,6 +27,7 @@ const ORANGE = ColorTypes.ORANGE
 const BLUE = ColorTypes.BLUE
 const YELLOW = ColorTypes.YELLOW
 enum SourcePref {NULL, LOCAL, EXTERNAL}
+@export var name : String
 @export var colorType : ColorTypes
 @export_color_no_alpha var color : Color
 @export_multiline var description : String
@@ -57,8 +59,8 @@ const MULTI_PHSCR_TONE_GOAL = 5
 @export_group("Word Tags", "lookupTags")
 ##Words that are similar colors give a x10 point multi
 @export var lookupTagsColor : Array[WordWeight]
-##Words with similar tags give a x5 point multi
-@export var lookupTagsNames : Array[WordWeight]
+##Arbitrary Word Flags give a x5 point multi
+@export var lookupTagsArbitraryWordGroups : Array[ArbitraryWordGroups]
 ##Parts of Speech are worth fixed points
 @export var lookupTagsParts : Dictionary[String, float]
 @export_group("Phonetic Tags", "phon")
@@ -111,9 +113,8 @@ func get_word_score(word : String) -> float:
 		if colTags.word.to_lower() == word.to_lower():
 			score += colTags.weight * MULTI_COLOR
 	#Words that include similar tags
-	for nameTags in lookupTagsNames:
-		if nameTags.word.to_lower() == word.to_lower():
-			score += nameTags.weight * MULTI_NAMES
+	for awg in lookupTagsArbitraryWordGroups:
+		score += awg.color_score(name, word) * MULTI_NAMES
 	#Output the Score
 	return score
 
@@ -125,9 +126,8 @@ func get_words_score(words : String):
 		if words.containsn(colTags.word):
 			score += colTags.weight * MULTI_COLOR
 	#Words that include similar tags
-	for nameTags in lookupTagsNames:
-		if words.containsn(nameTags.word):
-			score += nameTags.weight * MULTI_NAMES
+	for awg in lookupTagsArbitraryWordGroups:
+		score += awg.color_score(name, words, true) * MULTI_NAMES
 	#Output the Score
 	return score
 

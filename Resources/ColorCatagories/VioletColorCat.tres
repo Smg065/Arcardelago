@@ -155,6 +155,7 @@ metadata/_custom_type_script = "uid://byt0cotie0pr4"
 
 [resource]
 script = ExtResource("1_bvwly")
+name = "Violet"
 colorType = 2
 color = Color(0.7882353, 0.5803922, 0.7607843, 1)
 description = "Color of Player's Name and Progressive Items.

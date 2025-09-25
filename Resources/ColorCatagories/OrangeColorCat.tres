@@ -131,6 +131,7 @@ metadata/_custom_type_script = "uid://byt0cotie0pr4"
 
 [resource]
 script = ExtResource("1_4p0c6")
+name = "Orange"
 colorType = 3
 color = Color(0.84705883, 0.627451, 0.49019608, 1)
 description = "Color of Proguseful Items/Debug Messages.

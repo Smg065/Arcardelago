@@ -1,0 +1,124 @@
+[gd_scene load_steps=13 format=3 uid="uid://d040f5mvvhs33"]
+
+[ext_resource type="Script" uid="uid://c7rmbsab4u5np" path="res://Scripts/UI/UIWeightColorSubentry.gd" id="1_wmn7g"]
+[ext_resource type="PackedScene" uid="uid://idd3nb3sgec7" path="res://Resources/WordGroupColorToggle.tscn" id="2_df6oc"]
+[ext_resource type="Script" uid="uid://d11kfgsd6jgt" path="res://addons/AutoSizeText/ui/AutoSizeLabel.gd" id="3_6dr70"]
+[ext_resource type="Texture2D" uid="uid://bvk0r51iqvs2g" path="res://Sprites/UpArrow.png" id="4_06hyx"]
+[ext_resource type="Texture2D" uid="uid://dtqui7or2ldis" path="res://Sprites/DownArrow.png" id="5_tnnej"]
+[ext_resource type="Texture2D" uid="uid://bdro4mvx8dgjy" path="res://Sprites/Delete.png" id="6_23e0c"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4x5yi"]
+bg_color = Color(0.5, 0.5, 0.5, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dxv06"]
+bg_color = Color(0.7, 0.7, 0.7, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rades"]
+bg_color = Color(0.85, 0.85, 0.85, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_djbt3"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xbroo"]
+bg_color = Color(0.8, 0.8, 0.8, 1)
+
+[sub_resource type="Theme" id="Theme_d018t"]
+Button/styles/disabled = SubResource("StyleBoxFlat_4x5yi")
+Button/styles/focus = SubResource("StyleBoxFlat_dxv06")
+Button/styles/hover = SubResource("StyleBoxFlat_rades")
+Button/styles/normal = SubResource("StyleBoxFlat_djbt3")
+Button/styles/pressed = SubResource("StyleBoxFlat_xbroo")
+
+[node name="ColorWeightControl" type="HBoxContainer"]
+custom_minimum_size = Vector2(0, 64)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+script = ExtResource("1_wmn7g")
+colorTogglePrefab = ExtResource("2_df6oc")
+
+[node name="SliderControl" type="Control" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="WeightSlider" type="HSlider" parent="SliderControl"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_bottom = 16.000015
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = -1.0
+max_value = 1.0
+step = 0.05
+value = 1.0
+tick_count = 9
+ticks_on_borders = true
+ticks_position = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="WeightDisplay" type="Label" parent="SliderControl"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 38
+text = "1.00"
+horizontal_alignment = 1
+vertical_alignment = 2
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 3
+script = ExtResource("3_6dr70")
+watch_text_change = true
+metadata/_custom_type_script = "uid://d11kfgsd6jgt"
+metadata/_edit_use_anchors_ = true
+
+[node name="NudgeControl" type="Control" parent="."]
+custom_minimum_size = Vector2(34, 0)
+layout_mode = 2
+
+[node name="NudgeUp" type="Button" parent="NudgeControl"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.50000006
+offset_bottom = -1.5258789e-05
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_d018t")
+icon = ExtResource("4_06hyx")
+metadata/_edit_use_anchors_ = true
+
+[node name="NudgeDown" type="Button" parent="NudgeControl"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -1.5258789e-05
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_d018t")
+icon = ExtResource("5_tnnej")
+icon_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Delete" type="Button" parent="."]
+layout_mode = 2
+tooltip_text = "Delete"
+theme = SubResource("Theme_d018t")
+icon = ExtResource("6_23e0c")
+
+[connection signal="value_changed" from="SliderControl/WeightSlider" to="." method="weight_slider_changed"]
+[connection signal="pressed" from="Delete" to="." method="delete_pressed"]

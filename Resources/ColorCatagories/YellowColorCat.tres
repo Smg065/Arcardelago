@@ -149,6 +149,7 @@ metadata/_custom_type_script = "uid://byt0cotie0pr4"
 
 [resource]
 script = ExtResource("1_ptdfw")
+name = "Yellow"
 colorType = 5
 color = Color(0.93333334, 0.8901961, 0.5686275, 1)
 description = "Color of Other Players.

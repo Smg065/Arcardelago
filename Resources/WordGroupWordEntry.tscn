@@ -1,0 +1,99 @@
+[gd_scene load_steps=13 format=3 uid="uid://dei0s4cn4omxt"]
+
+[ext_resource type="Texture2D" uid="uid://bvk0r51iqvs2g" path="res://Sprites/UpArrow.png" id="1_p4tk7"]
+[ext_resource type="Script" uid="uid://os3hu5eyom55" path="res://Scripts/UI/UIWordWeightColorEntry.gd" id="1_yw7fo"]
+[ext_resource type="Texture2D" uid="uid://dtqui7or2ldis" path="res://Sprites/DownArrow.png" id="2_l0xox"]
+[ext_resource type="PackedScene" uid="uid://d040f5mvvhs33" path="res://Resources/WordGroupColorWeight.tscn" id="2_ptja1"]
+[ext_resource type="Texture2D" uid="uid://d3ckrrc5u438d" path="res://Sprites/Add.png" id="3_ptja1"]
+[ext_resource type="Texture2D" uid="uid://bdro4mvx8dgjy" path="res://Sprites/Delete.png" id="3_yw7fo"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yw7fo"]
+bg_color = Color(0.5, 0.5, 0.5, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ptja1"]
+bg_color = Color(0.7, 0.7, 0.7, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5wqkk"]
+bg_color = Color(0.85, 0.85, 0.85, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8rjfs"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tk438"]
+bg_color = Color(0.8, 0.8, 0.8, 1)
+
+[sub_resource type="Theme" id="Theme_ptja1"]
+Button/styles/disabled = SubResource("StyleBoxFlat_yw7fo")
+Button/styles/focus = SubResource("StyleBoxFlat_ptja1")
+Button/styles/hover = SubResource("StyleBoxFlat_5wqkk")
+Button/styles/normal = SubResource("StyleBoxFlat_8rjfs")
+Button/styles/pressed = SubResource("StyleBoxFlat_tk438")
+
+[node name="WordGroupEntry" type="HBoxContainer" node_paths=PackedStringArray("entrySpot")]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 50.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+script = ExtResource("1_yw7fo")
+subentryPrefab = ExtResource("2_ptja1")
+entrySpot = NodePath("ColorEntries")
+
+[node name="WordInput" type="LineEdit" parent="."]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 27
+placeholder_text = "Word Goes Here..."
+alignment = 1
+expand_to_text_length = true
+
+[node name="ColorEntries" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Add" type="Button" parent="."]
+layout_mode = 2
+size_flags_vertical = 4
+tooltip_text = "Add Color Weight"
+theme = SubResource("Theme_ptja1")
+icon = ExtResource("3_ptja1")
+
+[node name="NudgeControl" type="Control" parent="."]
+custom_minimum_size = Vector2(34, 0)
+layout_mode = 2
+
+[node name="NudgeUp" type="Button" parent="NudgeControl"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.50000006
+offset_bottom = -1.5258789e-05
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_ptja1")
+icon = ExtResource("1_p4tk7")
+metadata/_edit_use_anchors_ = true
+
+[node name="NudgeDown" type="Button" parent="NudgeControl"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -1.5258789e-05
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_ptja1")
+icon = ExtResource("2_l0xox")
+icon_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Delete" type="Button" parent="."]
+layout_mode = 2
+tooltip_text = "Delete"
+theme = SubResource("Theme_ptja1")
+icon = ExtResource("3_yw7fo")
+
+[connection signal="pressed" from="Add" to="." method="add_pressed"]
+[connection signal="pressed" from="Delete" to="." method="delete_pressed"]

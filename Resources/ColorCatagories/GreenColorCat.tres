@@ -137,6 +137,7 @@ metadata/_custom_type_script = "uid://byt0cotie0pr4"
 
 [resource]
 script = ExtResource("1_3x53w")
+name = "Green"
 colorType = 1
 color = Color(0.45882353, 0.7607843, 0.45490196, 1)
 description = "Color of Locations.

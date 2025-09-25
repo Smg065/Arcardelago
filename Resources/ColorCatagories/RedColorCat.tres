@@ -166,6 +166,7 @@ metadata/_custom_type_script = "uid://byt0cotie0pr4"
 
 [resource]
 script = ExtResource("1_gb2qe")
+name = "Red"
 color = Color(0.7882353, 0.45882353, 0.50980395, 1)
 description = "Color of Traps.
 

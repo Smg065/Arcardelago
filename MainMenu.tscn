@@ -197,10 +197,11 @@ min_size = Vector2i(800, 256)
 
 [node name="ColorCat Window" type="Window" parent="Node"]
 oversampling_override = 1.0
+title = "Color Catagory Creator"
 initial_position = 4
-size = Vector2i(900, 650)
+size = Vector2i(1150, 650)
 visible = false
-min_size = Vector2i(900, 650)
+min_size = Vector2i(1150, 650)
 
 [node name="ColorCatEditor" parent="Node/ColorCat Window" instance=ExtResource("5_7r1g0")]
 

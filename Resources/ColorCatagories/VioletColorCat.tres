@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="ColorCatagory" load_steps=28 format=3 uid="uid://cpk6luucltmtw"]
+[gd_resource type="Resource" script_class="ColorCatagory" load_steps=30 format=3 uid="uid://cpk6luucltmtw"]
 
+[ext_resource type="Script" uid="uid://3slsv11kg0rw" path="res://Scripts/ArbitraryWordGroups.gd" id="1_4o1xg"]
 [ext_resource type="Script" uid="uid://dt6bcuot6d2k" path="res://Scripts/ColorCatagory.gd" id="1_bvwly"]
 [ext_resource type="Script" uid="uid://byt0cotie0pr4" path="res://Scripts/WordWeight.gd" id="1_n46dx"]
 
@@ -153,6 +154,12 @@ word = "pink"
 weight = 1.0
 metadata/_custom_type_script = "uid://byt0cotie0pr4"
 
+[sub_resource type="Resource" id="Resource_ygcrb"]
+script = ExtResource("1_n46dx")
+word = "purple"
+weight = 1.0
+metadata/_custom_type_script = "uid://byt0cotie0pr4"
+
 [resource]
 script = ExtResource("1_bvwly")
 name = "Violet"
@@ -161,7 +168,7 @@ color = Color(0.7882353, 0.5803922, 0.7607843, 1)
 description = "Color of Player's Name and Progressive Items.
 
 Focues on progressive items, your own items and local enemies."
-lookupTagsColor = Array[ExtResource("1_n46dx")]([SubResource("Resource_n46dx"), SubResource("Resource_4o1xg"), SubResource("Resource_u0isj"), SubResource("Resource_8cqqx"), SubResource("Resource_ba6my"), SubResource("Resource_hq3cw"), SubResource("Resource_t812i"), SubResource("Resource_d276p"), SubResource("Resource_6pu75"), SubResource("Resource_wm60x"), SubResource("Resource_2un3b"), SubResource("Resource_dhvr5"), SubResource("Resource_rb7h1"), SubResource("Resource_q7f8u"), SubResource("Resource_c3k87"), SubResource("Resource_x18le"), SubResource("Resource_6qp04"), SubResource("Resource_fb8xa"), SubResource("Resource_b2ql4"), SubResource("Resource_jva4u"), SubResource("Resource_rb5n6"), SubResource("Resource_7tv8q"), SubResource("Resource_o80nd"), SubResource("Resource_x0aak"), SubResource("Resource_5m3dc")])
+lookupTagsColor = Array[ExtResource("1_n46dx")]([SubResource("Resource_n46dx"), SubResource("Resource_4o1xg"), SubResource("Resource_u0isj"), SubResource("Resource_8cqqx"), SubResource("Resource_ba6my"), SubResource("Resource_hq3cw"), SubResource("Resource_t812i"), SubResource("Resource_d276p"), SubResource("Resource_6pu75"), SubResource("Resource_wm60x"), SubResource("Resource_2un3b"), SubResource("Resource_dhvr5"), SubResource("Resource_rb7h1"), SubResource("Resource_q7f8u"), SubResource("Resource_c3k87"), SubResource("Resource_x18le"), SubResource("Resource_6qp04"), SubResource("Resource_fb8xa"), SubResource("Resource_b2ql4"), SubResource("Resource_jva4u"), SubResource("Resource_rb5n6"), SubResource("Resource_7tv8q"), SubResource("Resource_o80nd"), SubResource("Resource_x0aak"), SubResource("Resource_5m3dc"), SubResource("Resource_ygcrb")])
 lookupTagsParts = Dictionary[String, float]({
 "adjective": 5.0,
 "adnoun": 10.0,

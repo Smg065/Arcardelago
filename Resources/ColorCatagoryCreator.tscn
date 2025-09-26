@@ -33,7 +33,7 @@ Button/styles/hover = SubResource("StyleBoxFlat_o44ue")
 Button/styles/normal = SubResource("StyleBoxFlat_yt6qk")
 Button/styles/pressed = SubResource("StyleBoxFlat_g8y5w")
 
-[node name="ColorCatagoryCreator" type="TextureRect" node_paths=PackedStringArray("nameInput", "colorInput", "descriptionInput", "lookupTagsColorHolder", "lookupTagsPartsInput", "phonNameInput", "phonTypesInput", "phonDiacriticCommandInput", "phonVowelGoalToggle", "phonVowelGoalXInput", "phonVowelGoalYInput", "phonVowelGoalPosition", "phonVowelGoalLabel", "phonVowelRoundPrefInput", "phonConsonantSoundInput", "phonConsonantShapeInput", "phonConsonantVoicedInput", "phonToneGoalToggle", "phonToneGoalLabel", "phonToneGoalInput", "itemQualityMultiInput", "itemSourcePrefInput")]
+[node name="ColorCatagoryCreator" type="TextureRect" node_paths=PackedStringArray("nameInput", "colorInput", "descriptionInput", "lookupTagsColorHolder", "lookupTagsPartsInput", "phonNameInput", "phonTypesInput", "phonDiacriticCommandInput", "phonVowelGoalToggle", "phonVowelGoalXInput", "phonVowelGoalYInput", "phonVowelGoalPosition", "phonVowelGoalLabel", "phonVowelRoundPrefInput", "phonConsonantSoundInput", "phonConsonantShapeInput", "phonConsonantVoicedInput", "phonToneGoalToggle", "phonToneGoalLabel", "phonToneGoalInput", "itemQualityMultiInput", "itemQualityFlagInputs", "itemSourcePrefInput")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -51,7 +51,7 @@ lookupTagsPartsInput = [NodePath("PoS Info/PoS Scroll/PoS Container/PoS Adfix"),
 phonNameInput = NodePath("Phonetics/PhoneticToggles/BasicsColor/BasicsHBox/PhonNamesInput")
 phonTypesInput = NodePath("Phonetics/PhoneticToggles/BasicsColor/BasicsHBox/PhonTypesInput")
 phonDiacriticCommandInput = NodePath("Phonetics/PhoneticToggles/BasicsColor/BasicsHBox/PhonDiacriticsInput")
-phonVowelGoalToggle = NodePath("ToneGoalBox/ToneGoalToggle")
+phonVowelGoalToggle = NodePath("VowelContainer/Vowel Selection/Vowel Selection2/VowelGoalToggle")
 phonVowelGoalXInput = NodePath("VowelContainer/Vowel Selection/VowelXInput")
 phonVowelGoalYInput = NodePath("VowelContainer/Vowel Selection/VowelYInput")
 phonVowelGoalPosition = NodePath("VowelContainer/Vowel Selection/VowelTexture/PositionBox/PositionCursor")
@@ -64,6 +64,7 @@ phonToneGoalToggle = NodePath("ToneGoalBox/ToneGoalToggle")
 phonToneGoalLabel = NodePath("ToneGoalBox/ToneDisplay")
 phonToneGoalInput = NodePath("ToneGoalBox/ToneSlider")
 itemQualityMultiInput = NodePath("ApItemInfo/ItemContainer/ItemQualityMultiInput")
+itemQualityFlagInputs = [NodePath("ApItemInfo/ItemContainer/ItemFlagsInput/FillerToggle"), NodePath("ApItemInfo/ItemContainer/ItemFlagsInput/ProgressionToggle"), NodePath("ApItemInfo/ItemContainer/ItemFlagsInput/UsefulToggle"), NodePath("ApItemInfo/ItemContainer/ItemFlagsInput/ProgusefulToggle"), NodePath("ApItemInfo/ItemContainer/ItemFlagsInput/TrapToggle")]
 itemSourcePrefInput = NodePath("ApItemInfo/ItemSourceInput")
 
 [node name="MainInfo" type="ColorRect" parent="."]
@@ -79,9 +80,10 @@ color = Color(1, 1, 1, 0.19607843)
 
 [node name="NameLabel" type="Label" parent="MainInfo"]
 layout_mode = 1
-offset_top = 32.0
-offset_right = 67.0
-offset_bottom = 72.0
+offset_left = 8.0
+offset_top = 40.0
+offset_right = 72.0
+offset_bottom = 88.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Name:"
 horizontal_alignment = 1
@@ -102,11 +104,12 @@ vertical_alignment = 1
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 67.0
-offset_top = 32.0
-offset_right = -48.0
-offset_bottom = 72.0
+offset_left = 80.0
+offset_top = 40.0
+offset_right = -56.0
+offset_bottom = 88.0
 grow_horizontal = 2
+theme_override_font_sizes/font_size = 23
 placeholder_text = "Color Name"
 alignment = 1
 
@@ -115,10 +118,10 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -40.0
-offset_top = 40.0
+offset_left = -48.0
+offset_top = 48.0
 offset_right = -8.0
-offset_bottom = 64.0
+offset_bottom = 80.0
 grow_horizontal = 0
 color = Color(1, 1, 1, 1)
 
@@ -127,7 +130,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 80.0
+offset_left = 8.0
+offset_top = 96.0
+offset_right = -8.0
+offset_bottom = -8.0
 grow_horizontal = 2
 grow_vertical = 2
 placeholder_text = "Description"
@@ -141,7 +147,7 @@ offset_left = 24.442001
 offset_top = -472.0
 offset_right = 208.0
 offset_bottom = -73.98401
-color = Color(1, 1, 1, 0.13725491)
+color = Color(0, 0, 0, 0.21568628)
 
 [node name="ItemSourceLabel" type="Label" parent="ApItemInfo"]
 custom_minimum_size = Vector2(0, 42)
@@ -178,7 +184,7 @@ popup/item_0/text = "None"
 popup/item_0/id = 0
 popup/item_1/text = "External"
 popup/item_1/id = 1
-popup/item_2/text = "Internal"
+popup/item_2/text = "Local"
 popup/item_2/id = 2
 
 [node name="ItemContainer" type="VBoxContainer" parent="ApItemInfo"]
@@ -219,17 +225,6 @@ script = ExtResource("3_b0dao")
 button_text = "Filler"
 metadata/_custom_type_script = "uid://bnsokjy5urgks"
 
-[node name="UsefulToggle" type="CheckBox" parent="ApItemInfo/ItemContainer/ItemFlagsInput"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 1
-alignment = 1
-clip_text = true
-script = ExtResource("3_b0dao")
-button_text = "Useful"
-metadata/_custom_type_script = "uid://bnsokjy5urgks"
-
 [node name="ProgressionToggle" type="CheckBox" parent="ApItemInfo/ItemContainer/ItemFlagsInput"]
 layout_mode = 2
 size_flags_vertical = 3
@@ -239,6 +234,17 @@ alignment = 1
 clip_text = true
 script = ExtResource("3_b0dao")
 button_text = "Progression"
+metadata/_custom_type_script = "uid://bnsokjy5urgks"
+
+[node name="UsefulToggle" type="CheckBox" parent="ApItemInfo/ItemContainer/ItemFlagsInput"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 1
+alignment = 1
+clip_text = true
+script = ExtResource("3_b0dao")
+button_text = "Useful"
 metadata/_custom_type_script = "uid://bnsokjy5urgks"
 
 [node name="ProgusefulToggle" type="CheckBox" parent="ApItemInfo/ItemContainer/ItemFlagsInput"]
@@ -1012,20 +1018,15 @@ color = Color(0, 0, 0, 0.47058824)
 
 [node name="VowelGoalToggle" type="CheckBox" parent="VowelContainer/Vowel Selection/Vowel Selection2"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 8.0
-offset_right = -8.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -76.0
+offset_right = 76.0
+offset_bottom = 43.0
 grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 1
-text = "Vowel Position"
+text = "Vowel Button"
 alignment = 1
-clip_text = true
-script = ExtResource("3_b0dao")
-button_text = "Vowel Goal"
-metadata/_custom_type_script = "uid://bnsokjy5urgks"
 
 [node name="VowelYInput" type="VSlider" parent="VowelContainer/Vowel Selection"]
 layout_mode = 1
@@ -1248,7 +1249,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 16.0
-offset_top = 48.0
+offset_top = 56.0
 offset_right = -10.495972
 offset_bottom = -14.0
 grow_horizontal = 2
@@ -1348,3 +1349,15 @@ use_native_dialog = true
 [connection signal="toggled" from="ToneGoalBox/ToneGoalToggle" to="." method="tone_toggled"]
 [connection signal="value_changed" from="ToneGoalBox/ToneSlider" to="." method="tone_value_changed"]
 [connection signal="pressed" from="LookupColors/Add" to="." method="add_pressed"]
+[connection signal="pressed" from="SavingBar/HGroupAlign/SaveEditor" to="SaveLoad/ResourceSave" method="show"]
+[connection signal="pressed" from="SavingBar/HGroupAlign/LoadEditor" to="SaveLoad/ResourceLoad" method="show"]
+[connection signal="pressed" from="SavingBar/HGroupAlign/SaveJson" to="SaveLoad/JsonSave" method="show"]
+[connection signal="pressed" from="SavingBar/HGroupAlign/LoadJson" to="SaveLoad/JsonLoad" method="show"]
+[connection signal="close_requested" from="SaveLoad/JsonSave" to="SaveLoad/JsonSave" method="hide"]
+[connection signal="file_selected" from="SaveLoad/JsonSave" to="." method="json_save"]
+[connection signal="close_requested" from="SaveLoad/JsonLoad" to="SaveLoad/JsonLoad" method="hide"]
+[connection signal="file_selected" from="SaveLoad/JsonLoad" to="." method="json_load"]
+[connection signal="close_requested" from="SaveLoad/ResourceSave" to="SaveLoad/ResourceSave" method="hide"]
+[connection signal="file_selected" from="SaveLoad/ResourceSave" to="." method="res_save"]
+[connection signal="close_requested" from="SaveLoad/ResourceLoad" to="SaveLoad/ResourceLoad" method="hide"]
+[connection signal="file_selected" from="SaveLoad/ResourceLoad" to="." method="res_load"]

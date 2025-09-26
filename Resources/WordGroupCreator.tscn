@@ -5,27 +5,27 @@
 [ext_resource type="Script" uid="uid://dn052w10ojsfu" path="res://Scripts/UI/UIWordGroupCreator.gd" id="2_utdho"]
 [ext_resource type="Texture2D" uid="uid://d3ckrrc5u438d" path="res://Sprites/Add.png" id="3_ldo4l"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ldo4l"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_utdho"]
 bg_color = Color(0.5, 0.5, 0.5, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_utdho"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o44ue"]
 bg_color = Color(0.7, 0.7, 0.7, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o44ue"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yt6qk"]
 bg_color = Color(0.85, 0.85, 0.85, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yt6qk"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g8y5w"]
 bg_color = Color(1, 1, 1, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g8y5w"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_16b4f"]
 bg_color = Color(0.8, 0.8, 0.8, 1)
 
 [sub_resource type="Theme" id="Theme_16b4f"]
-Button/styles/disabled = SubResource("StyleBoxFlat_ldo4l")
-Button/styles/focus = SubResource("StyleBoxFlat_utdho")
-Button/styles/hover = SubResource("StyleBoxFlat_o44ue")
-Button/styles/normal = SubResource("StyleBoxFlat_yt6qk")
-Button/styles/pressed = SubResource("StyleBoxFlat_g8y5w")
+Button/styles/disabled = SubResource("StyleBoxFlat_utdho")
+Button/styles/focus = SubResource("StyleBoxFlat_o44ue")
+Button/styles/hover = SubResource("StyleBoxFlat_yt6qk")
+Button/styles/normal = SubResource("StyleBoxFlat_g8y5w")
+Button/styles/pressed = SubResource("StyleBoxFlat_16b4f")
 
 [node name="WordGroupCreator" type="TextureRect" node_paths=PackedStringArray("nameInput", "scoreInput", "entryHolder", "editorSaveButton", "editorLoadButton")]
 anchors_preset = 15

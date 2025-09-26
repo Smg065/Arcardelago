@@ -16,3 +16,10 @@ func get_value() -> float:
 	if $POSToggle.button_pressed:
 		return $POSScore.value
 	return 0
+
+func set_enabled(newPressed : bool):
+	$POSToggle.button_pressed = newPressed
+	toggled(newPressed)
+
+func set_value(newVal : float):
+	$POSScore.value = newVal

@@ -1,0 +1,58 @@
+[gd_scene load_steps=4 format=3 uid="uid://b7l2qeboa8j3q"]
+
+[ext_resource type="PackedScene" uid="uid://cwtt7orxvibcr" path="res://Resources/SubEntry.tscn" id="1_gqxms"]
+[ext_resource type="Script" uid="uid://bjmlsswjcco4h" path="res://Scripts/UI/UIWordWeightEntry.gd" id="2_a0dpu"]
+[ext_resource type="Script" uid="uid://d11kfgsd6jgt" path="res://addons/AutoSizeText/ui/AutoSizeLabel.gd" id="3_m2qs5"]
+
+[node name="WordWeightEntry" instance=ExtResource("1_gqxms")]
+custom_minimum_size = Vector2(0, 64)
+script = ExtResource("2_a0dpu")
+
+[node name="WordEntry" type="LineEdit" parent="." index="0"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+placeholder_text = "Input Word"
+
+[node name="SliderControl" type="Control" parent="." index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="WeightSlider" type="HSlider" parent="SliderControl" index="0"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_bottom = 16.000015
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = -1.0
+max_value = 1.0
+step = 0.05
+tick_count = 9
+ticks_on_borders = true
+ticks_position = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="WeightDisplay" type="Label" parent="SliderControl" index="1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 18
+text = "0.00"
+horizontal_alignment = 1
+vertical_alignment = 2
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 3
+script = ExtResource("3_m2qs5")
+watch_text_change = true
+metadata/_custom_type_script = "uid://d11kfgsd6jgt"
+
+[connection signal="value_changed" from="SliderControl/WeightSlider" to="." method="weight_changed"]

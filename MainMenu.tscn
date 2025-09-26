@@ -1,0 +1,232 @@
+[gd_scene load_steps=7 format=3 uid="uid://cio43f3fgbytu"]
+
+[ext_resource type="Script" uid="uid://dtclpj6vku0um" path="res://Scripts/UI/MainMenu.gd" id="1_eiy7p"]
+[ext_resource type="Script" uid="uid://d11kfgsd6jgt" path="res://addons/AutoSizeText/ui/AutoSizeLabel.gd" id="1_i26rj"]
+[ext_resource type="PackedScene" uid="uid://bobesgom0g6b7" path="res://Test.tscn" id="2_h7a2f"]
+[ext_resource type="PackedScene" uid="uid://riptfjpym813" path="res://Resources/WordGroupCreator.tscn" id="4_qoqlk"]
+[ext_resource type="PackedScene" uid="uid://dyp5pgp8cr3j" path="res://Resources/ColorCatagoryCreator.tscn" id="5_7r1g0"]
+[ext_resource type="PackedScene" uid="uid://bmb3omoxm7f1c" path="res://Resources/SetEditor.tscn" id="6_cqjrg"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_eiy7p")
+playScene = ExtResource("2_h7a2f")
+
+[node name="Root" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="AutoSizeLabel" type="Label" parent="Root"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.395
+theme_override_font_sizes/font_size = 128
+text = "ARCARDELAGO"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 3
+script = ExtResource("1_i26rj")
+watch_text_change = true
+min_font_size = 34
+max_font_size = 128
+metadata/_custom_type_script = "uid://d11kfgsd6jgt"
+metadata/_edit_use_anchors_ = true
+
+[node name="MainButtons" type="VBoxContainer" parent="Root"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -42.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="PlayButton" type="Button" parent="Root/MainButtons"]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 32
+text = "Play"
+
+[node name="SettingsButton" type="Button" parent="Root/MainButtons"]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 32
+text = "Settings"
+
+[node name="YAMLButton" type="Button" parent="Root/MainButtons"]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 32
+text = "YAML Creator"
+
+[node name="EditorsButton" type="Button" parent="Root/MainButtons"]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 32
+text = "Editor Tools"
+
+[node name="QuitButton" type="Button" parent="Root/MainButtons"]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 32
+text = "Quit"
+
+[node name="Settings" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="SettingsButtons" type="VBoxContainer" parent="Settings"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -42.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="Fullscreen" type="Button" parent="Settings/SettingsButtons"]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 32
+text = "Fullscreen"
+
+[node name="Back" type="Button" parent="Settings/SettingsButtons"]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 32
+text = "Back"
+
+[node name="Editors" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="EditorButtons" type="VBoxContainer" parent="Editors"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -42.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="Set Creator" type="Button" parent="Editors/EditorButtons"]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 32
+text = "Set Creator"
+
+[node name="AWG Creator" type="Button" parent="Editors/EditorButtons"]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 32
+text = "AWG Creator"
+
+[node name="Custom Color" type="Button" parent="Editors/EditorButtons"]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 32
+text = "Custom Color"
+
+[node name="Back" type="Button" parent="Editors/EditorButtons"]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 32
+text = "Back"
+
+[node name="Node" type="Node" parent="."]
+
+[node name="AWC Window" type="Window" parent="Node"]
+oversampling_override = 1.0
+title = "Arbitrary Word Group Creator"
+initial_position = 4
+size = Vector2i(800, 256)
+visible = false
+force_native = true
+min_size = Vector2i(800, 256)
+
+[node name="WordGroupCreator" parent="Node/AWC Window" instance=ExtResource("4_qoqlk")]
+
+[node name="ColorCat Window" type="Window" parent="Node"]
+oversampling_override = 1.0
+initial_position = 4
+size = Vector2i(900, 650)
+visible = false
+min_size = Vector2i(900, 650)
+
+[node name="ColorCatEditor" parent="Node/ColorCat Window" instance=ExtResource("5_7r1g0")]
+
+[node name="Custom Set Window" type="Window" parent="Node"]
+process_mode = 4
+oversampling_override = 1.0
+initial_position = 4
+visible = false
+
+[node name="SetEditorBackdrop" parent="Node/Custom Set Window" instance=ExtResource("6_cqjrg")]
+
+[connection signal="pressed" from="Root/MainButtons/PlayButton" to="." method="play_pressed"]
+[connection signal="pressed" from="Root/MainButtons/SettingsButton" to="Root" method="hide"]
+[connection signal="pressed" from="Root/MainButtons/SettingsButton" to="Settings" method="show"]
+[connection signal="pressed" from="Root/MainButtons/YAMLButton" to="." method="yaml_button_pressed"]
+[connection signal="pressed" from="Root/MainButtons/EditorsButton" to="Root" method="hide"]
+[connection signal="pressed" from="Root/MainButtons/EditorsButton" to="Editors" method="show"]
+[connection signal="pressed" from="Root/MainButtons/QuitButton" to="." method="quit_pressed"]
+[connection signal="pressed" from="Settings/SettingsButtons/Fullscreen" to="." method="fullscreen_pressed"]
+[connection signal="pressed" from="Settings/SettingsButtons/Back" to="Root" method="show"]
+[connection signal="pressed" from="Settings/SettingsButtons/Back" to="Settings" method="hide"]
+[connection signal="pressed" from="Editors/EditorButtons/Set Creator" to="Node/Custom Set Window" method="show"]
+[connection signal="pressed" from="Editors/EditorButtons/AWG Creator" to="Node/AWC Window" method="show"]
+[connection signal="pressed" from="Editors/EditorButtons/Custom Color" to="Node/ColorCat Window" method="show"]
+[connection signal="pressed" from="Editors/EditorButtons/Back" to="Root" method="show"]
+[connection signal="pressed" from="Editors/EditorButtons/Back" to="Editors" method="hide"]
+[connection signal="close_requested" from="Node/AWC Window" to="Node/AWC Window" method="hide"]
+[connection signal="close_requested" from="Node/ColorCat Window" to="Node/ColorCat Window" method="hide"]
+[connection signal="close_requested" from="Node/Custom Set Window" to="Node/Custom Set Window" method="hide"]

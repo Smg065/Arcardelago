@@ -27,7 +27,7 @@ Button/styles/hover = SubResource("StyleBoxFlat_o44ue")
 Button/styles/normal = SubResource("StyleBoxFlat_yt6qk")
 Button/styles/pressed = SubResource("StyleBoxFlat_g8y5w")
 
-[node name="WordGroupCreator" type="TextureRect" node_paths=PackedStringArray("nameInput", "entryHolder", "editorSaveButton", "editorLoadButton")]
+[node name="WordGroupCreator" type="TextureRect" node_paths=PackedStringArray("nameInput", "scoreInput", "entryHolder", "editorSaveButton", "editorLoadButton")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -37,6 +37,7 @@ texture = ExtResource("1_ck1ld")
 stretch_mode = 1
 script = ExtResource("2_utdho")
 nameInput = NodePath("NameBackdrop/WordGroupInput")
+scoreInput = NodePath("SavingBar/SpinBox")
 wordEntryPrefab = ExtResource("2_srvvy")
 entryHolder = NodePath("ColorRect/EntryScroll/EntryList")
 editorSaveButton = NodePath("SavingBar/HGroupAlign/SaveEditor")
@@ -86,14 +87,15 @@ icon = ExtResource("3_ldo4l")
 
 [node name="NameBackdrop" type="ColorRect" parent="."]
 layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
+anchors_preset = -1
+anchor_right = 0.716
 offset_left = 16.0
 offset_top = 3.0
 offset_right = -16.0
 offset_bottom = 66.0
 grow_horizontal = 2
 color = Color(1, 1, 1, 0.63529414)
+metadata/_edit_use_anchors_ = true
 
 [node name="WordGroupInput" type="LineEdit" parent="NameBackdrop"]
 layout_mode = 1
@@ -111,14 +113,13 @@ placeholder_text = "Word Group Name"
 
 [node name="WordGroupLabel" type="Label" parent="NameBackdrop"]
 layout_mode = 1
-anchors_preset = 14
+anchors_preset = -1
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
 offset_top = -17.5
 offset_right = -532.0
 offset_bottom = 17.5
-grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Word Group Name: "
@@ -141,6 +142,7 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 158.0
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 2
@@ -166,6 +168,16 @@ text = "Save Json"
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 text = "Load Json"
+
+[node name="SpinBox" type="SpinBox" parent="SavingBar"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 158.0
+grow_vertical = 2
+max_value = 10.0
+value = 5.0
+prefix = "Base Score:"
 
 [node name="SaveLoad" type="Node" parent="."]
 

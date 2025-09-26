@@ -2,6 +2,7 @@ extends TextureRect
 class_name WordGroupCreatorUI
 
 @export var nameInput : LineEdit
+@export var scoreInput : SpinBox
 @export var wordEntryPrefab : PackedScene
 @export var customColors : Array[ColorCatagory]
 @export var entryHolder : VBoxContainer
@@ -51,6 +52,7 @@ func shift_entry(targetUi : ColorWeightEntryUI, moveDir : int):
 
 func from_arbitrary_word_group(awg : ArbitraryWordGroups):
 	nameInput.text = awg.name
+	scoreInput.value = awg.baseScore
 	for eachEntry in awg.table:
 		var entry := add_pressed(false)
 		entry.from_color_word_data(eachEntry, customColors)
@@ -59,6 +61,7 @@ func from_arbitrary_word_group(awg : ArbitraryWordGroups):
 func to_arbitrary_word_group() -> ArbitraryWordGroups:
 	var awg := ArbitraryWordGroups.new()
 	awg.name = nameInput.text
+	awg.baseScore = scoreInput.value
 	for eachEntry in entries:
 		awg.table.append(eachEntry.to_color_word_data())
 	return awg

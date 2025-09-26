@@ -114,7 +114,7 @@ func get_word_score(word : String) -> float:
 			score += colTags.weight * MULTI_COLOR
 	#Words that include similar tags
 	for awg in lookupTagsArbitraryWordGroups:
-		score += awg.color_score(name, word) * MULTI_NAMES
+		score += awg.color_score(name, word)
 	#Output the Score
 	return score
 
@@ -127,7 +127,7 @@ func get_words_score(words : String):
 			score += colTags.weight * MULTI_COLOR
 	#Words that include similar tags
 	for awg in lookupTagsArbitraryWordGroups:
-		score += awg.color_score(name, words, true) * MULTI_NAMES
+		score += awg.color_score(name, words, true)
 	#Output the Score
 	return score
 

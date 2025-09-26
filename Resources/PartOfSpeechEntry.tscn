@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://bojwhsv1iwy8"]
+
+[ext_resource type="Script" uid="uid://bnsokjy5urgks" path="res://addons/AutoSizeText/ui/AutoSizeCheckBox.gd" id="1_au7pt"]
+[ext_resource type="Script" uid="uid://dcf162pc62ox6" path="res://Scripts/UI/UIColorCreatorPartOfSpeechEntry.gd" id="1_p24o0"]
+
+[node name="PartOfSpeechEntry" type="Control"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+script = ExtResource("1_p24o0")
+
+[node name="POSToggle" type="CheckBox" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -112.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 1
+clip_text = true
+script = ExtResource("1_au7pt")
+button_text = "---------------------"
+metadata/_custom_type_script = "uid://bnsokjy5urgks"
+
+[node name="POSScore" type="SpinBox" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -96.0
+grow_horizontal = 0
+grow_vertical = 2
+min_value = 5.0
+step = 5.0
+value = 10.0
+rounded = true
+prefix = "Score:"
+
+[connection signal="toggled" from="POSToggle" to="." method="toggled"]

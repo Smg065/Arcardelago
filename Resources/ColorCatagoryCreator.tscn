@@ -1,8 +1,39 @@
-[gd_scene load_steps=2 format=3 uid="uid://dyp5pgp8cr3j"]
+[gd_scene load_steps=16 format=3 uid="uid://dyp5pgp8cr3j"]
 
 [ext_resource type="Texture2D" uid="uid://ghkuaeswxtix" path="res://Sprites/ColorGroupCreatorBackdrop.png" id="1_gofgl"]
+[ext_resource type="Script" uid="uid://oock1kyvrfik" path="res://Scripts/UI/UIColorCatagoryCreator.gd" id="2_h5tcc"]
+[ext_resource type="PackedScene" uid="uid://b7l2qeboa8j3q" path="res://Resources/WordWeightEntry.tscn" id="3_615oe"]
+[ext_resource type="Script" uid="uid://bnsokjy5urgks" path="res://addons/AutoSizeText/ui/AutoSizeCheckBox.gd" id="3_b0dao"]
+[ext_resource type="PackedScene" uid="uid://bojwhsv1iwy8" path="res://Resources/PartOfSpeechEntry.tscn" id="4_t4o8u"]
+[ext_resource type="Texture2D" uid="uid://w1i7kjxabd1y" path="res://Sprites/VowelOpenForward.png" id="5_gmupo"]
+[ext_resource type="Texture2D" uid="uid://cl1bq3dhh17fm" path="res://Sprites/MiniPip.png" id="6_gmupo"]
+[ext_resource type="Texture2D" uid="uid://d3ckrrc5u438d" path="res://Sprites/Add.png" id="7_vdkjx"]
 
-[node name="Control" type="TextureRect"]
+[sub_resource type="LabelSettings" id="LabelSettings_gmupo"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ldo4l"]
+bg_color = Color(0.5, 0.5, 0.5, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_utdho"]
+bg_color = Color(0.7, 0.7, 0.7, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o44ue"]
+bg_color = Color(0.85, 0.85, 0.85, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yt6qk"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g8y5w"]
+bg_color = Color(0.8, 0.8, 0.8, 1)
+
+[sub_resource type="Theme" id="Theme_615oe"]
+Button/styles/disabled = SubResource("StyleBoxFlat_ldo4l")
+Button/styles/focus = SubResource("StyleBoxFlat_utdho")
+Button/styles/hover = SubResource("StyleBoxFlat_o44ue")
+Button/styles/normal = SubResource("StyleBoxFlat_yt6qk")
+Button/styles/pressed = SubResource("StyleBoxFlat_g8y5w")
+
+[node name="ColorCatagoryCreator" type="TextureRect" node_paths=PackedStringArray("nameInput", "colorInput", "descriptionInput", "lookupTagsColorHolder", "lookupTagsPartsInput", "phonNameInput", "phonTypesInput", "phonDiacriticCommandInput", "phonVowelGoalToggle", "phonVowelGoalXInput", "phonVowelGoalYInput", "phonVowelGoalPosition", "phonVowelGoalLabel", "phonVowelRoundPrefInput", "phonConsonantSoundInput", "phonConsonantShapeInput", "phonConsonantVoicedInput", "phonToneGoalToggle", "phonToneGoalLabel", "phonToneGoalInput", "itemQualityMultiInput", "itemSourcePrefInput")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -10,3 +41,1310 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_gofgl")
 stretch_mode = 1
+script = ExtResource("2_h5tcc")
+wordWeightPrefab = ExtResource("3_615oe")
+nameInput = NodePath("MainInfo/NameInput")
+colorInput = NodePath("MainInfo/ColorInput")
+descriptionInput = NodePath("MainInfo/DescriptionInput")
+lookupTagsColorHolder = NodePath("LookupColors/ColorWeightScroll/ColorWeightEntries")
+lookupTagsPartsInput = [NodePath("PoS Info/PoS Scroll/PoS Container/PoS Adfix"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Adjective"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Adnoun"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Adverb"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Article"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Auxiliary Verb"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Cardinal Number"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Collective Numeral"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Conjunction"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Conjunctional Phrase"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Converb"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Coverb"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Demonstrative Determiner"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Demonstrative Pronoun"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Determinative"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Determiner"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Fractional Number"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Gerund"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Ideophone"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Indefinite Pronoun"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Infinitive"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Interjection"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Interjectional Phrase"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Interrogative Pronoun"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Intransitive Verb"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Multiplicative Number"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Multiplicative Numeral"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Noun"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Number"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Numeral"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Ordinal"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Ordinal Number"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Participle"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Particle"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Part Of Speech"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Personal Pronoun"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Phrasal Preposition"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Possessional Adjective"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Possessive Adjective"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Possessive Determiner"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Possessive Pronoun"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Postposition"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Predicative"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Preposition"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Preverb"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Privative Adjective"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Pronominal Phrase"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Pronoun"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Quasi-Adjective"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Reciprocal Pronoun"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Reflexive Pronoun"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Relative Adjective"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Relative Pronoun"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Shadow Pronoun"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Speech Disfluency"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Substantive"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Transitive"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Transitive Verb"), NodePath("PoS Info/PoS Scroll/PoS Container/PoS Verbal Noun")]
+phonNameInput = NodePath("Phonetics/PhoneticToggles/BasicsColor/BasicsHBox/PhonNamesInput")
+phonTypesInput = NodePath("Phonetics/PhoneticToggles/BasicsColor/BasicsHBox/PhonTypesInput")
+phonDiacriticCommandInput = NodePath("Phonetics/PhoneticToggles/BasicsColor/BasicsHBox/PhonDiacriticsInput")
+phonVowelGoalToggle = NodePath("ToneGoalBox/ToneGoalToggle")
+phonVowelGoalXInput = NodePath("VowelContainer/Vowel Selection/VowelXInput")
+phonVowelGoalYInput = NodePath("VowelContainer/Vowel Selection/VowelYInput")
+phonVowelGoalPosition = NodePath("VowelContainer/Vowel Selection/VowelTexture/PositionBox/PositionCursor")
+phonVowelGoalLabel = NodePath("VowelContainer/Vowel Selection/VowelTexture/PositionBox/PositionCursor/CursorTextBackdrop/VowelPosLabel")
+phonVowelRoundPrefInput = NodePath("Phonetics/PhoneticToggles/VowelsColor/VowelRoundnessInput")
+phonConsonantSoundInput = NodePath("Phonetics/PhoneticToggles/ConsonantsColor/ConsonantsHBox/PhonConSoundInput")
+phonConsonantShapeInput = NodePath("Phonetics/PhoneticToggles/ConsonantsColor/ConsonantsHBox/PhonConShapeInput")
+phonConsonantVoicedInput = NodePath("Phonetics/PhoneticToggles/ConsonantsColor/ConsonantsHBox/PhonConVoicedInput")
+phonToneGoalToggle = NodePath("ToneGoalBox/ToneGoalToggle")
+phonToneGoalLabel = NodePath("ToneGoalBox/ToneDisplay")
+phonToneGoalInput = NodePath("ToneGoalBox/ToneSlider")
+itemQualityMultiInput = NodePath("ApItemInfo/ItemContainer/ItemQualityMultiInput")
+itemSourcePrefInput = NodePath("ApItemInfo/ItemSourceInput")
+
+[node name="MainInfo" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 512.0
+offset_bottom = -488.0
+grow_vertical = 2
+color = Color(1, 1, 1, 0.19607843)
+
+[node name="NameLabel" type="Label" parent="MainInfo"]
+layout_mode = 1
+offset_top = 32.0
+offset_right = 67.0
+offset_bottom = 72.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Name:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BasicsLabel" type="Label" parent="MainInfo"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 35.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Basics"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NameInput" type="LineEdit" parent="MainInfo"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 67.0
+offset_top = 32.0
+offset_right = -48.0
+offset_bottom = 72.0
+grow_horizontal = 2
+placeholder_text = "Color Name"
+alignment = 1
+
+[node name="ColorInput" type="ColorPickerButton" parent="MainInfo"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_top = 40.0
+offset_right = -8.0
+offset_bottom = 64.0
+grow_horizontal = 0
+color = Color(1, 1, 1, 1)
+
+[node name="DescriptionInput" type="TextEdit" parent="MainInfo"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+placeholder_text = "Description"
+
+[node name="ApItemInfo" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 24.442001
+offset_top = -472.0
+offset_right = 208.0
+offset_bottom = -73.98401
+color = Color(1, 1, 1, 0.13725491)
+
+[node name="ItemSourceLabel" type="Label" parent="ApItemInfo"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -89.01599
+offset_bottom = -43.01599
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "Item Source"
+horizontal_alignment = 1
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="ItemSourceInput" type="OptionButton" parent="ApItemInfo"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -43.01599
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+selected = 0
+item_count = 3
+popup/item_0/text = "None"
+popup/item_0/id = 0
+popup/item_1/text = "External"
+popup/item_1/id = 1
+popup/item_2/text = "Internal"
+popup/item_2/id = 2
+
+[node name="ItemContainer" type="VBoxContainer" parent="ApItemInfo"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -89.01599
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ItemQualityFlags" type="Label" parent="ApItemInfo/ItemContainer"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "Quality Flags"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="ItemFlagsInput" type="VBoxContainer" parent="ApItemInfo/ItemContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="FillerToggle" type="CheckBox" parent="ApItemInfo/ItemContainer/ItemFlagsInput"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 1
+alignment = 1
+clip_text = true
+script = ExtResource("3_b0dao")
+button_text = "Filler"
+metadata/_custom_type_script = "uid://bnsokjy5urgks"
+
+[node name="UsefulToggle" type="CheckBox" parent="ApItemInfo/ItemContainer/ItemFlagsInput"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 1
+alignment = 1
+clip_text = true
+script = ExtResource("3_b0dao")
+button_text = "Useful"
+metadata/_custom_type_script = "uid://bnsokjy5urgks"
+
+[node name="ProgressionToggle" type="CheckBox" parent="ApItemInfo/ItemContainer/ItemFlagsInput"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 1
+alignment = 1
+clip_text = true
+script = ExtResource("3_b0dao")
+button_text = "Progression"
+metadata/_custom_type_script = "uid://bnsokjy5urgks"
+
+[node name="ProgusefulToggle" type="CheckBox" parent="ApItemInfo/ItemContainer/ItemFlagsInput"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 1
+alignment = 1
+clip_text = true
+script = ExtResource("3_b0dao")
+button_text = "Proguseful"
+metadata/_custom_type_script = "uid://bnsokjy5urgks"
+
+[node name="TrapToggle" type="CheckBox" parent="ApItemInfo/ItemContainer/ItemFlagsInput"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 1
+alignment = 1
+clip_text = true
+script = ExtResource("3_b0dao")
+button_text = "Trap"
+metadata/_custom_type_script = "uid://bnsokjy5urgks"
+
+[node name="ItemQualityMultiInput" type="SpinBox" parent="ApItemInfo/ItemContainer"]
+custom_minimum_size = Vector2(168, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+max_value = 5.0
+step = 0.01
+value = 1.0
+prefix = "Quality Multi"
+custom_arrow_step = 1.0
+
+[node name="PoS Info" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 224.0
+offset_top = -472.0
+offset_right = 512.0
+offset_bottom = -74.0
+grow_vertical = 0
+color = Color(0.15727392, 0.15727395, 0.15727395, 1)
+
+[node name="PoS Scroll" type="ScrollContainer" parent="PoS Info"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
+
+[node name="PoS Container" type="VBoxContainer" parent="PoS Info/PoS Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PoS Adfix" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Adfix"
+
+[node name="PoS Adjective" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Adjective"
+
+[node name="PoS Adnoun" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Adnoun"
+
+[node name="PoS Adverb" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Adverb"
+
+[node name="PoS Article" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Article"
+
+[node name="PoS Auxiliary Verb" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Auxiliary Verb"
+
+[node name="PoS Cardinal Number" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Cardinal Number"
+
+[node name="PoS Collective Numeral" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Collective Numeral"
+
+[node name="PoS Conjunction" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Conjunction"
+
+[node name="PoS Conjunctional Phrase" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Conjunctional Phrase"
+
+[node name="PoS Converb" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Converb"
+
+[node name="PoS Coverb" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Coverb"
+
+[node name="PoS Demonstrative Determiner" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Demonstrative Determiner"
+
+[node name="PoS Demonstrative Pronoun" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Demonstrative Pronoun"
+
+[node name="PoS Determinative" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Determinative"
+
+[node name="PoS Determiner" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Determiner"
+
+[node name="PoS Fractional Number" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Fractional Number"
+
+[node name="PoS Gerund" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Gerund"
+
+[node name="PoS Ideophone" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Ideophone"
+
+[node name="PoS Indefinite Pronoun" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Indefinite Pronoun"
+
+[node name="PoS Infinitive" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Infinitive"
+
+[node name="PoS Interjection" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Interjection"
+
+[node name="PoS Interjectional Phrase" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Interjectional Phrase"
+
+[node name="PoS Interrogative Pronoun" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Interrogative Pronoun"
+
+[node name="PoS Intransitive Verb" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Intransitive Verb"
+
+[node name="PoS Multiplicative Number" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Multiplicative Number"
+
+[node name="PoS Multiplicative Numeral" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Multiplicative Numeral"
+
+[node name="PoS Noun" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Noun"
+
+[node name="PoS Number" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Number"
+
+[node name="PoS Numeral" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Numeral"
+
+[node name="PoS Ordinal" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Ordinal"
+
+[node name="PoS Ordinal Number" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Ordinal Number"
+
+[node name="PoS Participle" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Participle"
+
+[node name="PoS Particle" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Particle"
+
+[node name="PoS Part Of Speech" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Part Of Speech"
+
+[node name="PoS Personal Pronoun" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Personal Pronoun"
+
+[node name="PoS Phrasal Preposition" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Phrasal Preposition"
+
+[node name="PoS Possessional Adjective" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Possessional Adjective"
+
+[node name="PoS Possessive Adjective" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Possessive Adjective"
+
+[node name="PoS Possessive Determiner" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Possessive Determiner"
+
+[node name="PoS Possessive Pronoun" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Possessive Pronoun"
+
+[node name="PoS Postposition" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Postposition"
+
+[node name="PoS Predicative" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Predicative"
+
+[node name="PoS Preposition" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Preposition"
+
+[node name="PoS Preverb" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Preverb"
+
+[node name="PoS Privative Adjective" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Privative Adjective"
+
+[node name="PoS Pronominal Phrase" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Pronominal Phrase"
+
+[node name="PoS Pronoun" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Pronoun"
+
+[node name="PoS Quasi-Adjective" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Quasi-Adjective"
+
+[node name="PoS Reciprocal Pronoun" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Reciprocal Pronoun"
+
+[node name="PoS Reflexive Pronoun" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Reflexive Pronoun"
+
+[node name="PoS Relative Adjective" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Relative Adjective"
+
+[node name="PoS Relative Pronoun" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Relative Pronoun"
+
+[node name="PoS Shadow Pronoun" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Shadow Pronoun"
+
+[node name="PoS Speech Disfluency" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Speech Disfluency"
+
+[node name="PoS Substantive" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Substantive"
+
+[node name="PoS Transitive" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Transitive"
+
+[node name="PoS Transitive Verb" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Transitive Verb"
+
+[node name="PoS Verbal Noun" parent="PoS Info/PoS Scroll/PoS Container" instance=ExtResource("4_t4o8u")]
+layout_mode = 2
+partName = "Verbal Noun"
+
+[node name="PoS Label" type="Label" parent="PoS Info"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 35.0
+grow_horizontal = 2
+text = "Parts of Speech Scores"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Phonetics" type="ColorRect" parent="."]
+layout_mode = 1
+offset_left = 528.0
+offset_top = 24.0
+offset_right = 784.0
+offset_bottom = 272.0
+color = Color(1, 1, 1, 0.49803922)
+
+[node name="PhoneticToggles" type="VBoxContainer" parent="Phonetics"]
+custom_minimum_size = Vector2(0, 78)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 35.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="BasicsColor" type="ColorRect" parent="Phonetics/PhoneticToggles"]
+custom_minimum_size = Vector2(248, 0)
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(0, 0, 0, 0.49803922)
+
+[node name="BasicsLabel" type="Label" parent="Phonetics/PhoneticToggles/BasicsColor"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 35.0
+grow_horizontal = 2
+text = "Basics"
+horizontal_alignment = 1
+
+[node name="BasicsHBox" type="HBoxContainer" parent="Phonetics/PhoneticToggles/BasicsColor"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -43.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="PhonNamesInput" type="MenuButton" parent="Phonetics/PhoneticToggles/BasicsColor/BasicsHBox"]
+layout_mode = 2
+text = "Names"
+
+[node name="PhonTypesInput" type="MenuButton" parent="Phonetics/PhoneticToggles/BasicsColor/BasicsHBox"]
+layout_mode = 2
+text = "Types"
+item_count = 24
+popup/item_0/text = "Pulmonic Consonant"
+popup/item_0/checkable = 1
+popup/item_0/id = 0
+popup/item_1/text = "Vowel"
+popup/item_1/checkable = 1
+popup/item_1/id = 1
+popup/item_2/text = "R Colored Vowel"
+popup/item_2/checkable = 1
+popup/item_2/id = 2
+popup/item_3/text = "Click"
+popup/item_3/checkable = 1
+popup/item_3/id = 3
+popup/item_4/text = "Voiced Implosive"
+popup/item_4/checkable = 1
+popup/item_4/id = 4
+popup/item_5/text = "Ejective"
+popup/item_5/checkable = 1
+popup/item_5/id = 5
+popup/item_6/text = "Coarticulated Consonant"
+popup/item_6/checkable = 1
+popup/item_6/id = 6
+popup/item_7/text = "Primary Stress"
+popup/item_7/checkable = 1
+popup/item_7/id = 7
+popup/item_8/text = "Secondary Stress"
+popup/item_8/checkable = 1
+popup/item_8/id = 8
+popup/item_9/text = "Long"
+popup/item_9/checkable = 1
+popup/item_9/id = 9
+popup/item_10/text = "Half Long"
+popup/item_10/checkable = 1
+popup/item_10/id = 10
+popup/item_11/text = "Extra Short"
+popup/item_11/checkable = 1
+popup/item_11/id = 11
+popup/item_12/text = "Syllable Break"
+popup/item_12/checkable = 1
+popup/item_12/id = 12
+popup/item_13/text = "Minor Group"
+popup/item_13/checkable = 1
+popup/item_13/id = 13
+popup/item_14/text = "Major Group"
+popup/item_14/checkable = 1
+popup/item_14/id = 14
+popup/item_15/text = "Linking"
+popup/item_15/checkable = 1
+popup/item_15/id = 15
+popup/item_16/text = "Tone"
+popup/item_16/checkable = 1
+popup/item_16/id = 16
+popup/item_17/text = "Upstep"
+popup/item_17/checkable = 1
+popup/item_17/id = 17
+popup/item_18/text = "Downstep"
+popup/item_18/checkable = 1
+popup/item_18/id = 18
+popup/item_19/text = "Bracket Start"
+popup/item_19/checkable = 1
+popup/item_19/id = 19
+popup/item_19/disabled = true
+popup/item_20/text = "Bracket End"
+popup/item_20/checkable = 1
+popup/item_20/id = 20
+popup/item_20/disabled = true
+popup/item_21/text = "Diacritic"
+popup/item_21/checkable = 1
+popup/item_21/id = 21
+popup/item_22/text = "Misc"
+popup/item_22/checkable = 1
+popup/item_22/id = 22
+popup/item_23/text = "Unknown"
+popup/item_23/checkable = 1
+popup/item_23/id = 23
+
+[node name="PhonDiacriticsInput" type="MenuButton" parent="Phonetics/PhoneticToggles/BasicsColor/BasicsHBox"]
+layout_mode = 2
+text = "Diacritics"
+item_count = 47
+popup/item_0/text = "Retracted tongue root"
+popup/item_0/checkable = 1
+popup/item_0/id = 0
+popup/item_1/text = "Advanced tongue root"
+popup/item_1/checkable = 1
+popup/item_1/id = 1
+popup/item_2/text = "Lowered"
+popup/item_2/checkable = 1
+popup/item_2/id = 2
+popup/item_3/text = "Raised"
+popup/item_3/checkable = 1
+popup/item_3/id = 3
+popup/item_4/text = "Velarized or pharyngealized"
+popup/item_4/checkable = 1
+popup/item_4/id = 4
+popup/item_5/text = "No audible release"
+popup/item_5/checkable = 1
+popup/item_5/id = 5
+popup/item_6/text = "Nasalized"
+popup/item_6/checkable = 1
+popup/item_6/id = 6
+popup/item_7/text = "Laminal"
+popup/item_7/checkable = 1
+popup/item_7/id = 7
+popup/item_8/text = "Linguolabial"
+popup/item_8/checkable = 1
+popup/item_8/id = 8
+popup/item_9/text = "Creaky voiced"
+popup/item_9/checkable = 1
+popup/item_9/id = 9
+popup/item_10/text = "Apical"
+popup/item_10/checkable = 1
+popup/item_10/id = 10
+popup/item_11/text = "Breathy voiced"
+popup/item_11/checkable = 1
+popup/item_11/id = 11
+popup/item_12/text = "Dental"
+popup/item_12/checkable = 1
+popup/item_12/id = 12
+popup/item_13/text = "Voiceless"
+popup/item_13/checkable = 1
+popup/item_13/id = 13
+popup/item_14/text = "Voiced"
+popup/item_14/checkable = 1
+popup/item_14/id = 14
+popup/item_15/text = "Aspirated"
+popup/item_15/checkable = 1
+popup/item_15/id = 15
+popup/item_16/text = "More rounded"
+popup/item_16/checkable = 1
+popup/item_16/id = 16
+popup/item_17/text = "Labialized"
+popup/item_17/checkable = 1
+popup/item_17/id = 17
+popup/item_18/text = "Less rounded"
+popup/item_18/checkable = 1
+popup/item_18/id = 18
+popup/item_19/text = "Palatalized"
+popup/item_19/checkable = 1
+popup/item_19/id = 19
+popup/item_20/text = "Nasal release"
+popup/item_20/checkable = 1
+popup/item_20/id = 20
+popup/item_21/text = "Advanced"
+popup/item_21/checkable = 1
+popup/item_21/id = 21
+popup/item_22/text = "Velarized"
+popup/item_22/checkable = 1
+popup/item_22/id = 22
+popup/item_23/text = "Lateral release"
+popup/item_23/checkable = 1
+popup/item_23/id = 23
+popup/item_24/text = "Retracted"
+popup/item_24/checkable = 1
+popup/item_24/id = 24
+popup/item_25/text = "Pharyngealized"
+popup/item_25/checkable = 1
+popup/item_25/id = 25
+popup/item_26/text = "Centralized"
+popup/item_26/checkable = 1
+popup/item_26/id = 26
+popup/item_27/text = "Mid-centralized"
+popup/item_27/checkable = 1
+popup/item_27/id = 27
+popup/item_28/text = "Syllabic"
+popup/item_28/checkable = 1
+popup/item_28/id = 28
+popup/item_29/text = "Non-syllabic"
+popup/item_29/checkable = 1
+popup/item_29/id = 29
+popup/item_30/text = "Rhoticity"
+popup/item_30/checkable = 1
+popup/item_30/id = 30
+popup/item_31/text = "Labial spreading"
+popup/item_31/checkable = 1
+popup/item_31/id = 31
+popup/item_32/text = "Strong articulation"
+popup/item_32/checkable = 1
+popup/item_32/id = 32
+popup/item_33/text = "Denasal"
+popup/item_33/checkable = 1
+popup/item_33/id = 33
+popup/item_34/text = "Dentolabial"
+popup/item_34/checkable = 1
+popup/item_34/id = 34
+popup/item_35/text = "Weak articulation"
+popup/item_35/checkable = 1
+popup/item_35/id = 35
+popup/item_36/text = "Nasal escape"
+popup/item_36/checkable = 1
+popup/item_36/id = 36
+popup/item_37/text = "Interdental/Bidental"
+popup/item_37/checkable = 1
+popup/item_37/id = 37
+popup/item_38/text = "Reiterated articulation"
+popup/item_38/checkable = 1
+popup/item_38/id = 38
+popup/item_39/text = "Velopharyngeal friction"
+popup/item_39/checkable = 1
+popup/item_39/id = 39
+popup/item_40/text = "Alveolar"
+popup/item_40/checkable = 1
+popup/item_40/id = 40
+popup/item_41/text = "Whistled articulation"
+popup/item_41/checkable = 1
+popup/item_41/id = 41
+popup/item_42/text = "Ingressive airflow"
+popup/item_42/checkable = 1
+popup/item_42/id = 42
+popup/item_43/text = "Linguolabial"
+popup/item_43/checkable = 1
+popup/item_43/id = 43
+popup/item_44/text = "Sliding articulation"
+popup/item_44/checkable = 1
+popup/item_44/id = 44
+popup/item_45/text = "Egressive airflow"
+popup/item_45/checkable = 1
+popup/item_45/id = 45
+popup/item_46/text = "Combining diaeresis"
+popup/item_46/checkable = 1
+popup/item_46/id = 46
+
+[node name="VowelsColor" type="ColorRect" parent="Phonetics/PhoneticToggles"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(0, 0, 0, 0.49803922)
+
+[node name="VowelRoundnessInput" type="MenuButton" parent="Phonetics/PhoneticToggles/VowelsColor"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -43.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Rounded"
+item_count = 2
+popup/item_0/text = "Yes"
+popup/item_0/checkable = 1
+popup/item_0/id = 0
+popup/item_1/text = "No"
+popup/item_1/checkable = 1
+popup/item_1/id = 1
+
+[node name="BasicsLabel" type="Label" parent="Phonetics/PhoneticToggles/VowelsColor"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 35.0
+grow_horizontal = 2
+text = "Vowels"
+horizontal_alignment = 1
+
+[node name="ConsonantsColor" type="ColorRect" parent="Phonetics/PhoneticToggles"]
+custom_minimum_size = Vector2(224, 0)
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(0, 0, 0, 0.49803922)
+
+[node name="ConsonantsHBox" type="HBoxContainer" parent="Phonetics/PhoneticToggles/ConsonantsColor"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -43.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="PhonConSoundInput" type="MenuButton" parent="Phonetics/PhoneticToggles/ConsonantsColor/ConsonantsHBox"]
+layout_mode = 2
+text = "Sounds"
+item_count = 10
+popup/item_0/text = "Plosive"
+popup/item_0/checkable = 1
+popup/item_0/id = 0
+popup/item_1/text = "Nasal"
+popup/item_1/checkable = 1
+popup/item_1/id = 1
+popup/item_2/text = "Trill"
+popup/item_2/checkable = 1
+popup/item_2/id = 2
+popup/item_3/text = "Tap Flap"
+popup/item_3/checkable = 1
+popup/item_3/id = 3
+popup/item_4/text = "Lateral Tap Flap"
+popup/item_4/checkable = 1
+popup/item_4/id = 4
+popup/item_5/text = "Fricative"
+popup/item_5/checkable = 1
+popup/item_5/id = 5
+popup/item_6/text = "Fricative Sibilant"
+popup/item_6/checkable = 1
+popup/item_6/id = 6
+popup/item_7/text = "Approximant"
+popup/item_7/checkable = 1
+popup/item_7/id = 7
+popup/item_8/text = "Lateral Fricative"
+popup/item_8/checkable = 1
+popup/item_8/id = 8
+popup/item_9/text = "Lateral Approximant"
+popup/item_9/checkable = 1
+popup/item_9/id = 9
+
+[node name="PhonConShapeInput" type="MenuButton" parent="Phonetics/PhoneticToggles/ConsonantsColor/ConsonantsHBox"]
+layout_mode = 2
+text = "Shape"
+item_count = 15
+popup/item_0/text = "Bilabial"
+popup/item_0/checkable = 1
+popup/item_0/id = 0
+popup/item_1/text = "Labiodental"
+popup/item_1/checkable = 1
+popup/item_1/id = 1
+popup/item_2/text = "Linguolabial"
+popup/item_2/checkable = 1
+popup/item_2/id = 2
+popup/item_3/text = "Dental"
+popup/item_3/checkable = 1
+popup/item_3/id = 3
+popup/item_4/text = "Alveolar"
+popup/item_4/checkable = 1
+popup/item_4/id = 4
+popup/item_5/text = "Postalveolar"
+popup/item_5/checkable = 1
+popup/item_5/id = 5
+popup/item_6/text = "Retroflex"
+popup/item_6/checkable = 1
+popup/item_6/id = 6
+popup/item_7/text = "Palatal"
+popup/item_7/checkable = 1
+popup/item_7/id = 7
+popup/item_8/text = "Velar"
+popup/item_8/checkable = 1
+popup/item_8/id = 8
+popup/item_9/text = "Uvular"
+popup/item_9/checkable = 1
+popup/item_9/id = 9
+popup/item_10/text = "Pharyngeal / Epigolottal"
+popup/item_10/checkable = 1
+popup/item_10/id = 10
+popup/item_11/text = "Glottal"
+popup/item_11/checkable = 1
+popup/item_11/id = 11
+popup/item_12/text = "Lateral"
+popup/item_12/checkable = 1
+popup/item_12/id = 12
+popup/item_13/text = "Labial"
+popup/item_13/checkable = 1
+popup/item_13/id = 13
+popup/item_14/text = "Null"
+popup/item_14/checkable = 1
+popup/item_14/id = 14
+
+[node name="PhonConVoicedInput" type="MenuButton" parent="Phonetics/PhoneticToggles/ConsonantsColor/ConsonantsHBox"]
+layout_mode = 2
+text = "Voiced"
+item_count = 3
+popup/item_0/text = "Null"
+popup/item_0/checkable = 1
+popup/item_0/id = 0
+popup/item_1/text = "Unvoiced"
+popup/item_1/checkable = 1
+popup/item_1/id = 1
+popup/item_2/text = "Voiced"
+popup/item_2/checkable = 1
+popup/item_2/id = 2
+
+[node name="BasicsLabel" type="Label" parent="Phonetics/PhoneticToggles/ConsonantsColor"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 35.0
+grow_horizontal = 2
+text = "Consonants"
+horizontal_alignment = 1
+
+[node name="PhoneticLabel" type="Label" parent="Phonetics"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 35.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Phonetics"
+horizontal_alignment = 1
+
+[node name="VowelContainer" type="AspectRatioContainer" parent="."]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 528.0
+offset_top = 336.0
+offset_right = 784.0
+offset_bottom = -200.0
+grow_vertical = 2
+ratio = 1.3333
+
+[node name="Vowel Selection" type="ColorRect" parent="VowelContainer"]
+layout_mode = 2
+color = Color(0, 0, 0, 0.47058824)
+
+[node name="Vowel Selection2" type="ColorRect" parent="VowelContainer/Vowel Selection"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -48.0
+grow_horizontal = 2
+color = Color(0, 0, 0, 0.47058824)
+
+[node name="VowelGoalToggle" type="CheckBox" parent="VowelContainer/Vowel Selection/Vowel Selection2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_right = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 1
+text = "Vowel Position"
+alignment = 1
+clip_text = true
+script = ExtResource("3_b0dao")
+button_text = "Vowel Goal"
+metadata/_custom_type_script = "uid://bnsokjy5urgks"
+
+[node name="VowelYInput" type="VSlider" parent="VowelContainer/Vowel Selection"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_top = 6.0
+offset_right = 16.0
+offset_bottom = -21.0
+grow_vertical = 2
+min_value = -1.0
+max_value = 1.0
+step = 0.01
+editable = false
+tick_count = 5
+ticks_on_borders = true
+
+[node name="VowelXInput" type="HSlider" parent="VowelContainer/Vowel Selection"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 28.664795
+offset_top = -16.0
+offset_right = -12.664795
+grow_horizontal = 2
+grow_vertical = 0
+min_value = -1.0
+max_value = 1.0
+step = 0.01
+editable = false
+tick_count = 5
+ticks_on_borders = true
+ticks_position = 1
+
+[node name="VowelTexture" type="ColorRect" parent="VowelContainer/Vowel Selection"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VowelTexture2" type="TextureRect" parent="VowelContainer/Vowel Selection/VowelTexture"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_gmupo")
+expand_mode = 1
+
+[node name="PositionBox" type="Control" parent="VowelContainer/Vowel Selection/VowelTexture"]
+layout_mode = 1
+anchor_left = 0.06532704
+anchor_top = 0.0625
+anchor_right = 0.917627
+anchor_bottom = 0.95
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="PositionCursor" type="TextureRect" parent="VowelContainer/Vowel Selection/VowelTexture/PositionBox"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(8, 8)
+texture = ExtResource("6_gmupo")
+expand_mode = 1
+
+[node name="CursorTextBackdrop" type="ColorRect" parent="VowelContainer/Vowel Selection/VowelTexture/PositionBox/PositionCursor"]
+custom_minimum_size = Vector2(64, 16)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = -32.0
+offset_right = 48.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.627451)
+
+[node name="VowelPosLabel" type="Label" parent="VowelContainer/Vowel Selection/VowelTexture/PositionBox/PositionCursor/CursorTextBackdrop"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "-0.00, -0.00"
+label_settings = SubResource("LabelSettings_gmupo")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ToneGoalBox" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 528.0
+offset_top = -184.0
+offset_right = 784.0
+offset_bottom = -72.0
+grow_vertical = 0
+color = Color(1, 1, 1, 0.3137255)
+
+[node name="ToneGoalToggle" type="CheckBox" parent="ToneGoalBox"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -63.5
+offset_right = 63.5
+offset_bottom = 48.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0.13077193, 0.13077214, 0.1307725, 1)
+theme_override_colors/font_pressed_color = Color(0.024029793, 0.024029795, 0.024029793, 1)
+theme_override_colors/font_hover_color = Color(0.1788095, 0.17880964, 0.17881015, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.14767182, 0.14767179, 0.14767179, 1)
+text = " Tone Goal"
+alignment = 1
+
+[node name="ToneSlider" type="HSlider" parent="ToneGoalBox"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = -24.0
+offset_right = -8.0
+grow_horizontal = 2
+grow_vertical = 0
+min_value = -1.0
+max_value = 1.0
+step = 0.05
+editable = false
+tick_count = 9
+ticks_on_borders = true
+ticks_position = 1
+
+[node name="ToneNumbers" type="Label" parent="ToneGoalBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 48.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.20990813, 0.20990813, 0.2099081, 1)
+text = " -1                                          1"
+
+[node name="ToneDisplay" type="Label" parent="ToneGoalBox"]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = 48.0
+offset_right = 20.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "0.00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LookupColors" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.012
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 800.0
+offset_top = 16.223999
+offset_right = -21.504028
+offset_bottom = -74.0
+color = Color(0, 0, 0, 0.5019608)
+
+[node name="ColorSynonymLabel" type="Label" parent="LookupColors"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 16.0
+offset_right = -58.49597
+offset_bottom = 48.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 24
+text = "Color Entry Weights"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ColorWeightScroll" type="ScrollContainer" parent="LookupColors"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 48.0
+offset_right = -10.495972
+offset_bottom = -14.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorWeightEntries" type="VBoxContainer" parent="LookupColors/ColorWeightScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Add" type="Button" parent="LookupColors"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -58.49597
+offset_right = -10.495972
+offset_bottom = 48.0
+grow_horizontal = 0
+tooltip_text = "Add Woed"
+theme = SubResource("Theme_615oe")
+icon = ExtResource("7_vdkjx")
+icon_alignment = 1
+
+[node name="SavingBar" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -66.0
+offset_right = -16.0
+offset_bottom = -3.0
+grow_horizontal = 2
+color = Color(0, 0, 0, 0.63529414)
+
+[node name="HGroupAlign" type="HBoxContainer" parent="SavingBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 2
+
+[node name="SaveEditor" type="Button" parent="SavingBar/HGroupAlign"]
+visible = false
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Save Resource"
+
+[node name="LoadEditor" type="Button" parent="SavingBar/HGroupAlign"]
+visible = false
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Load Resource"
+
+[node name="SaveJson" type="Button" parent="SavingBar/HGroupAlign"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Save Json"
+
+[node name="LoadJson" type="Button" parent="SavingBar/HGroupAlign"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Load Json"
+
+[node name="SaveLoad" type="Node" parent="."]
+
+[node name="JsonSave" type="FileDialog" parent="SaveLoad"]
+access = 2
+filters = PackedStringArray("*.json")
+use_native_dialog = true
+
+[node name="JsonLoad" type="FileDialog" parent="SaveLoad"]
+title = "Open a File"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.json")
+use_native_dialog = true
+
+[node name="ResourceSave" type="FileDialog" parent="SaveLoad"]
+access = 2
+filters = PackedStringArray("*.tres")
+use_native_dialog = true
+
+[node name="ResourceLoad" type="FileDialog" parent="SaveLoad"]
+title = "Open a File"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.tres")
+use_native_dialog = true
+
+[connection signal="toggled" from="VowelContainer/Vowel Selection/Vowel Selection2/VowelGoalToggle" to="." method="vowel_goal_toggled"]
+[connection signal="value_changed" from="VowelContainer/Vowel Selection/VowelYInput" to="." method="vowel_y_changed"]
+[connection signal="value_changed" from="VowelContainer/Vowel Selection/VowelXInput" to="." method="vowel_x_changed"]
+[connection signal="toggled" from="ToneGoalBox/ToneGoalToggle" to="." method="tone_toggled"]
+[connection signal="value_changed" from="ToneGoalBox/ToneSlider" to="." method="tone_value_changed"]
+[connection signal="pressed" from="LookupColors/Add" to="." method="add_pressed"]

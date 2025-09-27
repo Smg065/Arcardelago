@@ -9,6 +9,7 @@ var apItemFlags : int
 var enemyCard : bool
 var fadeAngle : float
 var isLocal : bool
+var debugColorScores : Dictionary[ColorCatagory.ColorTypes, float]
 
 @export_flags("Red", "Green", "Violet", "Orange", "Blue", "Yellow") var colors : int = 0
 
@@ -107,9 +108,11 @@ func unique_parts_of_speech():
 func calculate_color() -> int:
 	var colorScore : Dictionary[ColorCatagory.ColorTypes, float] = {}
 	for baseColor in ColorCatagory.BASE_COLORS:
-		#Oh sweet lordy
+		#Create the default entry
 		var colorType : ColorCatagory.ColorTypes = baseColor.colorType
 		colorScore[colorType] = 0
+		#Get the Set's Values
+		colorScore[colorType] += gameCardset.colorScore[colorType]
 		#Source Pref Flags
 		match baseColor.itemSourcePref:
 			ColorCatagory.SourcePref.LOCAL:
@@ -125,5 +128,41 @@ func calculate_color() -> int:
 		for eachFlag in nameData.nameFlags:
 			colorScore[colorType] += eachFlag.get_score(baseColor)
 	
-	print(nameData.name + "," + ",".join(colorScore.values()))
-	return randi_range(0, 63)
+	debugColorScores = colorScore
+	
+	return scores_to_color(colorScore)
+
+static func scores_to_color(colorScore, multi : float = 1) -> int:
+	var useColors : Array[ColorCatagory.ColorTypes] = []
+	var highestRunnerUp : float = 0
+	var runnerUpsForUse : Array[ColorCatagory.ColorTypes] = []
+	for eachColor in colorScore:
+		if colorScore[eachColor] >= 100 * multi:
+			useColors.append(eachColor)
+		elif colorScore[eachColor] >= 50 * multi:
+			#Append Ties
+			if is_equal_approx(highestRunnerUp, colorScore[eachColor]):
+				runnerUpsForUse.append(eachColor)
+			#Overwrite Best Color Score
+			elif highestRunnerUp < colorScore[eachColor]:
+				highestRunnerUp = colorScore[eachColor]
+				runnerUpsForUse.clear()
+				runnerUpsForUse.append(eachColor)
+	useColors.append_array(runnerUpsForUse)
+	#Get the color type flags
+	var outColor : int = 0
+	for eachEntry in useColors:
+		match eachEntry:
+			ColorCatagory.RED:
+				outColor += 1
+			ColorCatagory.GREEN:
+				outColor += 2
+			ColorCatagory.VIOLET:
+				outColor += 4
+			ColorCatagory.ORANGE:
+				outColor += 8
+			ColorCatagory.BLUE:
+				outColor += 16
+			ColorCatagory.YELLOW:
+				outColor += 32
+	return outColor

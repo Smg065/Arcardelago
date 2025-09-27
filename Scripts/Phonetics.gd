@@ -204,7 +204,7 @@ class PhoneticFlag:
 			PhoneticType.MISC:
 				color = "BLACK"
 			PhoneticType.UNKNOWN:
-				print(name)
+				print("Unknown Symbol: " + name)
 				color = "MAGENTA"
 		var appliedText : String = name
 		appliedText += "x" + str(count)

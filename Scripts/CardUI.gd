@@ -9,6 +9,7 @@ class_name CardUI
 @export var uiCardGameLabel : AutoSizeRichTextLabel
 @export var uiCardBackColor : ColorSpectrumRect
 @export var uiCardPipColor : ColorPipDisplay
+@export var uiCardSetPipColor : ColorPipDisplay
 @export var playerPip : Texture2D
 @export var enemyPip : Texture2D
 @export var bossPip : Texture2D
@@ -19,6 +20,8 @@ func build(nCardData : CardData):
 	cardData = nCardData
 	uiCardBackColor.colors = cardData.colors
 	uiCardPipColor.colors = cardData.colors
+	uiCardSetPipColor.colors = cardData.gameCardset.setColor
+	uiCardSetPipColor.build(playerPip)
 	uiCardBackColor.build(cardData.fadeAngle)
 	if cardData.enemyCard:
 		if cardData.apItemFlags == 3:

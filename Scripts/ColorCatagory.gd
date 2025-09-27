@@ -27,6 +27,12 @@ const ORANGE = ColorTypes.ORANGE
 const BLUE = ColorTypes.BLUE
 const YELLOW = ColorTypes.YELLOW
 enum SourcePref {NULL, LOCAL, EXTERNAL}
+
+##Base Arbitrary Word Flags give a x5 point multi. They're static
+static var BASE_ARBITRARY_WORD_GROUPS : Array[ArbitraryWordGroups] = [
+	load("res://Resources/DefaultWordGroups/Base.tres") as ArbitraryWordGroups,
+]
+
 @export var name : String
 @export var colorType : ColorTypes
 @export_color_no_alpha var color : Color
@@ -37,7 +43,7 @@ const MULTI_COLOR = 10 ##100 if Card Name, 50 Synonym, -50 Antonym
 const MULTI_NAMES = 5 ##50 if Card Name, 25 Synonym, -25 Antonym
 const MULTI_PHONETIC = 1 ##Phonetics are high in count
 #External Score Multipliers
-const MULTI_SOURCE = 25 ##Local/Non Local
+const MULTI_SOURCE = 15 ##Local/Non Local
 const MULTI_ITEM_FLAGS = 25 ##Filler/Useful/Trap/Progression/Proguseful
 const MULTI_CARD_NAME = 10 ##100 if Color and 50 if Typing
 const MULTI_SYNONYMS = 5 ##50 if Color and 25 if Typing
@@ -59,8 +65,6 @@ const MULTI_PHSCR_TONE_GOAL = 5
 @export_group("Word Tags", "lookupTags")
 ##Words that are similar colors give a x10 point multi
 @export var lookupTagsColor : Array[WordWeight]
-##Arbitrary Word Flags give a x5 point multi
-@export var lookupTagsArbitraryWordGroups : Array[ArbitraryWordGroups]
 ##Parts of Speech are worth fixed points
 @export var lookupTagsParts : Dictionary[String, float]
 @export_group("Phonetic Tags", "phon")
@@ -84,7 +88,7 @@ const MULTI_PHSCR_TONE_GOAL = 5
 @export var phonToneGoal : PackedFloat32Array
 
 @export_group("AP Data", "item")
-@export var itemQualityMulti = 1
+@export var itemQualityMulti = 1.0
 @export_flags("Progression", "Useful", "Trap") var itemQualityFlags : PackedInt32Array
 @export var itemSourcePref : SourcePref
 
@@ -113,7 +117,7 @@ func get_word_score(word : String) -> float:
 		if colTags.word.to_lower() == word.to_lower():
 			score += colTags.weight * MULTI_COLOR
 	#Words that include similar tags
-	for awg in lookupTagsArbitraryWordGroups:
+	for awg in BASE_ARBITRARY_WORD_GROUPS:
 		score += awg.color_score(name, word)
 	#Output the Score
 	return score
@@ -126,7 +130,7 @@ func get_words_score(words : String):
 		if words.containsn(colTags.word):
 			score += colTags.weight * MULTI_COLOR
 	#Words that include similar tags
-	for awg in lookupTagsArbitraryWordGroups:
+	for awg in BASE_ARBITRARY_WORD_GROUPS:
 		score += awg.color_score(name, words, true)
 	#Output the Score
 	return score
@@ -206,3 +210,78 @@ func get_phonetic_score(phonetic : Phonetics.PhoneticFlag) -> float:
 			#Apply it to the score
 			score += bestGoal * MULTI_PHSCR_TONE_GOAL
 	return score
+
+func save_json() -> Dictionary:
+	var saveData : Dictionary = {
+		"name" : name,
+		"colorType" : int(colorType),
+		"color" : color,
+		"description" : description,
+		"lookupTagsParts" : lookupTagsParts,
+		"phonName" : phonName,
+		"phonDiacriticCommand" : phonDiacriticCommand,
+		"phonToneGoal" : phonToneGoal,
+		"itemQualityMulti" : itemQualityMulti,
+		"itemQualityFlags" : itemQualityFlags,
+		"itemSourcePref" : int(itemSourcePref),
+		"lookupTagsColor" : [],
+		"phonTypes" : [],
+		"phonVowelRoundPref" : phonVowelRoundPref,
+		"phonConsonantSound" : [],
+		"phonConsonantShape" : [],
+		"phonConsonantVoiced" : [],
+		"phonVowelGoal" : []
+	}
+	for eachEntry in phonVowelGoal:
+		saveData["phonVowelGoal"].append({
+			"x" : eachEntry.x,
+			"y" : eachEntry.y
+		})
+	#Word Weights
+	for eachLookup in lookupTagsColor:
+		saveData["lookupTagsColor"].append(eachLookup.save_json())
+	#Enums
+	for eachEnum in phonTypes:
+		saveData["phonTypes"].append(int(eachEnum))
+	for eachEnum in phonConsonantSound:
+		saveData["phonConsonantSound"].append(int(eachEnum))
+	for eachEnum in phonConsonantShape:
+		saveData["phonConsonantShape"].append(int(eachEnum))
+	for eachEnum in phonConsonantVoiced:
+		saveData["phonConsonantVoiced"].append(int(eachEnum))
+	
+	return saveData
+
+static func load_json(saveData : Dictionary) -> ColorCatagory:
+	var cc := ColorCatagory.new()
+	cc.name = saveData["name"]
+	cc.colorType = saveData["colorType"]
+	var colSplit = saveData["color"].trim_prefix("(").trim_suffix(")").split(",")
+	cc.color = Color(float(colSplit[0]),float(colSplit[1]),float(colSplit[2]),1)
+	cc.description = saveData["description"]
+	cc.lookupTagsParts.assign(saveData["lookupTagsParts"])
+	cc.phonName = saveData["phonName"]
+	cc.phonDiacriticCommand = saveData["phonDiacriticCommand"]
+	for eachVector in saveData["phonVowelGoal"]:
+		cc.phonVowelGoal.append(Vector2(eachVector["x"], eachVector["y"]))
+	cc.phonToneGoal.append_array(saveData["phonToneGoal"])
+	cc.itemQualityMulti = saveData["itemQualityMulti"]
+	cc.itemQualityFlags = saveData["itemQualityFlags"]
+	cc.itemSourcePref = saveData["itemSourcePref"]
+	cc.phonVowelRoundPref.append_array(saveData["phonVowelRoundPref"])
+	#Word Weights
+	for eachLookup in saveData["lookupTagsColor"]:
+		var wordWeight := WordWeight.new()
+		wordWeight.load_json(eachLookup)
+		cc.lookupTagsColor.append(wordWeight)
+	#Enums
+	for eachEnum in saveData["phonTypes"]:
+		cc.phonTypes.append(int(eachEnum))
+	for eachEnum in saveData["phonConsonantSound"]:
+		cc.phonConsonantSound.append(int(eachEnum))
+	for eachEnum in saveData["phonConsonantShape"]:
+		cc.phonConsonantShape.append(int(eachEnum))
+	for eachEnum in saveData["phonConsonantVoiced"]:
+		cc.phonConsonantVoiced.append(int(eachEnum))
+	
+	return cc

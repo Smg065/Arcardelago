@@ -1,0 +1,499 @@
+[gd_resource type="Resource" script_class="ArbitraryWordGroups" load_steps=102 format=3]
+
+[ext_resource type="Script" path="res://Scripts/ArbitraryWordGroups.gd" id="1_py3ud"]
+[ext_resource type="Script" path="res://Scripts/ColorWordData.gd" id="2_hrlhe"]
+[ext_resource type="Script" path="res://Scripts/ColorWeight.gd" id="3_h4nki"]
+
+[sub_resource type="Resource" id="Resource_py3ud"]
+script = ExtResource("3_h4nki")
+weight = 1.0
+baseColors = Array[int]([0])
+
+[sub_resource type="Resource" id="Resource_hrlhe"]
+script = ExtResource("2_hrlhe")
+word = "Trap"
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_py3ud")])
+
+[sub_resource type="Resource" id="Resource_h4nki"]
+script = ExtResource("3_h4nki")
+weight = 1.0
+baseColors = Array[int]([0])
+
+[sub_resource type="Resource" id="Resource_6peuo"]
+script = ExtResource("2_hrlhe")
+word = "Danger"
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_h4nki")])
+
+[sub_resource type="Resource" id="Resource_k5v0t"]
+script = ExtResource("3_h4nki")
+weight = 1.0
+baseColors = Array[int]([0, 1])
+
+[sub_resource type="Resource" id="Resource_21iwx"]
+script = ExtResource("3_h4nki")
+weight = -0.25
+baseColors = Array[int]([5])
+
+[sub_resource type="Resource" id="Resource_hbtpa"]
+script = ExtResource("2_hrlhe")
+word = "Steal"
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_k5v0t"), SubResource("Resource_21iwx")])
+
+[sub_resource type="Resource" id="Resource_7phty"]
+script = ExtResource("3_h4nki")
+weight = 0.75
+baseColors = Array[int]([1, 5])
+
+[sub_resource type="Resource" id="Resource_ohqh5"]
+script = ExtResource("2_hrlhe")
+word = "Give"
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_7phty")])
+
+[sub_resource type="Resource" id="Resource_yg1iv"]
+script = ExtResource("3_h4nki")
+weight = 1.0
+baseColors = Array[int]([3])
+
+[sub_resource type="Resource" id="Resource_8ohvg"]
+script = ExtResource("3_h4nki")
+weight = -0.5
+baseColors = Array[int]([4])
+
+[sub_resource type="Resource" id="Resource_os5ml"]
+script = ExtResource("2_hrlhe")
+word = "Power"
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_yg1iv"), SubResource("Resource_8ohvg")])
+
+[sub_resource type="Resource" id="Resource_wfohu"]
+script = ExtResource("3_h4nki")
+weight = 0.5
+baseColors = Array[int]([2, 3])
+
+[sub_resource type="Resource" id="Resource_6e5gl"]
+script = ExtResource("3_h4nki")
+weight = 1.0
+baseColors = Array[int]([4])
+
+[sub_resource type="Resource" id="Resource_evkk2"]
+script = ExtResource("3_h4nki")
+weight = -1.0
+baseColors = Array[int]([0])
+
+[sub_resource type="Resource" id="Resource_s628s"]
+script = ExtResource("2_hrlhe")
+word = "Useful"
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_wfohu"), SubResource("Resource_6e5gl"), SubResource("Resource_evkk2")])
+
+[sub_resource type="Resource" id="Resource_r32nq"]
+script = ExtResource("3_h4nki")
+weight = 1.0
+baseColors = Array[int]([2, 3])
+
+[sub_resource type="Resource" id="Resource_7186y"]
+script = ExtResource("3_h4nki")
+weight = -1.0
+baseColors = Array[int]([4])
+
+[sub_resource type="Resource" id="Resource_7xoo2"]
+script = ExtResource("3_h4nki")
+weight = -1.0
+baseColors = Array[int]([0])
+
+[sub_resource type="Resource" id="Resource_2t845"]
+script = ExtResource("2_hrlhe")
+word = "Progress"
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_r32nq"), SubResource("Resource_7186y"), SubResource("Resource_7xoo2")])
+
+[sub_resource type="Resource" id="Resource_u7iob"]
+script = ExtResource("3_h4nki")
+weight = 1.0
+baseColors = Array[int]([0, 1, 5])
+
+[sub_resource type="Resource" id="Resource_qac52"]
+script = ExtResource("3_h4nki")
+weight = -1.0
+baseColors = Array[int]([2, 3, 4])
+
+[sub_resource type="Resource" id="Resource_ymnha"]
+script = ExtResource("2_hrlhe")
+word = "Lose"
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_u7iob"), SubResource("Resource_qac52")])
+
+[sub_resource type="Resource" id="Resource_xxrui"]
+script = ExtResource("3_h4nki")
+weight = 0.95
+baseColors = Array[int]([1, 4, 5])
+
+[sub_resource type="Resource" id="Resource_1lylw"]
+script = ExtResource("3_h4nki")
+weight = -1.0
+baseColors = Array[int]([0, 3])
+
+[sub_resource type="Resource" id="Resource_up0e4"]
+script = ExtResource("3_h4nki")
+weight = 0.5
+baseColors = Array[int]([2])
+
+[sub_resource type="Resource" id="Resource_hsdqd"]
+script = ExtResource("2_hrlhe")
+word = "Burger"
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_xxrui"), SubResource("Resource_1lylw"), SubResource("Resource_up0e4")])
+
+[sub_resource type="Resource" id="Resource_n26ug"]
+script = ExtResource("3_h4nki")
+weight = 1.0
+baseColors = Array[int]([0, 2])
+
+[sub_resource type="Resource" id="Resource_qgbqe"]
+script = ExtResource("3_h4nki")
+weight = -0.75
+baseColors = Array[int]([5])
+
+[sub_resource type="Resource" id="Resource_ijcu2"]
+script = ExtResource("2_hrlhe")
+word = "Mine"
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_n26ug"), SubResource("Resource_qgbqe")])
+
+[sub_resource type="Resource" id="Resource_finoq"]
+script = ExtResource("3_h4nki")
+weight = 1.0
+baseColors = Array[int]([0, 1, 2, 3, 4, 5])
+
+[sub_resource type="Resource" id="Resource_lh4wg"]
+script = ExtResource("2_hrlhe")
+word = "Archipelago"
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_finoq")])
+
+[sub_resource type="Resource" id="Resource_pn6la"]
+script = ExtResource("3_h4nki")
+weight = 1.0
+baseColors = Array[int]([1, 5])
+
+[sub_resource type="Resource" id="Resource_6hg0f"]
+script = ExtResource("3_h4nki")
+weight = -1.0
+baseColors = Array[int]([0, 2, 4])
+
+[sub_resource type="Resource" id="Resource_0gws5"]
+script = ExtResource("2_hrlhe")
+word = "Stuck"
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_pn6la"), SubResource("Resource_6hg0f")])
+
+[sub_resource type="Resource" id="Resource_07038"]
+script = ExtResource("3_h4nki")
+weight = 1.0
+baseColors = Array[int]([1])
+
+[sub_resource type="Resource" id="Resource_e8ls8"]
+script = ExtResource("2_hrlhe")
+word = "Explore"
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_07038")])
+
+[sub_resource type="Resource" id="Resource_rb4b4"]
+script = ExtResource("3_h4nki")
+weight = 1.0
+baseColors = Array[int]([0, 1])
+
+[sub_resource type="Resource" id="Resource_cowor"]
+script = ExtResource("2_hrlhe")
+word = "Obstacle"
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_rb4b4")])
+
+[sub_resource type="Resource" id="Resource_bn0ye"]
+script = ExtResource("3_h4nki")
+weight = 1.0
+baseColors = Array[int]([5])
+
+[sub_resource type="Resource" id="Resource_pefso"]
+script = ExtResource("3_h4nki")
+weight = -1.0
+baseColors = Array[int]([2])
+
+[sub_resource type="Resource" id="Resource_04luh"]
+script = ExtResource("2_hrlhe")
+word = "Team"
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_bn0ye"), SubResource("Resource_pefso")])
+
+[sub_resource type="Resource" id="Resource_cfkdq"]
+script = ExtResource("3_h4nki")
+weight = 1.0
+baseColors = Array[int]([0, 3])
+
+[sub_resource type="Resource" id="Resource_737nw"]
+script = ExtResource("2_hrlhe")
+word = "Chance"
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_cfkdq")])
+
+[sub_resource type="Resource" id="Resource_ni6el"]
+script = ExtResource("3_h4nki")
+weight = 1.0
+baseColors = Array[int]([0, 3])
+
+[sub_resource type="Resource" id="Resource_jwkpk"]
+script = ExtResource("3_h4nki")
+weight = -1.0
+baseColors = Array[int]([4])
+
+[sub_resource type="Resource" id="Resource_l732k"]
+script = ExtResource("2_hrlhe")
+word = "Extreme"
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_ni6el"), SubResource("Resource_jwkpk")])
+
+[sub_resource type="Resource" id="Resource_n06d4"]
+script = ExtResource("3_h4nki")
+weight = 1.0
+baseColors = Array[int]([4])
+
+[sub_resource type="Resource" id="Resource_ml844"]
+script = ExtResource("2_hrlhe")
+word = "Mild"
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_n06d4")])
+
+[sub_resource type="Resource" id="Resource_pq4ex"]
+script = ExtResource("3_h4nki")
+weight = 1.0
+baseColors = Array[int]([1, 5])
+
+[sub_resource type="Resource" id="Resource_xfl6s"]
+script = ExtResource("3_h4nki")
+weight = -1.0
+baseColors = Array[int]([2, 4])
+
+[sub_resource type="Resource" id="Resource_0lc4d"]
+script = ExtResource("2_hrlhe")
+word = "Release"
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_pq4ex"), SubResource("Resource_xfl6s")])
+
+[sub_resource type="Resource" id="Resource_ekih6"]
+script = ExtResource("3_h4nki")
+weight = 1.0
+baseColors = Array[int]([1, 5])
+
+[sub_resource type="Resource" id="Resource_xefw3"]
+script = ExtResource("3_h4nki")
+weight = -1.0
+baseColors = Array[int]([0])
+
+[sub_resource type="Resource" id="Resource_nqvry"]
+script = ExtResource("2_hrlhe")
+word = "Found"
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_ekih6"), SubResource("Resource_xefw3")])
+
+[sub_resource type="Resource" id="Resource_7eylm"]
+script = ExtResource("3_h4nki")
+weight = 1.0
+baseColors = Array[int]([1, 5])
+
+[sub_resource type="Resource" id="Resource_loyi2"]
+script = ExtResource("3_h4nki")
+weight = -1.0
+baseColors = Array[int]([0, 2])
+
+[sub_resource type="Resource" id="Resource_yl0f5"]
+script = ExtResource("2_hrlhe")
+word = "Gift"
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_7eylm"), SubResource("Resource_loyi2")])
+
+[sub_resource type="Resource" id="Resource_7oqh3"]
+script = ExtResource("3_h4nki")
+weight = 1.0
+baseColors = Array[int]([1, 3])
+
+[sub_resource type="Resource" id="Resource_1525e"]
+script = ExtResource("3_h4nki")
+weight = -0.75
+baseColors = Array[int]([4])
+
+[sub_resource type="Resource" id="Resource_a2rd5"]
+script = ExtResource("2_hrlhe")
+word = "Few"
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_7oqh3"), SubResource("Resource_1525e")])
+
+[sub_resource type="Resource" id="Resource_pafbo"]
+script = ExtResource("3_h4nki")
+weight = 1.0
+baseColors = Array[int]([4])
+
+[sub_resource type="Resource" id="Resource_rih1i"]
+script = ExtResource("3_h4nki")
+weight = -0.8
+baseColors = Array[int]([1, 3])
+
+[sub_resource type="Resource" id="Resource_il514"]
+script = ExtResource("2_hrlhe")
+word = "Many"
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_pafbo"), SubResource("Resource_rih1i")])
+
+[sub_resource type="Resource" id="Resource_5b71j"]
+script = ExtResource("3_h4nki")
+weight = 1.0
+baseColors = Array[int]([5])
+
+[sub_resource type="Resource" id="Resource_kev58"]
+script = ExtResource("3_h4nki")
+weight = -0.5
+baseColors = Array[int]([2])
+
+[sub_resource type="Resource" id="Resource_hxgpx"]
+script = ExtResource("2_hrlhe")
+word = "Friend"
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_5b71j"), SubResource("Resource_kev58")])
+
+[sub_resource type="Resource" id="Resource_ujq5t"]
+script = ExtResource("3_h4nki")
+weight = 1.0
+baseColors = Array[int]([1, 5])
+
+[sub_resource type="Resource" id="Resource_st3f3"]
+script = ExtResource("3_h4nki")
+weight = -0.55
+
+[sub_resource type="Resource" id="Resource_761g8"]
+script = ExtResource("2_hrlhe")
+word = "Ghost"
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_ujq5t"), SubResource("Resource_st3f3")])
+
+[sub_resource type="Resource" id="Resource_4kmeo"]
+script = ExtResource("3_h4nki")
+weight = 1.0
+baseColors = Array[int]([4])
+
+[sub_resource type="Resource" id="Resource_q2gwv"]
+script = ExtResource("3_h4nki")
+weight = -1.0
+baseColors = Array[int]([3])
+
+[sub_resource type="Resource" id="Resource_wej0w"]
+script = ExtResource("2_hrlhe")
+word = "Small"
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_4kmeo"), SubResource("Resource_q2gwv")])
+
+[sub_resource type="Resource" id="Resource_spnmf"]
+script = ExtResource("3_h4nki")
+weight = 1.0
+baseColors = Array[int]([3])
+
+[sub_resource type="Resource" id="Resource_7abue"]
+script = ExtResource("3_h4nki")
+weight = -1.0
+baseColors = Array[int]([4])
+
+[sub_resource type="Resource" id="Resource_ycuql"]
+script = ExtResource("2_hrlhe")
+word = "Large"
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_spnmf"), SubResource("Resource_7abue")])
+
+[sub_resource type="Resource" id="Resource_o7jru"]
+script = ExtResource("3_h4nki")
+weight = 1.0
+baseColors = Array[int]([3])
+
+[sub_resource type="Resource" id="Resource_1gnhy"]
+script = ExtResource("2_hrlhe")
+word = "Sphere"
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_o7jru")])
+
+[sub_resource type="Resource" id="Resource_kk8jg"]
+script = ExtResource("3_h4nki")
+weight = 0.95
+baseColors = Array[int]([3])
+
+[sub_resource type="Resource" id="Resource_wb7i4"]
+script = ExtResource("3_h4nki")
+weight = -1.0
+baseColors = Array[int]([4])
+
+[sub_resource type="Resource" id="Resource_yjgma"]
+script = ExtResource("2_hrlhe")
+word = "Rare"
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_kk8jg"), SubResource("Resource_wb7i4")])
+
+[sub_resource type="Resource" id="Resource_0ohdd"]
+script = ExtResource("3_h4nki")
+weight = 1.0
+baseColors = Array[int]([5])
+
+[sub_resource type="Resource" id="Resource_hd55m"]
+script = ExtResource("2_hrlhe")
+word = "Recive"
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_0ohdd")])
+
+[sub_resource type="Resource" id="Resource_327o5"]
+script = ExtResource("3_h4nki")
+weight = 1.0
+baseColors = Array[int]([5])
+
+[sub_resource type="Resource" id="Resource_u4ep4"]
+script = ExtResource("3_h4nki")
+weight = 0.5
+baseColors = Array[int]([3])
+
+[sub_resource type="Resource" id="Resource_nl3s1"]
+script = ExtResource("2_hrlhe")
+word = "Money"
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_327o5"), SubResource("Resource_u4ep4")])
+
+[sub_resource type="Resource" id="Resource_dsxhl"]
+script = ExtResource("3_h4nki")
+weight = 1.0
+baseColors = Array[int]([4, 5])
+
+[sub_resource type="Resource" id="Resource_ginr7"]
+script = ExtResource("3_h4nki")
+weight = -0.5
+baseColors = Array[int]([2])
+
+[sub_resource type="Resource" id="Resource_msx0j"]
+script = ExtResource("2_hrlhe")
+word = "Together"
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_dsxhl"), SubResource("Resource_ginr7")])
+
+[sub_resource type="Resource" id="Resource_j7411"]
+script = ExtResource("3_h4nki")
+weight = 1.0
+baseColors = Array[int]([0])
+
+[sub_resource type="Resource" id="Resource_mik5s"]
+script = ExtResource("3_h4nki")
+weight = -1.0
+baseColors = Array[int]([5])
+
+[sub_resource type="Resource" id="Resource_ub5dc"]
+script = ExtResource("2_hrlhe")
+word = "Avoid"
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_j7411"), SubResource("Resource_mik5s")])
+
+[sub_resource type="Resource" id="Resource_tyvf3"]
+script = ExtResource("3_h4nki")
+weight = 0.5
+baseColors = Array[int]([0, 5])
+
+[sub_resource type="Resource" id="Resource_1cv1q"]
+script = ExtResource("2_hrlhe")
+word = "Wait"
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_tyvf3")])
+
+[sub_resource type="Resource" id="Resource_qurkm"]
+script = ExtResource("3_h4nki")
+weight = 0.75
+baseColors = Array[int]([2])
+
+[sub_resource type="Resource" id="Resource_757cd"]
+script = ExtResource("3_h4nki")
+weight = 0.5
+baseColors = Array[int]([3])
+
+[sub_resource type="Resource" id="Resource_h52pl"]
+script = ExtResource("3_h4nki")
+weight = -1.0
+baseColors = Array[int]([4])
+
+[sub_resource type="Resource" id="Resource_ni2mw"]
+script = ExtResource("2_hrlhe")
+word = "Key"
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_qurkm"), SubResource("Resource_757cd"), SubResource("Resource_h52pl")])
+
+[resource]
+script = ExtResource("1_py3ud")
+name = "Base"
+table = Array[ExtResource("2_hrlhe")]([SubResource("Resource_hrlhe"), SubResource("Resource_6peuo"), SubResource("Resource_hbtpa"), SubResource("Resource_ohqh5"), SubResource("Resource_os5ml"), SubResource("Resource_s628s"), SubResource("Resource_2t845"), SubResource("Resource_ymnha"), SubResource("Resource_hsdqd"), SubResource("Resource_ijcu2"), SubResource("Resource_lh4wg"), SubResource("Resource_0gws5"), SubResource("Resource_e8ls8"), SubResource("Resource_cowor"), SubResource("Resource_04luh"), SubResource("Resource_737nw"), SubResource("Resource_l732k"), SubResource("Resource_ml844"), SubResource("Resource_0lc4d"), SubResource("Resource_nqvry"), SubResource("Resource_yl0f5"), SubResource("Resource_a2rd5"), SubResource("Resource_il514"), SubResource("Resource_hxgpx"), SubResource("Resource_761g8"), SubResource("Resource_wej0w"), SubResource("Resource_ycuql"), SubResource("Resource_1gnhy"), SubResource("Resource_yjgma"), SubResource("Resource_hd55m"), SubResource("Resource_nl3s1"), SubResource("Resource_msx0j"), SubResource("Resource_ub5dc"), SubResource("Resource_1cv1q"), SubResource("Resource_ni2mw")])

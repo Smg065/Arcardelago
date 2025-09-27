@@ -19,7 +19,7 @@ colors = PackedColorArray(0, 0, 0, 1)
 gradient = SubResource("Gradient_2n3nw")
 fill_to = Vector2(1, 1)
 
-[node name="CardAspectMaintainer" type="AspectRatioContainer" node_paths=PackedStringArray("uiCardNameLabel", "uiCardItemFlagLabel", "uiCardWordTypesLabel", "uiCardPhoneticsLabel", "uiCardGameLabel", "uiCardBackColor", "uiCardPipColor")]
+[node name="CardAspectMaintainer" type="AspectRatioContainer" node_paths=PackedStringArray("uiCardNameLabel", "uiCardItemFlagLabel", "uiCardWordTypesLabel", "uiCardPhoneticsLabel", "uiCardGameLabel", "uiCardBackColor", "uiCardPipColor", "uiCardSetPipColor")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -34,6 +34,7 @@ uiCardPhoneticsLabel = NodePath("CardContainer/PhoneticScroll")
 uiCardGameLabel = NodePath("CardContainer/GameName")
 uiCardBackColor = NodePath("CardContainer/CardBack/ColorSpectrum")
 uiCardPipColor = NodePath("CardContainer/ColorPipDisplay")
+uiCardSetPipColor = NodePath("CardContainer/SetPipDisplay")
 playerPip = ExtResource("2_xvg67")
 enemyPip = ExtResource("3_ny8h8")
 bossPip = ExtResource("4_dgc14")
@@ -48,7 +49,13 @@ anchor_left = 0.059994444
 anchor_top = 0.04
 anchor_right = 0.20666298
 anchor_bottom = 0.14999999
-colors = 3
+
+[node name="SetPipDisplay" parent="CardContainer" instance=ExtResource("3_jqbn0")]
+layout_mode = 1
+anchor_left = 0.08612057
+anchor_top = 0.90123457
+anchor_right = 0.15510048
+anchor_bottom = 0.9506173
 
 [node name="CardBack" type="TextureRect" parent="CardContainer"]
 clip_children = 1
@@ -117,11 +124,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/normal_font_size = 22
-theme_override_font_sizes/bold_font_size = 22
-theme_override_font_sizes/bold_italics_font_size = 22
-theme_override_font_sizes/italics_font_size = 22
-theme_override_font_sizes/mono_font_size = 22
+theme_override_font_sizes/normal_font_size = 36
+theme_override_font_sizes/bold_font_size = 36
+theme_override_font_sizes/bold_italics_font_size = 36
+theme_override_font_sizes/italics_font_size = 36
+theme_override_font_sizes/mono_font_size = 36
 bbcode_enabled = true
 text = "[bgcolor=BLACK][center]CARD_NAME_HERE"
 script = ExtResource("6_2n3nw")
@@ -138,11 +145,11 @@ anchor_right = 0.33286074
 anchor_bottom = 0.2375
 size_flags_horizontal = 3
 size_flags_vertical = 4
-theme_override_font_sizes/normal_font_size = 14
-theme_override_font_sizes/bold_font_size = 14
-theme_override_font_sizes/bold_italics_font_size = 14
-theme_override_font_sizes/italics_font_size = 14
-theme_override_font_sizes/mono_font_size = 14
+theme_override_font_sizes/normal_font_size = 24
+theme_override_font_sizes/bold_font_size = 24
+theme_override_font_sizes/bold_italics_font_size = 24
+theme_override_font_sizes/italics_font_size = 24
+theme_override_font_sizes/mono_font_size = 24
 bbcode_enabled = true
 text = "[bgcolor=BLACK]ITEM_TYPE"
 script = ExtResource("6_2n3nw")
@@ -177,13 +184,13 @@ anchor_top = 0.81
 anchor_right = 0.95048195
 anchor_bottom = 0.89
 grow_horizontal = 2
-theme_override_font_sizes/normal_font_size = 23
-theme_override_font_sizes/bold_font_size = 23
-theme_override_font_sizes/bold_italics_font_size = 23
-theme_override_font_sizes/italics_font_size = 23
-theme_override_font_sizes/mono_font_size = 23
+theme_override_font_sizes/normal_font_size = 36
+theme_override_font_sizes/bold_font_size = 36
+theme_override_font_sizes/bold_italics_font_size = 36
+theme_override_font_sizes/italics_font_size = 36
+theme_override_font_sizes/mono_font_size = 36
 bbcode_enabled = true
-text = "[color=black]JAMES"
+text = "[color=black]ERR PHONETIC RENDER"
 script = ExtResource("6_2n3nw")
 watch_text_change = true
 metadata/_custom_type_script = "uid://leehmvr1x5lu"
@@ -192,19 +199,19 @@ metadata/_edit_use_anchors_ = true
 [node name="GameName" type="RichTextLabel" parent="CardContainer"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.04951812
-anchor_top = 0.9
-anchor_right = 0.95048195
-anchor_bottom = 0.9575
+anchor_left = 0.17234543
+anchor_top = 0.90000004
+anchor_right = 0.89663446
+anchor_bottom = 0.9574999
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_font_sizes/normal_font_size = 16
-theme_override_font_sizes/bold_font_size = 16
-theme_override_font_sizes/bold_italics_font_size = 16
-theme_override_font_sizes/italics_font_size = 16
-theme_override_font_sizes/mono_font_size = 16
+theme_override_font_sizes/normal_font_size = 22
+theme_override_font_sizes/bold_font_size = 22
+theme_override_font_sizes/bold_italics_font_size = 22
+theme_override_font_sizes/italics_font_size = 22
+theme_override_font_sizes/mono_font_size = 22
 bbcode_enabled = true
-text = "[bgcolor=BLACK][left]Banjo-Tooie (Smg065)"
+text = "[bgcolor=BLACK][left]ERR_GAME_NAME_AND_PLAYER"
 script = ExtResource("6_2n3nw")
 watch_text_change = true
 metadata/_custom_type_script = "uid://leehmvr1x5lu"

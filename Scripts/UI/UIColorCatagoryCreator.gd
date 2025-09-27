@@ -279,8 +279,7 @@ func json_load(path: String) -> void:
 	remove_entries()
 	var saveFile := FileAccess.open(path, FileAccess.READ)
 	var saveData = JSON.parse_string(saveFile.get_as_text())
-	var cc := ColorCatagory.new()
-	cc.load_json(saveData)
+	var cc := ColorCatagory.load_json(saveData)
 	from_color_catagory(cc)
 	saveFile.close()
 

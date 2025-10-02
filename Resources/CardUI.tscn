@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dk6dmv5557rf6"]
+[gd_scene load_steps=16 format=3 uid="uid://dk6dmv5557rf6"]
 
 [ext_resource type="Script" uid="uid://kmrp78w2pwog" path="res://Scripts/CardUI.gd" id="1_xvg67"]
 [ext_resource type="Texture2D" uid="uid://dqag26jiqd610" path="res://Sprites/Card.png" id="2_2be0t"]
@@ -10,6 +10,9 @@
 [ext_resource type="Texture2D" uid="uid://b8ihd5q3rb3dc" path="res://Sprites/BossPip.png" id="4_dgc14"]
 [ext_resource type="Script" uid="uid://leehmvr1x5lu" path="res://addons/AutoSizeText/ui/AutoSizeRichTextLabel.gd" id="6_2n3nw"]
 [ext_resource type="Script" uid="uid://c2oydyjvp4cw6" path="res://Scripts/ColorSpectrumRect.gd" id="6_5f00q"]
+[ext_resource type="Texture2D" uid="uid://d251snkuc658e" path="res://Sprites/DamagePanel.png" id="11_njo2f"]
+[ext_resource type="Script" uid="uid://d11kfgsd6jgt" path="res://addons/AutoSizeText/ui/AutoSizeLabel.gd" id="12_m8awi"]
+[ext_resource type="Texture2D" uid="uid://dx80tqmn85b78" path="res://Sprites/HeartPanel.png" id="13_pos1q"]
 
 [sub_resource type="Gradient" id="Gradient_2n3nw"]
 offsets = PackedFloat32Array(0)
@@ -19,7 +22,7 @@ colors = PackedColorArray(0, 0, 0, 1)
 gradient = SubResource("Gradient_2n3nw")
 fill_to = Vector2(1, 1)
 
-[node name="CardAspectMaintainer" type="AspectRatioContainer" node_paths=PackedStringArray("uiCardNameLabel", "uiCardItemFlagLabel", "uiCardWordTypesLabel", "uiCardPhoneticsLabel", "uiCardGameLabel", "uiCardBackColor", "uiCardPipColor", "uiCardSetPipColor")]
+[node name="CardAspectMaintainer" type="AspectRatioContainer" node_paths=PackedStringArray("uiCardNameLabel", "uiCardItemFlagLabel", "uiCardWordTypesLabel", "uiCardPhoneticsLabel", "uiCardGameLabel", "uiCardBackColor", "uiCardPipColor", "uiCardSetPipColor", "uiCardBandColor", "uiCardHealth", "uiCardDamage")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -27,14 +30,17 @@ grow_horizontal = 2
 grow_vertical = 2
 ratio = 0.7159
 script = ExtResource("1_xvg67")
-uiCardNameLabel = NodePath("CardContainer/CardNameContainer/CardName")
-uiCardItemFlagLabel = NodePath("CardContainer/APItemType")
-uiCardWordTypesLabel = NodePath("CardContainer/WordTypes")
-uiCardPhoneticsLabel = NodePath("CardContainer/PhoneticScroll")
-uiCardGameLabel = NodePath("CardContainer/GameName")
+uiCardNameLabel = NodePath("CardContainer/CardText/CardName")
+uiCardItemFlagLabel = NodePath("CardContainer/CardText/APItemType")
+uiCardWordTypesLabel = NodePath("CardContainer/CardText/WordTypes")
+uiCardPhoneticsLabel = NodePath("CardContainer/CardText/PhoneticScroll")
+uiCardGameLabel = NodePath("CardContainer/CardText/GameName")
 uiCardBackColor = NodePath("CardContainer/CardBack/ColorSpectrum")
 uiCardPipColor = NodePath("CardContainer/ColorPipDisplay")
 uiCardSetPipColor = NodePath("CardContainer/SetPipDisplay")
+uiCardBandColor = NodePath("CardContainer/CardBack/SetColor")
+uiCardHealth = NodePath("CardContainer/HealthIcon/HealthText")
+uiCardDamage = NodePath("CardContainer/DamageIcon/DamageText")
 playerPip = ExtResource("2_xvg67")
 enemyPip = ExtResource("3_ny8h8")
 bossPip = ExtResource("4_dgc14")
@@ -52,9 +58,9 @@ anchor_bottom = 0.14999999
 
 [node name="SetPipDisplay" parent="CardContainer" instance=ExtResource("3_jqbn0")]
 layout_mode = 1
-anchor_left = 0.08612057
-anchor_top = 0.90123457
-anchor_right = 0.15510048
+anchor_left = 0.20683539
+anchor_top = 0.8765432
+anchor_right = 0.31030524
 anchor_bottom = 0.9506173
 
 [node name="CardBack" type="TextureRect" parent="CardContainer"]
@@ -100,28 +106,39 @@ metadata/_edit_use_anchors_ = true
 [node name="ColorSpectrum" type="TextureRect" parent="CardContainer/CardBack"]
 modulate = Color(1, 1, 1, 0.27450982)
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("GradientTexture2D_5f00q")
 script = ExtResource("6_5f00q")
-
-[node name="CardNameContainer" type="Control" parent="CardContainer"]
-clip_children = 1
-layout_mode = 1
-anchor_left = 0.22412352
-anchor_top = 0.0425
-anchor_right = 0.91905296
-anchor_bottom = 0.14750001
 metadata/_edit_use_anchors_ = true
 
-[node name="CardName" type="RichTextLabel" parent="CardContainer/CardNameContainer"]
+[node name="SetColor" type="ColorRect" parent="CardContainer/CardBack"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.7654321
+anchor_right = 1.0
+anchor_bottom = 0.79012346
+color = Color(0.79, 0.45820004, 0.5079699, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="CardText" type="Control" parent="CardContainer"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CardName" type="RichTextLabel" parent="CardContainer/CardText"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.22408037
+anchor_top = 0.037037037
+anchor_right = 0.91387945
+anchor_bottom = 0.14814815
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/normal_font_size = 36
@@ -131,18 +148,21 @@ theme_override_font_sizes/italics_font_size = 36
 theme_override_font_sizes/mono_font_size = 36
 bbcode_enabled = true
 text = "[bgcolor=BLACK][center]CARD_NAME_HERE"
+vertical_alignment = 1
 script = ExtResource("6_2n3nw")
 watch_text_change = true
 max_font_size = 200
 metadata/_custom_type_script = "uid://leehmvr1x5lu"
+metadata/_edit_use_anchors_ = true
 
-[node name="APItemType" type="RichTextLabel" parent="CardContainer"]
+[node name="APItemType" type="RichTextLabel" parent="CardContainer/CardText"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.04999998
 anchor_top = 0.18
 anchor_right = 0.33286074
 anchor_bottom = 0.2375
+offset_right = 1.5258789e-05
 size_flags_horizontal = 3
 size_flags_vertical = 4
 theme_override_font_sizes/normal_font_size = 24
@@ -156,7 +176,7 @@ script = ExtResource("6_2n3nw")
 watch_text_change = true
 metadata/_custom_type_script = "uid://leehmvr1x5lu"
 
-[node name="WordTypes" type="RichTextLabel" parent="CardContainer"]
+[node name="WordTypes" type="RichTextLabel" parent="CardContainer/CardText"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.33237886
@@ -176,54 +196,127 @@ script = ExtResource("6_2n3nw")
 watch_text_change = true
 metadata/_custom_type_script = "uid://leehmvr1x5lu"
 
-[node name="PhoneticScroll" type="RichTextLabel" parent="CardContainer"]
+[node name="EffectsText" type="RichTextLabel" parent="CardContainer/CardText"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.04999998
-anchor_top = 0.81
-anchor_right = 0.95048195
-anchor_bottom = 0.89
-grow_horizontal = 2
-theme_override_font_sizes/normal_font_size = 36
-theme_override_font_sizes/bold_font_size = 36
-theme_override_font_sizes/bold_italics_font_size = 36
-theme_override_font_sizes/italics_font_size = 36
-theme_override_font_sizes/mono_font_size = 36
-bbcode_enabled = true
-text = "[color=black]ERR PHONETIC RENDER"
-script = ExtResource("6_2n3nw")
-watch_text_change = true
-metadata/_custom_type_script = "uid://leehmvr1x5lu"
-metadata/_edit_use_anchors_ = true
-
-[node name="GameName" type="RichTextLabel" parent="CardContainer"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.17234543
-anchor_top = 0.90000004
-anchor_right = 0.89663446
-anchor_bottom = 0.9574999
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_font_sizes/normal_font_size = 22
-theme_override_font_sizes/bold_font_size = 22
-theme_override_font_sizes/bold_italics_font_size = 22
-theme_override_font_sizes/italics_font_size = 22
-theme_override_font_sizes/mono_font_size = 22
-bbcode_enabled = true
-text = "[bgcolor=BLACK][left]ERR_GAME_NAME_AND_PLAYER"
-script = ExtResource("6_2n3nw")
-watch_text_change = true
-metadata/_custom_type_script = "uid://leehmvr1x5lu"
-metadata/_edit_use_anchors_ = true
-
-[node name="RichTextLabel" type="RichTextLabel" parent="CardContainer"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.04951812
-anchor_top = 0.25
-anchor_right = 0.95048195
-anchor_bottom = 0.81
+anchor_left = 0.05163059
+anchor_top = 0.25925925
+anchor_right = 0.9525944
+anchor_bottom = 0.75308645
 bbcode_enabled = true
 text = "[color=BLACK]When you"
+
+[node name="PhoneticScroll" type="RichTextLabel" parent="CardContainer/CardText"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.051630598
+anchor_top = 0.8
+anchor_right = 0.9483694
+anchor_bottom = 0.8518519
+grow_horizontal = 2
+theme_override_font_sizes/normal_font_size = 23
+theme_override_font_sizes/bold_font_size = 23
+theme_override_font_sizes/bold_italics_font_size = 23
+theme_override_font_sizes/italics_font_size = 23
+theme_override_font_sizes/mono_font_size = 23
+bbcode_enabled = true
+text = "[color=black]ERR PHONETIC RENDER"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("6_2n3nw")
+watch_text_change = true
+metadata/_custom_type_script = "uid://leehmvr1x5lu"
 metadata/_edit_use_anchors_ = true
+
+[node name="GameName" type="RichTextLabel" parent="CardContainer/CardText"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.3447952
+anchor_top = 0.86419755
+anchor_right = 0.7586747
+anchor_bottom = 0.962963
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/normal_font_size = 23
+theme_override_font_sizes/bold_font_size = 23
+theme_override_font_sizes/bold_italics_font_size = 23
+theme_override_font_sizes/italics_font_size = 23
+theme_override_font_sizes/mono_font_size = 23
+bbcode_enabled = true
+text = "[bgcolor=BLACK][left]ERR_GAME_NAME_AND_PLAYER"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("6_2n3nw")
+watch_text_change = true
+metadata/_custom_type_script = "uid://leehmvr1x5lu"
+metadata/_edit_use_anchors_ = true
+
+[node name="DamageIcon" type="TextureRect" parent="CardContainer"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.03438562
+anchor_top = 0.86419755
+anchor_right = 0.17234543
+anchor_bottom = 0.962963
+offset_left = 2.0
+offset_top = 2.0
+offset_right = -2.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("11_njo2f")
+expand_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="DamageText" type="Label" parent="CardContainer/DamageIcon"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 34
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 3
+script = ExtResource("12_m8awi")
+watch_text_change = true
+metadata/_custom_type_script = "uid://d11kfgsd6jgt"
+
+[node name="HealthIcon" type="TextureRect" parent="CardContainer"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.82765454
+anchor_top = 0.86419755
+anchor_right = 0.9656144
+anchor_bottom = 0.962963
+offset_left = 2.0
+offset_top = 2.0
+offset_right = -2.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("13_pos1q")
+expand_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="HealthText" type="Label" parent="CardContainer/HealthIcon"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 34
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 3
+script = ExtResource("12_m8awi")
+watch_text_change = true
+metadata/_custom_type_script = "uid://d11kfgsd6jgt"

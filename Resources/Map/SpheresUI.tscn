@@ -1,0 +1,91 @@
+[gd_scene load_steps=3 format=3 uid="uid://cs8cr31j4t2nl"]
+
+[ext_resource type="Texture2D" uid="uid://drfcsgstnmw2j" path="res://Sprites/SpheresBackdrop.png" id="1_m7d5m"]
+[ext_resource type="Texture2D" uid="uid://bhyox5glrd4sp" path="res://Resources/Map/SphereGlow.tres" id="2_5tlj3"]
+
+[node name="SphereCountUI" type="AspectRatioContainer"]
+anchors_preset = -1
+anchor_right = 0.055555556
+anchor_bottom = 0.09876543
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="SphereBackdrop" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("1_m7d5m")
+
+[node name="RedSphere" type="TextureRect" parent="SphereBackdrop"]
+modulate = Color(0.7882353, 0.45882353, 0.50980395, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.28125
+anchor_right = 0.71875
+anchor_bottom = 0.4375
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_5tlj3")
+metadata/_edit_use_anchors_ = true
+
+[node name="YellowSphere" type="TextureRect" parent="SphereBackdrop"]
+modulate = Color(0.93333334, 0.8901961, 0.5686275, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.15625
+anchor_right = 0.4375
+anchor_bottom = 0.59375
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_5tlj3")
+metadata/_edit_use_anchors_ = true
+
+[node name="GreenSphere" type="TextureRect" parent="SphereBackdrop"]
+modulate = Color(0.45882353, 0.7607843, 0.45490196, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5625
+anchor_top = 0.15625
+anchor_right = 1.0
+anchor_bottom = 0.59375
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_5tlj3")
+metadata/_edit_use_anchors_ = true
+
+[node name="BlueSphere" type="TextureRect" parent="SphereBackdrop"]
+modulate = Color(0.4627451, 0.49411765, 0.7411765, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.40625
+anchor_right = 0.4375
+anchor_bottom = 0.84375
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_5tlj3")
+metadata/_edit_use_anchors_ = true
+
+[node name="VioletSphere" type="TextureRect" parent="SphereBackdrop"]
+modulate = Color(0.7882353, 0.5803922, 0.7607843, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5625
+anchor_top = 0.40625
+anchor_right = 1.0
+anchor_bottom = 0.84375
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_5tlj3")
+metadata/_edit_use_anchors_ = true
+
+[node name="OrangeSphere" type="TextureRect" parent="SphereBackdrop"]
+modulate = Color(0.84705883, 0.627451, 0.49019608, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.28125
+anchor_top = 0.5625
+anchor_right = 0.71875
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_5tlj3")
+metadata/_edit_use_anchors_ = true

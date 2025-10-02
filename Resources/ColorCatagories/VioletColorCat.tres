@@ -166,7 +166,7 @@ colorType = 2
 color = Color(0.7882353, 0.5803922, 0.7607843, 1)
 description = "Color of Player's Name and Progressive Items.
 
-Focues on progressive items, your own items and local enemies."
+Focuses on progressive items, your own items and local enemies."
 lookupTagsColor = Array[ExtResource("1_n46dx")]([SubResource("Resource_n46dx"), SubResource("Resource_4o1xg"), SubResource("Resource_u0isj"), SubResource("Resource_8cqqx"), SubResource("Resource_ba6my"), SubResource("Resource_hq3cw"), SubResource("Resource_t812i"), SubResource("Resource_d276p"), SubResource("Resource_6pu75"), SubResource("Resource_wm60x"), SubResource("Resource_2un3b"), SubResource("Resource_dhvr5"), SubResource("Resource_rb7h1"), SubResource("Resource_q7f8u"), SubResource("Resource_c3k87"), SubResource("Resource_x18le"), SubResource("Resource_6qp04"), SubResource("Resource_fb8xa"), SubResource("Resource_b2ql4"), SubResource("Resource_jva4u"), SubResource("Resource_rb5n6"), SubResource("Resource_7tv8q"), SubResource("Resource_o80nd"), SubResource("Resource_x0aak"), SubResource("Resource_5m3dc"), SubResource("Resource_ygcrb")])
 lookupTagsParts = Dictionary[String, float]({
 "adjective": 5.0,

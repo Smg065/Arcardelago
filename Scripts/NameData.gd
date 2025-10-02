@@ -171,9 +171,12 @@ static func json_load(inDict, gameData : GameData) -> NameData:
 	newNameData.words = inDict["words"]
 	newNameData.fictionalWords = inDict["fictionalWords"]
 	newNameData.numbers = inDict["numbers"]
-	for eachFlag in inDict["words"]:
-		newNameData.nameFlags.append(gameData.existingWords[eachFlag])
 	for eachFlag in inDict["fictionalWords"]:
 		newNameData.nameFlags.append(gameData.fictionalWords[eachFlag])
+	for eachFlag in inDict["words"]:
+		if not newNameData.fictionalWords.has(eachFlag):
+			newNameData.nameFlags.append(gameData.existingWords[eachFlag])
+		else:
+			push_warning("In both dictionaries: %s" % eachFlag)
 	newNameData.get_phonetic_counts()
 	return newNameData

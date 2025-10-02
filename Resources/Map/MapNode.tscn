@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://6skb8ufxgc38"]
+
+[ext_resource type="SpriteFrames" uid="uid://c1gtvtx7hcn6h" path="res://Resources/Map/PipAnims.tres" id="1_ios3t"]
+[ext_resource type="Script" uid="uid://c0awpgvaoogss" path="res://Scripts/Overworld/MapNode.gd" id="2_1cmld"]
+
+[node name="MapPip" type="AnimatedSprite2D"]
+texture_filter = 1
+texture_repeat = 1
+sprite_frames = ExtResource("1_ios3t")
+animation = &"WhiteBossPip"
+script = ExtResource("2_1cmld")
+colorIndex = 3
+mapNodeType = 4
+
+[node name="Color" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 1
+sprite_frames = ExtResource("1_ios3t")
+animation = &"WhitePip"

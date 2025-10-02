@@ -1,0 +1,364 @@
+[gd_scene load_steps=3 format=3 uid="uid://cpofxalps4yuo"]
+
+[ext_resource type="PackedScene" uid="uid://cifjnmtp52uco" path="res://Resources/CardScrollbox.tscn" id="2_lul25"]
+[ext_resource type="PackedScene" uid="uid://dj0bi4scf7x7c" path="res://Resources/Battle/CardSlot.tscn" id="2_yh5fh"]
+
+[node name="BattlefieldMap" type="ReferenceRect"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+border_color = Color(1, 0.72133213, 0.67637587, 1)
+border_width = 8.0
+
+[node name="Battle" type="ReferenceRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.25
+anchor_right = 0.75
+anchor_bottom = 1.0
+offset_top = 32.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 2
+border_width = 4.0
+metadata/_edit_use_anchors_ = true
+
+[node name="MidRow" type="ReferenceRect" parent="Battle"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -16.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+border_color = Color(1, 1, 1, 1)
+border_width = 4.0
+
+[node name="Playfield" type="ReferenceRect" parent="Battle"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 16.0
+grow_horizontal = 2
+grow_vertical = 0
+border_color = Color(0.98, 0.47040004, 0.63177335, 1)
+border_width = 4.0
+metadata/_edit_use_anchors_ = true
+
+[node name="APAspect" type="AspectRatioContainer" parent="Battle/Playfield"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Playmat" type="TextureRect" parent="Battle/Playfield/APAspect"]
+layout_mode = 2
+expand_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Frontmost2" parent="Battle/Playfield/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.33333334
+anchor_right = 0.66666675
+anchor_bottom = 0.39999998
+
+[node name="Leftfront" parent="Battle/Playfield/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.10144927
+anchor_right = 0.3333334
+anchor_bottom = 0.5014492
+
+[node name="Rightfront" parent="Battle/Playfield/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.6666667
+anchor_top = 0.10144927
+anchor_right = 1.0000001
+anchor_bottom = 0.5014492
+
+[node name="Leftback" parent="Battle/Playfield/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.5
+anchor_right = 0.3333334
+anchor_bottom = 0.9
+
+[node name="Rightback" parent="Battle/Playfield/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.6666667
+anchor_top = 0.5
+anchor_right = 1.0000001
+anchor_bottom = 0.9
+
+[node name="Backmost2" parent="Battle/Playfield/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.33333334
+anchor_top = 0.6
+anchor_right = 0.66666675
+anchor_bottom = 1.0
+
+[node name="Enemies" type="ReferenceRect" parent="Battle"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+border_color = Color(0.32, 0.55799997, 1, 1)
+border_width = 4.0
+metadata/_edit_use_anchors_ = true
+
+[node name="HordeLayout" type="Control" parent="Battle/Enemies"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FrontRow" type="HBoxContainer" parent="Battle/Enemies/HordeLayout"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.55
+anchor_right = 1.0
+anchor_bottom = 0.95
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="CardSlot" parent="Battle/Enemies/HordeLayout/FrontRow" instance=ExtResource("2_yh5fh")]
+layout_mode = 2
+
+[node name="CardSlot2" parent="Battle/Enemies/HordeLayout/FrontRow" instance=ExtResource("2_yh5fh")]
+layout_mode = 2
+
+[node name="CardSlot3" parent="Battle/Enemies/HordeLayout/FrontRow" instance=ExtResource("2_yh5fh")]
+layout_mode = 2
+
+[node name="CardSlot4" parent="Battle/Enemies/HordeLayout/FrontRow" instance=ExtResource("2_yh5fh")]
+layout_mode = 2
+
+[node name="CardSlot5" parent="Battle/Enemies/HordeLayout/FrontRow" instance=ExtResource("2_yh5fh")]
+layout_mode = 2
+
+[node name="CardSlot6" parent="Battle/Enemies/HordeLayout/FrontRow" instance=ExtResource("2_yh5fh")]
+layout_mode = 2
+
+[node name="CardSlot7" parent="Battle/Enemies/HordeLayout/FrontRow" instance=ExtResource("2_yh5fh")]
+layout_mode = 2
+
+[node name="BackRow" type="HBoxContainer" parent="Battle/Enemies/HordeLayout"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.05
+anchor_right = 1.0
+anchor_bottom = 0.45
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="CardSlot" parent="Battle/Enemies/HordeLayout/BackRow" instance=ExtResource("2_yh5fh")]
+layout_mode = 2
+
+[node name="CardSlot2" parent="Battle/Enemies/HordeLayout/BackRow" instance=ExtResource("2_yh5fh")]
+layout_mode = 2
+
+[node name="CardSlot3" parent="Battle/Enemies/HordeLayout/BackRow" instance=ExtResource("2_yh5fh")]
+layout_mode = 2
+
+[node name="CardSlot4" parent="Battle/Enemies/HordeLayout/BackRow" instance=ExtResource("2_yh5fh")]
+layout_mode = 2
+
+[node name="CardSlot5" parent="Battle/Enemies/HordeLayout/BackRow" instance=ExtResource("2_yh5fh")]
+layout_mode = 2
+
+[node name="CardSlot6" parent="Battle/Enemies/HordeLayout/BackRow" instance=ExtResource("2_yh5fh")]
+layout_mode = 2
+
+[node name="CardSlot7" parent="Battle/Enemies/HordeLayout/BackRow" instance=ExtResource("2_yh5fh")]
+layout_mode = 2
+
+[node name="RivalLayout" type="Control" parent="Battle/Enemies"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="APAspect" type="AspectRatioContainer" parent="Battle/Enemies/RivalLayout"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Playmat" type="TextureRect" parent="Battle/Enemies/RivalLayout/APAspect"]
+layout_mode = 2
+expand_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Frontmost2" parent="Battle/Enemies/RivalLayout/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.33333334
+anchor_top = 0.6
+anchor_right = 0.66666675
+anchor_bottom = 1.0
+
+[node name="Leftfront" parent="Battle/Enemies/RivalLayout/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.5
+anchor_right = 0.3333334
+anchor_bottom = 0.9
+
+[node name="Rightfront" parent="Battle/Enemies/RivalLayout/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.6666667
+anchor_top = 0.5
+anchor_right = 1.0000001
+anchor_bottom = 0.9
+
+[node name="Leftback" parent="Battle/Enemies/RivalLayout/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.10144927
+anchor_right = 0.3333334
+anchor_bottom = 0.5014492
+
+[node name="Rightback" parent="Battle/Enemies/RivalLayout/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.6666667
+anchor_top = 0.10144927
+anchor_right = 1.0000001
+anchor_bottom = 0.5014492
+
+[node name="Backmost2" parent="Battle/Enemies/RivalLayout/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.33333334
+anchor_right = 0.66666675
+anchor_bottom = 0.4
+
+[node name="BossLayout" type="Control" parent="Battle/Enemies"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BossSlot" parent="Battle/Enemies/BossLayout" instance=ExtResource("2_yh5fh")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.333
+anchor_top = 0.1
+anchor_right = 0.6671875
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LFrontRow" type="HBoxContainer" parent="Battle/Enemies/BossLayout"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.55
+anchor_right = 0.333
+anchor_bottom = 0.95
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="CardSlot" parent="Battle/Enemies/BossLayout/LFrontRow" instance=ExtResource("2_yh5fh")]
+layout_mode = 2
+
+[node name="CardSlot7" parent="Battle/Enemies/BossLayout/LFrontRow" instance=ExtResource("2_yh5fh")]
+layout_mode = 2
+
+[node name="LBackRow" type="HBoxContainer" parent="Battle/Enemies/BossLayout"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.05
+anchor_right = 0.333
+anchor_bottom = 0.45
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="CardSlot" parent="Battle/Enemies/BossLayout/LBackRow" instance=ExtResource("2_yh5fh")]
+layout_mode = 2
+
+[node name="CardSlot2" parent="Battle/Enemies/BossLayout/LBackRow" instance=ExtResource("2_yh5fh")]
+layout_mode = 2
+
+[node name="RFrontRow" type="HBoxContainer" parent="Battle/Enemies/BossLayout"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.667
+anchor_top = 0.55
+anchor_right = 1.0
+anchor_bottom = 0.95
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="CardSlot" parent="Battle/Enemies/BossLayout/RFrontRow" instance=ExtResource("2_yh5fh")]
+layout_mode = 2
+
+[node name="CardSlot2" parent="Battle/Enemies/BossLayout/RFrontRow" instance=ExtResource("2_yh5fh")]
+layout_mode = 2
+
+[node name="RBackRow" type="HBoxContainer" parent="Battle/Enemies/BossLayout"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.667
+anchor_top = 0.05
+anchor_right = 1.0
+anchor_bottom = 0.45
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="CardSlot" parent="Battle/Enemies/BossLayout/RBackRow" instance=ExtResource("2_yh5fh")]
+layout_mode = 2
+
+[node name="CardSlot2" parent="Battle/Enemies/BossLayout/RBackRow" instance=ExtResource("2_yh5fh")]
+layout_mode = 2
+
+[node name="DeckSelection" type="ReferenceRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.75
+anchor_top = 0.25
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_right = -16.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 2
+border_width = 8.0
+metadata/_edit_use_anchors_ = true
+
+[node name="ScrollContainer" parent="DeckSelection" instance=ExtResource("2_lul25")]
+layout_mode = 0
+anchors_preset = 0

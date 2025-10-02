@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="ArbitraryWordGroups" load_steps=102 format=3]
+[gd_resource type="Resource" script_class="ArbitraryWordGroups" load_steps=102 format=3 uid="uid://ckena4ikgus8"]
 
-[ext_resource type="Script" path="res://Scripts/ArbitraryWordGroups.gd" id="1_py3ud"]
-[ext_resource type="Script" path="res://Scripts/ColorWordData.gd" id="2_hrlhe"]
-[ext_resource type="Script" path="res://Scripts/ColorWeight.gd" id="3_h4nki"]
+[ext_resource type="Script" uid="uid://3slsv11kg0rw" path="res://Scripts/ArbitraryWordGroups.gd" id="1_py3ud"]
+[ext_resource type="Script" uid="uid://msrh0tnnmpa0" path="res://Scripts/ColorWordData.gd" id="2_hrlhe"]
+[ext_resource type="Script" uid="uid://c7tg13jj77m00" path="res://Scripts/ColorWeight.gd" id="3_h4nki"]
 
 [sub_resource type="Resource" id="Resource_py3ud"]
 script = ExtResource("3_h4nki")

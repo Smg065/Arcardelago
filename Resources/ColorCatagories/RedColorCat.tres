@@ -195,6 +195,5 @@ phonTypes = Array[int]([2, 5, 12])
 phonDiacriticCommand = PackedStringArray("Nasalized", "Creaky voiced", "Dental", "Nasal release")
 phonConsonantSound = Array[int]([1])
 phonConsonantShape = Array[int]([11])
-itemQualityMulti = 4
 itemQualityFlags = PackedInt32Array(4, 5, 6, 7)
 metadata/_custom_type_script = "uid://dt6bcuot6d2k"

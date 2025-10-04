@@ -5,7 +5,14 @@ class_name MapPip
 enum MapNodeType {AUTO, INTERSECTION, ENEMY, BOSS, OBSTACLE, GATE, SHOP, TREASURE, PORTAL, RELEASER}
 ##The recolorable renderer for the center of the pip
 var colorNode : AnimatedSprite2D
-##The map color this node is part of
+##The map color this node is part of.[br]
+##0: White[br]
+##1: Red[br]
+##2: Green[br]
+##3: Violet[br]
+##4: Orange[br]
+##5: Blue[br]
+##6: Yellow
 @export var colorIndex : int
 ##The location this map node is
 @export var mapNodeType : MapNodeType
@@ -131,7 +138,12 @@ func other_path(startingPath : MapWalkPip) -> MapWalkPip:
 
 ##Get any directions not taken up by a path
 func available_directions() -> Array[Directions]:
-	var allDirs = Directions.keys()
+	var allDirs : Array[Directions] = [
+		Directions.UP,
+		Directions.DOWN,
+		Directions.LEFT,
+		Directions.RIGHT
+	]
 	for eachDir in pathDirs.keys():
 		allDirs.erase(eachDir)
 	return allDirs
@@ -151,11 +163,11 @@ func get_grid_entry_point(offsetDir : Directions) -> Vector2i:
 	return ((Vector2i(global_position) + (Vector2i.ONE * 8)) / 16) + inputOffset
 
 ##Get the best goal from this specific node
-func best_goal(bestGoals : Array) -> Array:
+func best_goal(bestGoals : Array[MapWalkPip.ConnectionGoal]) -> Array[MapWalkPip.ConnectionGoal]:
 	if pathGoals.size() == 0:
 		return []
 	for eachGoal in pathGoals:
-		var result : Array = eachGoal.best_goal(bestGoals[0])
+		var result : Array[MapWalkPip.ConnectionGoal] = eachGoal.best_goal(bestGoals)
 		#If both are the best, put it in the array
 		if result.size() == 2:
 			bestGoals.append(eachGoal)
@@ -166,7 +178,19 @@ func best_goal(bestGoals : Array) -> Array:
 
 ##Remove this goal from the node
 func clear_goal(inGoal : MapWalkPip.ConnectionGoal, usedDir : Directions):
+	if !pathGoals.has(inGoal):
+		print("Doesn't Exist")
+		print("Path Generated = " + str(inGoal.path.generated))
 	#Remove the goal
 	pathGoals.erase(inGoal)
 	#Tell the other goals connected to it the direction given is no longer viable
-	for eachGoal in pathGoals
+	for eachGoal in pathGoals:
+		eachGoal.dir_taken(usedDir)
+
+##Runs when a path is generated that you have a goal around
+func path_generated(inPath : MapWalkPip):
+	#Clear it from being a path goal anymore
+	for eachGoal in pathGoals.duplicate():
+		if eachGoal.path == inPath:
+			print("Erased a goal")
+			pathGoals.erase(eachGoal)

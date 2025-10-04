@@ -12,8 +12,12 @@ var xAlign : AlignDir
 ##How the Map Pips line up on the Y axis (Above, Aligned, Below)
 var yAlign : AlignDir
 
+##If the path data has been generated
+var generated : bool
 ##How much the aStar path weighs extra
 const PATH_COST = 10.0
+
+signal path_generated
 
 ##The alignment of the map pips along this path
 enum AlignDir {
@@ -67,11 +71,6 @@ class ConnectionGoal:
 	
 	##Clears the connected goals from their pip and readies for path construction
 	func get_path_dirs() -> Array[MapPip.Directions]:
-		#Get the other pip to use in path dirs instructions
-		var oPip := pairedGoal.pip
-		#This goal is no longer needed in the root map pip
-		pip.clear_goal(self)
-		oPip.clear_goal(pairedGoal)
 		#Get the best direction prefrence arrays
 		var tPosGoalDirs = dPrefs[get_best_prefs()]
 		var oPosGoalDirs = pairedGoal.dPrefs[get_best_prefs()]
@@ -90,6 +89,11 @@ class ConnectionGoal:
 		else:
 			#It'll be nice to not need RNG for most of this
 			oGoalDir = oPosGoalDirs[0]
+		
+		#This goal is no longer needed in the root map pip
+		pip.clear_goal(self, tGoalDir)
+		pairedGoal.pip.clear_goal(pairedGoal, oGoalDir)
+		
 		#Is this goal the path's start?
 		if path.pathPoint1 == pip:
 			#Then start with that direction
@@ -135,6 +139,19 @@ class ConnectionGoal:
 			return [self]
 		#If all else fails, you're the new chosen one
 		return [self]
+	
+	##Remove the input from the possible scoring metrics
+	func dir_taken(dirTaken : MapPip.Directions):
+		#Go over all the scores
+		for eachKey in dPrefs.keys():
+			#If the score has this direction, not anymore
+			if dPrefs[eachKey].has(dirTaken):
+				print("Erased the key %s" % dirTaken)
+				dPrefs[eachKey].erase(dirTaken)
+				#The reason we if it is to remove empty pref lists after
+				if dPrefs[eachKey].size() == 0:
+					print("Erased the score %s" % eachKey)
+					dPrefs.erase(eachKey)
 
 ##The distance between the two map nodes
 func distance() -> float:
@@ -235,27 +252,38 @@ func create_pip_goals() -> void:
 	
 	#Call back the goals
 	pathPoint1.pathGoals.append(goal1)
+	path_generated.connect(pathPoint1.path_generated.bind(self))
 	pathPoint2.pathGoals.append(goal2)
+	path_generated.connect(pathPoint2.path_generated.bind(self))
 
 ##Use the given directional goals to create the path's curves and map nodes inputs
-func generate_path(input1 : MapPip.Directions, input2 : MapPip.Directions, aStars : AStarGrid2D):
-	#Start point always starts here
-	curve.add_point(pathPoint1.global_position)
-	
+func generate_path(input1 : MapPip.Directions, input2 : MapPip.Directions, aStars : AStarGrid2D) -> bool:
 	#Get the start and end of the grid path
 	var start1 := pathPoint1.get_grid_entry_point(input1)
 	var start2 := pathPoint2.get_grid_entry_point(input2)
 	
-	#Get the path's points
-	var pathPoints : Array[Vector2i] = aStars.get_id_path(start1, start2)
+	#If it's out of bounds, it failed
+	if !aStars.region.has_point(start1) or !aStars.region.has_point(start2):
+		return false
+	var starIds : Array[Vector2i] = aStars.get_id_path(start1, start2)
+	var pathPoints : PackedVector2Array = aStars.get_point_path(start1, start2)
 	
 	#Note that these paths got a LOT more expensive
-	for eachPoint in pathPoints:
+	for eachPoint in starIds:
 		aStars.set_point_weight_scale(eachPoint, PATH_COST)
 	
+	#Start point always starts here
+	curve.add_point(pathPoint1.global_position)
+	for eachPoint in pathPoints:
+		curve.add_point(eachPoint - Vector2(WorldMap.CELL_SIZE / 2))
 	#End point always ends here
 	curve.add_point(pathPoint2.global_position)
 	$PathVis.points = curve.get_baked_points()
+	
+	#The path is made
+	generated = true
+	path_generated.emit()
+	return true
 
 ##Get the opposing pip attached to this path
 func other_pip(startPip : MapPip) -> MapPip:
@@ -276,3 +304,23 @@ func can_travel(startPip : MapPip) -> bool:
 		return true
 	#Tiles that have yet to be defeated will only allow unlocked paths
 	return unlocked
+
+##Get the region the pips are in.[br]
+##If they're in diffrent regions, mark -1 for adjacent, -2 for distant
+func region() -> int:
+	if pathPoint1.colorIndex != pathPoint2.colorIndex:
+		#Always adjacent to the center of the map
+		if pathPoint1.colorIndex == 0 or pathPoint2.colorIndex == 0:
+			return -1
+		#Get the region offset
+		var regionOffset : int = abs(pathPoint1.colorIndex - pathPoint2.colorIndex)
+		#If it's 1
+		if regionOffset == 1:
+			return -1
+		#Red and yellow are adjacent
+		if regionOffset == 5:
+			return -1
+		#If none of the above are true, it's distant
+		return -2
+	else:
+		return pathPoint1.colorIndex

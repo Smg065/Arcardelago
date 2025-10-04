@@ -12,6 +12,9 @@ class MapRegion:
 	
 	const DIRS = [Vector2.UP, Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT]
 	
+	##All the pips in this region
+	var pips : Array[MapPip]
+	
 	func _init(nIndex : int, nCoords : PackedVector2Array) -> void:
 		#Basic assignment
 		index = nIndex
@@ -55,6 +58,7 @@ class MapRegion:
 @export var mapRadius : int = 25
 const CELL_SIZE = Vector2i(16, 16)
 var aStar : AStarGrid2D
+var regions : Array[MapRegion]
 
 @export_category("Map Rendering")
 @export var groundTilemap : TileMapLayer
@@ -77,30 +81,36 @@ func _ready() -> void:
 	aStar.update()
 	#Get all the regions coords
 	var regionCoords = run_for_region(aStar.region, get_region_cell.bind(centerRadius), true)
-	var regions : Array[MapRegion]
-	var lastPip : MapPip = null
 	#Create the regions
 	for regionIndex in regionCoords.keys():
-		var newRegion := MapRegion.new(regionIndex, regionCoords[regionIndex])
-		regions.append(newRegion)
-		groundTilemap.set_cells_terrain_connect(regionCoords[regionIndex], regionIndex, 0)
-		if regionIndex == 0:
-			spawn_pip(-Vector2i.ONE, 0, MapPip.MapNodeType.BOSS)
-			continue
-		var pipCoords := newRegion.rand_pip_coords(10)
-		for eachCoord in pipCoords:
-			var spawnCoord := eachCoord
-			var thisPip := spawn_pip(spawnCoord, regionIndex, MapPip.MapNodeType.ENEMY)
-			if lastPip != null:
-				spawn_path(thisPip, lastPip)
-	#Best Goals
-	var bestGoals : Array[MapWalkPip.ConnectionGoal] = []
-	for eachPip in pips.values():
-		eachPip = eachPip as MapPip
-		bestGoals = eachPip.best_goal(bestGoals)
-	for eachGoal in bestGoals:
-		var pathDirs := eachGoal.get_path_dirs()
-		eachGoal.path.generate_path(pathDirs[0], pathDirs[1], aStar)
+		generate_region(regionIndex, regionCoords[regionIndex])
+	#generate_paths()
+
+##Construct a region
+func generate_region(index : int, coords : PackedVector2Array):
+	var newRegion := MapRegion.new(index, coords)
+	regions.append(newRegion)
+	groundTilemap.set_cells_terrain_connect(coords, index, 0)
+	if index == 0:
+		spawn_pip(-Vector2i.ONE, 0, MapPip.MapNodeType.BOSS)
+		return
+	var pipCoords := newRegion.rand_pip_coords(10)
+	for eachCoord in pipCoords:
+		var spawnCoord := eachCoord
+		var nPip := spawn_pip(spawnCoord, index, MapPip.MapNodeType.ENEMY)
+		newRegion.pips.append(nPip)
+
+##Try to generate all paths in the world map
+func generate_paths():
+	for i in 1:
+		#Get the current best goal
+		var bestGoals : Array[MapWalkPip.ConnectionGoal] = []
+		for eachPip in pips.values():
+			eachPip = eachPip as MapPip
+			bestGoals = eachPip.best_goal(bestGoals)
+		#Create a path from it
+		for eachGoal in bestGoals:
+			solidify_path_goal(eachGoal)
 
 ##Get all the cells from the regions
 func get_region_cell(cellX : int, cellY : int, centerRadius : float):
@@ -155,6 +165,7 @@ func spawn_pip(coords : Vector2i, region : int, type : MapPip.MapNodeType) -> Ma
 	newPip.setup_pip(region, type)
 	return newPip
 
+##Creates an empty path to be constructed later
 func spawn_path(point1 : MapPip, point2 : MapPip) -> MapWalkPip:
 	var newPath : MapWalkPip = pathPrefab.instantiate()
 	mapSpot.add_child(newPath)
@@ -163,3 +174,31 @@ func spawn_path(point1 : MapPip, point2 : MapPip) -> MapWalkPip:
 	paths.append(newPath)
 	newPath.create_pip_goals()
 	return newPath
+
+##Turns a path goal into actual path data
+func solidify_path_goal(inGoal : MapWalkPip.ConnectionGoal):
+	var pathDirs := inGoal.get_path_dirs()
+	#Get the astar relevant to the region data
+	var starForUse : AStarGrid2D
+	var pathRegion := inGoal.path.region()
+	match pathRegion:
+		-1:
+			starForUse = aStar
+		-2:
+			inGoal.path.generated = true
+			inGoal.path.path_generated.emit()
+			print("Warp Logic")
+			return
+		_:
+			starForUse = regions[pathRegion].aStar
+	if !inGoal.path.generate_path(pathDirs[0], pathDirs[1], starForUse):
+		print("Out of bounds!")
+		inGoal.path.generated = true
+		inGoal.path.path_generated.emit()
+
+##Checks if there's paths yet to be generated
+func all_paths_generated():
+	for eachPath in paths:
+		if !eachPath.generated:
+			return false
+	return true

@@ -360,5 +360,4 @@ border_width = 8.0
 metadata/_edit_use_anchors_ = true
 
 [node name="ScrollContainer" parent="DeckSelection" instance=ExtResource("2_lul25")]
-layout_mode = 0
-anchors_preset = 0
+layout_mode = 1

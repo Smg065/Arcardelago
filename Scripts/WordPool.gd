@@ -1,12 +1,10 @@
 extends Control
 class_name WordPool
 
-var game : GameData
 @export_category("UI")
 @export var progressControl : Control
 @export var progressBar : ProgressBar
 @export var progressLabel : Label
-@export var debugCard : CardUI
 @export_category("Dictionary Connection Info")
 var wordsEnglish : Array[String] = []
 @export var httpRequest : HTTPRequest
@@ -39,43 +37,35 @@ func _ready() -> void:
 	Archipelago.ap_connect(ip, port, slot, password)
 	Archipelago.connected.connect(on_connection)
 
-func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("Left"):
-		curCard -= 1
-		debug_text_holder()
-	if Input.is_action_just_pressed("Right"):
-		curCard += 1
-		debug_text_holder()
-
 func on_connection(inConn: ConnectionInfo, json: Dictionary):
 	conn = inConn
 	conn.new_scouts_cached.connect(scouts_updated)
-	var gameInfo = find_valid_game()
+	var gameInfo = GameData.find_valid_game(ip, port, slot, password)
 	if gameInfo != "":
-		game = GameData.json_load(gameInfo)
-		debug_text_holder()
+		Persist.game = GameData.json_load(gameInfo)
+		get_tree().change_scene_to_file("res://WorldMap.tscn")
 	else:
 		build_new_game(json)
 
 #Create a new game if the JSON game key can't find something similar
 func build_new_game(json: Dictionary):
-	game = GameData.new()
+	Persist.game = GameData.new()
 	#Go over all the players
 	for eachPlayer in conn.players:
 		var currentSlot : NetworkSlot = eachPlayer.get_slot()
 		#No teams or spectators
 		if currentSlot.type == 1:
 			#If there's no cardset for this game
-			if not game.gameCardsets.has(currentSlot.game):
+			if not Persist.game.gameCardsets.has(currentSlot.game):
 				var gameNameData : NameData = get_name_data(currentSlot.game)
-				game.gameCardsets[currentSlot.game] = GameCardset.build(gameNameData)
-				game.gameCardsets[currentSlot.game].players.append(eachPlayer.name)
+				Persist.game.gameCardsets[currentSlot.game] = GameCardset.build(gameNameData)
+				Persist.game.gameCardsets[currentSlot.game].players.append(eachPlayer.name)
 			else:
-				game.gameCardsets[currentSlot.game].players.append(eachPlayer.name)
+				Persist.game.gameCardsets[currentSlot.game].players.append(eachPlayer.name)
 	conn.load_locations()
 	var locationIds : Array[int] = []
 	locationIds.append_array(conn.slot_locations.keys())
-	game.difficulty = json["slot_data"]["difficulty"]
+	Persist.game.difficulty = json["slot_data"]["difficulty"]
 	build_enemies(json["slot_data"]["enemies"])
 	Archipelago.send_command("LocationScouts", {"locations": locationIds, "create_as_hint": 0})
 
@@ -91,10 +81,10 @@ func build_enemies(enemies : Array):
 		var local = eachPlayer == conn.get_player()
 		var playerName : String = eachPlayer.name
 		var itemNameData : NameData = get_name_data(eachEnemy[1])
-		var cardset : GameCardset = game.gameCardsets[eachPlayer.get_slot().game]
+		var cardset : GameCardset = Persist.game.gameCardsets[eachPlayer.get_slot().game]
 		#Create card data from this information
 		var cardData : CardData = CardData.build(eachEnemy[2], -1, itemNameData, cardset, playerName, local, true)
-		game.allCards.append(cardData)
+		Persist.game.allCards.append(cardData)
 
 func scouts_to_cards():
 	for eachEntry in conn._scout_cache:
@@ -104,29 +94,29 @@ func scouts_to_cards():
 		#Get all the name data
 		var playerName : String = eachPlayer.get_name()
 		var itemNameData : NameData = get_name_data(eachItem.get_name())
-		var cardset : GameCardset = game.gameCardsets[eachPlayer.get_slot().game]
+		var cardset : GameCardset = Persist.game.gameCardsets[eachPlayer.get_slot().game]
 		#Create card data from this information
 		var cardData : CardData = CardData.build(eachItem.flags, eachEntry, itemNameData, cardset, playerName, eachItem.is_local())
-		game.allCards.append(cardData)
+		Persist.game.allCards.append(cardData)
 	_initalWordQueueSize = _wordQueue.size()
-	progressBar.max_value = _initalWordQueueSize + game.fictionalWords.size()
+	progressBar.max_value = _initalWordQueueSize + Persist.game.fictionalWords.size()
 	progressLabel.text = "Calling Dictionary API..."
 	update_progress_visual()
 	try_request()
 
 func get_name_data(inName : String) -> NameData:
-	if not game.existingNames.has(inName):
+	if not Persist.game.existingNames.has(inName):
 		var newNameData : NameData = NameData.build(inName, self)
-		game.existingNames[inName] = newNameData
+		Persist.game.existingNames[inName] = newNameData
 		if not new_word_flags.is_connected(newNameData.check_has_word):
 			new_word_flags.connect(newNameData.check_has_word)
 		return newNameData
 	else:
-		return game.existingNames[inName]
+		return Persist.game.existingNames[inName]
 
 func try_get_word_flags(checkName : String) -> NameFlags:
 	checkName = checkName.to_lower()
-	if !game.existingWords.has(checkName):
+	if !Persist.game.existingWords.has(checkName):
 		if !_wordQueue.has(checkName):
 			_wordQueue.append(checkName)
 	return null
@@ -155,7 +145,7 @@ func dictionary_http_request_completed(_result: int, response_code: int, _header
 	json.parse(body.get_string_from_utf8())
 	var jsonOutput = json.get_data()
 	var nameFlags : NameFlags = NameFlags.build(jsonOutput)
-	game.existingWords[nameFlags.word] = nameFlags
+	Persist.game.existingWords[nameFlags.word] = nameFlags
 	_wordQueue.erase(nameFlags.word)
 	new_word_flags.emit(nameFlags.word, nameFlags)
 	requestCooldown.start()
@@ -174,13 +164,13 @@ func try_request():
 		fictional_names_check_existing()
 
 func notify_fictional_word(newWord : String):
-	if !game.fictionalWords.has(newWord):
-		game.fictionalWords[newWord] = null
+	if !Persist.game.fictionalWords.has(newWord):
+		Persist.game.fictionalWords[newWord] = null
 
 func fictional_names_check_existing():
-	for eachFictional in game.fictionalWords:
+	for eachFictional in Persist.game.fictionalWords:
 		#Only worry about keyless words
-		if game.fictionalWords[eachFictional] != null:
+		if Persist.game.fictionalWords[eachFictional] != null:
 			continue
 		var fictWeights : PackedFloat32Array
 		var fictRealNames : PackedStringArray
@@ -246,7 +236,7 @@ func fictional_names_check_existing():
 				if hasFlags != null:
 					fictNameFlags.append(hasFlags)
 		var newFictFlags : FictionalNameFlags = FictionalNameFlags.build(eachFictional, fictWeights, fictRealNames, fictNameFlags, self)
-		game.fictionalWords[eachFictional] = newFictFlags
+		Persist.game.fictionalWords[eachFictional] = newFictFlags
 		new_word_flags.emit(eachFictional, newFictFlags)
 	#Back to the word queue
 	if _wordQueue.size() > 0 and allowRepass:
@@ -258,66 +248,9 @@ func fictional_names_check_existing():
 	else:
 		save_game_as_new()
 
-func get_save_path() -> String:
-	var baseDir = OS.get_executable_path().get_base_dir()
-	if OS.has_feature("editor"):
-		baseDir = "res://"
-	return baseDir + "saves"
-
-func find_valid_game() -> String:
-	var savePath := get_save_path()
-	if DirAccess.dir_exists_absolute(savePath):
-		var dir := DirAccess.open(savePath)
-		for eachFile in dir.get_files():
-			if eachFile.ends_with(".json"):
-				var checkSave = SaveFile.new()
-				var filePath = savePath + "/" + eachFile
-				var file := FileAccess.open(filePath, FileAccess.READ)
-				if file == null:
-					print(FileAccess.get_open_error())
-					continue
-				checkSave.read(file)
-				if checkSave.aplock.valid:
-					var lockNotifs : Array[String] = checkSave.aplock.lock(conn)
-					for eachWarning in lockNotifs:
-						print(eachWarning)
-					if checkSave.creds.matches(ip, port, slot, password) and lockNotifs.size() <= 0:
-						var output = file.get_pascal_string()
-						file.close()
-						return output
-				file.close()
-	else:
-		DirAccess.make_dir_absolute(savePath)
-	return ""
-
 func save_game_as_new():
-	var otherFiles : int = 0
-	var savePath := get_save_path()
-	if DirAccess.dir_exists_absolute(savePath):
-		var dir := DirAccess.open(savePath)
-		for eachFile in dir.get_files():
-			if eachFile.ends_with(".json"):
-				otherFiles += 1
-	else:
-		DirAccess.make_dir_absolute(savePath)
-	var saveFilePath : String = "%s/save%d.json" % [savePath, otherFiles]
-	var saveFileString : String = game.json_save()
-	var saveFileAccess := FileAccess.open(saveFilePath, FileAccess.WRITE)
-	if saveFileAccess == null:
-		print(saveFileAccess.get_error())
-	game.apSaveData = SaveFile.new()
-	game.apSaveData.aplock.lock(conn)
-	game.apSaveData.creds.update(ip, port, slot, password)
-	game.apSaveData.write(saveFileAccess)
-	saveFileAccess.store_pascal_string(saveFileString)
-	saveFileAccess.close()
-	debug_text_holder()
-
-func debug_text_holder():
-	if game != null:
-		progressControl.hide()
-		curCard = wrapi(curCard, 0, game.allCards.size())
-		debugCard.build(game.allCards[curCard])
+	Persist.game.save_as_new()
+	get_tree().change_scene_to_file("res://WorldMap.tscn")
 
 func dictionary_api_delay() -> void:
 	try_request()

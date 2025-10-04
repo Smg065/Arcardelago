@@ -52,3 +52,57 @@ static func json_load(saveString : String) -> GameData:
 	for eachCard in saveData["allCards"]:
 		gameData.allCards.append(CardData.json_load(eachCard, gameData))
 	return gameData
+
+func save_as_file(ip, port, slot, password):
+	var otherFiles : int = 0
+	var savePath := get_save_path()
+	if DirAccess.dir_exists_absolute(savePath):
+		var dir := DirAccess.open(savePath)
+		for eachFile in dir.get_files():
+			if eachFile.ends_with(".json"):
+				otherFiles += 1
+	else:
+		DirAccess.make_dir_absolute(savePath)
+	var saveFilePath : String = "%s/save%d.json" % [savePath, otherFiles]
+	var saveFileString : String = json_save()
+	var saveFileAccess := FileAccess.open(saveFilePath, FileAccess.WRITE)
+	if saveFileAccess == null:
+		print(saveFileAccess.get_error())
+	apSaveData = SaveFile.new()
+	apSaveData.aplock.lock(Archipelago.conn)
+	apSaveData.creds.update(ip, port, slot, password)
+	apSaveData.write(saveFileAccess)
+	saveFileAccess.store_pascal_string(saveFileString)
+	saveFileAccess.close()
+
+static func find_valid_game(ip, port, slot, password) -> String:
+	var savePath := get_save_path()
+	if DirAccess.dir_exists_absolute(savePath):
+		var dir := DirAccess.open(savePath)
+		for eachFile in dir.get_files():
+			if eachFile.ends_with(".json"):
+				var checkSave = SaveFile.new()
+				var filePath = savePath + "/" + eachFile
+				var file := FileAccess.open(filePath, FileAccess.READ)
+				if file == null:
+					print(FileAccess.get_open_error())
+					continue
+				checkSave.read(file)
+				if checkSave.aplock.valid:
+					var lockNotifs : Array[String] = checkSave.aplock.lock(Archipelago.conn)
+					for eachWarning in lockNotifs:
+						print(eachWarning)
+					if checkSave.creds.matches(ip, port, slot, password) and lockNotifs.size() <= 0:
+						var output = file.get_pascal_string()
+						file.close()
+						return output
+				file.close()
+	else:
+		DirAccess.make_dir_absolute(savePath)
+	return ""
+
+static func get_save_path() -> String:
+	var baseDir = OS.get_executable_path().get_base_dir()
+	if OS.has_feature("editor"):
+		baseDir = "res://"
+	return baseDir + "saves"

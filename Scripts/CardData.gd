@@ -74,6 +74,9 @@ static func json_load(inDict, gameData : GameData) -> CardData:
 
 
 func rich_item_flags() -> String:
+	#Enemies
+	if enemyCard:
+		return "[hint=A check which contains an item in your world][bgcolor=LIGHT_GREEN][color=BLACK]Location"
 	#Proguseful
 	if apItemFlags == 3:
 		return "[hint=An item that is critical for progression][bgcolor=GOLD][color=BLACK]Proguseful"
@@ -121,9 +124,10 @@ func calculate_color() -> int:
 			ColorCatagory.SourcePref.EXTERNAL:
 				if not isLocal:
 					colorScore[colorType] += ColorCatagory.MULTI_SOURCE
-		#Item Quality Flags
-		if baseColor.itemQualityFlags.has(apItemFlags):
-			colorScore[colorType] += ColorCatagory.MULTI_ITEM_FLAGS * baseColor.itemQualityMulti
+		#Item Quality Flags are Player Only
+		if !enemyCard:
+			if baseColor.itemQualityFlags.has(apItemFlags):
+				colorScore[colorType] += ColorCatagory.MULTI_ITEM_FLAGS * baseColor.itemQualityMulti
 		#Go over the name flags
 		for eachFlag in nameData.nameFlags:
 			colorScore[colorType] += eachFlag.get_score(baseColor)

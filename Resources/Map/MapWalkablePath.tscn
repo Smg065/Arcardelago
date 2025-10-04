@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://ck7rlgf4sxlox" path="res://Scripts/Overworld/MapWalkablePath.gd" id="1_vb3ws"]
 
 [sub_resource type="Curve2D" id="Curve2D_l8kh1"]
+resource_local_to_scene = true
 
 [node name="WalkablePath" type="Path2D"]
 curve = SubResource("Curve2D_l8kh1")

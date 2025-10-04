@@ -56,3 +56,6 @@ func update_rich_texts():
 func set_region_band(apId : int):
 	var cardsPerRegion : int = 20
 	uiCardBandColor.color = ColorCatagory.BASE_COLORS[floori((apId - 1.0) / cardsPerRegion)].color
+
+func set_min_from_height(inHeight : int):
+	custom_minimum_size = Vector2(ceili(inHeight * ratio), inHeight)

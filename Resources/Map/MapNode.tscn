@@ -7,7 +7,6 @@
 texture_filter = 1
 texture_repeat = 1
 sprite_frames = ExtResource("1_ios3t")
-animation = &"WhiteBossPip"
 script = ExtResource("2_1cmld")
 colorIndex = 3
 mapNodeType = 4

@@ -19,17 +19,21 @@ var colorNode : AnimatedSprite2D
 ##If this node is marked as done
 var defeated : bool
 
-##Orthoginal Input Directions
-enum Directions {UP, RIGHT, DOWN, LEFT}
-
 ##The direction you would press to leave this node
-@export var pathDirs : Dictionary[Directions, MapWalkPip]
+@export var pathDirs : Dictionary[Vector2i, MapWalkPip]
 
-##The goals this map node has in connecting to others
-var pathGoals : Array[MapWalkPip.ConnectionGoal]
+##The directions that can be used to plug into other locations
+var availableDirs : Array[Vector2i]
+##Directions that lead off the map
+var nullDirs : Array[Vector2i]
+##Directions that lead into a new region
+var crossDirs : Dictionary[Vector2i, int]
+##The point on the grid
+var gridPoint : Vector2i
 
 ##Sets the pip up to be rendered
-func setup_pip(nColorIndex : int, nMapNodeType : int) -> void:
+func setup_pip(nColorIndex : int, nMapNodeType : int, worldMap : WorldMap) -> void:
+	#Visuals first
 	colorIndex = nColorIndex
 	mapNodeType = nMapNodeType as MapNodeType
 	colorNode = $Color
@@ -73,6 +77,19 @@ func setup_pip(nColorIndex : int, nMapNodeType : int) -> void:
 	#Don't animate if it's an intersection
 	if mapNodeType == MapNodeType.INTERSECTION:
 		colorNode.pause()
+	for eachOffset in [Vector2i.UP, Vector2i.RIGHT, Vector2i.DOWN, Vector2i.LEFT]:
+		var entryPoint : Vector2 = gridPoint + eachOffset
+		#If the entry of this node is not in-region
+		if !worldMap.regions[colorIndex].coords.has(entryPoint):
+			#Check if it's in ANY region
+			for eachRegion in worldMap.regions:
+				if eachRegion.coords.has(entryPoint):
+					crossDirs[eachOffset] = eachRegion.index
+					break
+			if !crossDirs.has(eachOffset):
+				nullDirs.append(eachOffset)
+		else:
+			availableDirs.append(eachOffset)
 
 ##Set the colored pip in the middle to a specific colored animation
 func set_anim_pip_color(colorAppend : String):
@@ -137,60 +154,25 @@ func other_path(startingPath : MapWalkPip) -> MapWalkPip:
 	return paths[0]
 
 ##Get any directions not taken up by a path
-func available_directions() -> Array[Directions]:
-	var allDirs : Array[Directions] = [
-		Directions.UP,
-		Directions.DOWN,
-		Directions.LEFT,
-		Directions.RIGHT
-	]
+func available_directions(inRegion : bool = true) -> Array[Vector2i]:
+	var allDirs : Array[Vector2i] = availableDirs.duplicate()
+	#Disclude directions already used
 	for eachDir in pathDirs.keys():
 		allDirs.erase(eachDir)
+	#Erase directions that are fully nullified
+	for eachDir in nullDirs:
+		allDirs.erase(eachDir)
+	#If you're a region-internal path, no cross-worlding
+	if inRegion:
+		for eachDir in crossDirs.keys():
+			allDirs.erase(eachDir)
 	return allDirs
 
-##TODO: Make Bosses Not Blow:tm:
-func get_grid_entry_point(offsetDir : Directions) -> Vector2i:
-	var inputOffset : Vector2i
-	match offsetDir:
-		Directions.UP:
-			inputOffset = Vector2i.UP
-		Directions.RIGHT:
-			inputOffset = Vector2i.RIGHT
-		Directions.DOWN:
-			inputOffset = Vector2i.DOWN
-		Directions.LEFT:
-			inputOffset = Vector2i.LEFT
-	return ((Vector2i(global_position) + (Vector2i.ONE * 8)) / 16) + inputOffset
+##Set your global position to match the grid point
+func set_grid_point(nGridPoint : Vector2i):
+	gridPoint = nGridPoint
+	global_position = (gridPoint * WorldMap.CELL_SIZE) + (WorldMap.CELL_SIZE / 2)
 
-##Get the best goal from this specific node
-func best_goal(bestGoals : Array[MapWalkPip.ConnectionGoal]) -> Array[MapWalkPip.ConnectionGoal]:
-	if pathGoals.size() == 0:
-		return []
-	for eachGoal in pathGoals:
-		var result : Array[MapWalkPip.ConnectionGoal] = eachGoal.best_goal(bestGoals)
-		#If both are the best, put it in the array
-		if result.size() == 2:
-			bestGoals.append(eachGoal)
-		#If only one is the best, it's the new array to beat
-		else:
-			bestGoals = result
-	return bestGoals
-
-##Remove this goal from the node
-func clear_goal(inGoal : MapWalkPip.ConnectionGoal, usedDir : Directions):
-	if !pathGoals.has(inGoal):
-		print("Doesn't Exist")
-		print("Path Generated = " + str(inGoal.path.generated))
-	#Remove the goal
-	pathGoals.erase(inGoal)
-	#Tell the other goals connected to it the direction given is no longer viable
-	for eachGoal in pathGoals:
-		eachGoal.dir_taken(usedDir)
-
-##Runs when a path is generated that you have a goal around
-func path_generated(inPath : MapWalkPip):
-	#Clear it from being a path goal anymore
-	for eachGoal in pathGoals.duplicate():
-		if eachGoal.path == inPath:
-			print("Erased a goal")
-			pathGoals.erase(eachGoal)
+func register(inputDir : Vector2i, path : MapWalkPip):
+	pathDirs[inputDir] = path
+	availableDirs.erase(inputDir)

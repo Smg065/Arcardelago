@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://c0awpgvaoogss" path="res://Scripts/Overworld/MapNode.gd" id="2_1cmld"]
 
 [node name="MapPip" type="AnimatedSprite2D"]
+z_index = 2
 texture_filter = 1
 texture_repeat = 1
 sprite_frames = ExtResource("1_ios3t")
@@ -12,6 +13,7 @@ colorIndex = 3
 mapNodeType = 4
 
 [node name="Color" type="AnimatedSprite2D" parent="."]
+z_index = 3
 texture_filter = 1
 texture_repeat = 1
 sprite_frames = ExtResource("1_ios3t")

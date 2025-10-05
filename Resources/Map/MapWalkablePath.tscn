@@ -7,6 +7,7 @@
 resource_local_to_scene = true
 
 [node name="WalkablePath" type="Path2D"]
+z_index = 1
 curve = SubResource("Curve2D_l8kh1")
 script = ExtResource("1_vb3ws")
 

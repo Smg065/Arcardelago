@@ -11,8 +11,9 @@
 
 [node name="Game" type="Node"]
 
-[node name="WorldMap" type="Node2D" parent="." node_paths=PackedStringArray("groundTilemap", "mapSpot")]
+[node name="WorldMap" type="Node2D" parent="." node_paths=PackedStringArray("mapPlayer", "groundTilemap", "mapSpot")]
 script = ExtResource("1_psonl")
+mapPlayer = NodePath("Player")
 groundTilemap = NodePath("GroundTilemap")
 mapSpot = NodePath("MapNodes")
 pipPrefab = ExtResource("4_eceo5")
@@ -30,6 +31,7 @@ texture = ExtResource("1_l8kh1")
 [node name="MapNodes" type="Node2D" parent="WorldMap"]
 
 [node name="Player" type="PathFollow2D" parent="WorldMap"]
+z_index = 4
 rotates = false
 loop = false
 script = ExtResource("6_37m1j")
@@ -40,7 +42,7 @@ position = Vector2(0, -8)
 texture = ExtResource("5_x5pqh")
 
 [node name="PlayCam" type="Camera2D" parent="WorldMap/Player"]
-zoom = Vector2(1.6, 1.6)
+zoom = Vector2(2, 2)
 
 [node name="WorldmapUi" type="CanvasLayer" parent="WorldMap/Player/PlayCam"]
 

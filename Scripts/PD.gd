@@ -12,8 +12,19 @@ static func append_dict_entry(dict : Dictionary, key, value) -> Dictionary:
 		dict[key] = [value]
 	return dict
 
+##Get a random color from the ranges
+func random_color(hMn : float, hMx : float, sMn : float, sMx : float, vMn : float, vMx : float):
+	var randH := rng.randf_range(hMn, hMx)
+	var randS := rng.randf_range(sMn, sMx)
+	var randV := rng.randf_range(vMn, vMx)
+	return Color.from_hsv(randH, randS, randV)
+
 ##Picks a random element from the random seed
 func pick_random(inArray : Array):
 	if rng == null:
 		rng = RandomNumberGenerator.new()
+	#Don't use the RNG if there's no options, for seed stability
+	if inArray.size() == 1:
+		return inArray[0]
+	#Use the RNG if there's 2 or more options
 	return inArray[rng.randi_range(0, inArray.size() - 1)]

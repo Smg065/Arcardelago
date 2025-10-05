@@ -14,6 +14,7 @@
 [node name="WorldMap" type="Node2D" parent="." node_paths=PackedStringArray("mapPlayer", "groundTilemap", "mapSpot")]
 script = ExtResource("1_psonl")
 mapPlayer = NodePath("Player")
+diagonalMode = 3
 groundTilemap = NodePath("GroundTilemap")
 mapSpot = NodePath("MapNodes")
 pipPrefab = ExtResource("4_eceo5")
@@ -42,7 +43,6 @@ position = Vector2(0, -8)
 texture = ExtResource("5_x5pqh")
 
 [node name="PlayCam" type="Camera2D" parent="WorldMap/Player"]
-zoom = Vector2(2, 2)
 
 [node name="WorldmapUi" type="CanvasLayer" parent="WorldMap/Player/PlayCam"]
 

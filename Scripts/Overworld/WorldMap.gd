@@ -9,6 +9,7 @@ class MapRegion:
 	var aStar : AStarGrid2D
 	##All coordinates that the map regions have
 	var coords : PackedVector2Array
+	var noise : FastNoiseLite
 	
 	const DIRS = [Vector2.UP, Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT,
 	Vector2(1, 1), Vector2(1, -1), Vector2(-1, 1), Vector2(-1, -1)]
@@ -16,7 +17,7 @@ class MapRegion:
 	##All the pips in this region
 	var pips : Array[MapPip]
 	
-	func _init(nIndex : int, nCoords : PackedVector2Array) -> void:
+	func _init(nIndex : int, nCoords : PackedVector2Array, diagonalMode : AStarGrid2D.DiagonalMode) -> void:
 		#Basic assignment
 		index = nIndex
 		coords.append_array(nCoords)
@@ -35,10 +36,35 @@ class MapRegion:
 		aStar = AStarGrid2D.new()
 		aStar.region = aStarRegion
 		aStar.cell_size = WorldMap.CELL_SIZE
-		aStar.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_NEVER
+		aStar.diagonal_mode = diagonalMode
 		aStar.update()
 		#print("Region %s goes from %s to %s" % [index, aStar.region.position, aStar.region.end])
 		WorldMap.run_for_region(aStar.region, WorldMap.solidify_unfound_cells.bind(aStar, coords))
+		
+		#Create the noise for water/walls
+		noise = FastNoiseLite.new()
+		noise.seed = Persist.rng.randi()
+		#noise.noise_type = FastNoiseLite.TYPE_SIMPLEX_SMOOTH
+		#noise.TYPE_SIMPLEX_SMOOTH
+		noise.frequency = .05
+	
+	##Render the tiles using the noise map
+	func draw_tiles(groundTilemap : TileMapLayer) -> void:
+		var floorCoords : PackedVector2Array
+		var wallCoords : PackedVector2Array
+		var waterCoords : PackedVector2Array
+		for eachCoord in coords:
+			var noiseVal := noise.get_noise_2dv(eachCoord)
+			print(noiseVal)
+			if noiseVal < -0.5:
+				waterCoords.append(eachCoord)
+			elif noiseVal > 0.5:
+				wallCoords.append(eachCoord)
+			else:
+				floorCoords.append(eachCoord)
+		groundTilemap.set_cells_terrain_connect(floorCoords, index, 0)
+		groundTilemap.set_cells_terrain_connect(wallCoords, index, 1)
+		groundTilemap.set_cells_terrain_connect(waterCoords, index, 2)
 	
 	##Get all the random coords you plan to use
 	func rand_pip_coords(toPick : int, aStarGlobal : AStarGrid2D) -> PackedVector2Array:
@@ -59,15 +85,16 @@ class MapRegion:
 			for eachDir in DIRS:
 				var adjacent : Vector2 = randCord + eachDir
 				if aStar.is_in_boundsv(adjacent):
-					aStar.set_point_weight_scale(adjacent, 3)
+					aStar.set_point_weight_scale(adjacent, 2)
 				if aStarGlobal.is_in_boundsv(adjacent):
-					aStarGlobal.set_point_weight_scale(adjacent, 3)
+					aStarGlobal.set_point_weight_scale(adjacent, 2)
 				coordsNoDupes.erase(randCord + eachDir)
 			output.append(randCord)
 		return output
 
 @export var mapRadius : int = 25
 @export var mapPlayer : OverworldPlayer
+@export var diagonalMode : AStarGrid2D.DiagonalMode
 const CELL_SIZE = Vector2i(16, 16)
 var aStar : AStarGrid2D
 var regions : Array[MapRegion]
@@ -83,21 +110,26 @@ var regions : Array[MapRegion]
 @export var paths : Array[MapWalkPip]
 
 func _ready() -> void:
+	var nSeed : int = randi()
+	print(nSeed)
+	Persist.set_rand_seed(nSeed)
+	
 	aStar = AStarGrid2D.new()
 	var mapSize := Vector2i(mapRadius, mapRadius) * 2
 	var startPoint : Vector2i = -mapSize / 2
 	var centerRadius := mapRadius / (PI * 1.5)
 	aStar.region = Rect2i(startPoint, mapSize)
 	aStar.cell_size = CELL_SIZE
-	aStar.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_NEVER
+	aStar.diagonal_mode = diagonalMode
 	aStar.update()
 	#Get all the regions coords
 	var regionCoords = run_for_region(aStar.region, get_region_cell.bind(centerRadius), true)
 	#Create the regions
 	for regionIndex in regionCoords.keys():
 		generate_region(regionIndex, regionCoords[regionIndex])
-	#Make the regions show up IN ORDER
+	#Make the regions show up in order
 	regions.sort_custom(func(a, b): return a.index < b.index)
+	#For each region, do the following
 	for eachRegion in regions:
 		spawn_region_nodes(eachRegion)
 	#Generate the paths
@@ -107,9 +139,9 @@ func _ready() -> void:
 
 ##Construct a region
 func generate_region(index : int, coords : PackedVector2Array):
-	var newRegion := MapRegion.new(index, coords)
+	var newRegion := MapRegion.new(index, coords, diagonalMode)
 	regions.append(newRegion)
-	groundTilemap.set_cells_terrain_connect(coords, index, 0)
+	newRegion.draw_tiles(groundTilemap)
 	#The center region has special spawning rules
 	if index == 0:
 		spawn_pip(-Vector2i.ONE, 0, MapPip.MapNodeType.BOSS)
@@ -121,7 +153,7 @@ func spawn_region_nodes(inRegion : MapRegion):
 	var pipCoords := inRegion.rand_pip_coords(10, aStar)
 	for eachCoord in pipCoords:
 		var spawnCoord := eachCoord
-		var nPip := spawn_pip(spawnCoord, inRegion.index, MapPip.MapNodeType.ENEMY)
+		var nPip := spawn_pip(spawnCoord, inRegion.index, 2 as MapPip.MapNodeType)
 		inRegion.pips.append(nPip)
 	
 	var lastPip := inRegion.pips[0]

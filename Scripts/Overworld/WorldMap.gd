@@ -54,11 +54,10 @@ class MapRegion:
 		var wallCoords : PackedVector2Array
 		var waterCoords : PackedVector2Array
 		for eachCoord in coords:
-			var noiseVal := noise.get_noise_2dv(eachCoord)
-			print(noiseVal)
-			if noiseVal < -0.5:
+			var noiseVal : float = noise.get_noise_2dv(eachCoord)
+			if noiseVal < -0.25:
 				waterCoords.append(eachCoord)
-			elif noiseVal > 0.5:
+			elif noiseVal > 0.25:
 				wallCoords.append(eachCoord)
 			else:
 				floorCoords.append(eachCoord)
@@ -91,6 +90,7 @@ class MapRegion:
 				coordsNoDupes.erase(randCord + eachDir)
 			output.append(randCord)
 		return output
+	
 
 @export var mapRadius : int = 25
 @export var mapPlayer : OverworldPlayer
@@ -106,13 +106,11 @@ var regions : Array[MapRegion]
 @export var mapSpot : Node2D
 @export var pipPrefab : PackedScene
 @export var pathPrefab : PackedScene
-@export var pips : Dictionary[Vector2i, MapPip]
+@export var pips : Array[MapPip]
+var finalBossPip : MapPip
 @export var paths : Array[MapWalkPip]
 
 func _ready() -> void:
-	var nSeed : int = randi()
-	print(nSeed)
-	Persist.set_rand_seed(nSeed)
 	
 	aStar = AStarGrid2D.new()
 	var mapSize := Vector2i(mapRadius, mapRadius) * 2
@@ -130,11 +128,15 @@ func _ready() -> void:
 	#Make the regions show up in order
 	regions.sort_custom(func(a, b): return a.index < b.index)
 	#For each region, do the following
+	var startPip : MapPip = finalBossPip
 	for eachRegion in regions:
 		spawn_region_nodes(eachRegion)
+		eachRegion.pips = sort_map_pips(eachRegion.pips, startPip)
+	#Make it perfectly linear
+	spawn_all_paths()
 	#Generate the paths
 	generate_all_paths()
-	mapPlayer.set_current_pip(Persist.pick_random(pips.values()))
+	mapPlayer.set_current_pip(Persist.pick_random(pips))
 	mapPlayer.enabled = true
 
 ##Construct a region
@@ -144,7 +146,7 @@ func generate_region(index : int, coords : PackedVector2Array):
 	newRegion.draw_tiles(groundTilemap)
 	#The center region has special spawning rules
 	if index == 0:
-		spawn_pip(-Vector2i.ONE, 0, MapPip.MapNodeType.BOSS)
+		finalBossPip = spawn_pip(-Vector2i.ONE, 0, MapPip.MapNodeType.BOSS)
 		return
 
 ##Create the nodes in a region
@@ -155,12 +157,6 @@ func spawn_region_nodes(inRegion : MapRegion):
 		var spawnCoord := eachCoord
 		var nPip := spawn_pip(spawnCoord, inRegion.index, 2 as MapPip.MapNodeType)
 		inRegion.pips.append(nPip)
-	
-	var lastPip := inRegion.pips[0]
-	for pipIndex in range(1, inRegion.pips.size()):
-		var thisPip := inRegion.pips[pipIndex]
-		spawn_path(lastPip, thisPip)
-		lastPip = thisPip
 
 ##Try to generate all paths in the world map
 func generate_all_paths():
@@ -175,12 +171,10 @@ func generate_path(inPath : MapWalkPip):
 	match pathRegion:
 		#Adjacent Mapping
 		-1:
-			print("Adjacent")
 			starForUse = aStar
 		#Create 2 warp points and bridge
 		-2:
 			inPath.generated = true
-			inPath.path_generated.emit()
 			print("Warp Logic")
 			return
 		#In-Region Mapping
@@ -238,7 +232,7 @@ static func run_for_region(inRect : Rect2i, callable : Callable, reverse : bool 
 func spawn_pip(coords : Vector2i, region : int, type : MapPip.MapNodeType) -> MapPip:
 	var newPip : MapPip = pipPrefab.instantiate()
 	mapSpot.add_child(newPip)
-	pips[coords] = newPip
+	pips.append(newPip)
 	newPip.set_grid_point(coords)
 	newPip.setup_pip(region, type, self)
 	return newPip
@@ -259,3 +253,34 @@ func all_paths_generated():
 		if !eachPath.generated:
 			return false
 	return true
+
+##Map node sorter to make the paths less complex/more straight
+static func sort_map_pips(toSort : Array[MapPip], startingPip : MapPip) -> Array[MapPip]:
+	var sortedPips : Array[MapPip]
+	var originalPips : Array[MapPip]
+	originalPips.append_array(toSort)
+	originalPips.erase(startingPip)
+	var previousPip := startingPip
+	while originalPips.size() > 0:
+		var bestDist := 99999999999.9
+		var closestPips : Array[MapPip]
+		for eachPip in originalPips:
+			var dist := eachPip.global_position.distance_squared_to(previousPip.global_position)
+			if is_equal_approx(bestDist, dist):
+				closestPips.append(eachPip)
+			elif bestDist > dist:
+				closestPips = [eachPip]
+				bestDist = dist
+		previousPip = Persist.pick_random(closestPips)
+		originalPips.erase(previousPip)
+		sortedPips.append(previousPip)
+	return sortedPips
+
+##Just go in total order
+func spawn_all_paths():
+	for eachRegion in regions:
+		var lastPip := eachRegion.pips[0]
+		for pipIndex in range(1, eachRegion.pips.size()):
+			var thisPip := eachRegion.pips[pipIndex]
+			spawn_path(lastPip, thisPip)
+			lastPip = thisPip

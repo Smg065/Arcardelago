@@ -4,6 +4,13 @@ class_name PD
 var rng : RandomNumberGenerator
 var game : GameData
 
+func _ready() -> void:
+	var nSeed : int = randi()
+	print(nSeed)
+	Persist.set_rand_seed(nSeed)
+	
+	
+
 ##Makes a dictionary either create a new array at a key or append to it
 static func append_dict_entry(dict : Dictionary, key, value) -> Dictionary:
 	if dict.has(key):

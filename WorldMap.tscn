@@ -43,6 +43,7 @@ position = Vector2(0, -8)
 texture = ExtResource("5_x5pqh")
 
 [node name="PlayCam" type="Camera2D" parent="WorldMap/Player"]
+zoom = Vector2(2, 2)
 
 [node name="WorldmapUi" type="CanvasLayer" parent="WorldMap/Player/PlayCam"]
 

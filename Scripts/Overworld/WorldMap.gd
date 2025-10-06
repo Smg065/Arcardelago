@@ -90,9 +90,7 @@ class MapRegion:
 				coordsNoDupes.erase(randCord + eachDir)
 			output.append(randCord)
 		return output
-	
 
-@export var mapRadius : int = 25
 @export var mapPlayer : OverworldPlayer
 @export var diagonalMode : AStarGrid2D.DiagonalMode
 const CELL_SIZE = Vector2i(16, 16)
@@ -108,14 +106,24 @@ var regions : Array[MapRegion]
 @export var pathPrefab : PackedScene
 @export var pips : Array[MapPip]
 var finalBossPip : MapPip
+var nodesUsedPercents : Dictionary[String, float] = {
+	"Auto":0,
+	"Intersection":0,
+	"Shop":0,
+	"Treasure":0,
+	"Releaser":0,
+	"Warp":0,
+	"Event":0,
+	"Enemy":0
+}
 @export var paths : Array[MapWalkPip]
 
 func _ready() -> void:
-	
 	aStar = AStarGrid2D.new()
-	var mapSize := Vector2i(mapRadius, mapRadius) * 2
+	var mapSize := Vector2i(Persist.mapRadius, Persist.mapRadius) * 2
 	var startPoint : Vector2i = -mapSize / 2
-	var centerRadius := mapRadius / (PI * 1.5)
+	var centerRadius := Persist.mapRadius / (PI * 1.5)
+	var spawnRegion = (Persist.spawnSphere as int) + 1
 	aStar.region = Rect2i(startPoint, mapSize)
 	aStar.cell_size = CELL_SIZE
 	aStar.diagonal_mode = diagonalMode
@@ -130,13 +138,15 @@ func _ready() -> void:
 	#For each region, do the following
 	var startPip : MapPip = finalBossPip
 	for eachRegion in regions:
+		#Spawn the nodes
 		spawn_region_nodes(eachRegion)
-		eachRegion.pips = sort_map_pips(eachRegion.pips, startPip)
+		#Sort the map pips
+		#eachRegion.pips = sort_map_pips(eachRegion.pips, startPip)
 	#Make it perfectly linear
 	spawn_all_paths()
 	#Generate the paths
 	generate_all_paths()
-	mapPlayer.set_current_pip(Persist.pick_random(pips))
+	mapPlayer.set_current_pip(Persist.pick_random(regions[spawnRegion].pips))
 	mapPlayer.enabled = true
 
 ##Construct a region
@@ -155,8 +165,55 @@ func spawn_region_nodes(inRegion : MapRegion):
 	var pipCoords := inRegion.rand_pip_coords(10, aStar)
 	for eachCoord in pipCoords:
 		var spawnCoord := eachCoord
-		var nPip := spawn_pip(spawnCoord, inRegion.index, 2 as MapPip.MapNodeType)
+		var nPip := spawn_pip(spawnCoord, inRegion.index, get_next_pip_type())
 		inRegion.pips.append(nPip)
+
+##Create a pip type
+func get_next_pip_type() -> MapPip.MapNodeType:
+	#First, get all scores at 0
+	var tiedOptions : Array[String]
+	var bestScore : float = 9999999999
+	for eachType in nodesUsedPercents.keys():
+		var eachScore = nodesUsedPercents[eachType]
+		if is_equal_approx(bestScore, eachScore):
+			tiedOptions.append(eachType)
+		elif bestScore > eachScore:
+			tiedOptions = [eachType]
+			bestScore = eachScore
+	#Then pick the ones with the highest rate of spawn
+	var bestOptions : Array[String]
+	var highestPercent : float = 0
+	for eachOption in tiedOptions:
+		var eachPercent = Persist.nodePercents[eachOption]
+		if is_equal_approx(highestPercent, eachPercent):
+			bestOptions.append(eachOption)
+		elif highestPercent < eachPercent:
+			bestOptions = [eachOption]
+			highestPercent = eachPercent
+	#From the tied remaining, pick one at random
+	var chosenType : String = Persist.pick_random(bestOptions)
+	#Append the percent that it occurs
+	nodesUsedPercents[chosenType] += 100.0 / highestPercent
+	#Return the type based on the name
+	match chosenType:
+		"Auto":
+			return MapPip.MapNodeType.AUTO
+		"Intersection":
+			return MapPip.MapNodeType.INTERSECTION
+		"Shop":
+			return MapPip.MapNodeType.SHOP
+		"Treasure":
+			return MapPip.MapNodeType.TREASURE
+		"Releaser":
+			return MapPip.MapNodeType.RELEASER
+		"Warp":
+			return MapPip.MapNodeType.PORTAL
+		"Event":
+			return MapPip.MapNodeType.EVENT
+		_:
+			if chosenType != "Enemy":
+				push_warning(chosenType + "unknown; defaulted to 'Enemy'")
+			return MapPip.MapNodeType.ENEMY
 
 ##Try to generate all paths in the world map
 func generate_all_paths():
@@ -190,7 +247,7 @@ func get_region_cell(cellX : int, cellY : int, centerRadius : float):
 	var lineCentered := (newCell + (Vector2.ONE / 2))
 	var cellDistance := lineCentered.length()
 	#No cell here
-	if cellDistance > mapRadius:
+	if cellDistance > Persist.mapRadius:
 		return null
 	#The center region
 	if cellDistance <= centerRadius:

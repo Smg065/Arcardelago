@@ -1,5 +1,6 @@
-[gd_resource type="SpriteFrames" load_steps=144 format=3 uid="uid://c1gtvtx7hcn6h"]
+[gd_resource type="SpriteFrames" load_steps=145 format=3 uid="uid://c1gtvtx7hcn6h"]
 
+[ext_resource type="Texture2D" uid="uid://b6og38fxc1omk" path="res://Sprites/Altar.png" id="1_8tvo4"]
 [ext_resource type="Texture2D" uid="uid://cd7b7vuw1o018" path="res://Sprites/MapNode.png" id="1_ei3w0"]
 [ext_resource type="Texture2D" uid="uid://b3pou677qexuh" path="res://Sprites/BossNode.png" id="1_mvso2"]
 [ext_resource type="Texture2D" uid="uid://bm3yfl5hlkd1g" path="res://Sprites/Gates.png" id="2_1qk57"]
@@ -554,6 +555,14 @@ region = Rect2(0, 32, 16, 16)
 
 [resource]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_8tvo4")
+}],
+"loop": true,
+"name": &"Altar",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_rxd84")

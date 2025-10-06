@@ -53,6 +53,14 @@ func hold_server_data(slotData : Dictionary) -> void:
 	cardsPerRegion = slotData["cards_per_region"]
 	mapRadius = slotData["map_radius"]
 	nodePercents = slotData["node_percentages"]
+	#Nodes with 0% Chance will not randomly be selected
+	var toDelete : Array[String]
+	for eachEntry in nodePercents.keys():
+		if is_zero_approx(nodePercents[eachEntry]):
+			toDelete = eachEntry
+	for eachEntry in toDelete:
+		nodePercents.erase(eachEntry)
+	##Get your spawning sphere
 	match slotData["spawning_sphere"]:
 		"Red Sphere":
 			spawnSphere = ColorCatagory.RED

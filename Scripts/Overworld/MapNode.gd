@@ -32,10 +32,29 @@ var crossDirs : Dictionary[Vector2i, int]
 var gridPoint : Vector2i
 
 ##Sets the pip up to be rendered
-func setup_pip(nColorIndex : int, nMapNodeType : int, worldMap : WorldMap) -> void:
+func setup_pip(nColorIndex : int, nMapNodeType : MapNodeType, worldMap : WorldMap) -> void:
 	#Visuals first
 	colorIndex = nColorIndex
-	mapNodeType = nMapNodeType as MapNodeType
+	mapNodeType = nMapNodeType
+	setup_visuals()
+	#Don't animate if it's an intersection
+	if mapNodeType == MapNodeType.INTERSECTION:
+		colorNode.pause()
+	for eachOffset in [Vector2i.UP, Vector2i.RIGHT, Vector2i.DOWN, Vector2i.LEFT]:
+		var entryPoint : Vector2 = gridPoint + eachOffset
+		#If the entry of this node is not in-region
+		if !worldMap.regions[colorIndex].coords.has(entryPoint):
+			#Check if it's in ANY region
+			for eachRegion in worldMap.regions:
+				if eachRegion.coords.has(entryPoint):
+					crossDirs[eachOffset] = eachRegion.index
+					break
+			if !crossDirs.has(eachOffset):
+				nullDirs.append(eachOffset)
+		else:
+			availableDirs.append(eachOffset)
+
+func setup_visuals():
 	colorNode = $Color
 	var colorAppend := ""
 	match mapNodeType:
@@ -72,31 +91,19 @@ func setup_pip(nColorIndex : int, nMapNodeType : int, worldMap : WorldMap) -> vo
 			return
 		MapNodeType.RELEASER:
 			self_modulate = Color.TRANSPARENT
+			play("Altar")
 			return
 		#Auto has no rendering at all
 		MapNodeType.AUTO:
 			modulate = Color.TRANSPARENT
 			return
-		#Enemies and Events render the same, to keep it spicy
+		#Events have no metal ring
+		MapNodeType.EVENT:
+			self_modulate = Color.TRANSPARENT
+		#Enemies
 		_:
 			play("default")
 	set_anim_pip_color(colorAppend)
-	#Don't animate if it's an intersection
-	if mapNodeType == MapNodeType.INTERSECTION:
-		colorNode.pause()
-	for eachOffset in [Vector2i.UP, Vector2i.RIGHT, Vector2i.DOWN, Vector2i.LEFT]:
-		var entryPoint : Vector2 = gridPoint + eachOffset
-		#If the entry of this node is not in-region
-		if !worldMap.regions[colorIndex].coords.has(entryPoint):
-			#Check if it's in ANY region
-			for eachRegion in worldMap.regions:
-				if eachRegion.coords.has(entryPoint):
-					crossDirs[eachOffset] = eachRegion.index
-					break
-			if !crossDirs.has(eachOffset):
-				nullDirs.append(eachOffset)
-		else:
-			availableDirs.append(eachOffset)
 
 ##Set the colored pip in the middle to a specific colored animation
 func set_anim_pip_color(colorAppend : String):

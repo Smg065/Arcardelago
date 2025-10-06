@@ -54,8 +54,7 @@ func update_rich_texts():
 	uiCardGameLabel.do_resize_text()
 
 func set_region_band(apId : int):
-	var cardsPerRegion : int = 20
-	uiCardBandColor.color = ColorCatagory.BASE_COLORS[floori((apId - 1.0) / cardsPerRegion)].color
+	uiCardBandColor.color = ColorCatagory.BASE_COLORS[floori((apId - 65000.0) / 100.0)].color
 
 func set_min_from_height(inHeight : int):
 	custom_minimum_size = Vector2(ceili(inHeight * ratio), inHeight)

@@ -15,10 +15,12 @@
 [ext_resource type="Texture2D" uid="uid://dx80tqmn85b78" path="res://Sprites/HeartPanel.png" id="13_pos1q"]
 
 [sub_resource type="Gradient" id="Gradient_2n3nw"]
+resource_local_to_scene = true
 offsets = PackedFloat32Array(0)
 colors = PackedColorArray(0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_5f00q"]
+resource_local_to_scene = true
 gradient = SubResource("Gradient_2n3nw")
 fill_to = Vector2(1, 1)
 

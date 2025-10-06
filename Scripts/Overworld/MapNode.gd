@@ -2,7 +2,7 @@ extends AnimatedSprite2D
 class_name MapPip
 
 ##The types of locations that show up in the overworld
-enum MapNodeType {AUTO, INTERSECTION, ENEMY, BOSS, OBSTACLE, GATE, SHOP, TREASURE, PORTAL, RELEASER}
+enum MapNodeType {AUTO, INTERSECTION, ENEMY, BOSS, OBSTACLE, GATE, SHOP, TREASURE, PORTAL, RELEASER, EVENT, HOME}
 ##The recolorable renderer for the center of the pip
 var colorNode : AnimatedSprite2D
 ##The map color this node is part of.[br]
@@ -44,12 +44,19 @@ func setup_pip(nColorIndex : int, nMapNodeType : int, worldMap : WorldMap) -> vo
 			position += Vector2.ONE * 8
 			play("BossRing")
 			colorAppend = "Boss"
+		#Reuse the shop sprite for now
+		MapNodeType.HOME:
+			play("ShopBack")
+			colorAppend = "Shop"
+		#Shop sprites
 		MapNodeType.SHOP:
 			play("ShopBack")
 			colorAppend = "Shop"
+		#Treasure sprites
 		MapNodeType.TREASURE:
 			play("TreasureBack")
 			colorAppend = "Treasure"
+		#Gate sprites
 		MapNodeType.GATE:
 			play("GateBack")
 			colorAppend = "Gate"
@@ -70,7 +77,7 @@ func setup_pip(nColorIndex : int, nMapNodeType : int, worldMap : WorldMap) -> vo
 		MapNodeType.AUTO:
 			modulate = Color.TRANSPARENT
 			return
-		#Enemies
+		#Enemies and Events render the same, to keep it spicy
 		_:
 			play("default")
 	set_anim_pip_color(colorAppend)

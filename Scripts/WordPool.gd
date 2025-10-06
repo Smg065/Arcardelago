@@ -43,6 +43,7 @@ func on_connection(inConn: ConnectionInfo, json: Dictionary):
 	var gameInfo = GameData.find_valid_game(ip, port, slot, password)
 	if gameInfo != "":
 		Persist.game = GameData.json_load(gameInfo)
+		Persist.hold_server_data(json["slot_data"])
 		get_tree().change_scene_to_file("res://WorldMap.tscn")
 	else:
 		build_new_game(json)
@@ -65,7 +66,7 @@ func build_new_game(json: Dictionary):
 	conn.load_locations()
 	var locationIds : Array[int] = []
 	locationIds.append_array(conn.slot_locations.keys())
-	Persist.game.difficulty = json["slot_data"]["difficulty"]
+	Persist.hold_server_data(json["slot_data"])
 	build_enemies(json["slot_data"]["enemies"])
 	Archipelago.send_command("LocationScouts", {"locations": locationIds, "create_as_hint": 0})
 
@@ -249,7 +250,7 @@ func fictional_names_check_existing():
 		save_game_as_new()
 
 func save_game_as_new():
-	Persist.game.save_as_new()
+	Persist.game.save_as_file(ip, port, slot, password)
 	get_tree().change_scene_to_file("res://WorldMap.tscn")
 
 func dictionary_api_delay() -> void:

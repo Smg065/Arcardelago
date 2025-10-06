@@ -2,7 +2,6 @@ extends Resource
 class_name GameData
 
 #AP Server Data
-var difficulty : int
 var apSaveData : SaveFile
 
 #Dictionary Data
@@ -15,7 +14,6 @@ var allCards : Array[CardData]
 func json_save() -> String:
 	#Empty info
 	var saveData : Dictionary = {
-		"difficulty" : difficulty,
 		"gameCardsets" : {},
 		"existingWords" : {},
 		"fictionalWords" : {},
@@ -39,7 +37,6 @@ func json_save() -> String:
 static func json_load(saveString : String) -> GameData:
 	var gameData := GameData.new()
 	var saveData = JSON.parse_string(saveString)
-	gameData.difficulty = saveData["difficulty"]
 	#Get each resources save info
 	for eachExistingWord in saveData["existingWords"]:
 		gameData.existingWords[eachExistingWord] = NameFlags.json_load(saveData["existingWords"][eachExistingWord])

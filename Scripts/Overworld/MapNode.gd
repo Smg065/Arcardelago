@@ -14,6 +14,8 @@ var colorNode : AnimatedSprite2D
 ##5: Blue[br]
 ##6: Yellow
 @export var colorIndex : int
+##The actual region the map node is from. -1 for unassigned
+@export var region : int = -1
 ##The location this map node is
 @export var mapNodeType : MapNodeType
 ##If this node is marked as done
@@ -21,7 +23,8 @@ var defeated : bool
 
 ##The direction you would press to leave this node
 @export var pathDirs : Dictionary[Vector2i, MapWalkPip]
-
+##The number of paths connected to this node
+var pathCount : int
 ##The directions that can be used to plug into other locations
 var availableDirs : Array[Vector2i]
 ##Directions that lead off the map
@@ -31,29 +34,14 @@ var crossDirs : Dictionary[Vector2i, int]
 ##The point on the grid
 var gridPoint : Vector2i
 
-##Sets the pip up to be rendered
-func setup_pip(nColorIndex : int, nMapNodeType : MapNodeType, worldMap : WorldMap) -> void:
+##Sets the pip up to be rendered as the type chosen
+func set_pip_type(nColorIndex : int, nMapNodeType : MapNodeType) -> void:
 	#Visuals first
 	colorIndex = nColorIndex
 	mapNodeType = nMapNodeType
 	setup_visuals()
-	#Don't animate if it's an intersection
-	if mapNodeType == MapNodeType.INTERSECTION:
-		colorNode.pause()
-	for eachOffset in [Vector2i.UP, Vector2i.RIGHT, Vector2i.DOWN, Vector2i.LEFT]:
-		var entryPoint : Vector2 = gridPoint + eachOffset
-		#If the entry of this node is not in-region
-		if !worldMap.regions[colorIndex].coords.has(entryPoint):
-			#Check if it's in ANY region
-			for eachRegion in worldMap.regions:
-				if eachRegion.coords.has(entryPoint):
-					crossDirs[eachOffset] = eachRegion.index
-					break
-			if !crossDirs.has(eachOffset):
-				nullDirs.append(eachOffset)
-		else:
-			availableDirs.append(eachOffset)
 
+##Visuals of type setting
 func setup_visuals():
 	colorNode = $Color
 	var colorAppend := ""
@@ -85,6 +73,7 @@ func setup_visuals():
 		#Portals, releasers and obstacles use their own unique renders
 		MapNodeType.PORTAL:
 			self_modulate = Color.TRANSPARENT
+			colorNode.modulate = Color.BLACK
 			return
 		MapNodeType.OBSTACLE:
 			self_modulate = Color.TRANSPARENT
@@ -104,6 +93,9 @@ func setup_visuals():
 		_:
 			play("default")
 	set_anim_pip_color(colorAppend)
+	#Don't animate if it's an intersection
+	if mapNodeType == MapNodeType.INTERSECTION:
+		colorNode.pause()
 
 ##Set the colored pip in the middle to a specific colored animation
 func set_anim_pip_color(colorAppend : String):
@@ -123,6 +115,26 @@ func set_anim_pip_color(colorAppend : String):
 			colorNode.play("Yellow%sPip" % colorAppend)
 		_:
 			colorNode.play("White%sPip" % colorAppend)
+
+##Generate the pip's direction availability
+func direction_availability(worldMap : WorldMap):
+	availableDirs.clear()
+	nullDirs.clear()
+	crossDirs.clear()
+	for eachOffset in [Vector2i.UP, Vector2i.RIGHT, Vector2i.DOWN, Vector2i.LEFT]:
+		var entryPoint : Vector2 = gridPoint + eachOffset
+		#If the entry of this node is not in-region
+		if !worldMap.regions[region].coords.has(entryPoint):
+			#Check if it's in ANY region
+			for eachRegion in worldMap.regions:
+				if eachRegion.coords.has(entryPoint):
+					crossDirs[eachOffset] = eachRegion.index
+					break
+			if !crossDirs.has(eachOffset):
+				nullDirs.append(eachOffset)
+		else:
+			availableDirs.append(eachOffset)
+
 
 ##Mark this node as defeated/undefeated, along with connected atuos
 func defeat(nDefeated : bool = true) -> void:
@@ -167,6 +179,10 @@ func other_path(startingPath : MapWalkPip) -> MapWalkPip:
 		return paths[1]
 	return paths[0]
 
+##Flag if you've got more than 1 path that can connect
+func connections_available(inRegion : bool = true) -> bool:
+	return available_directions(inRegion).size() - pathCount > 0
+
 ##Get any directions not taken up by a path
 func available_directions(inRegion : bool = true) -> Array[Vector2i]:
 	var allDirs : Array[Vector2i] = availableDirs.duplicate()
@@ -180,11 +196,15 @@ func available_directions(inRegion : bool = true) -> Array[Vector2i]:
 	if inRegion:
 		for eachDir in crossDirs.keys():
 			allDirs.erase(eachDir)
+	if availableDirs.size() == 0:
+		print("No available directions on this node!")
 	return allDirs
 
-##Set your global position to match the grid point
-func set_grid_point(nGridPoint : Vector2i):
+##Set your global position to match the grid point, along with the region
+func set_grid_point(nGridPoint : Vector2i, nRegion : int, worldMap : WorldMap):
 	gridPoint = nGridPoint
+	region = nRegion
+	direction_availability(worldMap)
 	global_position = (gridPoint * WorldMap.CELL_SIZE) + (WorldMap.CELL_SIZE / 2)
 
 func register(inputDir : Vector2i, path : MapWalkPip):

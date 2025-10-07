@@ -46,11 +46,17 @@ func move_along_path(delta: float):
 	if is_equal_approx(progress_ratio, move_progress()):
 		#On arrival, set this as your pip
 		curPip = curPath.other_pip(curPip)
-		#If you're an auto node, keep going here
-		if curPip.mapNodeType == MapPip.MapNodeType.AUTO:
-			set_path_goal(curPip.other_path(curPath))
-		else:
-			curPath = null
+		match curPip.mapNodeType:
+			#If you're an auto node, keep going here
+			MapPip.MapNodeType.AUTO:
+				set_path_goal(curPip.other_path(curPath))
+			#If you're a warp, warp
+			MapPip.MapNodeType.PORTAL:
+				var warpPath := curPip.other_path(curPath)
+				var warpPoint := warpPath.other_pip(curPip)
+				set_path_goal(warpPoint.other_path(warpPath))
+			_:
+				curPath = null
 
 func move_progress() -> float:
 	return 0.5 + (moveDir / 2.0)

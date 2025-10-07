@@ -16,9 +16,22 @@ class MapRegion:
 	
 	##All the pips in this region
 	var pips : Array[MapPip]
+	##The pip the house/interregionals should start at
+	var finalPip : MapPip
+	##The region you came from
+	var previousRegion : MapRegion
 	##The regions you want to connect to
 	var neighborRegions : Array[MapRegion]
+	##Pips that are gates
+	var gatePips : Array[MapPip]
+	##The regions you warp to
 	var warpRegions : Array[MapRegion]
+	##Pips that are gates
+	var warpPips : Array[MapPip]
+	##If this end of the region has a gate
+	var warpHasGate : Array[bool]
+	##The sphere required to traverse this warp
+	var warpSphere : PackedInt32Array
 	
 	func _init(nIndex : int, nCoords : PackedVector2Array, diagonalMode : AStarGrid2D.DiagonalMode) -> void:
 		#Basic assignment
@@ -71,7 +84,8 @@ class MapRegion:
 	##Get all the random coords you plan to use
 	func rand_pip_coords(toPick : int, aStarGlobal : AStarGrid2D) -> Dictionary:
 		var output : Dictionary = {
-			#"Boss" : Vector2
+			#"Boss" : Vector2,
+			#"Home" : Vector2,
 			"Gates" : PackedVector2Array(),
 			"Warps" : PackedVector2Array(),
 			"Random" : PackedVector2Array()
@@ -84,6 +98,12 @@ class MapRegion:
 		#Don't spawn on the boss node
 		for eachOffset in [Vector2.ZERO, Vector2.RIGHT, Vector2.DOWN, Vector2.DOWN + Vector2.RIGHT]:
 			coordsNoDupes = block_point(bossCoord + eachOffset, coordsNoDupes, aStarGlobal)
+		#If there's a home
+		if Persist.spawnSphere + 1 == index:
+			var homeCoord : Vector2 = Persist.pick_random(coordsNoDupes["Center"])
+			output["Home"] = homeCoord
+			coordsNoDupes = block_point(homeCoord, coordsNoDupes, aStarGlobal)
+		
 		#Get the adjacency spots
 		for eachNeighbor in neighborRegions:
 			#Only if it's within 1 tile of the bounding box
@@ -94,14 +114,16 @@ class MapRegion:
 			coordsNoDupes = block_point(randCord, coordsNoDupes, aStarGlobal)
 			output["Gates"].append(randCord)
 		#Get the map warps
-		for eachNeighbor in warpRegions:
-			var gateCoord : Vector2 = Persist.pick_random(coordsNoDupes["Center"])
-			#Keep the warp and gate within 3 x/y of eachother
-			var validWarpCoords := rect_overlap_points(Rect2i(gateCoord, Vector2i.ZERO).grow(3), coordsNoDupes["Center"])
-			var warpCoord : Vector2 = Persist.pick_random(validWarpCoords)
-			coordsNoDupes = block_point(gateCoord, coordsNoDupes, aStarGlobal)
-			output["Gates"].append(gateCoord)
+		for eachGateEnd in warpHasGate:
+			var warpCoord : Vector2 = Persist.pick_random(coordsNoDupes["Center"])
 			coordsNoDupes = block_point(warpCoord, coordsNoDupes, aStarGlobal)
+			#Check if it's the gate end here
+			if eachGateEnd:
+				#Keep the warp and gate within 3 x/y of eachother
+				var validGateCoords := rect_overlap_points(Rect2i(warpCoord, Vector2i.ZERO).grow(3), coordsNoDupes["Center"])
+				var gateCoord : Vector2 = Persist.pick_random(validGateCoords)
+				coordsNoDupes = block_point(gateCoord, coordsNoDupes, aStarGlobal)
+				output["Gates"].append(gateCoord)
 			output["Warps"].append(warpCoord)
 		#Center tiles
 		for i in toPick:
@@ -161,11 +183,24 @@ class MapRegion:
 				output["Center"].append(eachEntry)
 		return output
 	
+	##Get the target pip that leads to a region
+	func get_interregional_pip(inRegion : MapRegion) -> MapPip:
+		#Go over the neighbors to see if that's your index
+		if neighborRegions.has(inRegion):
+			return gatePips[neighborRegions.find(inRegion)]
+		#Otherwise, go over the warps to see if that's your index instead
+		if warpRegions.has(inRegion):
+			return warpPips[warpRegions.find(inRegion)]
+		#If all else fails, error
+		push_error("No path from region %s to region %s!" % [index, inRegion.index])
+		return null
+	
 @export var mapPlayer : OverworldPlayer
 @export var diagonalMode : AStarGrid2D.DiagonalMode
 const CELL_SIZE = Vector2i(16, 16)
 var aStar : AStarGrid2D
 var regions : Array[MapRegion]
+var mapOrder : Dictionary[MapRegion, Array]
 
 @export_category("Map Rendering")
 @export var groundTilemap : TileMapLayer
@@ -175,7 +210,7 @@ var regions : Array[MapRegion]
 @export var pipPrefab : PackedScene
 @export var pathPrefab : PackedScene
 @export var pips : Array[MapPip]
-var finalBossPip : MapPip
+
 var nodesUsedPercents : Dictionary[String, float] = {
 	"Auto":0,
 	"Intersection":0,
@@ -207,15 +242,10 @@ func _ready() -> void:
 	regions.sort_custom(func(a, b): return a.index < b.index)
 	#For each region, do the following
 	create_interretiongal_connections()
-	#Leading paths
-	var startPip : MapPip = finalBossPip
+	#Create the spawning nodes
 	for eachRegion in regions:
 		#Spawn the nodes
 		spawn_region_nodes(eachRegion)
-		#Sort the map pips
-		eachRegion.pips = sort_map_pips(eachRegion.pips, startPip)
-	#Make it perfectly linear
-	spawn_all_paths()
 	#Generate the paths
 	generate_all_paths()
 	mapPlayer.set_current_pip(Persist.pick_random(regions[spawnRegion].pips))
@@ -226,10 +256,6 @@ func generate_region(index : int, coords : PackedVector2Array):
 	var newRegion := MapRegion.new(index, coords, diagonalMode)
 	regions.append(newRegion)
 	newRegion.draw_tiles(groundTilemap)
-	#The center region has special spawning rules
-	if index == 0:
-		finalBossPip = spawn_pip(-Vector2i.ONE, 0, MapPip.MapNodeType.BOSS)
-		return
 
 ##Get a region by it's name
 func get_region_by_name(inColor : String) -> MapRegion:
@@ -242,8 +268,9 @@ func create_interretiongal_connections():
 	var dfsRegions := PD.depth_first_search(Persist.worldOrder, spawnName)
 	var deepestRegions := PD.get_best(dfsRegions, PD.square_bracket.bind(dfsRegions))
 	#Get the deepest node
-	var centerBridging = Persist.pick_random(deepestRegions)
-	get_region_by_name(centerBridging).neighborRegions.append(regions[0])
+	var semifinalRegion := get_region_by_name(Persist.pick_random(deepestRegions))
+	semifinalRegion.neighborRegions.append(regions[0])
+	regions[0].previousRegion = semifinalRegion
 	#Mark bridges between regions that exist
 	for eachColor in dfsRegions:
 		#No gate of your spawn color
@@ -264,26 +291,136 @@ func create_interretiongal_connections():
 		#Connect them for node construction
 		var startRegion = get_region_by_name(chosenBridge)
 		var endRegion = get_region_by_name(eachColor)
+		#Remember where you came from
+		endRegion.previousRegion = startRegion
 		#Walk across map boundries
 		if is_adjacent(startRegion.index, endRegion.index):
 			startRegion.neighborRegions.append(endRegion)
 		else:
+			#Which end has the gate is random
+			var startHasGate : bool = Persist.rng.randi_range(0, 1) == 0
 			#Warp Points Required
 			startRegion.warpRegions.append(endRegion)
+			startRegion.warpHasGate.append(startHasGate)
+			startRegion.warpSphere.append(endRegion.index)
 			endRegion.warpRegions.append(startRegion)
+			endRegion.warpHasGate.append(!startHasGate)
+			endRegion.warpSphere.append(endRegion.index)
 
 ##Create the nodes in a region
 func spawn_region_nodes(inRegion : MapRegion):
 	#Get the cooridnates for how many pips are needed in each region
-	var spawnPoints : int = 10
+	var rndNodeCount : int = 10
 	if inRegion.index == 0:
-		spawnPoints = 1
-	var pipCoords := inRegion.rand_pip_coords(spawnPoints, aStar)
-	inRegion.pips.append(spawn_pip(pipCoords["Boss"], inRegion.index, MapPip.MapNodeType.BOSS))
+		rndNodeCount = 1
+	##If the house should spawn here instead of it connecting from another region
+	var isRootRegion = Persist.spawnSphere + 1 == inRegion.index
+	#Get a pool of available random types in the middle
+	var typePool : Array[MapPip.MapNodeType]
+	for spawnables in rndNodeCount:
+		var nextType := get_next_pip_type()
+		typePool.append(nextType)
+		#Portals need to come in pairs
+		if nextType == MapPip.MapNodeType.PORTAL:
+			typePool.append(nextType)
+	var pipCoords := inRegion.rand_pip_coords(typePool.size(), aStar)
+	#Create the boss
+	var bossPip := spawn_typed_pip(pipCoords["Boss"], inRegion.index, MapPip.MapNodeType.BOSS)
+	inRegion.pips.append(bossPip)
+	#Create all the gates
+	var totalNeighbors := inRegion.neighborRegions.size()
+	for eachIndex in pipCoords["Gates"].size():
+		var eachCoord : Vector2 = pipCoords["Gates"][eachIndex]
+		var gateColor : int
+		#Pure neighbor regions first
+		if totalNeighbors > eachIndex:
+			gateColor = inRegion.neighborRegions[eachIndex].index
+		#Followed by warp regions
+		else:
+			#The gate color has to take into acount preview warp zones
+			gateColor = inRegion.warpSphere[eachIndex - totalNeighbors]
+		var eachGate := spawn_typed_pip(eachCoord, gateColor, MapPip.MapNodeType.GATE, inRegion.index)
+		inRegion.pips.append(eachGate)
+		inRegion.gatePips.append(eachGate)
+	#Create the interworld warps
+	var gatedWarps : Array[MapPip]
+	var ungatedWarps : Array[MapPip]
+	for eachIndex in pipCoords["Warps"].size():
+		var eachCoord : Vector2 = pipCoords["Warps"][eachIndex]
+		var eachWarp := spawn_typed_pip(eachCoord, inRegion.index, MapPip.MapNodeType.PORTAL)
+		inRegion.warpPips.append(eachWarp)
+		#Connections to gates and warps must be considered
+		if inRegion.warpHasGate[eachIndex]:
+			var blockingGate := inRegion.gatePips[eachIndex + totalNeighbors]
+			spawn_path(eachWarp, blockingGate)
+			gatedWarps.append(eachWarp)
+		else:
+			ungatedWarps.append(eachWarp)
+	
+	#Create the random nodes between the others
+	var randomPips : Array[MapPip]
 	for eachCoord in pipCoords["Random"]:
 		var spawnCoord : Vector2 = eachCoord
-		var nPip := spawn_pip(spawnCoord, inRegion.index, get_next_pip_type())
+		var nPip := spawn_pip(spawnCoord, inRegion.index)
 		inRegion.pips.append(nPip)
+		randomPips.append(nPip)
+	#Sort the randomized pips so they're a line leading to the boss
+	randomPips = sort_map_pips(randomPips, bossPip)
+	
+	#Whatever the end point pip you have is what connects interregionals and the home
+	inRegion.finalPip = randomPips[-1]
+	 
+	#Get all the nodes that occur before you travel interregionally
+	var preInterregions : Array[MapPip]
+	preInterregions.append_array(inRegion.gatePips)
+	preInterregions.append_array(ungatedWarps)
+	#Special case for the spawning sphere
+	if isRootRegion:
+		var homePip := spawn_typed_pip(pipCoords["Home"], inRegion.index, MapPip.MapNodeType.HOME)
+		spawn_path(homePip, inRegion.finalPip)
+	else:
+		#Otherwise, think about if the region leads to this one is generated
+		if inRegion.previousRegion.index < inRegion.index:
+			create_interregional_path(inRegion)
+	
+	#Backfill
+	for eachRegion in regions:
+		#Find the regions that declare you the previous one
+		if eachRegion.previousRegion == inRegion:
+			#If the previous region has been generated
+			if eachRegion.index < inRegion.index:
+				create_interregional_path(eachRegion)
+	
+	#Connect them to the closest one on the random path
+	for eachGoal in preInterregions:
+		var nearestPips := sort_map_pips(randomPips, eachGoal)
+		var forUse : MapPip = null
+		for eachRand in nearestPips:
+			if eachRand.connections_available():
+				forUse = eachRand
+				break
+		if forUse != null:
+			spawn_path(forUse, eachGoal)
+		else:
+			push_warning("Absolutely Nothing Available for Path Connections!")
+	
+	#TEMP: Linear Path
+	var lastPip := bossPip
+	for eachPip in randomPips:
+		spawn_path(lastPip, eachPip)
+		lastPip = eachPip
+
+##Create the path that goes from one region to the next
+func create_interregional_path(inRegion : MapRegion):
+	#If it's been generated
+	var startPip := inRegion.previousRegion.get_interregional_pip(inRegion)
+	match startPip.mapNodeType:
+		#Gates go to the final pip
+		MapPip.MapNodeType.GATE:
+			spawn_path(startPip, inRegion.finalPip)
+		#Warps go to their respective warp
+		MapPip.MapNodeType.PORTAL:
+			spawn_path(startPip, inRegion.get_interregional_pip(inRegion.previousRegion))
 
 ##Create a pip type
 func get_next_pip_type() -> MapPip.MapNodeType:
@@ -337,13 +474,18 @@ func generate_path(inPath : MapWalkPip):
 		#Create 2 warp points and bridge
 		-2:
 			inPath.generated = true
-			print("Warp Logic")
-			return
+			if !inPath.is_warp():
+				push_warning("2 Step Interregional that isn't a warp!")
+				starForUse = aStar
+			else:
+				inPath.pathPoint1.register(Vector2i.ZERO, inPath)
+				inPath.pathPoint2.register(Vector2i.ZERO, inPath)
+				return
 		#In-Region Mapping
 		_:
 			starForUse = regions[pathRegion].aStar
 	if !inPath.generate_path(starForUse, aStar):
-		print("No entries available!")
+		print("No entries available! Path region claims %s" % pathRegion)
 		inPath.generated = true
 
 ##Get all the cells from the regions
@@ -363,7 +505,7 @@ func get_region_cell(cellX : int, cellY : int, centerRadius : float):
 	var point = (floori((lineCentered.angle() / (PI / 3)) + 2) + 6) % 6 + 1
 	return point
 
-##A Star
+##A Star blockout the corners of circles
 static func solidify_unfound_cells(cellX : int, cellY : int, inStar : AStarGrid2D, coords : PackedVector2Array):
 	var coord := Vector2(cellX, cellY)
 	inStar.set_point_solid(coord, !coords.has(coord))
@@ -390,31 +532,32 @@ static func run_for_region(inRect : Rect2i, callable : Callable, reverse : bool 
 				output[coord] = result
 	return output
 
-##Creates a pip at those coords, with the given region visuals and type
-func spawn_pip(coords : Vector2i, region : int, type : MapPip.MapNodeType) -> MapPip:
+##Creates a pip at the given coords with the given region
+func spawn_pip(coords : Vector2i, region : int) -> MapPip:
 	var newPip : MapPip = pipPrefab.instantiate()
 	mapSpot.add_child(newPip)
 	pips.append(newPip)
-	newPip.set_grid_point(coords)
-	newPip.setup_pip(region, type, self)
+	newPip.set_grid_point(coords, region, self)
+	return newPip
+
+##Creates a pip at the given coords, with the given region visuals and type
+func spawn_typed_pip(coords : Vector2i, color : int, type : MapPip.MapNodeType, region : int = -1) -> MapPip:
+	#Most of the time, the region is the color
+	if region == -1:
+		region = color
+	#Instantiate
+	var newPip : MapPip = spawn_pip(coords, region)
+	#Give the setup data
+	newPip.set_pip_type(color, type)
 	return newPip
 
 ##Creates an empty path to be constructed later
 func spawn_path(point1 : MapPip, point2 : MapPip) -> MapWalkPip:
 	var newPath : MapWalkPip = pathPrefab.instantiate()
 	mapSpot.add_child(newPath)
-	newPath.pathPoint1 = point1
-	newPath.pathPoint2 = point2
+	newPath.setup_path(point1, point2)
 	paths.append(newPath)
-	newPath.get_alignments()
 	return newPath
-
-##Checks if there's paths yet to be generated
-func all_paths_generated():
-	for eachPath in paths:
-		if !eachPath.generated:
-			return false
-	return true
 
 ##Map node sorter to make the paths less complex/more straight
 static func sort_map_pips(toSort : Array[MapPip], startingPip : MapPip) -> Array[MapPip]:
@@ -430,15 +573,6 @@ static func sort_map_pips(toSort : Array[MapPip], startingPip : MapPip) -> Array
 		originalPips.erase(previousPip)
 		sortedPips.append(previousPip)
 	return sortedPips
-
-##Just go in total order
-func spawn_all_paths():
-	for eachRegion in regions:
-		var lastPip := eachRegion.pips[0]
-		for pipIndex in range(1, eachRegion.pips.size()):
-			var thisPip := eachRegion.pips[pipIndex]
-			spawn_path(lastPip, thisPip)
-			lastPip = thisPip
 
 ##See if two regions are adjacent or not
 static func is_adjacent(regIndex1 : int, regIndex2 : int):

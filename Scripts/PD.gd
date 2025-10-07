@@ -121,7 +121,6 @@ func hold_server_data(slotData : Dictionary) -> void:
 	worldOrder = slotData["world_order"]
 	apSeed = slotData["seed"]
 	set_rand_seed(apSeed)
-	print(worldOrder)
 
 ##
 #func debug_all_cards_from(colorCat : ColorCatagory):

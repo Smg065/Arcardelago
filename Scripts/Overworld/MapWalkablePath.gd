@@ -27,6 +27,14 @@ enum AlignDir {
 	DIAGONAL
 	}
 
+##Setup the path for generation later
+func setup_path(nPathPoint1 : MapPip, nPathPoint2 : MapPip):
+	pathPoint1 = nPathPoint1
+	pathPoint1.pathCount += 1
+	pathPoint2 = nPathPoint2
+	pathPoint2.pathCount += 1
+	get_alignments()
+
 ##The distance between the two map nodes
 func distance() -> float:
 	return pathPoint1.global_position.distance_to(pathPoint2.global_position)
@@ -95,6 +103,9 @@ func generate_path(usedAStar : AStarGrid2D, globalAStar : AStarGrid2D) -> bool:
 				bestOffset2 = [ofset2]
 	
 	if bestOffset1.size() == 0 or bestOffset2.size() == 0:
+		print(pathPoint1.available_directions(usedAStar != globalAStar))
+		print(pathPoint2.available_directions(usedAStar != globalAStar))
+		print("One of the nodes has no available entries!")
 		return false
 	
 	#Get the available entry points
@@ -154,14 +165,20 @@ func can_travel(startPip : MapPip) -> bool:
 	#Tiles that have yet to be defeated will only allow unlocked paths
 	return unlocked
 
+##If this path is a warp hint rather than being an actual path.
+func is_warp() -> bool:
+	if pathPoint1.mapNodeType == MapPip.MapNodeType.PORTAL:
+		return pathPoint2.mapNodeType == MapPip.MapNodeType.PORTAL
+	return false
+
 ##Get the region the pips are in.[br]
 ##If they're in diffrent regions, mark -1 for adjacent, -2 for distant
 func region() -> int:
-	if pathPoint1.colorIndex != pathPoint2.colorIndex:
+	if pathPoint1.region != pathPoint2.region:
 		#Adjacent
-		if WorldMap.is_adjacent(pathPoint1.colorIndex, pathPoint2.colorIndex):
+		if WorldMap.is_adjacent(pathPoint1.region, pathPoint2.region):
 			return -1
 		#Distant
 		return -2
 	#The region both nodes are in
-	return pathPoint1.colorIndex
+	return pathPoint1.region

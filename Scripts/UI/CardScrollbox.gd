@@ -39,11 +39,14 @@ func setup_filter():
 	popup.add_separator("Players")
 	for eachEntry in allPlayers:
 		popup.add_check_item(eachEntry)
-	for eachEntry in 20:
+	show_current()
+	set_card_scale(minSize)
+
+func show_current():
+	for eachCard in 20:
 		var newSlot : CardUI = cardUi.instantiate()
 		flow.add_child(newSlot)
 		newSlot.build(Persist.game.allCards.pick_random())
-	set_card_scale(minSize)
 
 func toggle_filter(filterIndex : int):
 	var popup := filtersMenu.get_popup()

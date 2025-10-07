@@ -158,18 +158,10 @@ func can_travel(startPip : MapPip) -> bool:
 ##If they're in diffrent regions, mark -1 for adjacent, -2 for distant
 func region() -> int:
 	if pathPoint1.colorIndex != pathPoint2.colorIndex:
-		#Always adjacent to the center of the map
-		if pathPoint1.colorIndex == 0 or pathPoint2.colorIndex == 0:
+		#Adjacent
+		if WorldMap.is_adjacent(pathPoint1.colorIndex, pathPoint2.colorIndex):
 			return -1
-		#Get the region offset
-		var regionOffset : int = abs(pathPoint1.colorIndex - pathPoint2.colorIndex)
-		#If it's 1
-		if regionOffset == 1:
-			return -1
-		#Red and yellow are adjacent
-		if regionOffset == 5:
-			return -1
-		#If none of the above are true, it's distant
+		#Distant
 		return -2
-	else:
-		return pathPoint1.colorIndex
+	#The region both nodes are in
+	return pathPoint1.colorIndex

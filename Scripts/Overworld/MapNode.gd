@@ -91,7 +91,7 @@ func setup_visuals():
 			return
 		MapNodeType.RELEASER:
 			self_modulate = Color.TRANSPARENT
-			play("Altar")
+			colorNode.play("Altar")
 			return
 		#Auto has no rendering at all
 		MapNodeType.AUTO:

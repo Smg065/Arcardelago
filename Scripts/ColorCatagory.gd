@@ -20,6 +20,7 @@ enum ColorTypes {
 	YELLOW, ##Other Players & Item Sending
 	CUSTOM ##A color made by others
 }
+const COLOR_NAMES = ["Red", "Green", "Violet", "Orange", "Blue", "Yellow"]
 const RED = ColorTypes.RED
 const GREEN = ColorTypes.GREEN
 const VIOLET = ColorTypes.VIOLET

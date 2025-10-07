@@ -20,6 +20,9 @@ var apSeed : int
 ##The AP's game data
 var game : GameData
 
+##What cards you have right now
+var currentCards : Array[CardData]
+
 ##Makes a dictionary either create a new array at a key or append to it
 static func append_dict_entry(dict : Dictionary, key, value) -> Dictionary:
 	if dict.has(key):
@@ -28,6 +31,47 @@ static func append_dict_entry(dict : Dictionary, key, value) -> Dictionary:
 		dict[key] = [value]
 	return dict
 
+##Searches a graph dictionary depth-first, returning Dictionary[Node, Depth]
+static func depth_first_search(graph : Dictionary, node, depth : int = 0) -> Dictionary:
+	var output := {node:depth}
+	for eachChild in graph[node]:
+		var result := depth_first_search(graph, eachChild, depth + 1)
+		for eachResult in result:
+			output[eachResult] = result[eachResult]
+	return output
+
+##Get the path you need to take to get to the entry
+static func get_graph_path(graph : Dictionary, node, goal) -> Array:
+	var output := []
+	if node == goal:
+		return [node]
+	for eachChild in graph[node]:
+		var result := get_graph_path(graph, eachChild, goal)
+		if result.has(goal):
+			output.append(node)
+			output.append_array(result)
+	return output
+
+##Returns Iterable[Key]
+static func square_bracket(key, iterable):
+	return iterable[key]
+
+##Runs the callable over each entry in an iterable, and returns the value(s) that are the highest. Invert for lowest.
+static func get_best(iteratable, callable : Callable, isLesser := false) -> Array:
+	var output = []
+	var bestVal = -99999999
+	if isLesser:
+		bestVal = -bestVal
+	for eachEntry in iteratable:
+		var result = callable.call(eachEntry)
+		if is_equal_approx(bestVal, result):
+			output.append(eachEntry)
+		elif (result > bestVal) != isLesser:
+			bestVal = result
+			output = [eachEntry]
+	return output
+
+##Set the random seed to this
 func set_rand_seed(newSeed : int):
 	rng = RandomNumberGenerator.new()
 	rng.seed = newSeed
@@ -77,3 +121,8 @@ func hold_server_data(slotData : Dictionary) -> void:
 	worldOrder = slotData["world_order"]
 	apSeed = slotData["seed"]
 	set_rand_seed(apSeed)
+	print(worldOrder)
+
+##
+#func debug_all_cards_from(colorCat : ColorCatagory):
+#	colorCat as int

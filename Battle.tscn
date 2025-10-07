@@ -123,7 +123,6 @@ border_width = 4.0
 metadata/_edit_use_anchors_ = true
 
 [node name="HordeLayout" type="Control" parent="Battle/Enemies"]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -261,6 +260,7 @@ anchor_right = 0.66666675
 anchor_bottom = 0.4
 
 [node name="BossLayout" type="Control" parent="Battle/Enemies"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

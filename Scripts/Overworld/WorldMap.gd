@@ -210,6 +210,7 @@ var mapOrder : Dictionary[MapRegion, Array]
 @export var pipPrefab : PackedScene
 @export var pathPrefab : PackedScene
 @export var pips : Array[MapPip]
+var homePip : MapPip
 
 var nodesUsedPercents : Dictionary[String, float] = {
 	"Auto":0,
@@ -228,7 +229,6 @@ func _ready() -> void:
 	var mapSize := Vector2i(Persist.mapRadius, Persist.mapRadius) * 2
 	var startPoint : Vector2i = -mapSize / 2
 	var centerRadius := Persist.mapRadius / (PI * 1.5)
-	var spawnRegion = (Persist.spawnSphere as int) + 1
 	aStar.region = Rect2i(startPoint, mapSize)
 	aStar.cell_size = CELL_SIZE
 	aStar.diagonal_mode = diagonalMode
@@ -248,7 +248,8 @@ func _ready() -> void:
 		spawn_region_nodes(eachRegion)
 	#Generate the paths
 	generate_all_paths()
-	mapPlayer.set_current_pip(Persist.pick_random(regions[spawnRegion].pips))
+	#Set the player at the home pip
+	mapPlayer.set_current_pip(homePip)
 	mapPlayer.enabled = true
 
 ##Construct a region
@@ -376,7 +377,7 @@ func spawn_region_nodes(inRegion : MapRegion):
 	preInterregions.append_array(ungatedWarps)
 	#Special case for the spawning sphere
 	if isRootRegion:
-		var homePip := spawn_typed_pip(pipCoords["Home"], inRegion.index, MapPip.MapNodeType.HOME)
+		homePip = spawn_typed_pip(pipCoords["Home"], inRegion.index, MapPip.MapNodeType.HOME)
 		spawn_path(homePip, inRegion.finalPip)
 	else:
 		#Otherwise, think about if the region leads to this one is generated
@@ -403,6 +404,8 @@ func spawn_region_nodes(inRegion : MapRegion):
 			spawn_path(forUse, eachGoal)
 		else:
 			push_warning("Absolutely Nothing Available for Path Connections!")
+	
+	#Figure out
 	
 	#TEMP: Linear Path
 	var lastPip := bossPip

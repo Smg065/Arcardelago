@@ -86,6 +86,11 @@ func generate_path(usedAStar : AStarGrid2D, globalAStar : AStarGrid2D) -> bool:
 	var closestDist := 9999
 	var bestOffset1 : Array[Vector2i]
 	var bestOffset2 : Array[Vector2i]
+	
+	#Notify if the node's a 2x2
+	var isDouble1 : bool = pathPoint1.mapNodeType == MapPip.MapNodeType.BOSS
+	var isDouble2 : bool = pathPoint2.mapNodeType == MapPip.MapNodeType.BOSS
+	
 	#Get the prefered movement direction
 	for ofset1 in pathPoint1.available_directions(usedAStar != globalAStar):
 		var thisEntry1 := ofset1 + pathPoint1.gridPoint
@@ -115,6 +120,14 @@ func generate_path(usedAStar : AStarGrid2D, globalAStar : AStarGrid2D) -> bool:
 	#Get the start and end of the grid path
 	var start1 := pathPoint1.gridPoint + input1
 	var start2 := pathPoint2.gridPoint + input2
+	#Step in the input direction again if it's a boss (2x2)
+	#And you're going down/right
+	if isDouble1:
+		if input1 == Vector2i.RIGHT or input1 == Vector2i.DOWN:
+			start1 += input1
+	if isDouble2:
+		if input2 == Vector2i.RIGHT or input2 == Vector2i.DOWN:
+			start2 += input2
 	
 	#If it's out of bounds, it failed
 	if !usedAStar.region.has_point(start1) or !usedAStar.region.has_point(start2):
@@ -133,12 +146,54 @@ func generate_path(usedAStar : AStarGrid2D, globalAStar : AStarGrid2D) -> bool:
 		usedAStar.set_point_weight_scale(eachPoint, PATH_COST)
 		globalAStar.set_point_weight_scale(eachPoint, PATH_COST)
 	
-	#Start point always starts here
-	curve.add_point(pathPoint1.global_position)
+	#Add the start and end
+	pathPoints.insert(0, pathPoint1.global_position - Vector2(WorldMap.CELL_SIZE / 2))
+	pathPoints.append(pathPoint2.global_position - Vector2(WorldMap.CELL_SIZE / 2))
+	
+	#Cleanup redundant points
+	var lastDir = Vector2.ZERO
+	var cleanupPoints : PackedVector2Array
+	for pointIndex in range(1, pathPoints.size()):
+		#Get the lines that make up the points
+		var curDir := pathPoints[pointIndex].direction_to(pathPoints[pointIndex - 1])
+		#If the two directions are the same
+		if lastDir.is_equal_approx(curDir):
+			cleanupPoints.append(pathPoints[pointIndex - 1])
+		#Remember this
+		lastDir = curDir
+	#And erase them
+	for eachPoint in cleanupPoints:
+		pathPoints.erase(eachPoint)
+	
+	#Adjust the entry marks to be non-standard to the grid if it's a 2x2
+	if isDouble1:
+		var nudgeDir = Vector2.RIGHT
+		if input1 == Vector2i.RIGHT or input1 == Vector2i.LEFT:
+			nudgeDir = Vector2.DOWN
+		nudgeDir *= Vector2(WorldMap.CELL_SIZE) / 2
+		var lineDir := pathPoints[1].direction_to(pathPoints[2]).abs()
+		pathPoints[1] += nudgeDir
+		if lineDir.is_equal_approx(pathPoints[1].direction_to(pathPoints[0]).abs()):
+			if pathPoints.size() > 3:
+				pathPoints[2] += nudgeDir
+	if isDouble2:
+		var nudgeDir = Vector2.RIGHT
+		if input2 == Vector2i.RIGHT or input2 == Vector2i.LEFT:
+			nudgeDir = Vector2.DOWN
+		nudgeDir *= Vector2(WorldMap.CELL_SIZE) / 2
+		var lineDir := pathPoints[-2].direction_to(pathPoints[-3]).abs()
+		pathPoints[-2] += nudgeDir
+		if lineDir.is_equal_approx(pathPoints[1].direction_to(pathPoints[0]).abs()):
+			if pathPoints.size() > 3:
+				pathPoints[-3] += nudgeDir
+	
+	#Create the curve itself
 	for eachPoint in pathPoints:
 		curve.add_point(eachPoint + Vector2(WorldMap.CELL_SIZE / 2))
-	#End point always ends here
-	curve.add_point(pathPoint2.global_position)
+	
+	#Boss node adjustment paths to account for the bosses being 2x2
+	
+	#Make the visuals have this
 	$PathVis.points = curve.get_baked_points()
 	$PathVis.default_color = Persist.random_color(0, 1, .5, 1, .5, 1)
 	#The path is made

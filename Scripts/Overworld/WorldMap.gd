@@ -405,13 +405,32 @@ func spawn_region_nodes(inRegion : MapRegion):
 		else:
 			push_warning("Absolutely Nothing Available for Path Connections!")
 	
-	#Figure out
+	#Figure out junctions here
 	
-	#TEMP: Linear Path
+	#Create a linear Path
 	var lastPip := bossPip
+	var randomPaths : Array[MapWalkPip]
 	for eachPip in randomPips:
-		spawn_path(lastPip, eachPip)
+		randomPaths.append(spawn_path(lastPip, eachPip))
 		lastPip = eachPip
+	
+	#Go over the pips with no types and give them types
+	var unasignedPipTable := group_pips_by_path_count(randomPips)
+	
+	#Portals
+	#while typePool.has(MapPip.MapNodeType.PORTAL):
+	#	#Tick them down each loop even if there's no valid spots left
+	#	typePool.erase(MapPip.MapNodeType.PORTAL)
+	#	#Find a valid spot
+	#	for eachPip in unasignedPipTable[2]:
+	#		randomPaths[]
+
+##Creates a lookup table based on the connected paths on each node
+func group_pips_by_path_count(inPips : Array[MapPip]) -> Dictionary[int, Array]:
+	var outputTable : Dictionary[int, Array] = {}
+	for eachPip in inPips:
+		outputTable = PD.append_dict_entry(outputTable, eachPip.pathCount, eachPip)
+	return outputTable
 
 ##Create the path that goes from one region to the next
 func create_interregional_path(inRegion : MapRegion):

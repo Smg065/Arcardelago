@@ -191,11 +191,10 @@ func generate_path(usedAStar : AStarGrid2D, globalAStar : AStarGrid2D) -> bool:
 	for eachPoint in pathPoints:
 		curve.add_point(eachPoint + Vector2(WorldMap.CELL_SIZE / 2))
 	
-	#Boss node adjustment paths to account for the bosses being 2x2
-	
 	#Make the visuals have this
 	$PathVis.points = curve.get_baked_points()
 	$PathVis.default_color = Persist.random_color(0, 1, .5, 1, .5, 1)
+	
 	#The path is made
 	generated = true
 	return true

@@ -54,7 +54,9 @@ func move_along_path(delta: float):
 			MapPip.MapNodeType.PORTAL:
 				var warpPath := curPip.other_path(curPath)
 				var warpPoint := warpPath.other_pip(curPip)
-				set_path_goal(warpPoint.other_path(warpPath))
+				var warpExitPath := warpPoint.other_path(warpPath)
+				curPip = warpPoint
+				set_path_goal(warpExitPath)
 			_:
 				curPath = null
 

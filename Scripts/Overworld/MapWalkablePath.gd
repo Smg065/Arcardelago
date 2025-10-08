@@ -11,6 +11,8 @@ var unlocked : bool
 var xAlign : AlignDir
 ##How the Map Pips line up on the Y axis (Above, Aligned, Below)
 var yAlign : AlignDir
+##If this path is a warp instead of a standard trail
+var isWarp : bool
 
 ##If the path data has been generated
 var generated : bool
@@ -218,12 +220,6 @@ func can_travel(startPip : MapPip) -> bool:
 		return true
 	#Tiles that have yet to be defeated will only allow unlocked paths
 	return unlocked
-
-##If this path is a warp hint rather than being an actual path.
-func is_warp() -> bool:
-	if pathPoint1.mapNodeType == MapPip.MapNodeType.PORTAL:
-		return pathPoint2.mapNodeType == MapPip.MapNodeType.PORTAL
-	return false
 
 ##Get the region the pips are in.[br]
 ##If they're in diffrent regions, mark -1 for adjacent, -2 for distant

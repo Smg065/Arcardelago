@@ -181,6 +181,16 @@ func other_path(startingPath : MapWalkPip) -> MapWalkPip:
 
 ##Flag if you've got more than 1 path that can connect
 func connections_available(inRegion : bool = true) -> bool:
+	#Nodes that can only connect to 2 paths max are unavailable after
+	if pathCount >= 2:
+		match mapNodeType:
+			MapPip.MapNodeType.PORTAL:
+				return false
+			MapPip.MapNodeType.AUTO:
+				return false
+			MapPip.MapNodeType.GATE:
+				return false
+	#Otherwise, you need at least 1 path available
 	return available_directions(inRegion).size() - pathCount > 0
 
 ##Get any directions not taken up by a path

@@ -371,10 +371,6 @@ func spawn_region_nodes(inRegion : MapRegion):
 	#Whatever the end point pip you have is what connects interregionals and the home
 	inRegion.finalPip = randomPips[-1]
 	 
-	#Get all the nodes that occur before you travel interregionally
-	var preInterregions : Array[MapPip]
-	preInterregions.append_array(inRegion.gatePips)
-	preInterregions.append_array(ungatedWarps)
 	#Special case for the spawning sphere
 	if isRootRegion:
 		homePip = spawn_typed_pip(pipCoords["Home"], inRegion.index, MapPip.MapNodeType.HOME)
@@ -392,11 +388,29 @@ func spawn_region_nodes(inRegion : MapRegion):
 			if eachRegion.index < inRegion.index:
 				create_interregional_path(eachRegion)
 	
+	#Get all the nodes that occur before you travel interregionally
+	var preInterregions : Array[MapPip]
+	preInterregions.append_array(inRegion.gatePips)
+	preInterregions.append_array(ungatedWarps)
+	##The pre-interregional node that leads to the furthest point from the boss
+	var preIntToLast : MapPip = null
+	#Does last region come from a warp?
+	if inRegion.warpRegions.has(inRegion.previousRegion):
+		#If it does, get the connector node
+		var warpIndex := inRegion.warpRegions.find(inRegion.previousRegion)
+		if inRegion.warpHasGate[warpIndex]:
+			preIntToLast = inRegion.gatePips[inRegion.neighborRegions.size() + warpIndex]
+		else:
+			preIntToLast = inRegion.warpPips[warpIndex]
+		#And hold off connecting until later
+		preInterregions.erase(preIntToLast)
+	preInterregions.erase(preIntToLast)
 	#Connect them to the closest one on the random path
 	for eachGoal in preInterregions:
 		var nearestPips := sort_map_pips(randomPips, eachGoal)
 		var forUse : MapPip = null
 		for eachRand in nearestPips:
+			#If not all the nodes are taken
 			if eachRand.connections_available():
 				forUse = eachRand
 				break
@@ -414,20 +428,82 @@ func spawn_region_nodes(inRegion : MapRegion):
 		randomPaths.append(spawn_path(lastPip, eachPip))
 		lastPip = eachPip
 	
-	#Go over the pips with no types and give them types
-	var unasignedPipTable := group_pips_by_path_count(randomPips)
+	#NOW connect the pre-int
+	if preIntToLast != null:
+		spawn_path(preIntToLast, lastPip)
 	
+	#Go over the pips with no types and give them types
+	var unassignedPipTable := group_pips_by_path_count(randomPips)
 	#Portals
-	#while typePool.has(MapPip.MapNodeType.PORTAL):
-	#	#Tick them down each loop even if there's no valid spots left
-	#	typePool.erase(MapPip.MapNodeType.PORTAL)
-	#	#Find a valid spot
-	#	for eachPip in unasignedPipTable[2]:
-	#		randomPaths[]
+	if unassignedPipTable.has(2):
+		var warpCompPaths : Array[MapWalkPip]
+		#Get a path has only two 2-pathed nodes on both ends
+		for eachPath in randomPaths:
+			var pip1valid = unassignedPipTable[2].has(eachPath.pathPoint1)
+			var pip2valid = unassignedPipTable[2].has(eachPath.pathPoint2)
+			if unassignedPipTable[1].has(lastPip):
+				pip1valid = pip1valid or eachPath.pathPoint1 == lastPip
+				pip2valid = pip2valid or eachPath.pathPoint1 == lastPip
+			if pip2valid and pip1valid:
+				warpCompPaths.append(eachPath)
+		while typePool.has(MapPip.MapNodeType.PORTAL) and warpCompPaths.size() > 0:
+			#Tick them down each loop even if there's no valid spots left
+			typePool.erase(MapPip.MapNodeType.PORTAL)
+			typePool.erase(MapPip.MapNodeType.PORTAL)
+			var bestPaths := PD.get_best(warpCompPaths, func(a): return a.distance())
+			var bestPath : MapWalkPip = Persist.pick_random(bestPaths)
+			#Erase from reselection
+			warpCompPaths.erase(bestPath)
+			unassignedPipTable[2].erase(bestPath.pathPoint1)
+			unassignedPipTable[2].erase(bestPath.pathPoint2)
+			#Last pip'll end up as 2, it's not allowed to be otherwise long-term
+			if bestPath.pathPoint1 == lastPip or bestPath.pathPoint2 == lastPip:
+				if unassignedPipTable.has(1):
+					unassignedPipTable[1].erase(lastPip)
+			#Set warp info
+			bestPath.pathPoint1.set_pip_type(inRegion.index, MapPip.MapNodeType.PORTAL)
+			bestPath.pathPoint2.set_pip_type(inRegion.index, MapPip.MapNodeType.PORTAL)
+			bestPath.isWarp = true
+	#Auto-Nodes
+	if unassignedPipTable.has(2):
+		#For each valid spot you can spawn one
+		while typePool.has(MapPip.MapNodeType.AUTO) and unassignedPipTable[2].size() > 0:
+			typePool.erase(MapPip.MapNodeType.AUTO)
+			var autoNode : MapPip = Persist.pick_random(unassignedPipTable[2])
+			unassignedPipTable[2].erase(autoNode)
+			autoNode.set_pip_type(inRegion.index, MapPip.MapNodeType.AUTO)
+	#Treasure, Releasers and Shops in that order
+	var lowGoalType := [MapPip.MapNodeType.TREASURE, MapPip.MapNodeType.RELEASER, MapPip.MapNodeType.SHOP]
+	var pathCountOrder = unassignedPipTable.keys()
+	pathCountOrder.sort()
+	#Try and put them at spots with the least number of connections as you can
+	#AKA: Dead-Ends first
+	for eachType in lowGoalType:
+		while typePool.has(eachType) and pathCountOrder.size() > 0:
+			#Erase first to escape forever loops
+			typePool.erase(eachType)
+			#Cleanup dead key entries
+			while unassignedPipTable.size() > 0:
+				var leastPathCount = pathCountOrder[0]
+				if unassignedPipTable[leastPathCount].size() == 0:
+					unassignedPipTable.erase(leastPathCount)
+					pathCountOrder.remove_at(0)
+				else:
+					#Pick one at random
+					var lowestPip : MapPip = Persist.pick_random(unassignedPipTable[leastPathCount])
+					unassignedPipTable[leastPathCount].erase(lowestPip)
+					lowestPip.set_pip_type(inRegion.index, eachType)
+					break
 
 ##Creates a lookup table based on the connected paths on each node
 func group_pips_by_path_count(inPips : Array[MapPip]) -> Dictionary[int, Array]:
-	var outputTable : Dictionary[int, Array] = {}
+	var outputTable : Dictionary[int, Array] = {
+		0:[],
+		1:[],
+		2:[],
+		3:[],
+		4:[]
+		}
 	for eachPip in inPips:
 		outputTable = PD.append_dict_entry(outputTable, eachPip.pathCount, eachPip)
 	return outputTable
@@ -442,7 +518,8 @@ func create_interregional_path(inRegion : MapRegion):
 			spawn_path(startPip, inRegion.finalPip)
 		#Warps go to their respective warp
 		MapPip.MapNodeType.PORTAL:
-			spawn_path(startPip, inRegion.get_interregional_pip(inRegion.previousRegion))
+			var warpPath := spawn_path(startPip, inRegion.get_interregional_pip(inRegion.previousRegion))
+			warpPath.isWarp = true
 
 ##Create a pip type
 func get_next_pip_type() -> MapPip.MapNodeType:
@@ -489,26 +566,27 @@ func generate_path(inPath : MapWalkPip):
 	#Get the astar relevant to the region data
 	var starForUse : AStarGrid2D
 	var pathRegion := inPath.region()
+	#Warp logic doesn't use pathing
+	if inPath.isWarp:
+		pathRegion = -2
+		inPath.pathPoint1.register(Vector2i.ZERO, inPath)
+		inPath.pathPoint2.register(Vector2i.ZERO, inPath)
+		inPath.generated = true
+		return
+	#Otherwise
 	match pathRegion:
 		#Adjacent Mapping
 		-1:
 			starForUse = aStar
 		#Create 2 warp points and bridge
 		-2:
-			inPath.generated = true
-			if !inPath.is_warp():
-				push_warning("2 Step Interregional that isn't a warp!")
-				starForUse = aStar
-			else:
-				inPath.pathPoint1.register(Vector2i.ZERO, inPath)
-				inPath.pathPoint2.register(Vector2i.ZERO, inPath)
-				return
+			push_warning("2 Step Interregional that isn't a warp!")
+			starForUse = aStar
 		#In-Region Mapping
 		_:
 			starForUse = regions[pathRegion].aStar
 	if !inPath.generate_path(starForUse, aStar):
 		print("No entries available! Path region claims %s" % pathRegion)
-		inPath.generated = true
 
 ##Get all the cells from the regions
 func get_region_cell(cellX : int, cellY : int, centerRadius : float):

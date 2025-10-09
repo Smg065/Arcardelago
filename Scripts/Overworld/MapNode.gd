@@ -88,7 +88,8 @@ func setup_visuals():
 			return
 		#Events have no metal ring
 		MapNodeType.EVENT:
-			self_modulate = Color.TRANSPARENT
+			play("EventBack")
+			colorAppend = "Event"
 		#Enemies
 		_:
 			play("default")

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dtclpj6vku0um" path="res://Scripts/UI/MainMenu.gd" id="1_eiy7p"]
 [ext_resource type="Script" uid="uid://d11kfgsd6jgt" path="res://addons/AutoSizeText/ui/AutoSizeLabel.gd" id="1_i26rj"]
-[ext_resource type="PackedScene" uid="uid://bobesgom0g6b7" path="res://Test.tscn" id="2_h7a2f"]
+[ext_resource type="PackedScene" uid="uid://bobesgom0g6b7" path="res://CardGeneration.tscn" id="2_h7a2f"]
 [ext_resource type="PackedScene" uid="uid://riptfjpym813" path="res://Resources/WordGroupCreator.tscn" id="4_qoqlk"]
 [ext_resource type="PackedScene" uid="uid://dyp5pgp8cr3j" path="res://Resources/ColorCatagoryCreator.tscn" id="5_7r1g0"]
 [ext_resource type="PackedScene" uid="uid://bmb3omoxm7f1c" path="res://Resources/SetEditor.tscn" id="6_cqjrg"]

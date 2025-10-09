@@ -1,9 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bobesgom0g6b7"]
+[gd_scene load_steps=2 format=3 uid="uid://bobesgom0g6b7"]
 
 [ext_resource type="Script" uid="uid://m53kn2m5hvp6" path="res://Scripts/WordPool.gd" id="1_myinc"]
-[ext_resource type="PackedScene" uid="uid://dk6dmv5557rf6" path="res://Resources/CardUI.tscn" id="2_njov2"]
 
-[node name="WordPool" type="Control" node_paths=PackedStringArray("progressControl", "progressBar", "progressLabel", "debugCard", "httpRequest", "requestCooldown")]
+[node name="WordPool" type="Control" node_paths=PackedStringArray("progressControl", "progressBar", "progressLabel", "httpRequest", "requestCooldown")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,7 +13,6 @@ script = ExtResource("1_myinc")
 progressControl = NodePath("ProgressContainer")
 progressBar = NodePath("ProgressContainer/ProgressBar")
 progressLabel = NodePath("ProgressContainer/ProgressLabel")
-debugCard = NodePath("CardAspectMaintainer")
 httpRequest = NodePath("HTTPRequest")
 requestCooldown = NodePath("RequestCooldown")
 
@@ -23,6 +21,15 @@ requestCooldown = NodePath("RequestCooldown")
 [node name="RequestCooldown" type="Timer" parent="."]
 wait_time = 0.4
 one_shot = true
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
 
 [node name="ProgressContainer" type="Control" parent="."]
 custom_minimum_size = Vector2(0, 64)
@@ -59,9 +66,6 @@ grow_horizontal = 2
 grow_vertical = 0
 step = 1.0
 metadata/_edit_use_anchors_ = true
-
-[node name="CardAspectMaintainer" parent="." instance=ExtResource("2_njov2")]
-layout_mode = 1
 
 [connection signal="request_completed" from="HTTPRequest" to="." method="dictionary_http_request_completed"]
 [connection signal="timeout" from="RequestCooldown" to="." method="dictionary_api_delay"]

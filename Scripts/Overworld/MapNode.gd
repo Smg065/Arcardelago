@@ -167,7 +167,18 @@ func defeatable():
 
 ##Checks if you must defeat this node to travel over it
 func defeat_to_traverse() -> bool:
-	return mapNodeType == MapNodeType.ENEMY or mapNodeType == MapNodeType.BOSS or mapNodeType == MapNodeType.OBSTACLE or mapNodeType == MapNodeType.GATE or mapNodeType == MapNodeType.AUTO
+	match mapNodeType:
+		MapNodeType.INTERSECTION:
+			return false
+		MapNodeType.TREASURE:
+			return false
+		MapNodeType.PORTAL:
+			return false
+		MapNodeType.HOME:
+			return false
+		MapNodeType.SHOP:
+			return false
+	return true
 
 ##Get the opposting counterpart of a path. Only works if there's 2 paths.
 func other_path(startingPath : MapWalkPip) -> MapWalkPip:

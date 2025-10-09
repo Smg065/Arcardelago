@@ -240,11 +240,10 @@ func _ready() -> void:
 		generate_region(regionIndex, regionCoords[regionIndex])
 	#Make the regions show up in order
 	regions.sort_custom(func(a, b): return a.index < b.index)
-	#For each region, do the following
-	create_interretiongal_connections()
+	create_interregiongal_connections()
 	#Create the spawning nodes
 	for eachRegion in regions:
-		#Spawn the nodes
+		#Spawn the nodes with the connections they have
 		spawn_region_nodes(eachRegion)
 	#Generate the paths
 	generate_all_paths()
@@ -263,7 +262,7 @@ func get_region_by_name(inColor : String) -> MapRegion:
 	return regions[ColorCatagory.COLOR_NAMES.find(inColor) + 1]
 
 ##Figure out how regions piece together
-func create_interretiongal_connections():
+func create_interregiongal_connections():
 	#Get the world order as a depth-first sorted dictionary
 	var spawnName = ColorCatagory.BASE_COLORS[Persist.spawnSphere as int].name
 	var dfsRegions := PD.depth_first_search(Persist.worldOrder, spawnName)
@@ -310,20 +309,22 @@ func create_interretiongal_connections():
 
 ##Create the nodes in a region
 func spawn_region_nodes(inRegion : MapRegion):
-	#Get the cooridnates for how many pips are needed in each region
-	var rndNodeCount : int = 10
-	if inRegion.index == 0:
-		rndNodeCount = 1
 	##If the house should spawn here instead of it connecting from another region
 	var isRootRegion = Persist.spawnSphere + 1 == inRegion.index
 	#Get a pool of available random types in the middle
 	var typePool : Array[MapPip.MapNodeType]
-	for spawnables in rndNodeCount:
-		var nextType := get_next_pip_type()
-		typePool.append(nextType)
-		#Portals need to come in pairs
-		if nextType == MapPip.MapNodeType.PORTAL:
+	#Get the cooridnates for how many pips are needed in each region
+	var rndNodeCount : int = 10
+	if inRegion.index == 0:
+		rndNodeCount = 1
+		typePool.append(MapPip.MapNodeType.ENEMY)
+	else:
+		for spawnables in rndNodeCount:
+			var nextType := get_next_pip_type()
 			typePool.append(nextType)
+			#Portals need to come in pairs
+			if nextType == MapPip.MapNodeType.PORTAL:
+				typePool.append(nextType)
 	var pipCoords := inRegion.rand_pip_coords(typePool.size(), aStar)
 	#Create the boss
 	var bossPip := spawn_typed_pip(pipCoords["Boss"], inRegion.index, MapPip.MapNodeType.BOSS)
@@ -494,6 +495,24 @@ func spawn_region_nodes(inRegion : MapRegion):
 					unassignedPipTable[leastPathCount].erase(lowestPip)
 					lowestPip.set_pip_type(inRegion.index, eachType)
 					break
+	
+	#Path counts no longer are involved in this
+	var finalUnassigned : Array[MapPip]
+	for eachRemaining in unassignedPipTable:
+		finalUnassigned.append_array(unassignedPipTable[eachRemaining])
+	
+	#Enemies, linear intersections and events should be all that remain
+	var finalTypes = [MapPip.MapNodeType.INTERSECTION, MapPip.MapNodeType.ENEMY, MapPip.MapNodeType.EVENT]
+	for eachType in typePool:
+		if finalUnassigned.size() == 0:
+			push_warning("No spots left for the remaining types!")
+			break
+		var finalPip = finalUnassigned.pop_back()
+		if finalTypes.has(eachType):
+			finalPip.set_pip_type(inRegion.index, eachType)
+		else:
+			push_warning("Remaining type unexpected! Falling back to enemy.")
+			finalPip.set_pip_type(inRegion.index, MapPip.MapNodeType.ENEMY)
 
 ##Creates a lookup table based on the connected paths on each node
 func group_pips_by_path_count(inPips : Array[MapPip]) -> Dictionary[int, Array]:

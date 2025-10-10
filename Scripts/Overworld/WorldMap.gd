@@ -1,4 +1,4 @@
-extends Node2D
+extends GameScreen
 class_name WorldMap
 
 ##The different map regions
@@ -761,7 +761,7 @@ func pip_activated(activePip : MapPip):
 	if GameRoot.ScreenType.CUTSCENE:
 		print("Play cutscene!")
 	else:
-		gameRoot.switch_scenes(GameRoot.ScreenType.BATTLE)
+		gameRoot.switch_scenes(newScreenType)
 
 func set_active(nState : bool):
 	mapPlayer.enabled = nState

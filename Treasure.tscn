@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cq5yk4gayfnpc"]
+
+[ext_resource type="Script" uid="uid://faodmv2tch4r" path="res://Scripts/Treasure.gd" id="1_r4olm"]
+
+[node name="Treasure" type="CanvasLayer"]
+script = ExtResource("1_r4olm")

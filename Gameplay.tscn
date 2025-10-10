@@ -1,15 +1,46 @@
-[gd_scene load_steps=4 format=3 uid="uid://dp7hihr25b70y"]
+[gd_scene load_steps=10 format=3 uid="uid://dp7hihr25b70y"]
 
 [ext_resource type="PackedScene" uid="uid://d0amflih465nl" path="res://WorldMap.tscn" id="1_inlal"]
 [ext_resource type="Script" uid="uid://bt5dbsbv315ql" path="res://Scripts/GameRoot.gd" id="1_k2aq1"]
 [ext_resource type="PackedScene" uid="uid://cpofxalps4yuo" path="res://Battle.tscn" id="2_vrd06"]
+[ext_resource type="PackedScene" uid="uid://c3amjevm3t2k0" path="res://Shop.tscn" id="4_wnni2"]
+[ext_resource type="PackedScene" uid="uid://cq5yk4gayfnpc" path="res://Treasure.tscn" id="5_c8c3f"]
+[ext_resource type="PackedScene" uid="uid://rmla3d3vqoar" path="res://Releaser.tscn" id="6_vhwld"]
+[ext_resource type="PackedScene" uid="uid://3ic2c4ms3m5y" path="res://Event.tscn" id="7_83vju"]
+[ext_resource type="PackedScene" uid="uid://26c6es3texj3" path="res://Home.tscn" id="8_824mg"]
+[ext_resource type="PackedScene" uid="uid://dun0jbik6ab7f" path="res://Cutscene.tscn" id="9_ies6u"]
 
-[node name="Game" type="Node"]
+[node name="Game" type="Node" node_paths=PackedStringArray("screenNodes")]
 script = ExtResource("1_k2aq1")
+screenNodes = {
+0: NodePath("WorldMap"),
+1: NodePath("Cutscene"),
+2: NodePath("Battlescreen"),
+3: NodePath("Event"),
+4: NodePath("Shop"),
+5: NodePath("Treasure"),
+6: NodePath("Releaser"),
+7: NodePath("Home")
+}
 
 [node name="WorldMap" parent="." instance=ExtResource("1_inlal")]
-unique_name_in_owner = true
 
 [node name="Battlescreen" parent="." instance=ExtResource("2_vrd06")]
-unique_name_in_owner = true
 visible = false
+
+[node name="Shop" parent="." instance=ExtResource("4_wnni2")]
+visible = false
+
+[node name="Treasure" parent="." instance=ExtResource("5_c8c3f")]
+visible = false
+
+[node name="Releaser" parent="." instance=ExtResource("6_vhwld")]
+visible = false
+
+[node name="Event" parent="." instance=ExtResource("7_83vju")]
+visible = false
+
+[node name="Home" parent="." instance=ExtResource("8_824mg")]
+visible = false
+
+[node name="Cutscene" parent="." instance=ExtResource("9_ies6u")]

@@ -9,7 +9,7 @@
 [ext_resource type="Script" uid="uid://b5ym3gb616s0h" path="res://Scripts/Overworld/OverworldPlayer.gd" id="6_37m1j"]
 [ext_resource type="PackedScene" uid="uid://cifjnmtp52uco" path="res://Resources/CardScrollbox.tscn" id="7_d26g4"]
 
-[node name="WorldMap" type="Node2D" node_paths=PackedStringArray("mapPlayer", "groundTilemap", "mapSpot")]
+[node name="WorldMap" type="CanvasLayer" node_paths=PackedStringArray("mapPlayer", "groundTilemap", "mapSpot")]
 script = ExtResource("1_psonl")
 mapPlayer = NodePath("Player")
 diagonalMode = 3
@@ -18,9 +18,9 @@ mapSpot = NodePath("MapNodes")
 pipPrefab = ExtResource("4_eceo5")
 pathPrefab = ExtResource("3_aypb6")
 
-[node name="WorldMapUi" type="CanvasLayer" parent="."]
+[node name="WorldMapUI" type="CanvasLayer" parent="."]
 
-[node name="CardScrollbox" parent="WorldMapUi" instance=ExtResource("7_d26g4")]
+[node name="CardScrollbox" parent="WorldMapUI" instance=ExtResource("7_d26g4")]
 anchors_preset = -1
 anchor_left = 0.7552083
 grow_horizontal = 0
@@ -42,7 +42,7 @@ z_index = 4
 rotates = false
 loop = false
 script = ExtResource("6_37m1j")
-worldMap = NodePath("..")
+worldMap = NodePath("")
 
 [node name="PlayChar" type="Sprite2D" parent="Player"]
 z_index = 1

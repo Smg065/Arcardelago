@@ -1,16 +1,13 @@
 extends Node
 class_name GameRoot
 
-@onready
-var curScreen = %WorldMap
+@export var screenNodes : Dictionary[ScreenType, GameScreen]
+
+var curScreen : ScreenType = ScreenType.WORLD_MAP
 
 enum ScreenType {WORLD_MAP, CUTSCENE, BATTLE, EVENT, SHOP, TREASURE, RELEASER, HOME}
 
 func switch_scenes(newScreen : ScreenType = ScreenType.WORLD_MAP):
-	curScreen.set_active(false)
-	match newScreen:
-		ScreenType.WORLD_MAP:
-			curScreen = %WorldMap
-		ScreenType.BATTLE:
-			curScreen = %Battlescreen
-	curScreen.set_active(true)
+	screenNodes[curScreen].set_active(false)
+	curScreen = newScreen
+	screenNodes[curScreen].set_active(true)

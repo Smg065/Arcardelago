@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://dp7hihr25b70y"]
+
+[ext_resource type="PackedScene" uid="uid://d0amflih465nl" path="res://WorldMap.tscn" id="1_inlal"]
+[ext_resource type="Script" uid="uid://bt5dbsbv315ql" path="res://Scripts/GameRoot.gd" id="1_k2aq1"]
+[ext_resource type="PackedScene" uid="uid://cpofxalps4yuo" path="res://Battle.tscn" id="2_vrd06"]
+
+[node name="Game" type="Node"]
+script = ExtResource("1_k2aq1")
+
+[node name="WorldMap" parent="." instance=ExtResource("1_inlal")]
+unique_name_in_owner = true
+
+[node name="Battlescreen" parent="." instance=ExtResource("2_vrd06")]
+unique_name_in_owner = true
+visible = false

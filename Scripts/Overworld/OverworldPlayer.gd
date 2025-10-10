@@ -1,6 +1,7 @@
 extends PathFollow2D
 class_name OverworldPlayer
 
+@export var worldMap : WorldMap
 @export var curPath : MapWalkPip 
 @export var curPip : MapPip
 @export var enabled : bool
@@ -30,8 +31,14 @@ func map_pip_logic():
 				return
 	#Look to try this location out
 	if Input.is_action_just_pressed("ConfirmOverworld"):
-		if curPip.defeatable():
-			curPip.defeat()
+		#If you're able to interact with it (defeatable & not auto)
+		if curPip.defeatable() and curPip.mapNodeType != MapPip.MapNodeType.AUTO:
+			#It's not auto
+			if !curPip.defeated:
+				worldMap.pip_activated(curPip)
+			#Revisiting defeated bosses to offload banded cards (?)
+			#elif curPip.mapNodeType == MapPip.MapNodeType.BOSS:
+			#	
 
 func set_path_goal(nPath : MapWalkPip):
 	curPath = nPath
@@ -44,6 +51,8 @@ func move_along_path(delta: float):
 	#Move along until you reach the 'end' of the direction you're moving
 	progress += delta * MOVE_SPEED * moveDir
 	if is_equal_approx(progress_ratio, move_progress()):
+		#Mark the path you just used as walkable to keep things consistant
+		curPath.unlocked = true
 		#On arrival, set this as your pip
 		curPip = curPath.other_pip(curPip)
 		match curPip.mapNodeType:

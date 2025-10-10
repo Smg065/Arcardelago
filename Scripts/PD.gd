@@ -9,6 +9,8 @@ var difficulty : int
 var cardsPerRegion : int
 ##How wide the map's radius is
 var mapRadius : int
+##How many tiles there are per map node
+var tileDensity : int
 ##Odds of node types appearing
 var nodePercents : Dictionary
 ##The sphere you spawn with
@@ -96,6 +98,7 @@ func hold_server_data(slotData : Dictionary) -> void:
 	difficulty = slotData["difficulty"]
 	cardsPerRegion = slotData["cards_per_region"]
 	mapRadius = slotData["map_radius"]
+	tileDensity = slotData["tiles_per_pip"]
 	nodePercents = slotData["node_percentages"]
 	#Nodes with 0% Chance will not randomly be selected
 	var toDelete : Array[String]
@@ -121,6 +124,16 @@ func hold_server_data(slotData : Dictionary) -> void:
 	worldOrder = slotData["world_order"]
 	apSeed = slotData["seed"]
 	set_rand_seed(apSeed)
+
+##Get the percentage that all the listed pip types take up in the generation
+func pip_percentage(types : PackedStringArray):
+	var outSum : float = 0
+	for eachType in types:
+		outSum += nodePercents[eachType]
+	#No divide by 0s
+	if is_zero_approx(outSum):
+		return 0
+	return outSum / 100.0
 
 ##
 #func debug_all_cards_from(colorCat : ColorCatagory):

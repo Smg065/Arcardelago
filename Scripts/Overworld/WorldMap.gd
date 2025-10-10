@@ -211,6 +211,7 @@ var mapOrder : Dictionary[MapRegion, Array]
 @export var pathPrefab : PackedScene
 @export var pips : Array[MapPip]
 var homePip : MapPip
+var nodesPerRegion : int = 10
 
 var nodesUsedPercents : Dictionary[String, float] = {
 	"Auto":0,
@@ -236,8 +237,14 @@ func _ready() -> void:
 	#Get all the regions coords
 	var regionCoords = run_for_region(aStar.region, get_region_cell.bind(centerRadius), true)
 	#Create the regions
+	var regionTiles : float = 0
 	for regionIndex in regionCoords.keys():
+		if regionIndex != 0:
+			regionTiles += regionCoords[regionIndex].size()
 		generate_region(regionIndex, regionCoords[regionIndex])
+	#Get the nodes that spawn in each region
+	regionTiles /= 6.0
+	nodesPerRegion = ceili(regionTiles / Persist.tileDensity)
 	#Make the regions show up in order
 	regions.sort_custom(func(a, b): return a.index < b.index)
 	create_interregiongal_connections()
@@ -314,12 +321,12 @@ func spawn_region_nodes(inRegion : MapRegion):
 	#Get a pool of available random types in the middle
 	var typePool : Array[MapPip.MapNodeType]
 	#Get the cooridnates for how many pips are needed in each region
-	var rndNodeCount : int = 10
 	if inRegion.index == 0:
-		rndNodeCount = 1
+		#The final region has a rival battle, and that's it
 		typePool.append(MapPip.MapNodeType.ENEMY)
 	else:
-		for spawnables in rndNodeCount:
+		#For each node that should be in a region
+		for spawnables in nodesPerRegion:
 			var nextType := get_next_pip_type()
 			typePool.append(nextType)
 			#Portals need to come in pairs
@@ -347,15 +354,17 @@ func spawn_region_nodes(inRegion : MapRegion):
 	#Create the interworld warps
 	var gatedWarps : Array[MapPip]
 	var ungatedWarps : Array[MapPip]
+	var totalWarpGates : int = 0
 	for eachIndex in pipCoords["Warps"].size():
 		var eachCoord : Vector2 = pipCoords["Warps"][eachIndex]
 		var eachWarp := spawn_typed_pip(eachCoord, inRegion.index, MapPip.MapNodeType.PORTAL)
 		inRegion.warpPips.append(eachWarp)
 		#Connections to gates and warps must be considered
 		if inRegion.warpHasGate[eachIndex]:
-			var blockingGate := inRegion.gatePips[eachIndex + totalNeighbors]
+			var blockingGate := inRegion.gatePips[totalWarpGates + totalNeighbors]
 			spawn_path(eachWarp, blockingGate)
 			gatedWarps.append(eachWarp)
+			totalWarpGates += 1
 		else:
 			ungatedWarps.append(eachWarp)
 	
@@ -708,3 +717,53 @@ static func is_adjacent(regIndex1 : int, regIndex2 : int):
 		return true
 	#If none of the above are true, it's distant
 	return false
+
+func pip_activated(activePip : MapPip):
+	var gameRoot = get_parent()
+	if !(gameRoot is GameRoot):
+		if OS.has_feature("Debug"):
+			activePip.defeat()
+			print("Debug clear for map generation testing!")
+		return
+	var newScreenType : GameRoot.ScreenType
+	match activePip.mapNodeType:
+		#Battle Scenes
+		MapPip.MapNodeType.ENEMY:
+			newScreenType = GameRoot.ScreenType.BATTLE
+		MapPip.MapNodeType.BOSS:
+			newScreenType = GameRoot.ScreenType.BATTLE
+		#Cutscenes
+		MapPip.MapNodeType.GATE:
+			newScreenType = GameRoot.ScreenType.CUTSCENE
+		MapPip.MapNodeType.OBSTACLE:
+			newScreenType = GameRoot.ScreenType.CUTSCENE
+		MapPip.MapNodeType.PORTAL:
+			newScreenType = GameRoot.ScreenType.CUTSCENE
+		#Shop
+		MapPip.MapNodeType.SHOP:
+			newScreenType = GameRoot.ScreenType.SHOP
+		#Treasure
+		MapPip.MapNodeType.TREASURE:
+			newScreenType = GameRoot.ScreenType.TREASURE
+		#Releaser
+		MapPip.MapNodeType.RELEASER:
+			newScreenType = GameRoot.ScreenType.RELEASER
+		#Event
+		MapPip.MapNodeType.EVENT:
+			newScreenType = GameRoot.ScreenType.EVENT
+		#Home
+		MapPip.MapNodeType.HOME:
+			newScreenType = GameRoot.ScreenType.HOME
+		#Fallback for nodes you should never interact with
+		_:
+			newScreenType = GameRoot.ScreenType.WORLD_MAP
+	#Cutscenes
+	if GameRoot.ScreenType.CUTSCENE:
+		print("Play cutscene!")
+	else:
+		gameRoot.switch_scenes(GameRoot.ScreenType.BATTLE)
+
+func set_active(nState : bool):
+	mapPlayer.enabled = nState
+	$WorldMapUi.visible = nState
+	visible = nState

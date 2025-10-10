@@ -44,7 +44,7 @@ func on_connection(inConn: ConnectionInfo, json: Dictionary):
 	if gameInfo != "":
 		Persist.game = GameData.json_load(gameInfo)
 		Persist.hold_server_data(json["slot_data"])
-		get_tree().change_scene_to_file("res://WorldMap.tscn")
+		get_tree().change_scene_to_file("res://Gameplay.tscn")
 	else:
 		build_new_game(json)
 
@@ -251,7 +251,7 @@ func fictional_names_check_existing():
 
 func save_game_as_new():
 	Persist.game.save_as_file(ip, port, slot, password)
-	get_tree().change_scene_to_file("res://WorldMap.tscn")
+	get_tree().change_scene_to_file("res://Gameplay.tscn")
 
 func dictionary_api_delay() -> void:
 	try_request()

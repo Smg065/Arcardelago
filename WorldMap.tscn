@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dp7hihr25b70y"]
+[gd_scene load_steps=9 format=3 uid="uid://d0amflih465nl"]
 
 [ext_resource type="Texture2D" uid="uid://dbaau4eyml6wu" path="res://Sprites/MapWheel.png" id="1_l8kh1"]
 [ext_resource type="Script" uid="uid://dhvryxbq5vw16" path="res://Scripts/Overworld/WorldMap.gd" id="1_psonl"]
@@ -9,9 +9,7 @@
 [ext_resource type="Script" uid="uid://b5ym3gb616s0h" path="res://Scripts/Overworld/OverworldPlayer.gd" id="6_37m1j"]
 [ext_resource type="PackedScene" uid="uid://cifjnmtp52uco" path="res://Resources/CardScrollbox.tscn" id="7_d26g4"]
 
-[node name="Game" type="Node"]
-
-[node name="WorldMap" type="Node2D" parent="." node_paths=PackedStringArray("mapPlayer", "groundTilemap", "mapSpot")]
+[node name="WorldMap" type="Node2D" node_paths=PackedStringArray("mapPlayer", "groundTilemap", "mapSpot")]
 script = ExtResource("1_psonl")
 mapPlayer = NodePath("Player")
 diagonalMode = 3
@@ -20,35 +18,36 @@ mapSpot = NodePath("MapNodes")
 pipPrefab = ExtResource("4_eceo5")
 pathPrefab = ExtResource("3_aypb6")
 
-[node name="GroundTilemap" type="TileMapLayer" parent="WorldMap"]
+[node name="WorldMapUi" type="CanvasLayer" parent="."]
+
+[node name="CardScrollbox" parent="WorldMapUi" instance=ExtResource("7_d26g4")]
+anchors_preset = -1
+anchor_left = 0.7552083
+grow_horizontal = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="GroundTilemap" type="TileMapLayer" parent="."]
 tile_set = ExtResource("2_aypb6")
 
-[node name="Sprite2D" type="Sprite2D" parent="WorldMap"]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 visible = false
 modulate = Color(1, 1, 1, 0.49803922)
 scale = Vector2(16, 16)
 texture = ExtResource("1_l8kh1")
 
-[node name="MapNodes" type="Node2D" parent="WorldMap"]
+[node name="MapNodes" type="Node2D" parent="."]
 
-[node name="Player" type="PathFollow2D" parent="WorldMap"]
+[node name="Player" type="PathFollow2D" parent="." node_paths=PackedStringArray("worldMap")]
 z_index = 4
 rotates = false
 loop = false
 script = ExtResource("6_37m1j")
+worldMap = NodePath("..")
 
-[node name="PlayChar" type="Sprite2D" parent="WorldMap/Player"]
+[node name="PlayChar" type="Sprite2D" parent="Player"]
 z_index = 1
 position = Vector2(0, -8)
 texture = ExtResource("5_x5pqh")
 
-[node name="PlayCam" type="Camera2D" parent="WorldMap/Player"]
-zoom = Vector2(6, 6)
-
-[node name="WorldmapUi" type="CanvasLayer" parent="WorldMap/Player/PlayCam"]
-
-[node name="CardScrollbox" parent="WorldMap/Player/PlayCam/WorldmapUi" instance=ExtResource("7_d26g4")]
-anchors_preset = -1
-anchor_left = 0.7552083
-grow_horizontal = 0
-metadata/_edit_use_anchors_ = true
+[node name="PlayCam" type="Camera2D" parent="Player"]
+zoom = Vector2(5.5, 5.5)

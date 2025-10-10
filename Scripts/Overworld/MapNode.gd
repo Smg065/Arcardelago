@@ -141,18 +141,20 @@ func direction_availability(worldMap : WorldMap):
 func defeat(nDefeated : bool = true) -> void:
 	#Set the new value
 	defeated = nDefeated
-	#Non-Auto tiles update the visual
-	if mapNodeType != MapNodeType.AUTO:
-		if defeated:
-			modulate = Color.GRAY
-		else:
-			modulate = Color.WHITE
-		if mapNodeType == MapNodeType.TREASURE:
-			play("TreasureBackOpen")
-			set_anim_pip_color("TreasureOpen")
-		if mapNodeType == MapNodeType.GATE:
-			play("GateBackOpen")
-			set_anim_pip_color("GateOpen")
+	#Obviously you can't really 'defeat' nodes that aren't defeatable
+	if defeatable():
+		#Non-Auto tiles update the visual
+		if mapNodeType != MapNodeType.AUTO:
+			if defeated:
+				modulate = Color.GRAY
+			else:
+				modulate = Color.WHITE
+			if mapNodeType == MapNodeType.TREASURE:
+				play("TreasureBackOpen")
+				set_anim_pip_color("TreasureOpen")
+			if mapNodeType == MapNodeType.GATE:
+				play("GateBackOpen")
+				set_anim_pip_color("GateOpen")
 	#Tell the paths if they're usable
 	for eachPath in pathDirs.values():
 		eachPath.unlocked = nDefeated

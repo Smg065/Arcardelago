@@ -1,7 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://cpofxalps4yuo"]
+[gd_scene load_steps=3 format=3 uid="uid://cpofxalps4yuo"]
 
 [ext_resource type="Script" uid="uid://bqqtjwd0ms0k6" path="res://Scripts/Battle.gd" id="1_yh5fh"]
-[ext_resource type="PackedScene" uid="uid://cifjnmtp52uco" path="res://Resources/CardScrollbox.tscn" id="2_lul25"]
 [ext_resource type="PackedScene" uid="uid://dj0bi4scf7x7c" path="res://Resources/Battle/CardSlot.tscn" id="2_yh5fh"]
 
 [node name="BattleScreen" type="CanvasLayer"]
@@ -88,7 +87,6 @@ layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.6666667
 anchor_top = 0.10144927
-anchor_right = 1.0000001
 anchor_bottom = 0.5014492
 
 [node name="Leftback" parent="Backdrop/Battle/Playfield/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
@@ -103,7 +101,6 @@ layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.6666667
 anchor_top = 0.5
-anchor_right = 1.0000001
 anchor_bottom = 0.9
 
 [node name="Backmost2" parent="Backdrop/Battle/Playfield/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
@@ -112,7 +109,6 @@ anchors_preset = -1
 anchor_left = 0.33333334
 anchor_top = 0.6
 anchor_right = 0.66666675
-anchor_bottom = 1.0
 
 [node name="Enemies" type="ReferenceRect" parent="Backdrop/Battle"]
 layout_mode = 1
@@ -224,7 +220,6 @@ anchors_preset = -1
 anchor_left = 0.33333334
 anchor_top = 0.6
 anchor_right = 0.66666675
-anchor_bottom = 1.0
 
 [node name="Leftfront" parent="Backdrop/Battle/Enemies/RivalLayout/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
 layout_mode = 1
@@ -238,7 +233,6 @@ layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.6666667
 anchor_top = 0.5
-anchor_right = 1.0000001
 anchor_bottom = 0.9
 
 [node name="Leftback" parent="Backdrop/Battle/Enemies/RivalLayout/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
@@ -253,7 +247,6 @@ layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.6666667
 anchor_top = 0.10144927
-anchor_right = 1.0000001
 anchor_bottom = 0.5014492
 
 [node name="Backmost2" parent="Backdrop/Battle/Enemies/RivalLayout/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
@@ -279,8 +272,6 @@ anchor_left = 0.333
 anchor_top = 0.1
 anchor_right = 0.6671875
 anchor_bottom = 0.9
-grow_horizontal = 2
-grow_vertical = 2
 
 [node name="LFrontRow" type="HBoxContainer" parent="Backdrop/Battle/Enemies/BossLayout"]
 layout_mode = 1
@@ -347,21 +338,3 @@ layout_mode = 2
 
 [node name="CardSlot2" parent="Backdrop/Battle/Enemies/BossLayout/RBackRow" instance=ExtResource("2_yh5fh")]
 layout_mode = 2
-
-[node name="DeckSelection" type="ReferenceRect" parent="Backdrop"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.75
-anchor_top = 0.25
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 16.0
-offset_right = -16.0
-offset_bottom = -32.0
-grow_horizontal = 2
-grow_vertical = 2
-border_width = 8.0
-metadata/_edit_use_anchors_ = true
-
-[node name="ScrollContainer" parent="Backdrop/DeckSelection" instance=ExtResource("2_lul25")]
-layout_mode = 1

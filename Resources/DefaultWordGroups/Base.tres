@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="ArbitraryWordGroups" load_steps=102 format=3 uid="uid://ckena4ikgus8"]
+[gd_resource type="Resource" script_class="ArbitraryWordGroups" load_steps=96 format=3]
 
-[ext_resource type="Script" uid="uid://3slsv11kg0rw" path="res://Scripts/ArbitraryWordGroups.gd" id="1_py3ud"]
-[ext_resource type="Script" uid="uid://msrh0tnnmpa0" path="res://Scripts/ColorWordData.gd" id="2_hrlhe"]
-[ext_resource type="Script" uid="uid://c7tg13jj77m00" path="res://Scripts/ColorWeight.gd" id="3_h4nki"]
+[ext_resource type="Script" path="res://Scripts/ArbitraryWordGroups.gd" id="1_py3ud"]
+[ext_resource type="Script" path="res://Scripts/ColorWordData.gd" id="2_hrlhe"]
+[ext_resource type="Script" path="res://Scripts/ColorWeight.gd" id="3_h4nki"]
 
 [sub_resource type="Resource" id="Resource_py3ud"]
 script = ExtResource("3_h4nki")
@@ -297,203 +297,173 @@ colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_7eylm"), Sub
 [sub_resource type="Resource" id="Resource_7oqh3"]
 script = ExtResource("3_h4nki")
 weight = 1.0
-baseColors = Array[int]([1, 3])
+baseColors = Array[int]([5])
 
 [sub_resource type="Resource" id="Resource_1525e"]
 script = ExtResource("3_h4nki")
-weight = -0.75
-baseColors = Array[int]([4])
+weight = -0.5
+baseColors = Array[int]([2])
 
 [sub_resource type="Resource" id="Resource_a2rd5"]
 script = ExtResource("2_hrlhe")
-word = "Few"
+word = "Friend"
 colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_7oqh3"), SubResource("Resource_1525e")])
 
 [sub_resource type="Resource" id="Resource_pafbo"]
 script = ExtResource("3_h4nki")
 weight = 1.0
-baseColors = Array[int]([4])
+baseColors = Array[int]([1, 5])
 
 [sub_resource type="Resource" id="Resource_rih1i"]
 script = ExtResource("3_h4nki")
-weight = -0.8
-baseColors = Array[int]([1, 3])
+weight = -0.55
 
 [sub_resource type="Resource" id="Resource_il514"]
 script = ExtResource("2_hrlhe")
-word = "Many"
+word = "Ghost"
 colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_pafbo"), SubResource("Resource_rih1i")])
 
 [sub_resource type="Resource" id="Resource_5b71j"]
 script = ExtResource("3_h4nki")
 weight = 1.0
-baseColors = Array[int]([5])
+baseColors = Array[int]([4])
 
 [sub_resource type="Resource" id="Resource_kev58"]
 script = ExtResource("3_h4nki")
-weight = -0.5
-baseColors = Array[int]([2])
+weight = -1.0
+baseColors = Array[int]([3])
 
 [sub_resource type="Resource" id="Resource_hxgpx"]
 script = ExtResource("2_hrlhe")
-word = "Friend"
+word = "Small"
 colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_5b71j"), SubResource("Resource_kev58")])
 
 [sub_resource type="Resource" id="Resource_ujq5t"]
 script = ExtResource("3_h4nki")
 weight = 1.0
-baseColors = Array[int]([1, 5])
+baseColors = Array[int]([3])
 
 [sub_resource type="Resource" id="Resource_st3f3"]
 script = ExtResource("3_h4nki")
-weight = -0.55
+weight = -1.0
+baseColors = Array[int]([4])
 
 [sub_resource type="Resource" id="Resource_761g8"]
 script = ExtResource("2_hrlhe")
-word = "Ghost"
+word = "Large"
 colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_ujq5t"), SubResource("Resource_st3f3")])
 
 [sub_resource type="Resource" id="Resource_4kmeo"]
 script = ExtResource("3_h4nki")
 weight = 1.0
-baseColors = Array[int]([4])
-
-[sub_resource type="Resource" id="Resource_q2gwv"]
-script = ExtResource("3_h4nki")
-weight = -1.0
 baseColors = Array[int]([3])
 
-[sub_resource type="Resource" id="Resource_wej0w"]
+[sub_resource type="Resource" id="Resource_q2gwv"]
 script = ExtResource("2_hrlhe")
-word = "Small"
-colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_4kmeo"), SubResource("Resource_q2gwv")])
+word = "Sphere"
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_4kmeo")])
+
+[sub_resource type="Resource" id="Resource_wej0w"]
+script = ExtResource("3_h4nki")
+weight = 0.8999999999999999
+baseColors = Array[int]([3])
 
 [sub_resource type="Resource" id="Resource_spnmf"]
 script = ExtResource("3_h4nki")
-weight = 1.0
-baseColors = Array[int]([3])
+weight = -1.0
+baseColors = Array[int]([4])
 
 [sub_resource type="Resource" id="Resource_7abue"]
-script = ExtResource("3_h4nki")
-weight = -1.0
-baseColors = Array[int]([4])
-
-[sub_resource type="Resource" id="Resource_ycuql"]
-script = ExtResource("2_hrlhe")
-word = "Large"
-colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_spnmf"), SubResource("Resource_7abue")])
-
-[sub_resource type="Resource" id="Resource_o7jru"]
-script = ExtResource("3_h4nki")
-weight = 1.0
-baseColors = Array[int]([3])
-
-[sub_resource type="Resource" id="Resource_1gnhy"]
-script = ExtResource("2_hrlhe")
-word = "Sphere"
-colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_o7jru")])
-
-[sub_resource type="Resource" id="Resource_kk8jg"]
-script = ExtResource("3_h4nki")
-weight = 0.95
-baseColors = Array[int]([3])
-
-[sub_resource type="Resource" id="Resource_wb7i4"]
-script = ExtResource("3_h4nki")
-weight = -1.0
-baseColors = Array[int]([4])
-
-[sub_resource type="Resource" id="Resource_yjgma"]
 script = ExtResource("2_hrlhe")
 word = "Rare"
-colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_kk8jg"), SubResource("Resource_wb7i4")])
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_wej0w"), SubResource("Resource_spnmf")])
 
-[sub_resource type="Resource" id="Resource_0ohdd"]
+[sub_resource type="Resource" id="Resource_ycuql"]
 script = ExtResource("3_h4nki")
 weight = 1.0
 baseColors = Array[int]([5])
 
-[sub_resource type="Resource" id="Resource_hd55m"]
+[sub_resource type="Resource" id="Resource_o7jru"]
 script = ExtResource("2_hrlhe")
 word = "Recive"
-colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_0ohdd")])
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_ycuql")])
 
-[sub_resource type="Resource" id="Resource_327o5"]
+[sub_resource type="Resource" id="Resource_1gnhy"]
 script = ExtResource("3_h4nki")
-weight = 1.0
+weight = 0.95
 baseColors = Array[int]([5])
 
-[sub_resource type="Resource" id="Resource_u4ep4"]
+[sub_resource type="Resource" id="Resource_kk8jg"]
 script = ExtResource("3_h4nki")
 weight = 0.5
 baseColors = Array[int]([3])
 
-[sub_resource type="Resource" id="Resource_nl3s1"]
+[sub_resource type="Resource" id="Resource_wb7i4"]
 script = ExtResource("2_hrlhe")
 word = "Money"
-colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_327o5"), SubResource("Resource_u4ep4")])
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_1gnhy"), SubResource("Resource_kk8jg")])
 
-[sub_resource type="Resource" id="Resource_dsxhl"]
+[sub_resource type="Resource" id="Resource_yjgma"]
 script = ExtResource("3_h4nki")
 weight = 1.0
 baseColors = Array[int]([4, 5])
 
-[sub_resource type="Resource" id="Resource_ginr7"]
+[sub_resource type="Resource" id="Resource_0ohdd"]
 script = ExtResource("3_h4nki")
 weight = -0.5
 baseColors = Array[int]([2])
 
-[sub_resource type="Resource" id="Resource_msx0j"]
+[sub_resource type="Resource" id="Resource_hd55m"]
 script = ExtResource("2_hrlhe")
 word = "Together"
-colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_dsxhl"), SubResource("Resource_ginr7")])
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_yjgma"), SubResource("Resource_0ohdd")])
 
-[sub_resource type="Resource" id="Resource_j7411"]
+[sub_resource type="Resource" id="Resource_327o5"]
 script = ExtResource("3_h4nki")
 weight = 1.0
 baseColors = Array[int]([0])
 
-[sub_resource type="Resource" id="Resource_mik5s"]
+[sub_resource type="Resource" id="Resource_u4ep4"]
 script = ExtResource("3_h4nki")
 weight = -1.0
 baseColors = Array[int]([5])
 
-[sub_resource type="Resource" id="Resource_ub5dc"]
+[sub_resource type="Resource" id="Resource_nl3s1"]
 script = ExtResource("2_hrlhe")
 word = "Avoid"
-colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_j7411"), SubResource("Resource_mik5s")])
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_327o5"), SubResource("Resource_u4ep4")])
 
-[sub_resource type="Resource" id="Resource_tyvf3"]
+[sub_resource type="Resource" id="Resource_dsxhl"]
 script = ExtResource("3_h4nki")
 weight = 0.5
 baseColors = Array[int]([0, 5])
 
-[sub_resource type="Resource" id="Resource_1cv1q"]
+[sub_resource type="Resource" id="Resource_ginr7"]
 script = ExtResource("2_hrlhe")
 word = "Wait"
-colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_tyvf3")])
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_dsxhl")])
 
-[sub_resource type="Resource" id="Resource_qurkm"]
+[sub_resource type="Resource" id="Resource_msx0j"]
 script = ExtResource("3_h4nki")
 weight = 0.75
 baseColors = Array[int]([2])
 
-[sub_resource type="Resource" id="Resource_757cd"]
+[sub_resource type="Resource" id="Resource_j7411"]
 script = ExtResource("3_h4nki")
 weight = 0.5
 baseColors = Array[int]([3])
 
-[sub_resource type="Resource" id="Resource_h52pl"]
+[sub_resource type="Resource" id="Resource_mik5s"]
 script = ExtResource("3_h4nki")
 weight = -1.0
 baseColors = Array[int]([4])
 
-[sub_resource type="Resource" id="Resource_ni2mw"]
+[sub_resource type="Resource" id="Resource_ub5dc"]
 script = ExtResource("2_hrlhe")
 word = "Key"
-colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_qurkm"), SubResource("Resource_757cd"), SubResource("Resource_h52pl")])
+colorWeights = Array[ExtResource("3_h4nki")]([SubResource("Resource_msx0j"), SubResource("Resource_j7411"), SubResource("Resource_mik5s")])
 
 [resource]
 script = ExtResource("1_py3ud")
 name = "Base"
-table = Array[ExtResource("2_hrlhe")]([SubResource("Resource_hrlhe"), SubResource("Resource_6peuo"), SubResource("Resource_hbtpa"), SubResource("Resource_ohqh5"), SubResource("Resource_os5ml"), SubResource("Resource_s628s"), SubResource("Resource_2t845"), SubResource("Resource_ymnha"), SubResource("Resource_hsdqd"), SubResource("Resource_ijcu2"), SubResource("Resource_lh4wg"), SubResource("Resource_0gws5"), SubResource("Resource_e8ls8"), SubResource("Resource_cowor"), SubResource("Resource_04luh"), SubResource("Resource_737nw"), SubResource("Resource_l732k"), SubResource("Resource_ml844"), SubResource("Resource_0lc4d"), SubResource("Resource_nqvry"), SubResource("Resource_yl0f5"), SubResource("Resource_a2rd5"), SubResource("Resource_il514"), SubResource("Resource_hxgpx"), SubResource("Resource_761g8"), SubResource("Resource_wej0w"), SubResource("Resource_ycuql"), SubResource("Resource_1gnhy"), SubResource("Resource_yjgma"), SubResource("Resource_hd55m"), SubResource("Resource_nl3s1"), SubResource("Resource_msx0j"), SubResource("Resource_ub5dc"), SubResource("Resource_1cv1q"), SubResource("Resource_ni2mw")])
+table = Array[ExtResource("2_hrlhe")]([SubResource("Resource_hrlhe"), SubResource("Resource_6peuo"), SubResource("Resource_hbtpa"), SubResource("Resource_ohqh5"), SubResource("Resource_os5ml"), SubResource("Resource_s628s"), SubResource("Resource_2t845"), SubResource("Resource_ymnha"), SubResource("Resource_hsdqd"), SubResource("Resource_ijcu2"), SubResource("Resource_lh4wg"), SubResource("Resource_0gws5"), SubResource("Resource_e8ls8"), SubResource("Resource_cowor"), SubResource("Resource_04luh"), SubResource("Resource_737nw"), SubResource("Resource_l732k"), SubResource("Resource_ml844"), SubResource("Resource_0lc4d"), SubResource("Resource_nqvry"), SubResource("Resource_yl0f5"), SubResource("Resource_a2rd5"), SubResource("Resource_il514"), SubResource("Resource_hxgpx"), SubResource("Resource_761g8"), SubResource("Resource_q2gwv"), SubResource("Resource_7abue"), SubResource("Resource_o7jru"), SubResource("Resource_wb7i4"), SubResource("Resource_hd55m"), SubResource("Resource_nl3s1"), SubResource("Resource_ginr7"), SubResource("Resource_ub5dc")])

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://d0amflih465nl"]
+[gd_scene load_steps=8 format=3 uid="uid://d0amflih465nl"]
 
 [ext_resource type="Texture2D" uid="uid://dbaau4eyml6wu" path="res://Sprites/MapWheel.png" id="1_l8kh1"]
 [ext_resource type="Script" uid="uid://dhvryxbq5vw16" path="res://Scripts/Overworld/WorldMap.gd" id="1_psonl"]
@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://6skb8ufxgc38" path="res://Resources/Map/MapNode.tscn" id="4_eceo5"]
 [ext_resource type="Texture2D" uid="uid://e42brlre416w" path="res://Sprites/Player.png" id="5_x5pqh"]
 [ext_resource type="Script" uid="uid://b5ym3gb616s0h" path="res://Scripts/Overworld/OverworldPlayer.gd" id="6_37m1j"]
-[ext_resource type="PackedScene" uid="uid://cifjnmtp52uco" path="res://Resources/CardScrollbox.tscn" id="7_d26g4"]
 
 [node name="WorldMap" type="CanvasLayer" node_paths=PackedStringArray("mapPlayer", "groundTilemap", "mapSpot")]
 script = ExtResource("1_psonl")
@@ -20,11 +19,17 @@ pathPrefab = ExtResource("3_aypb6")
 
 [node name="WorldMapUI" type="CanvasLayer" parent="."]
 
-[node name="CardScrollbox" parent="WorldMapUI" instance=ExtResource("7_d26g4")]
-anchors_preset = -1
-anchor_left = 0.7552083
-grow_horizontal = 0
-metadata/_edit_use_anchors_ = true
+[node name="WorldMapLabel" type="Label" parent="WorldMapUI"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -54.0
+offset_right = 54.0
+offset_bottom = 35.0
+grow_horizontal = 2
+text = "World Map:"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="GroundTilemap" type="TileMapLayer" parent="."]
 tile_set = ExtResource("2_aypb6")

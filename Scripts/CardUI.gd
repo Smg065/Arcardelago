@@ -116,7 +116,7 @@ func update_players_display():
 	#Display
 	var playersNames : String = ", ".join(allPlayerNames).replace("[", "[lb]")
 	uiCardGameLabel.text = "[center][color=black][i][u]%s[/u][/i][/color][color=%s]\n%s" % [cardData.gameCardset.game, PLAYER_NAME_COLOR, playersNames]
-	uiCardGameLabel.tooltip_text = uiCardGameLabel.text
+	uiCardGameLabel.tooltip_text = "%s\n%s" % [cardData.gameCardset.game, playersNames]
 	uiCardGameLabel.do_resize_text()
 
 ##Show how many cards of this type you have
@@ -140,10 +140,14 @@ func try_compress_card(inCard : CardData) -> bool:
 		return false
 	compressedCardData.append(inCard)
 	new_compression_size()
+	update_compressed_vis()
+	return true
+
+##Update compressed visuals
+func update_compressed_vis():
 	update_region_band()
 	update_players_display()
 	update_card_count_display()
-	return true
 
 ##Card compression changed
 func new_compression_size():
@@ -208,4 +212,16 @@ func filter(commands : Dictionary[String, Array]) -> void:
 	if !(false in partialFiltered):
 		hide()
 		return
+	else:
+		update_compressed_vis()
 	show()
+
+func _get_drag_data(_at_position: Vector2) -> Variant:
+	var cardPreview = self.duplicate(0)
+	cardPreview.custom_minimum_size = Vector2(64 * ratio, 64)
+	cardPreview.set_anchors_and_offsets_preset(PRESET_CENTER)
+	
+	cardPreview.size = cardPreview.custom_minimum_size
+	cardPreview.pivot_offset = cardPreview.size / 2
+	set_drag_preview(self.duplicate(0))
+	return {"IsArcardelago" : true, "CardUI" : self}

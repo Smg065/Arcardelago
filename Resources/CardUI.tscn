@@ -34,7 +34,7 @@ colors = PackedColorArray(0, 0, 0, 1)
 resource_local_to_scene = true
 gradient = SubResource("Gradient_njo2f")
 
-[node name="CardAspectMaintainer" type="AspectRatioContainer" node_paths=PackedStringArray("uiCardNameLabel", "uiCardItemFlagLabel", "uiCardWordTypesLabel", "uiCardPhoneticsLabel", "uiCardGameLabel", "uiCardBackColor", "uiCardPipColor", "uiCardSetPipColor", "uiCardBandColor", "uiCardHealth", "uiCardDamage", "uiCardCount")]
+[node name="Card" type="AspectRatioContainer" node_paths=PackedStringArray("uiCardNameLabel", "uiCardItemFlagLabel", "uiCardWordTypesLabel", "uiCardPhoneticsLabel", "uiCardGameLabel", "uiCardBackColor", "uiCardPipColor", "uiCardSetPipColor", "uiCardBandColor", "uiCardHealth", "uiCardDamage", "uiCardCount")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -60,7 +60,7 @@ bossPip = ExtResource("4_dgc14")
 
 [node name="RenderBox" type="Control" parent="."]
 layout_mode = 2
-mouse_filter = 2
+mouse_filter = 1
 
 [node name="CardContainer" type="Control" parent="RenderBox"]
 layout_mode = 1
@@ -134,6 +134,7 @@ offset_bottom = 100.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(243.18, 300)
+mouse_filter = 2
 texture = ExtResource("4_2n3nw")
 stretch_mode = 1
 

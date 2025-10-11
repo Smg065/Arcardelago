@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dp7hihr25b70y"]
+[gd_scene load_steps=11 format=3 uid="uid://dp7hihr25b70y"]
 
 [ext_resource type="PackedScene" uid="uid://d0amflih465nl" path="res://WorldMap.tscn" id="1_inlal"]
 [ext_resource type="Script" uid="uid://bt5dbsbv315ql" path="res://Scripts/GameRoot.gd" id="1_k2aq1"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://3ic2c4ms3m5y" path="res://Event.tscn" id="7_83vju"]
 [ext_resource type="PackedScene" uid="uid://26c6es3texj3" path="res://Home.tscn" id="8_824mg"]
 [ext_resource type="PackedScene" uid="uid://dun0jbik6ab7f" path="res://Cutscene.tscn" id="9_ies6u"]
+[ext_resource type="PackedScene" uid="uid://cifjnmtp52uco" path="res://Resources/CardScrollbox.tscn" id="10_c8c3f"]
 
 [node name="Game" type="Node" node_paths=PackedStringArray("screenNodes")]
 script = ExtResource("1_k2aq1")
@@ -45,3 +46,22 @@ visible = false
 visible = false
 
 [node name="Cutscene" parent="." instance=ExtResource("9_ies6u")]
+
+[node name="Supermenu" type="CanvasLayer" parent="."]
+
+[node name="DeckSelection" type="ReferenceRect" parent="Supermenu"]
+anchors_preset = -1
+anchor_left = 0.75
+anchor_top = 0.25
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_right = -16.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 2
+border_width = 8.0
+metadata/_edit_use_anchors_ = true
+
+[node name="ScrollContainer" parent="Supermenu/DeckSelection" instance=ExtResource("10_c8c3f")]
+layout_mode = 1

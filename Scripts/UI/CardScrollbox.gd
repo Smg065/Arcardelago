@@ -46,10 +46,10 @@ func show_current():
 	for eachCard in Persist.game.allCards:
 		if eachCard.enemyCard:
 			continue
-		add_card(eachCard)
+		add_card_from_data(eachCard)
 
 ##Add a card to the scrollbox
-func add_card(nCard : CardData):
+func add_card_from_data(nCard : CardData):
 	#Try to compress it into other cards
 	for eachChild in flow.get_children():
 		var eachCard : CardUI = eachChild as CardUI
@@ -60,11 +60,20 @@ func add_card(nCard : CardData):
 	flow.add_child(newSlot)
 	newSlot.build(nCard)
 
+##Add a card from an existing card data
+func add_card_from_ui_card(nCardUI : CardUI):
+	nCardUI.get_parent().remove_child(nCardUI)
+	flow.add_child(nCardUI)
+	nCardUI.set_min_from_height(minSize)
+	nCardUI.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+
+##One of the filters got toggled
 func toggle_filter(filterIndex : int):
 	var popup := filtersMenu.get_popup()
 	popup.set_item_checked(filterIndex, !popup.is_item_checked(filterIndex))
 	filter_items()
 
+##Apply the new filter
 func filter_items():
 	var popup := filtersMenu.get_popup()
 	var filterCommands : Dictionary[String, Array]
@@ -76,7 +85,18 @@ func filter_items():
 				filterCommands = PD.append_dict_entry(filterCommands, filterCatagory, popup.get_item_text(eachFilter))
 		elif popup.is_item_separator(eachFilter):
 			filterCatagory = popup.get_item_text(eachFilter)
-	print(filterCommands)
 	for eachChild in flow.get_children():
 		var eachCard : CardUI = eachChild as CardUI
 		eachCard.filter(filterCommands)
+
+func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
+	if typeof(data) != TYPE_DICTIONARY:
+		return false
+	var dict : Dictionary = data as Dictionary
+	if !dict.has("IsArcardelago"):
+		return false
+	return true
+
+func _drop_data(_at_position: Vector2, data: Variant) -> void:
+	var inCard : CardUI = data["CardUI"]
+	add_card_from_ui_card(inCard)

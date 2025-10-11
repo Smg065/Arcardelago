@@ -31,7 +31,7 @@ enum SourcePref {NULL, LOCAL, EXTERNAL}
 
 ##Base Arbitrary Word Flags give a x5 point multi. They're static
 static var BASE_ARBITRARY_WORD_GROUPS : Array[ArbitraryWordGroups] = [
-	load("res://Resources/DefaultWordGroups/Base.tres") as ArbitraryWordGroups,
+	#load("res://Resources/DefaultWordGroups/Base.tres") as ArbitraryWordGroups,
 ]
 
 @export var name : String

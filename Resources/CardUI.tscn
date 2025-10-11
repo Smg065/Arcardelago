@@ -35,7 +35,7 @@ resource_local_to_scene = true
 gradient = SubResource("Gradient_njo2f")
 
 [node name="CardAspectMaintainer" type="AspectRatioContainer" node_paths=PackedStringArray("uiCardNameLabel", "uiCardItemFlagLabel", "uiCardWordTypesLabel", "uiCardPhoneticsLabel", "uiCardGameLabel", "uiCardBackColor", "uiCardPipColor", "uiCardSetPipColor", "uiCardBandColor", "uiCardHealth", "uiCardDamage", "uiCardCount")]
-anchors_preset = -1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
@@ -60,6 +60,7 @@ bossPip = ExtResource("4_dgc14")
 
 [node name="RenderBox" type="Control" parent="."]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="CardContainer" type="Control" parent="RenderBox"]
 layout_mode = 1
@@ -68,6 +69,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="ColorPipDisplay" parent="RenderBox/CardContainer" instance=ExtResource("3_jqbn0")]
 layout_mode = 1
@@ -178,6 +180,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="CardName" type="RichTextLabel" parent="RenderBox/CardContainer/CardText"]
 layout_mode = 1
@@ -188,6 +191,7 @@ anchor_right = 0.91387945
 anchor_bottom = 0.14814815
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 theme_override_font_sizes/normal_font_size = 36
 theme_override_font_sizes/bold_font_size = 36
 theme_override_font_sizes/bold_italics_font_size = 36
@@ -200,7 +204,6 @@ script = ExtResource("6_2n3nw")
 watch_text_change = true
 max_font_size = 200
 metadata/_custom_type_script = "uid://leehmvr1x5lu"
-metadata/_edit_use_anchors_ = true
 
 [node name="APItemType" type="RichTextLabel" parent="RenderBox/CardContainer/CardText"]
 layout_mode = 1
@@ -212,6 +215,7 @@ anchor_bottom = 0.2375
 offset_right = 1.5258789e-05
 size_flags_horizontal = 3
 size_flags_vertical = 4
+mouse_filter = 1
 theme_override_font_sizes/normal_font_size = 24
 theme_override_font_sizes/bold_font_size = 24
 theme_override_font_sizes/bold_italics_font_size = 24
@@ -232,6 +236,7 @@ anchor_right = 0.94747174
 anchor_bottom = 0.2375
 size_flags_horizontal = 3
 size_flags_vertical = 4
+mouse_filter = 1
 theme_override_font_sizes/normal_font_size = 38
 theme_override_font_sizes/bold_font_size = 38
 theme_override_font_sizes/bold_italics_font_size = 38
@@ -250,30 +255,9 @@ anchor_left = 0.05163059
 anchor_top = 0.25925925
 anchor_right = 0.9525944
 anchor_bottom = 0.75308645
+mouse_filter = 1
 bbcode_enabled = true
 text = "[color=BLACK]When you"
-
-[node name="PhoneticScroll" type="RichTextLabel" parent="RenderBox/CardContainer/CardText"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.051630598
-anchor_top = 0.8
-anchor_right = 0.9483694
-anchor_bottom = 0.8518519
-grow_horizontal = 2
-theme_override_font_sizes/normal_font_size = 23
-theme_override_font_sizes/bold_font_size = 23
-theme_override_font_sizes/bold_italics_font_size = 23
-theme_override_font_sizes/italics_font_size = 23
-theme_override_font_sizes/mono_font_size = 23
-bbcode_enabled = true
-text = "[color=black]ERR PHONETIC RENDER"
-horizontal_alignment = 1
-vertical_alignment = 1
-script = ExtResource("6_2n3nw")
-watch_text_change = true
-metadata/_custom_type_script = "uid://leehmvr1x5lu"
-metadata/_edit_use_anchors_ = true
 
 [node name="GameName" type="RichTextLabel" parent="RenderBox/CardContainer/CardText"]
 layout_mode = 1
@@ -284,6 +268,7 @@ anchor_right = 0.7586747
 anchor_bottom = 0.962963
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_filter = 1
 theme_override_font_sizes/normal_font_size = 23
 theme_override_font_sizes/bold_font_size = 23
 theme_override_font_sizes/bold_italics_font_size = 23
@@ -296,7 +281,28 @@ vertical_alignment = 1
 script = ExtResource("6_2n3nw")
 watch_text_change = true
 metadata/_custom_type_script = "uid://leehmvr1x5lu"
-metadata/_edit_use_anchors_ = true
+
+[node name="PhoneticScroll" type="RichTextLabel" parent="RenderBox/CardContainer/CardText"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.051630598
+anchor_top = 0.8
+anchor_right = 0.9483694
+anchor_bottom = 0.8518519
+grow_horizontal = 2
+mouse_filter = 1
+theme_override_font_sizes/normal_font_size = 23
+theme_override_font_sizes/bold_font_size = 23
+theme_override_font_sizes/bold_italics_font_size = 23
+theme_override_font_sizes/italics_font_size = 23
+theme_override_font_sizes/mono_font_size = 23
+bbcode_enabled = true
+text = "[color=black]ERR PHONETIC RENDER"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("6_2n3nw")
+watch_text_change = true
+metadata/_custom_type_script = "uid://leehmvr1x5lu"
 
 [node name="DamageIcon" type="TextureRect" parent="RenderBox/CardContainer"]
 layout_mode = 1

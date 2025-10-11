@@ -72,12 +72,55 @@ static func json_load(inDict, gameData : GameData) -> CardData:
 	cardData.colors = cardData.calculate_color()
 	return cardData
 
+##Creates a default card
 static func new_default(nIsEnemy : bool = false) -> CardData:
 	var output := CardData.new()
 	output.enemyCard = nIsEnemy
 	output.isDefault = true
 	return output
 
+##The flags used for this card as displayed as basic text
+func stringify_item_quality() -> String:
+	#Enemies
+	if enemyCard:
+		return "Location"
+	if isDefault:
+		return "Default"
+	#Proguseful
+	if apItemFlags == 3:
+		return "Proguseful"
+	#Trap
+	elif apItemFlags >= 4:
+		return "Trap"
+	#Progression
+	elif apItemFlags == 1:
+		return "Progression"
+	#Useful
+	elif apItemFlags == 2:
+		return "Useful"
+	#Filler
+	return "Filler"
+
+##A packed string array of the litteral names of the colors
+func stringify_colors() -> PackedStringArray:
+	var output : PackedStringArray
+	if colors & 0b000001:
+		output.append("Red")
+	if colors & 0b000010:
+		output.append("Green")
+	if colors & 0b000100:
+		output.append("Violet")
+	if colors & 0b001000:
+		output.append("Orange")
+	if colors & 0b010000:
+		output.append("Blue")
+	if colors & 0b100000:
+		output.append("Yellow")
+	if output.size() == 0:
+		output.append("Colorless")
+	return output
+
+##The flags used for this card as displayed on a Card UI
 func rich_item_flags() -> String:
 	#Enemies
 	if enemyCard:

@@ -23,9 +23,11 @@ const PLAYER_NAME_COLOR = "222222"
 
 @export var cardData : CardData
 var compressedCardData : Array[CardData]
+var partialFiltered : Array[bool]
 
 func build(nCardData : CardData):
 	cardData = nCardData
+	partialFiltered.resize(compressedCardData.size() + 1)
 	if cardData.isDefault:
 		uiCardWordTypesLabel.text = ""
 		uiCardPhoneticsLabel.text = ""
@@ -82,9 +84,13 @@ func update_region_band():
 	if cardData.isDefault or cardData.enemyCard:
 		return
 	var apIds : PackedInt32Array
-	for altCards in compressedCardData:
-		apIds.append(altCards.apId)
-	apIds.append(cardData.apId)
+	#Normal APID's
+	for cardIndex in compressedCardData.size():
+		if !partialFiltered[cardIndex]:
+			apIds.append(compressedCardData[cardIndex].apId)
+	#Partial Filtered APID's
+	if !partialFiltered[-1]:
+		apIds.append(cardData.apId)
 	var colorIds : PackedInt32Array
 	for eachId in apIds:
 		var eachColor : int = floori((eachId - 65000.0) / 100.0)
@@ -99,19 +105,29 @@ func update_region_band():
 ##Show all the players these cards belong to
 func update_players_display():
 	var allPlayerNames : PackedStringArray
-	allPlayerNames.append(cardData.playerName)
-	for eachName in compressedCardData:
-		if !allPlayerNames.has(eachName.playerName):
-			allPlayerNames.append(eachName.playerName)
+	#Default card name
+	if !partialFiltered[-1]:
+		allPlayerNames.append(cardData.playerName)
+	#Alt players names
+	for cardIndex in compressedCardData.size():
+		if !partialFiltered[cardIndex]:
+			if !allPlayerNames.has(compressedCardData[cardIndex].playerName):
+				allPlayerNames.append(compressedCardData[cardIndex].playerName)
+	#Display
 	var playersNames : String = ", ".join(allPlayerNames).replace("[", "[lb]")
 	uiCardGameLabel.text = "[center][color=black][i][u]%s[/u][/i][/color][color=%s]\n%s" % [cardData.gameCardset.game, PLAYER_NAME_COLOR, playersNames]
+	uiCardGameLabel.tooltip_text = uiCardGameLabel.text
 	uiCardGameLabel.do_resize_text()
 
 ##Show how many cards of this type you have
 func update_card_count_display():
-	if compressedCardData.size() > 0:
+	var totalCards = 1 + compressedCardData.size()
+	for eachFiltered in partialFiltered:
+		if eachFiltered:
+			totalCards -= 1
+	if totalCards > 1:
 		uiCardCount.show()
-		uiCardCount.text = str(compressedCardData.size() + 1)
+		uiCardCount.text = str(totalCards)
 	else:
 		uiCardCount.hide()
 
@@ -123,7 +139,73 @@ func try_compress_card(inCard : CardData) -> bool:
 	if !inCard.is_comparable(cardData):
 		return false
 	compressedCardData.append(inCard)
+	new_compression_size()
 	update_region_band()
 	update_players_display()
 	update_card_count_display()
 	return true
+
+##Card compression changed
+func new_compression_size():
+	partialFiltered.resize(compressedCardData.size() + 1)
+
+##Changes card visibility based on filters
+func filter(commands : Dictionary[String, Array]) -> void:
+	#Typings check
+	if commands.has("Types"):
+		if !commands["Types"].has(cardData.stringify_item_quality()):
+			hide()
+			return
+		#Defaults only care about this filter
+		elif cardData.isDefault:
+			show()
+			return
+	#Filter non-defaults out when there's no type strings
+	elif cardData.isDefault:
+		hide()
+		return
+	#Game is also straight forward
+	if commands.has("Games"):
+		if !commands["Games"].has(cardData.gameCardset.game):
+			hide()
+			return
+	if commands.has("Colors"):
+		var allColors : PackedStringArray = cardData.stringify_colors()
+		#Colorless just checks if colorless is a command or not, always
+		if allColors[0] == "Colorless":
+			if !commands["Colors"].has("Colorless"):
+				hide()
+				return
+		else:
+			if commands["Colors"].has("Exact Match"):
+				allColors.insert(0, "Exact Match")
+				if commands["Colors"].size() > 0:
+					if Array(allColors) != commands["Colors"]:
+						hide()
+						return
+					else:
+						print("%s != %s" % [allColors, commands["Colors"]])
+			else:
+				var passes : bool = false
+				for eachColor in commands["Colors"]:
+					if allColors.has(eachColor):
+						passes = true
+						break
+				if !passes:
+					hide()
+					return
+	#Partial Filters
+	if commands.has("Players"):
+		#Filter out if it's missing the player name
+		partialFiltered[-1] = !commands["Players"].has(cardData.playerName)
+		for eachIndex in compressedCardData.size():
+			partialFiltered[eachIndex] = !commands["Players"].has(compressedCardData[eachIndex].playerName)
+	else:
+		#Disable all partial filters
+		for eachIndex in partialFiltered.size():
+			partialFiltered[eachIndex] = false
+	#If everything is hidden, just hide
+	if !(false in partialFiltered):
+		hide()
+		return
+	show()

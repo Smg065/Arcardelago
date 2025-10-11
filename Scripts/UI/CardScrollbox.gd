@@ -63,9 +63,20 @@ func add_card(nCard : CardData):
 func toggle_filter(filterIndex : int):
 	var popup := filtersMenu.get_popup()
 	popup.set_item_checked(filterIndex, !popup.is_item_checked(filterIndex))
+	filter_items()
 
 func filter_items():
 	var popup := filtersMenu.get_popup()
-	for eachChild in flow:
+	var filterCommands : Dictionary[String, Array]
+	var filterCatagory : String
+	#Get the filter data
+	for eachFilter in popup.item_count:
+		if popup.is_item_checkable(eachFilter):
+			if popup.is_item_checked(eachFilter):
+				filterCommands = PD.append_dict_entry(filterCommands, filterCatagory, popup.get_item_text(eachFilter))
+		elif popup.is_item_separator(eachFilter):
+			filterCatagory = popup.get_item_text(eachFilter)
+	print(filterCommands)
+	for eachChild in flow.get_children():
 		var eachCard : CardUI = eachChild as CardUI
-		
+		eachCard.filter(filterCommands)

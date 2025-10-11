@@ -8,6 +8,7 @@ var apId : int
 var apItemFlags : int
 var enemyCard : bool
 var fadeAngle : float
+@export var isDefault : bool
 var isLocal : bool
 var debugColorScores : Dictionary[ColorCatagory.ColorTypes, float]
 
@@ -71,12 +72,18 @@ static func json_load(inDict, gameData : GameData) -> CardData:
 	cardData.colors = cardData.calculate_color()
 	return cardData
 
-
+static func new_default(nIsEnemy : bool = false) -> CardData:
+	var output := CardData.new()
+	output.enemyCard = nIsEnemy
+	output.isDefault = true
+	return output
 
 func rich_item_flags() -> String:
 	#Enemies
 	if enemyCard:
 		return "[hint=A check which contains an item in your world][bgcolor=LIGHT_GREEN][color=BLACK]Location"
+	if isDefault:
+		return "[hint=No item in this card][bgcolor=SLATE_GREY][color=BLACK]Default"
 	#Proguseful
 	if apItemFlags == 3:
 		return "[hint=An item that is critical for progression][bgcolor=GOLD][color=BLACK]Proguseful"
@@ -170,3 +177,23 @@ static func scores_to_color(colorScore, multi : float = 1) -> int:
 			ColorCatagory.YELLOW:
 				outColor += 32
 	return outColor
+
+##If this card could combine with another as a UI
+func is_comparable(otherCard : CardData) -> bool:
+	#Yourself is valid
+	if otherCard == self:
+		return true
+	#Otherwise, a few checks;
+	if enemyCard != otherCard.enemyCard:
+		return false
+	#If it's a default, they must both be
+	if isDefault or otherCard.isDefault:
+		return isDefault == otherCard.isDefault
+	#Same game at least
+	if gameCardset.game != otherCard.gameCardset.game:
+		return false
+	#Same item flags
+	if apItemFlags != otherCard.apItemFlags:
+		return false
+	#Compare Names
+	return nameData.name == otherCard.nameData.name

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dk6dmv5557rf6"]
+[gd_scene load_steps=18 format=3 uid="uid://dk6dmv5557rf6"]
 
 [ext_resource type="Script" uid="uid://kmrp78w2pwog" path="res://Scripts/CardUI.gd" id="1_xvg67"]
 [ext_resource type="Texture2D" uid="uid://dqag26jiqd610" path="res://Sprites/Card.png" id="2_2be0t"]
@@ -24,48 +24,90 @@ resource_local_to_scene = true
 gradient = SubResource("Gradient_2n3nw")
 fill_to = Vector2(1, 1)
 
-[node name="CardAspectMaintainer" type="AspectRatioContainer" node_paths=PackedStringArray("uiCardNameLabel", "uiCardItemFlagLabel", "uiCardWordTypesLabel", "uiCardPhoneticsLabel", "uiCardGameLabel", "uiCardBackColor", "uiCardPipColor", "uiCardSetPipColor", "uiCardBandColor", "uiCardHealth", "uiCardDamage")]
-anchors_preset = 15
+[sub_resource type="Gradient" id="Gradient_njo2f"]
+resource_local_to_scene = true
+interpolation_mode = 1
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_pos1q"]
+resource_local_to_scene = true
+gradient = SubResource("Gradient_njo2f")
+
+[node name="CardAspectMaintainer" type="AspectRatioContainer" node_paths=PackedStringArray("uiCardNameLabel", "uiCardItemFlagLabel", "uiCardWordTypesLabel", "uiCardPhoneticsLabel", "uiCardGameLabel", "uiCardBackColor", "uiCardPipColor", "uiCardSetPipColor", "uiCardBandColor", "uiCardHealth", "uiCardDamage", "uiCardCount")]
+anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 ratio = 0.7159
 script = ExtResource("1_xvg67")
-uiCardNameLabel = NodePath("CardContainer/CardText/CardName")
-uiCardItemFlagLabel = NodePath("CardContainer/CardText/APItemType")
-uiCardWordTypesLabel = NodePath("CardContainer/CardText/WordTypes")
-uiCardPhoneticsLabel = NodePath("CardContainer/CardText/PhoneticScroll")
-uiCardGameLabel = NodePath("CardContainer/CardText/GameName")
-uiCardBackColor = NodePath("CardContainer/CardBack/ColorSpectrum")
-uiCardPipColor = NodePath("CardContainer/ColorPipDisplay")
-uiCardSetPipColor = NodePath("CardContainer/SetPipDisplay")
-uiCardBandColor = NodePath("CardContainer/CardBack/SetColor")
-uiCardHealth = NodePath("CardContainer/HealthIcon/HealthText")
-uiCardDamage = NodePath("CardContainer/DamageIcon/DamageText")
+uiCardNameLabel = NodePath("RenderBox/CardContainer/CardText/CardName")
+uiCardItemFlagLabel = NodePath("RenderBox/CardContainer/CardText/APItemType")
+uiCardWordTypesLabel = NodePath("RenderBox/CardContainer/CardText/WordTypes")
+uiCardPhoneticsLabel = NodePath("RenderBox/CardContainer/CardText/PhoneticScroll")
+uiCardGameLabel = NodePath("RenderBox/CardContainer/CardText/GameName")
+uiCardBackColor = NodePath("RenderBox/CardContainer/CardBack/ColorSpectrum")
+uiCardPipColor = NodePath("RenderBox/CardContainer/ColorPipDisplay")
+uiCardSetPipColor = NodePath("RenderBox/CardContainer/SetPipDisplay")
+uiCardBandColor = NodePath("RenderBox/CardContainer/CardBack/SetColor")
+uiCardHealth = NodePath("RenderBox/CardContainer/HealthIcon/HealthText")
+uiCardDamage = NodePath("RenderBox/CardContainer/DamageIcon/DamageText")
+uiCardCount = NodePath("RenderBox/CardContainer/CardCount")
 playerPip = ExtResource("2_xvg67")
 enemyPip = ExtResource("3_ny8h8")
 bossPip = ExtResource("4_dgc14")
-metadata/_edit_use_anchors_ = true
 
-[node name="CardContainer" type="Control" parent="."]
+[node name="RenderBox" type="Control" parent="."]
 layout_mode = 2
 
-[node name="ColorPipDisplay" parent="CardContainer" instance=ExtResource("3_jqbn0")]
+[node name="CardContainer" type="Control" parent="RenderBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorPipDisplay" parent="RenderBox/CardContainer" instance=ExtResource("3_jqbn0")]
 layout_mode = 1
 anchor_left = 0.059994444
 anchor_top = 0.04
 anchor_right = 0.20666298
 anchor_bottom = 0.14999999
 
-[node name="SetPipDisplay" parent="CardContainer" instance=ExtResource("3_jqbn0")]
+[node name="CardCount" type="Label" parent="RenderBox/CardContainer"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.06
+anchor_top = 0.04
+anchor_right = 0.20700002
+anchor_bottom = 0.15
+size_flags_horizontal = 4
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.52156866)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_constants/shadow_outline_size = 16
+theme_override_font_sizes/font_size = 38
+text = "X"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 3
+script = ExtResource("12_m8awi")
+watch_text_change = true
+metadata/_custom_type_script = "uid://d11kfgsd6jgt"
+
+[node name="SetPipDisplay" parent="RenderBox/CardContainer" instance=ExtResource("3_jqbn0")]
 layout_mode = 1
 anchor_left = 0.20683539
 anchor_top = 0.8765432
 anchor_right = 0.31030524
 anchor_bottom = 0.9506173
 
-[node name="CardBack" type="TextureRect" parent="CardContainer"]
+[node name="CardBack" type="TextureRect" parent="RenderBox/CardContainer"]
 clip_children = 1
 z_index = -1
 layout_mode = 1
@@ -78,7 +120,7 @@ texture = ExtResource("2_2be0t")
 expand_mode = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="CardTexture" type="TextureRect" parent="CardContainer/CardBack"]
+[node name="CardTexture" type="TextureRect" parent="RenderBox/CardContainer/CardBack"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -93,7 +135,7 @@ pivot_offset = Vector2(243.18, 300)
 texture = ExtResource("4_2n3nw")
 stretch_mode = 1
 
-[node name="CardOutline" type="TextureRect" parent="CardContainer/CardBack"]
+[node name="CardOutline" type="TextureRect" parent="RenderBox/CardContainer/CardBack"]
 self_modulate = Color(0.5, 0.5, 0.5, 1)
 layout_mode = 1
 anchors_preset = 15
@@ -105,7 +147,7 @@ texture = ExtResource("3_xvg67")
 expand_mode = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="ColorSpectrum" type="TextureRect" parent="CardContainer/CardBack"]
+[node name="ColorSpectrum" type="TextureRect" parent="RenderBox/CardContainer/CardBack"]
 modulate = Color(1, 1, 1, 0.27450982)
 layout_mode = 1
 anchors_preset = -1
@@ -117,16 +159,19 @@ texture = SubResource("GradientTexture2D_5f00q")
 script = ExtResource("6_5f00q")
 metadata/_edit_use_anchors_ = true
 
-[node name="SetColor" type="ColorRect" parent="CardContainer/CardBack"]
+[node name="SetColor" type="TextureRect" parent="RenderBox/CardContainer/CardBack"]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.7654321
 anchor_right = 1.0
 anchor_bottom = 0.79012346
-color = Color(0.79, 0.45820004, 0.5079699, 1)
+texture = SubResource("GradientTexture2D_pos1q")
+expand_mode = 1
+script = ExtResource("6_5f00q")
+metadata/_custom_type_script = "uid://c2oydyjvp4cw6"
 metadata/_edit_use_anchors_ = true
 
-[node name="CardText" type="Control" parent="CardContainer"]
+[node name="CardText" type="Control" parent="RenderBox/CardContainer"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -134,7 +179,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="CardName" type="RichTextLabel" parent="CardContainer/CardText"]
+[node name="CardName" type="RichTextLabel" parent="RenderBox/CardContainer/CardText"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.22408037
@@ -157,7 +202,7 @@ max_font_size = 200
 metadata/_custom_type_script = "uid://leehmvr1x5lu"
 metadata/_edit_use_anchors_ = true
 
-[node name="APItemType" type="RichTextLabel" parent="CardContainer/CardText"]
+[node name="APItemType" type="RichTextLabel" parent="RenderBox/CardContainer/CardText"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.04999998
@@ -178,7 +223,7 @@ script = ExtResource("6_2n3nw")
 watch_text_change = true
 metadata/_custom_type_script = "uid://leehmvr1x5lu"
 
-[node name="WordTypes" type="RichTextLabel" parent="CardContainer/CardText"]
+[node name="WordTypes" type="RichTextLabel" parent="RenderBox/CardContainer/CardText"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.33237886
@@ -198,7 +243,7 @@ script = ExtResource("6_2n3nw")
 watch_text_change = true
 metadata/_custom_type_script = "uid://leehmvr1x5lu"
 
-[node name="EffectsText" type="RichTextLabel" parent="CardContainer/CardText"]
+[node name="EffectsText" type="RichTextLabel" parent="RenderBox/CardContainer/CardText"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.05163059
@@ -208,7 +253,7 @@ anchor_bottom = 0.75308645
 bbcode_enabled = true
 text = "[color=BLACK]When you"
 
-[node name="PhoneticScroll" type="RichTextLabel" parent="CardContainer/CardText"]
+[node name="PhoneticScroll" type="RichTextLabel" parent="RenderBox/CardContainer/CardText"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.051630598
@@ -230,7 +275,7 @@ watch_text_change = true
 metadata/_custom_type_script = "uid://leehmvr1x5lu"
 metadata/_edit_use_anchors_ = true
 
-[node name="GameName" type="RichTextLabel" parent="CardContainer/CardText"]
+[node name="GameName" type="RichTextLabel" parent="RenderBox/CardContainer/CardText"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.3447952
@@ -253,7 +298,7 @@ watch_text_change = true
 metadata/_custom_type_script = "uid://leehmvr1x5lu"
 metadata/_edit_use_anchors_ = true
 
-[node name="DamageIcon" type="TextureRect" parent="CardContainer"]
+[node name="DamageIcon" type="TextureRect" parent="RenderBox/CardContainer"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.03438562
@@ -270,7 +315,7 @@ texture = ExtResource("11_njo2f")
 expand_mode = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="DamageText" type="Label" parent="CardContainer/DamageIcon"]
+[node name="DamageText" type="Label" parent="RenderBox/CardContainer/DamageIcon"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -288,7 +333,7 @@ script = ExtResource("12_m8awi")
 watch_text_change = true
 metadata/_custom_type_script = "uid://d11kfgsd6jgt"
 
-[node name="HealthIcon" type="TextureRect" parent="CardContainer"]
+[node name="HealthIcon" type="TextureRect" parent="RenderBox/CardContainer"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.82765454
@@ -305,7 +350,7 @@ texture = ExtResource("13_pos1q")
 expand_mode = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="HealthText" type="Label" parent="CardContainer/HealthIcon"]
+[node name="HealthText" type="Label" parent="RenderBox/CardContainer/HealthIcon"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

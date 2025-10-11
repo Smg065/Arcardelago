@@ -35,10 +35,20 @@ func build(dirAngle : float) -> void:
 	
 	#Set the first color
 	gradTex.gradient.set_color(0, colorSpectrum[0])
+	#Constant cutoffs need an extra buffer spot
+	var offsetMulti : float = 1
+	if gradTex.gradient.interpolation_mode == Gradient.InterpolationMode.GRADIENT_INTERPOLATE_CONSTANT:
+		offsetMulti = 1 - (1.0 / colorSpectrum.size())
 	#If there's only 1 color, leave it at that
 	for colorIndex in range(1, colorSpectrum.size()):
-		var setPoint : float = float(colorIndex) / (colorSpectrum.size() - 1)
+		var setPoint : float = float(colorIndex) / (colorSpectrum.size() - 1) * offsetMulti
 		gradTex.gradient.add_point(setPoint, colorSpectrum[colorIndex])
 	var rndGradAngle = Vector2.from_angle(dirAngle) / 2.0
 	gradTex.fill_from = CENTER + rndGradAngle
 	gradTex.fill_to = CENTER - rndGradAngle
+
+func default():
+	var gradTex : GradientTexture2D = texture
+	while gradTex.gradient.get_point_count() > 1:
+		gradTex.gradient.remove_point(1)
+	gradTex.gradient.set_color(0, Color.BLACK)

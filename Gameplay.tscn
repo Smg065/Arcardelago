@@ -24,6 +24,7 @@ screenNodes = {
 }
 
 [node name="WorldMap" parent="." instance=ExtResource("1_inlal")]
+follow_viewport_enabled = true
 
 [node name="Battlescreen" parent="." instance=ExtResource("2_vrd06")]
 visible = false

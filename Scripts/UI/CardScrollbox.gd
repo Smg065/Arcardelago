@@ -43,11 +43,29 @@ func setup_filter():
 	set_card_scale(minSize)
 
 func show_current():
-	for eachCard in 20:
-		var newSlot : CardUI = cardUi.instantiate()
-		flow.add_child(newSlot)
-		newSlot.build(Persist.game.allCards.pick_random())
+	for eachCard in Persist.game.allCards:
+		if eachCard.enemyCard:
+			continue
+		add_card(eachCard)
+
+##Add a card to the scrollbox
+func add_card(nCard : CardData):
+	#Try to compress it into other cards
+	for eachChild in flow.get_children():
+		var eachCard : CardUI = eachChild as CardUI
+		if eachCard.try_compress_card(nCard):
+			return
+	#If there are no other cards, create one
+	var newSlot : CardUI = cardUi.instantiate()
+	flow.add_child(newSlot)
+	newSlot.build(nCard)
 
 func toggle_filter(filterIndex : int):
 	var popup := filtersMenu.get_popup()
 	popup.set_item_checked(filterIndex, !popup.is_item_checked(filterIndex))
+
+func filter_items():
+	var popup := filtersMenu.get_popup()
+	for eachChild in flow:
+		var eachCard : CardUI = eachChild as CardUI
+		

@@ -42,7 +42,7 @@ z_index = 4
 rotates = false
 loop = false
 script = ExtResource("6_37m1j")
-worldMap = NodePath("")
+worldMap = NodePath("..")
 
 [node name="PlayChar" type="Sprite2D" parent="Player"]
 z_index = 1

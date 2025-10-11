@@ -48,3 +48,12 @@ func build(inTexture : Texture2D) -> void:
 			textureBar.fill_mode = TextureProgressBar.FillMode.FILL_CLOCKWISE
 			textureBar.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			textureBar.set_anchors_preset(Control.PRESET_FULL_RECT)
+
+func default(inTexture : Texture2D):
+	var textureRect := TextureRect.new()
+	textureRect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	textureRect.texture = inTexture
+	textureRect.tooltip_text = "Default"
+	textureRect.self_modulate = Color.GRAY
+	add_child(textureRect)
+	textureRect.set_anchors_preset(Control.PRESET_FULL_RECT)

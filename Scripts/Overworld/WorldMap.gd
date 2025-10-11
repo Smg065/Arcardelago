@@ -758,12 +758,12 @@ func pip_activated(activePip : MapPip):
 		_:
 			newScreenType = GameRoot.ScreenType.WORLD_MAP
 	#Cutscenes
-	if GameRoot.ScreenType.CUTSCENE:
+	if newScreenType == GameRoot.ScreenType.CUTSCENE:
 		print("Play cutscene!")
 	else:
 		gameRoot.switch_scenes(newScreenType)
 
 func set_active(nState : bool):
 	mapPlayer.enabled = nState
-	$WorldMapUi.visible = nState
-	visible = nState
+	$WorldMapUI.visible = nState
+	super(nState)

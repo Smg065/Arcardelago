@@ -28,7 +28,7 @@ var partialFiltered : Array[bool]
 
 func build(nCardData : CardData):
 	cardData = nCardData
-	partialFiltered.resize(compressedCardData.size() + 1)
+	new_compression_size()
 	if cardData.isDefault:
 		cardName = "Default"
 		name = cardName
@@ -235,7 +235,66 @@ func _get_drag_data(_at_position: Vector2) -> Variant:
 ##Changes the cards parent and sets card slots
 func shift_parent(nParent : Node):
 	var parent = get_parent()
-	if parent is CardSlot:
-		parent.mouse_filter = Control.MOUSE_FILTER_PASS
+	update_card_slot_mouse()
 	parent.remove_child(self)
 	nParent.add_child(self)
+
+##If you have a
+func update_card_slot_mouse():
+	var parent = get_parent()
+	if parent is CardSlot:
+		parent.mouse_filter = Control.MOUSE_FILTER_PASS
+
+##The number of stacks this would have on a card slot
+func stack_size() -> int:
+	return floori(log(partialFiltered.size()) / log(2))
+
+##The number of cards needed to up the stack
+func to_next_stack() -> int:
+	var stackSize := stack_size()
+	var output := roundi(pow(2, stackSize + 1)) - partialFiltered.size()
+	return output
+
+##If this card can be square stacked
+func square_stackable(inUi : CardUI) -> bool:
+	var inCount : int = inUi.partialFiltered.count(false)
+	return inCount >= to_next_stack()
+
+##Make the cards build to a new stack
+func square_stack(inUi : CardUI) -> void:
+	var extractedData := inUi.extract_data(to_next_stack())
+	compressedCardData.append_array(extractedData)
+	new_compression_size()
+	update_compressed_vis()
+
+##Extract the given number of non partial-filtered card data entries
+func extract_data(toExtract : int) -> Array[CardData]:
+	var output : Array[CardData]
+	#Grab all the unfiltered nodes to extract
+	for eachIndex in compressedCardData.size():
+		if !partialFiltered[eachIndex]:
+			output.append(compressedCardData[eachIndex])
+			toExtract -= 1
+		if toExtract <= 0:
+			break
+	#Remove the outputs
+	for eachExtract in output:
+		var removeIndex := compressedCardData.find(eachExtract)
+		compressedCardData.remove_at(removeIndex)
+		partialFiltered.remove_at(removeIndex)
+	#If there's more to extract, try your main card
+	if toExtract == 1:
+		if !partialFiltered[-1]:
+			output.append(cardData)
+			#Do we just delete, or reassign owner and hide?
+			if compressedCardData.size() > 0:
+				build(compressedCardData.pop_back())
+				hide()
+			else:
+				update_card_slot_mouse()
+				queue_free()
+	update_compressed_vis()
+	#Catch broken data extractions
+	if toExtract > 0:
+		push_warning("Can't extract all card data!")
+	return output

@@ -39,6 +39,9 @@ func map_pip_logic():
 			#Revisiting defeated bosses to offload banded cards (?)
 			#elif curPip.mapNodeType == MapPip.MapNodeType.BOSS:
 			#	
+	if Input.is_action_just_pressed("DebugClearNode"):
+		if curPip.defeatable() and curPip.mapNodeType != MapPip.MapNodeType.AUTO:
+			curPip.defeat()
 
 func set_path_goal(nPath : MapWalkPip):
 	curPath = nPath

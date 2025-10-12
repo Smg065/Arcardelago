@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="GameCardsetOverride" load_steps=3 format=3 uid="uid://wu1jjk5hlmup"]
+
+[ext_resource type="Script" uid="uid://c0llue788tfuc" path="res://Scripts/CardDataOverride.gd" id="1_fqe55"]
+[ext_resource type="Script" uid="uid://bt3smavg2uh0n" path="res://Scripts/GameCardsetOverride.gd" id="2_7ya1c"]
+
+[resource]
+script = ExtResource("2_7ya1c")
+gameName = "Sonic Heroes"
+colors = 49
+metadata/_custom_type_script = "uid://bt3smavg2uh0n"

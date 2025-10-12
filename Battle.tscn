@@ -3,10 +3,9 @@
 [ext_resource type="Script" uid="uid://bqqtjwd0ms0k6" path="res://Scripts/Battle.gd" id="1_yh5fh"]
 [ext_resource type="PackedScene" uid="uid://dj0bi4scf7x7c" path="res://Resources/Battle/CardSlot.tscn" id="2_yh5fh"]
 
-[node name="BattleScreen" type="CanvasLayer" node_paths=PackedStringArray("battlemap", "battleScroll")]
+[node name="BattleScreen" type="CanvasLayer" node_paths=PackedStringArray("battlemap")]
 script = ExtResource("1_yh5fh")
 battlemap = NodePath("Backdrop/MapScroll/MapRatio")
-battleScroll = NodePath("")
 
 [node name="Backdrop" type="ReferenceRect" parent="."]
 anchors_preset = 15
@@ -95,6 +94,7 @@ anchors_preset = -1
 anchor_left = 0.33333334
 anchor_right = 0.66666675
 anchor_bottom = 0.39999998
+squarable = true
 
 [node name="Leftfront" parent="Backdrop/MapScroll/MapRatio/Battle/Playfield/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
 layout_mode = 1
@@ -102,6 +102,7 @@ anchors_preset = -1
 anchor_top = 0.10144927
 anchor_right = 0.3333334
 anchor_bottom = 0.5014492
+squarable = true
 
 [node name="Rightfront" parent="Backdrop/MapScroll/MapRatio/Battle/Playfield/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
 layout_mode = 1
@@ -109,6 +110,7 @@ anchors_preset = -1
 anchor_left = 0.6666667
 anchor_top = 0.10144927
 anchor_bottom = 0.5014492
+squarable = true
 
 [node name="Leftback" parent="Backdrop/MapScroll/MapRatio/Battle/Playfield/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
 layout_mode = 1
@@ -116,6 +118,7 @@ anchors_preset = -1
 anchor_top = 0.5
 anchor_right = 0.3333334
 anchor_bottom = 0.9
+squarable = true
 
 [node name="Rightback" parent="Backdrop/MapScroll/MapRatio/Battle/Playfield/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
 layout_mode = 1
@@ -123,6 +126,7 @@ anchors_preset = -1
 anchor_left = 0.6666667
 anchor_top = 0.5
 anchor_bottom = 0.9
+squarable = true
 
 [node name="Backmost2" parent="Backdrop/MapScroll/MapRatio/Battle/Playfield/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
 layout_mode = 1
@@ -130,6 +134,7 @@ anchors_preset = -1
 anchor_left = 0.33333334
 anchor_top = 0.6
 anchor_right = 0.66666675
+squarable = true
 
 [node name="Enemies" type="ReferenceRect" parent="Backdrop/MapScroll/MapRatio/Battle"]
 layout_mode = 1

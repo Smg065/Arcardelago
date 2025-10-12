@@ -32,6 +32,18 @@ window/subwindows/embed_subwindows=false
 window/stretch/aspect="expand"
 window/per_pixel_transparency/allowed=true
 
+[file_customization]
+
+folder_colors={
+"res://Scripts/CardTags/Blue/": "blue",
+"res://Scripts/CardTags/Colorless/": "gray",
+"res://Scripts/CardTags/Green/": "green",
+"res://Scripts/CardTags/Orange/": "orange",
+"res://Scripts/CardTags/Red/": "red",
+"res://Scripts/CardTags/Violet/": "purple",
+"res://Scripts/CardTags/Yellow/": "yellow"
+}
+
 [filesystem]
 
 import/blender/enabled=false

@@ -3,8 +3,10 @@
 [ext_resource type="Script" uid="uid://bqqtjwd0ms0k6" path="res://Scripts/Battle.gd" id="1_yh5fh"]
 [ext_resource type="PackedScene" uid="uid://dj0bi4scf7x7c" path="res://Resources/Battle/CardSlot.tscn" id="2_yh5fh"]
 
-[node name="BattleScreen" type="CanvasLayer"]
+[node name="BattleScreen" type="CanvasLayer" node_paths=PackedStringArray("battlemap", "battleScroll")]
 script = ExtResource("1_yh5fh")
+battlemap = NodePath("Backdrop/MapScroll/MapRatio")
+battleScroll = NodePath("")
 
 [node name="Backdrop" type="ReferenceRect" parent="."]
 anchors_preset = 15
@@ -12,23 +14,40 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 border_color = Color(1, 0.72133213, 0.67637587, 1)
 border_width = 8.0
 
-[node name="Battle" type="ReferenceRect" parent="Backdrop"]
+[node name="MapScroll" type="ScrollContainer" parent="Backdrop"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.25
 anchor_right = 0.75
 anchor_bottom = 1.0
-offset_top = 32.0
-offset_bottom = -32.0
 grow_horizontal = 2
 grow_vertical = 2
+scroll_horizontal_custom_step = 0.0
+scroll_vertical_custom_step = 0.0
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="MapRatio" type="AspectRatioContainer" parent="Backdrop/MapScroll"]
+custom_minimum_size = Vector2(1028, 1028)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_default_cursor_shape = 6
+
+[node name="Battle" type="ReferenceRect" parent="Backdrop/MapScroll/MapRatio"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 1
 border_width = 4.0
 metadata/_edit_use_anchors_ = true
 
-[node name="MidRow" type="ReferenceRect" parent="Backdrop/Battle"]
+[node name="MidRow" type="ReferenceRect" parent="Backdrop/MapScroll/MapRatio/Battle"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 1
 anchors_preset = 14
@@ -39,10 +58,11 @@ offset_top = -16.0
 offset_bottom = 16.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 border_color = Color(1, 1, 1, 1)
 border_width = 4.0
 
-[node name="Playfield" type="ReferenceRect" parent="Backdrop/Battle"]
+[node name="Playfield" type="ReferenceRect" parent="Backdrop/MapScroll/MapRatio/Battle"]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.5
@@ -51,11 +71,12 @@ anchor_bottom = 1.0
 offset_top = 16.0
 grow_horizontal = 2
 grow_vertical = 0
+mouse_filter = 2
 border_color = Color(0.98, 0.47040004, 0.63177335, 1)
 border_width = 4.0
 metadata/_edit_use_anchors_ = true
 
-[node name="APAspect" type="AspectRatioContainer" parent="Backdrop/Battle/Playfield"]
+[node name="APAspect" type="AspectRatioContainer" parent="Backdrop/MapScroll/MapRatio/Battle/Playfield"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -63,54 +84,54 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Playmat" type="TextureRect" parent="Backdrop/Battle/Playfield/APAspect"]
+[node name="Playmat" type="TextureRect" parent="Backdrop/MapScroll/MapRatio/Battle/Playfield/APAspect"]
 layout_mode = 2
 expand_mode = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Frontmost2" parent="Backdrop/Battle/Playfield/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+[node name="Frontmost2" parent="Backdrop/MapScroll/MapRatio/Battle/Playfield/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.33333334
 anchor_right = 0.66666675
 anchor_bottom = 0.39999998
 
-[node name="Leftfront" parent="Backdrop/Battle/Playfield/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+[node name="Leftfront" parent="Backdrop/MapScroll/MapRatio/Battle/Playfield/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.10144927
 anchor_right = 0.3333334
 anchor_bottom = 0.5014492
 
-[node name="Rightfront" parent="Backdrop/Battle/Playfield/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+[node name="Rightfront" parent="Backdrop/MapScroll/MapRatio/Battle/Playfield/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.6666667
 anchor_top = 0.10144927
 anchor_bottom = 0.5014492
 
-[node name="Leftback" parent="Backdrop/Battle/Playfield/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+[node name="Leftback" parent="Backdrop/MapScroll/MapRatio/Battle/Playfield/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.5
 anchor_right = 0.3333334
 anchor_bottom = 0.9
 
-[node name="Rightback" parent="Backdrop/Battle/Playfield/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+[node name="Rightback" parent="Backdrop/MapScroll/MapRatio/Battle/Playfield/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.6666667
 anchor_top = 0.5
 anchor_bottom = 0.9
 
-[node name="Backmost2" parent="Backdrop/Battle/Playfield/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+[node name="Backmost2" parent="Backdrop/MapScroll/MapRatio/Battle/Playfield/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.33333334
 anchor_top = 0.6
 anchor_right = 0.66666675
 
-[node name="Enemies" type="ReferenceRect" parent="Backdrop/Battle"]
+[node name="Enemies" type="ReferenceRect" parent="Backdrop/MapScroll/MapRatio/Battle"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -118,19 +139,21 @@ anchor_bottom = 0.5
 offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 0
+mouse_filter = 2
 border_color = Color(0.32, 0.55799997, 1, 1)
 border_width = 4.0
 metadata/_edit_use_anchors_ = true
 
-[node name="HordeLayout" type="Control" parent="Backdrop/Battle/Enemies"]
+[node name="HordeLayout" type="Control" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
-[node name="FrontRow" type="HBoxContainer" parent="Backdrop/Battle/Enemies/HordeLayout"]
+[node name="FrontRow" type="HBoxContainer" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/HordeLayout"]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.55
@@ -140,28 +163,28 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="CardSlot" parent="Backdrop/Battle/Enemies/HordeLayout/FrontRow" instance=ExtResource("2_yh5fh")]
+[node name="CardSlot" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/HordeLayout/FrontRow" instance=ExtResource("2_yh5fh")]
 layout_mode = 2
 
-[node name="CardSlot2" parent="Backdrop/Battle/Enemies/HordeLayout/FrontRow" instance=ExtResource("2_yh5fh")]
+[node name="CardSlot2" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/HordeLayout/FrontRow" instance=ExtResource("2_yh5fh")]
 layout_mode = 2
 
-[node name="CardSlot3" parent="Backdrop/Battle/Enemies/HordeLayout/FrontRow" instance=ExtResource("2_yh5fh")]
+[node name="CardSlot3" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/HordeLayout/FrontRow" instance=ExtResource("2_yh5fh")]
 layout_mode = 2
 
-[node name="CardSlot4" parent="Backdrop/Battle/Enemies/HordeLayout/FrontRow" instance=ExtResource("2_yh5fh")]
+[node name="CardSlot4" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/HordeLayout/FrontRow" instance=ExtResource("2_yh5fh")]
 layout_mode = 2
 
-[node name="CardSlot5" parent="Backdrop/Battle/Enemies/HordeLayout/FrontRow" instance=ExtResource("2_yh5fh")]
+[node name="CardSlot5" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/HordeLayout/FrontRow" instance=ExtResource("2_yh5fh")]
 layout_mode = 2
 
-[node name="CardSlot6" parent="Backdrop/Battle/Enemies/HordeLayout/FrontRow" instance=ExtResource("2_yh5fh")]
+[node name="CardSlot6" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/HordeLayout/FrontRow" instance=ExtResource("2_yh5fh")]
 layout_mode = 2
 
-[node name="CardSlot7" parent="Backdrop/Battle/Enemies/HordeLayout/FrontRow" instance=ExtResource("2_yh5fh")]
+[node name="CardSlot7" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/HordeLayout/FrontRow" instance=ExtResource("2_yh5fh")]
 layout_mode = 2
 
-[node name="BackRow" type="HBoxContainer" parent="Backdrop/Battle/Enemies/HordeLayout"]
+[node name="BackRow" type="HBoxContainer" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/HordeLayout"]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.05
@@ -171,28 +194,28 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="CardSlot" parent="Backdrop/Battle/Enemies/HordeLayout/BackRow" instance=ExtResource("2_yh5fh")]
+[node name="CardSlot" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/HordeLayout/BackRow" instance=ExtResource("2_yh5fh")]
 layout_mode = 2
 
-[node name="CardSlot2" parent="Backdrop/Battle/Enemies/HordeLayout/BackRow" instance=ExtResource("2_yh5fh")]
+[node name="CardSlot2" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/HordeLayout/BackRow" instance=ExtResource("2_yh5fh")]
 layout_mode = 2
 
-[node name="CardSlot3" parent="Backdrop/Battle/Enemies/HordeLayout/BackRow" instance=ExtResource("2_yh5fh")]
+[node name="CardSlot3" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/HordeLayout/BackRow" instance=ExtResource("2_yh5fh")]
 layout_mode = 2
 
-[node name="CardSlot4" parent="Backdrop/Battle/Enemies/HordeLayout/BackRow" instance=ExtResource("2_yh5fh")]
+[node name="CardSlot4" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/HordeLayout/BackRow" instance=ExtResource("2_yh5fh")]
 layout_mode = 2
 
-[node name="CardSlot5" parent="Backdrop/Battle/Enemies/HordeLayout/BackRow" instance=ExtResource("2_yh5fh")]
+[node name="CardSlot5" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/HordeLayout/BackRow" instance=ExtResource("2_yh5fh")]
 layout_mode = 2
 
-[node name="CardSlot6" parent="Backdrop/Battle/Enemies/HordeLayout/BackRow" instance=ExtResource("2_yh5fh")]
+[node name="CardSlot6" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/HordeLayout/BackRow" instance=ExtResource("2_yh5fh")]
 layout_mode = 2
 
-[node name="CardSlot7" parent="Backdrop/Battle/Enemies/HordeLayout/BackRow" instance=ExtResource("2_yh5fh")]
+[node name="CardSlot7" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/HordeLayout/BackRow" instance=ExtResource("2_yh5fh")]
 layout_mode = 2
 
-[node name="RivalLayout" type="Control" parent="Backdrop/Battle/Enemies"]
+[node name="RivalLayout" type="Control" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -200,8 +223,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
-[node name="APAspect" type="AspectRatioContainer" parent="Backdrop/Battle/Enemies/RivalLayout"]
+[node name="APAspect" type="AspectRatioContainer" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/RivalLayout"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -209,54 +233,54 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Playmat" type="TextureRect" parent="Backdrop/Battle/Enemies/RivalLayout/APAspect"]
+[node name="Playmat" type="TextureRect" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/RivalLayout/APAspect"]
 layout_mode = 2
 expand_mode = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Frontmost2" parent="Backdrop/Battle/Enemies/RivalLayout/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+[node name="Frontmost2" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/RivalLayout/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.33333334
 anchor_top = 0.6
 anchor_right = 0.66666675
 
-[node name="Leftfront" parent="Backdrop/Battle/Enemies/RivalLayout/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+[node name="Leftfront" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/RivalLayout/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.5
 anchor_right = 0.3333334
 anchor_bottom = 0.9
 
-[node name="Rightfront" parent="Backdrop/Battle/Enemies/RivalLayout/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+[node name="Rightfront" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/RivalLayout/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.6666667
 anchor_top = 0.5
 anchor_bottom = 0.9
 
-[node name="Leftback" parent="Backdrop/Battle/Enemies/RivalLayout/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+[node name="Leftback" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/RivalLayout/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.10144927
 anchor_right = 0.3333334
 anchor_bottom = 0.5014492
 
-[node name="Rightback" parent="Backdrop/Battle/Enemies/RivalLayout/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+[node name="Rightback" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/RivalLayout/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.6666667
 anchor_top = 0.10144927
 anchor_bottom = 0.5014492
 
-[node name="Backmost2" parent="Backdrop/Battle/Enemies/RivalLayout/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+[node name="Backmost2" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/RivalLayout/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.33333334
 anchor_right = 0.66666675
 anchor_bottom = 0.4
 
-[node name="BossLayout" type="Control" parent="Backdrop/Battle/Enemies"]
+[node name="BossLayout" type="Control" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -264,8 +288,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
-[node name="BossSlot" parent="Backdrop/Battle/Enemies/BossLayout" instance=ExtResource("2_yh5fh")]
+[node name="BossSlot" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/BossLayout" instance=ExtResource("2_yh5fh")]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.333
@@ -273,7 +298,7 @@ anchor_top = 0.1
 anchor_right = 0.6671875
 anchor_bottom = 0.9
 
-[node name="LFrontRow" type="HBoxContainer" parent="Backdrop/Battle/Enemies/BossLayout"]
+[node name="LFrontRow" type="HBoxContainer" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/BossLayout"]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.55
@@ -283,13 +308,13 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="CardSlot" parent="Backdrop/Battle/Enemies/BossLayout/LFrontRow" instance=ExtResource("2_yh5fh")]
+[node name="CardSlot" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/BossLayout/LFrontRow" instance=ExtResource("2_yh5fh")]
 layout_mode = 2
 
-[node name="CardSlot7" parent="Backdrop/Battle/Enemies/BossLayout/LFrontRow" instance=ExtResource("2_yh5fh")]
+[node name="CardSlot7" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/BossLayout/LFrontRow" instance=ExtResource("2_yh5fh")]
 layout_mode = 2
 
-[node name="LBackRow" type="HBoxContainer" parent="Backdrop/Battle/Enemies/BossLayout"]
+[node name="LBackRow" type="HBoxContainer" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/BossLayout"]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.05
@@ -299,13 +324,13 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="CardSlot" parent="Backdrop/Battle/Enemies/BossLayout/LBackRow" instance=ExtResource("2_yh5fh")]
+[node name="CardSlot" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/BossLayout/LBackRow" instance=ExtResource("2_yh5fh")]
 layout_mode = 2
 
-[node name="CardSlot2" parent="Backdrop/Battle/Enemies/BossLayout/LBackRow" instance=ExtResource("2_yh5fh")]
+[node name="CardSlot2" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/BossLayout/LBackRow" instance=ExtResource("2_yh5fh")]
 layout_mode = 2
 
-[node name="RFrontRow" type="HBoxContainer" parent="Backdrop/Battle/Enemies/BossLayout"]
+[node name="RFrontRow" type="HBoxContainer" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/BossLayout"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.667
@@ -316,13 +341,13 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="CardSlot" parent="Backdrop/Battle/Enemies/BossLayout/RFrontRow" instance=ExtResource("2_yh5fh")]
+[node name="CardSlot" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/BossLayout/RFrontRow" instance=ExtResource("2_yh5fh")]
 layout_mode = 2
 
-[node name="CardSlot2" parent="Backdrop/Battle/Enemies/BossLayout/RFrontRow" instance=ExtResource("2_yh5fh")]
+[node name="CardSlot2" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/BossLayout/RFrontRow" instance=ExtResource("2_yh5fh")]
 layout_mode = 2
 
-[node name="RBackRow" type="HBoxContainer" parent="Backdrop/Battle/Enemies/BossLayout"]
+[node name="RBackRow" type="HBoxContainer" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/BossLayout"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.667
@@ -333,8 +358,11 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="CardSlot" parent="Backdrop/Battle/Enemies/BossLayout/RBackRow" instance=ExtResource("2_yh5fh")]
+[node name="CardSlot" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/BossLayout/RBackRow" instance=ExtResource("2_yh5fh")]
 layout_mode = 2
 
-[node name="CardSlot2" parent="Backdrop/Battle/Enemies/BossLayout/RBackRow" instance=ExtResource("2_yh5fh")]
+[node name="CardSlot2" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/BossLayout/RBackRow" instance=ExtResource("2_yh5fh")]
 layout_mode = 2
+
+[connection signal="mouse_entered" from="Backdrop/MapScroll" to="." method="mouse_on_battlefield"]
+[connection signal="mouse_exited" from="Backdrop/MapScroll" to="." method="mouse_off_battlefield"]

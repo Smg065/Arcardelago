@@ -225,3 +225,11 @@ func _get_drag_data(_at_position: Vector2) -> Variant:
 	cardPreview.pivot_offset = cardPreview.size / 2
 	set_drag_preview(self.duplicate(0))
 	return {"IsArcardelago" : true, "CardUI" : self}
+
+##Changes the cards parent and sets card slots
+func shift_parent(nParent : Node):
+	var parent = get_parent()
+	if parent is CardSlot:
+		mouse_filter = Control.MOUSE_FILTER_PASS
+	parent.remove_child(self)
+	nParent.add_child(self)

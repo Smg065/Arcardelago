@@ -11,7 +11,7 @@ func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 
 func _drop_data(_at_position: Vector2, data: Variant) -> void:
 	var inCard : CardUI = data["CardUI"]
-	inCard.get_parent().remove_child(inCard)
-	add_child(inCard)
+	inCard.shift_parent(self)
 	inCard.set_min_from_height(0)
 	inCard.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	mouse_filter = Control.MOUSE_FILTER_STOP

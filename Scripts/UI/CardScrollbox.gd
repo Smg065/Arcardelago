@@ -62,8 +62,7 @@ func add_card_from_data(nCard : CardData):
 
 ##Add a card from an existing card data
 func add_card_from_ui_card(nCardUI : CardUI):
-	nCardUI.get_parent().remove_child(nCardUI)
-	flow.add_child(nCardUI)
+	nCardUI.shift_parent(flow)
 	nCardUI.set_min_from_height(minSize)
 	nCardUI.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 

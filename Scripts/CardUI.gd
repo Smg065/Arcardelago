@@ -22,6 +22,7 @@ class_name CardUI
 const PLAYER_NAME_COLOR = "222222"
 
 @export var cardData : CardData
+var cardName : String
 var compressedCardData : Array[CardData]
 var partialFiltered : Array[bool]
 
@@ -29,6 +30,8 @@ func build(nCardData : CardData):
 	cardData = nCardData
 	partialFiltered.resize(compressedCardData.size() + 1)
 	if cardData.isDefault:
+		cardName = "Default"
+		name = cardName
 		uiCardWordTypesLabel.text = ""
 		uiCardPhoneticsLabel.text = ""
 		uiCardGameLabel.text = ""
@@ -40,6 +43,8 @@ func build(nCardData : CardData):
 		uiCardBackColor.default()
 		update_rich_texts()
 		return
+	cardName = " ".join([cardData.nameData.name, cardData.gameCardset.game])
+	name = cardName
 	uiCardBackColor.colors = cardData.colors
 	uiCardPipColor.colors = cardData.colors
 	uiCardSetPipColor.colors = cardData.gameCardset.setColor
@@ -223,6 +228,7 @@ func _get_drag_data(_at_position: Vector2) -> Variant:
 	
 	cardPreview.size = cardPreview.custom_minimum_size
 	cardPreview.pivot_offset = cardPreview.size / 2
+	cardPreview.z_index = 7
 	set_drag_preview(self.duplicate(0))
 	return {"IsArcardelago" : true, "CardUI" : self}
 
@@ -230,6 +236,6 @@ func _get_drag_data(_at_position: Vector2) -> Variant:
 func shift_parent(nParent : Node):
 	var parent = get_parent()
 	if parent is CardSlot:
-		mouse_filter = Control.MOUSE_FILTER_PASS
+		parent.mouse_filter = Control.MOUSE_FILTER_PASS
 	parent.remove_child(self)
 	nParent.add_child(self)

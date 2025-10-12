@@ -22,8 +22,6 @@ func _input(event: InputEvent) -> void:
 		return
 	if event is InputEventMouse:
 		battlemap.pivot_offset = event.global_position - battlemap.global_position
-	
-	
 	if event is InputEventMouseButton:
 		if event.is_pressed() and !event.shift_pressed:
 			match event.button_index:
@@ -39,13 +37,12 @@ func _input(event: InputEvent) -> void:
 			match event.button_index:
 				MouseButton.MOUSE_BUTTON_LEFT:
 					draggingMap = false
-	
 	if event is InputEventMouseMotion:
 		if draggingMap:
 			battlemap.global_position += event.relative
 
 func change_zoom(zoomDir : int):
-	zoomVal = clampi(zoomVal + zoomDir, 0, 20)
+	zoomVal = clampi(zoomVal + zoomDir, 0, 25)
 	var screenSize := get_viewport().get_visible_rect().size
 	var smallerAxis : float = min(screenSize.x, screenSize.y)
 	var minZoom := floori(sqrt(smallerAxis))

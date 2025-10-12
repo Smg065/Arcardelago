@@ -47,6 +47,7 @@ func show_current():
 		if eachCard.enemyCard:
 			continue
 		add_card_from_data(eachCard)
+	sort_children()
 
 ##Add a card to the scrollbox
 func add_card_from_data(nCard : CardData):
@@ -88,6 +89,15 @@ func filter_items():
 		var eachCard : CardUI = eachChild as CardUI
 		eachCard.filter(filterCommands)
 
+##Sort the children of the flowbox alphabetically
+func sort_children():
+	var allChildren := flow.get_children()
+	allChildren.sort_custom(func(a: CardUI, b: CardUI): return 0 > a.cardName.naturalnocasecmp_to(b.cardName))
+	for eachChild in allChildren:
+		flow.remove_child(eachChild)
+	for eachChild in allChildren:
+		flow.add_child(eachChild)
+
 func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 	if typeof(data) != TYPE_DICTIONARY:
 		return false
@@ -99,3 +109,4 @@ func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 func _drop_data(_at_position: Vector2, data: Variant) -> void:
 	var inCard : CardUI = data["CardUI"]
 	add_card_from_ui_card(inCard)
+	sort_children()

@@ -293,6 +293,7 @@ func extract_data(toExtract : int) -> Array[CardData]:
 			else:
 				update_card_slot_mouse()
 				queue_free()
+			toExtract -= 1
 	update_compressed_vis()
 	#Catch broken data extractions
 	if toExtract > 0:

@@ -14,6 +14,9 @@ func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 	if get_child_count() > 0:
 		if !squarable:
 			return false
+		var curCard : CardUI = get_child(0)
+		if curCard == data["CardUI"]:
+			return false
 		return get_child(0).square_stackable(data["CardUI"])
 	return true
 

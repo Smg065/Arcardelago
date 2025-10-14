@@ -1,16 +1,29 @@
 extends Resource
 class_name CardData
 
+##The name of the player that has this card.
 var playerName : String
+##The game cardset this card comes from.
 var gameCardset : GameCardset
+##The name data associated with the Card Data.
 var nameData : NameData
+##The item you can find at this card's location.
 var apId : int
+##The quality of the item
 var apItemFlags : int
+##If this card is a location instead of an item.
 var enemyCard : bool
+##The angle color fades has on this.
 var fadeAngle : float
+##If this card has no item attacked.
 @export var isDefault : bool
+##If this card is from your Arcardelago.
 var isLocal : bool
 var debugColorScores : Dictionary[ColorCatagory.ColorTypes, float]
+##The health this card has by default.
+var baseHealth : int = 1
+##The attack this card has by default .
+var baseAttack : int = 1
 
 @export_flags("Red", "Green", "Violet", "Orange", "Blue", "Yellow") var colors : int = 0
 
@@ -41,6 +54,8 @@ static func build(newApItemFlags : int, newApId : int, newData : NameData, newGa
 	return cardData
 
 func json_save():
+	if isDefault:
+		return {"isDefault" : true}
 	var saveOutput : Dictionary = {
 		"playerName" : playerName,
 		"apId" : apId,
@@ -48,18 +63,26 @@ func json_save():
 		"apItemFlags" : apItemFlags,
 		"enemyCard" : enemyCard,
 		"fadeAngle" : fadeAngle,
-		"isLocal" : isLocal
+		"isLocal" : isLocal,
+		"isDefault" : false,
+		"baseHealth" : baseHealth,
+		"baseAttack" : baseAttack
 	}
 	return saveOutput
 
 static func json_load(inDict, gameData : GameData) -> CardData:
 	var cardData := CardData.new()
+	if gameData["isDefault"]:
+		cardData.isDefault = true
+		return
 	cardData.playerName = inDict["playerName"]
 	cardData.apId = inDict["apId"]
 	cardData.apItemFlags = inDict["apItemFlags"]
 	cardData.enemyCard = inDict["enemyCard"]
 	cardData.fadeAngle = inDict["fadeAngle"]
 	cardData.isLocal = inDict["isLocal"]
+	cardData.baseHealth = inDict["baseHealth"]
+	cardData.baseAttack = inDict["baseAttack"]
 	cardData.nameData = gameData.existingNames[inDict["nameData"]]
 	for eachGame in gameData.gameCardsets:
 		if gameData.gameCardsets[eachGame].players.has(cardData.playerName):
@@ -100,6 +123,56 @@ func stringify_item_quality() -> String:
 		return "Useful"
 	#Filler
 	return "Filler"
+
+##Get the points on the card and pick abilities from it
+func stat_card() -> void:
+	##Points used for statting cards in general
+	var pointsAvailable : int = 0
+	#Default Cards just have base health and attack
+	if isDefault:
+		baseHealth = 1
+		baseAttack = 1
+		return
+	#Otherwise, lot more to consider
+	
+	##The RNG used by this card name
+	var rng = RandomNumberGenerator.new()
+	rng.set_seed(hash(nameData.name) + hash(gameCardset.nameData))
+	
+	#Pick the points you can use next
+	match stringify_item_quality():
+		"Filler":
+			pointsAvailable = 6
+		"Useful":
+			pointsAvailable = 12
+		"Progression":
+			pointsAvailable = 18
+		"Proguseful":
+			pointsAvailable = 24
+		"Trap":
+			return
+		"Location":
+			#Bosses
+			if apItemFlags == 3:
+				pointsAvailable = 30
+	##The points used to modify stats
+	var forStatroll : int = 0
+	##The health this card has
+	var healthPoints : int = 1
+	##The attack this card has
+	var attackPoints : int = 1
+	
+	#Leave at least 2 point for abilities minimum
+	forStatroll = rng.randi_range(0, pointsAvailable - 2)
+	pointsAvailable -= forStatroll
+	
+	##How much attack you have. for. Statroll - statRatio becomes how much health you have.
+	var statRatio : int = rng.randi_range(0, forStatroll) + rng.randi_range(0, forStatroll)
+	statRatio /= 2
+	attackPoints += statRatio
+	healthPoints += forStatroll - statRatio
+	baseHealth = healthPoints
+	baseAttack = attackPoints
 
 ##A packed string array of the litteral names of the colors
 func stringify_colors() -> PackedStringArray:

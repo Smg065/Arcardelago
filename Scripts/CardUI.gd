@@ -42,6 +42,7 @@ func build(nCardData : CardData):
 			uiCardPipColor.default(playerPip)
 		uiCardBackColor.default()
 		update_rich_texts()
+		set_stack_multi()
 		return
 	cardName = " ".join([cardData.nameData.name, cardData.gameCardset.game])
 	name = cardName
@@ -61,6 +62,7 @@ func build(nCardData : CardData):
 		uiCardPipColor.build(playerPip)
 		update_region_band()
 	update_rich_texts()
+	set_stack_multi()
 
 func update_rich_texts():
 	#Universal Data
@@ -266,9 +268,21 @@ func square_stack(inUi : CardUI) -> void:
 	compressedCardData.append_array(extractedData)
 	new_compression_size()
 	update_compressed_vis()
+	set_stack_multi()
 
-##Extract the given number of non partial-filtered card data entries
-func extract_data(toExtract : int) -> Array[CardData]:
+##Multiply your health and damage by the stack size. Set to false to set it do default instead.
+func set_stack_multi(showStacked : bool = true):
+	var multi : int = 1
+	if showStacked:
+		multi = stack_size() + 1
+	uiCardHealth.text = str(cardData.baseHealth * multi)
+	uiCardDamage.text = str(cardData.baseAttack * multi)
+
+##Extract the given number of non partial-filtered card data entries.[br]
+##Leave empty to extract all unfiltered entries.
+func extract_data(toExtract : int = -1) -> Array[CardData]:
+	if toExtract == -1:
+		toExtract = partialFiltered.count(false)
 	var output : Array[CardData]
 	#Grab all the unfiltered nodes to extract
 	for eachIndex in compressedCardData.size():

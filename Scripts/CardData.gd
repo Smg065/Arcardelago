@@ -72,7 +72,7 @@ func json_save():
 
 static func json_load(inDict, gameData : GameData) -> CardData:
 	var cardData := CardData.new()
-	if gameData["isDefault"]:
+	if inDict["isDefault"]:
 		cardData.isDefault = true
 		return
 	cardData.playerName = inDict["playerName"]

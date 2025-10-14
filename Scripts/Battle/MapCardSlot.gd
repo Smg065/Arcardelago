@@ -17,6 +17,8 @@ func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 		var curCard : CardUI = get_child(0)
 		if curCard == data["CardUI"]:
 			return false
+		if !curCard.cardData.is_comparable(data["CardUI"].cardData):
+			return false
 		return get_child(0).square_stackable(data["CardUI"])
 	return true
 

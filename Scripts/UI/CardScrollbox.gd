@@ -63,18 +63,19 @@ func add_card_from_data(nCard : CardData):
 
 ##Add a card from an existing card data
 func add_card_from_ui_card(nCardUI : CardUI):
-	nCardUI.shift_parent(flow)
 	var allChildren := flow.get_children()
+	nCardUI.shift_parent(flow)
 	for eachChild in allChildren:
 		if nCardUI.cardData.is_comparable(eachChild.cardData):
 			var data := nCardUI.extract_data()
-			eachChild.compressedCardData.append(data)
+			eachChild.compressedCardData.append_array(data)
 			eachChild.new_compression_size()
 			eachChild.update_compressed_vis()
 			eachChild.set_stack_multi(false)
 			return
 	nCardUI.set_min_from_height(minSize)
 	nCardUI.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	nCardUI.set_stack_multi(false)
 
 ##One of the filters got toggled
 func toggle_filter(filterIndex : int):

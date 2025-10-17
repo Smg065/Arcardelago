@@ -241,7 +241,7 @@ func shift_parent(nParent : Node):
 	parent.remove_child(self)
 	nParent.add_child(self)
 
-##If you have a
+##Allow the slot to stop taking mouse events
 func update_card_slot_mouse():
 	var parent = get_parent()
 	if parent is CardSlot:
@@ -309,6 +309,8 @@ func extract_data(toExtract : int = -1) -> Array[CardData]:
 				queue_free()
 			toExtract -= 1
 	update_compressed_vis()
+	if get_parent() is CardSlot:
+		set_stack_multi()
 	#Catch broken data extractions
 	if toExtract > 0:
 		push_warning("Can't extract all card data!")

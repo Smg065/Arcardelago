@@ -134,7 +134,3 @@ func pip_percentage(types : PackedStringArray):
 	if is_zero_approx(outSum):
 		return 0
 	return outSum / 100.0
-
-##
-#func debug_all_cards_from(colorCat : ColorCatagory):
-#	colorCat as int

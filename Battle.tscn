@@ -1,21 +1,32 @@
-[gd_scene load_steps=3 format=3 uid="uid://cpofxalps4yuo"]
+[gd_scene load_steps=10 format=3 uid="uid://cpofxalps4yuo"]
 
 [ext_resource type="Script" uid="uid://bqqtjwd0ms0k6" path="res://Scripts/Battle.gd" id="1_yh5fh"]
+[ext_resource type="Texture2D" uid="uid://bx1335alayi00" path="res://Sprites/Backdrops/WhiteBattleEdges.png" id="2_83ubk"]
 [ext_resource type="PackedScene" uid="uid://dj0bi4scf7x7c" path="res://Resources/Battle/CardSlot.tscn" id="2_yh5fh"]
+[ext_resource type="Texture2D" uid="uid://b3pjntrbp2phm" path="res://Sprites/Backdrops/RedBattleEdges.png" id="3_w0ll1"]
+[ext_resource type="Texture2D" uid="uid://bmv2ui1ix6wfx" path="res://Sprites/Backdrops/GreenBattleEdges.png" id="4_0500f"]
+[ext_resource type="Texture2D" uid="uid://b5iqhugsmawxd" path="res://Sprites/Backdrops/PurpleBattleEdges.png" id="5_sqcgj"]
+[ext_resource type="Texture2D" uid="uid://bhoq5lxgdwfco" path="res://Sprites/Backdrops/OrangeBattleEdges.png" id="6_ix2yc"]
+[ext_resource type="Texture2D" uid="uid://dosa43dyl6ir8" path="res://Sprites/Backdrops/BlueBattleEdges.png" id="7_fmwbo"]
+[ext_resource type="Texture2D" uid="uid://8qxf7urhaeco" path="res://Sprites/Backdrops/YellowBattleEdges.png" id="8_8eejf"]
 
-[node name="BattleScreen" type="CanvasLayer" node_paths=PackedStringArray("battlemap")]
+[node name="BattleScreen" type="CanvasLayer" node_paths=PackedStringArray("battlemap", "battleScroll", "battleBackground")]
 script = ExtResource("1_yh5fh")
 battlemap = NodePath("Backdrop/MapScroll/MapRatio")
+battleScroll = NodePath("Backdrop/MapScroll")
+battleBackground = NodePath("Backdrop")
+battleBackgrounds = Array[Texture2D]([ExtResource("2_83ubk"), ExtResource("3_w0ll1"), ExtResource("4_0500f"), ExtResource("5_sqcgj"), ExtResource("6_ix2yc"), ExtResource("7_fmwbo"), ExtResource("8_8eejf")])
 
-[node name="Backdrop" type="ReferenceRect" parent="."]
+[node name="Backdrop" type="TextureRect" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-border_color = Color(1, 0.72133213, 0.67637587, 1)
-border_width = 8.0
+texture = ExtResource("2_83ubk")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="MapScroll" type="ScrollContainer" parent="Backdrop"]
 layout_mode = 1

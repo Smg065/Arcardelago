@@ -7,15 +7,31 @@ var draggingMap : bool
 var mouseStartPoint : Vector2
 var mapStartPoint : Vector2
 
-##The map where the battle is happening
+##The info needed to setup the battle.
+@export var battleInfo : BattleInfo
+##The mat where the cards are all displayed
 @export var battlemap : AspectRatioContainer
+##The scrollbox containing the displayed card info
 @export var battleScroll : ScrollContainer
+
+@export_category("Background Visuals")
+##The background of the screen
+@export var battleBackground : TextureRect
+##The options the background would use
+@export var battleBackgrounds : Array[Texture2D]
 
 ##The zoom of the map. Range from 0-20
 var zoomVal : int
 
+##Set the battle map as active
 func set_active(nState : bool):
 	visible = nState
+	setup_battle(battleInfo)
+
+##Relay the battle information
+func setup_battle(nBattleInfo : BattleInfo):
+	battleInfo = nBattleInfo
+	battleBackground.texture = battleBackgrounds[battleInfo.region]
 
 func _input(event: InputEvent) -> void:
 	if !mouseFocused and !draggingMap:
@@ -41,6 +57,7 @@ func _input(event: InputEvent) -> void:
 		if draggingMap:
 			battlemap.global_position += event.relative
 
+##Zooming in and out
 func change_zoom(zoomDir : int):
 	zoomVal = clampi(zoomVal + zoomDir, 0, 25)
 	var screenSize := get_viewport().get_visible_rect().size
@@ -49,8 +66,10 @@ func change_zoom(zoomDir : int):
 	battlemap.custom_minimum_size = Vector2.ONE * pow(minZoom + zoomVal, 2)
 	battlemap.size = battlemap.custom_minimum_size
 
+##Needed to start mouse events
 func mouse_on_battlefield() -> void:
 	mouseFocused = true
 
+##Needed to stop mouse events
 func mouse_off_battlefield() -> void:
 	mouseFocused = false

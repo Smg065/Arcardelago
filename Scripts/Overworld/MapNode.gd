@@ -33,6 +33,8 @@ var nullDirs : Array[Vector2i]
 var crossDirs : Dictionary[Vector2i, int]
 ##The point on the grid
 var gridPoint : Vector2i
+##Node info
+var nodeInfo : BattleInfo
 
 ##Sets the pip up to be rendered as the type chosen
 func set_pip_type(nColorIndex : int, nMapNodeType : MapNodeType) -> void:
@@ -135,7 +137,6 @@ func direction_availability(worldMap : WorldMap):
 				nullDirs.append(eachOffset)
 		else:
 			availableDirs.append(eachOffset)
-
 
 ##Mark this node as defeated/undefeated, along with connected atuos
 func defeat(nDefeated : bool = true) -> void:

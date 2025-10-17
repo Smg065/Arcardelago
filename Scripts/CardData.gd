@@ -51,6 +51,7 @@ static func build(newApItemFlags : int, newApId : int, newData : NameData, newGa
 	else:
 		cardData.gameCardset.playerCards.append(cardData)
 	cardData.colors = cardData.calculate_color()
+	cardData.stat_card()
 	return cardData
 
 func json_save():
@@ -100,6 +101,7 @@ static func new_default(nIsEnemy : bool = false) -> CardData:
 	var output := CardData.new()
 	output.enemyCard = nIsEnemy
 	output.isDefault = true
+	output.stat_card()
 	return output
 
 ##The flags used for this card as displayed as basic text
@@ -155,6 +157,8 @@ func stat_card() -> void:
 			#Bosses
 			if apItemFlags == 3:
 				pointsAvailable = 30
+			else:
+				pointsAvailable = randi_range(3, 27)
 	##The points used to modify stats
 	var forStatroll : int = 0
 	##The health this card has

@@ -1,6 +1,7 @@
 extends TextureRect
 class_name CardSlot
 
+@export var playerInteractable : bool
 @export var squarable : bool
 
 var cardPrefab : PackedScene = load("res://Resources/CardUI.tscn")

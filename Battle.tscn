@@ -25,10 +25,11 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("2_83ubk")
-expand_mode = 1
+expand_mode = 5
 stretch_mode = 5
 
 [node name="MapScroll" type="ScrollContainer" parent="Backdrop"]
+z_index = 1
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.25
@@ -49,12 +50,12 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_default_cursor_shape = 6
 
-[node name="Battle" type="ReferenceRect" parent="Backdrop/MapScroll/MapRatio"]
+[node name="Battle" type="ColorRect" parent="Backdrop/MapScroll/MapRatio"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 1
-border_width = 4.0
+color = Color(0, 0, 0, 0.49411765)
 metadata/_edit_use_anchors_ = true
 
 [node name="MidRow" type="ReferenceRect" parent="Backdrop/MapScroll/MapRatio/Battle"]

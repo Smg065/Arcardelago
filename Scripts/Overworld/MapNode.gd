@@ -34,7 +34,7 @@ var crossDirs : Dictionary[Vector2i, int]
 ##The point on the grid
 var gridPoint : Vector2i
 ##Node info
-var nodeInfo : BattleInfo
+var nodeInfo : Dictionary
 
 ##Sets the pip up to be rendered as the type chosen
 func set_pip_type(nColorIndex : int, nMapNodeType : MapNodeType) -> void:
@@ -232,6 +232,54 @@ func set_grid_point(nGridPoint : Vector2i, nRegion : int, worldMap : WorldMap):
 	direction_availability(worldMap)
 	global_position = (gridPoint * WorldMap.CELL_SIZE) + (WorldMap.CELL_SIZE / 2)
 
+##Register a path to an input direction
 func register(inputDir : Vector2i, path : MapWalkPip):
 	pathDirs[inputDir] = path
 	availableDirs.erase(inputDir)
+
+##Construct the info for use
+func build_info():
+	nodeInfo["Region"] = region
+	match mapNodeType:
+		#No Data
+		MapNodeType.AUTO:
+			nodeInfo = {}
+		MapNodeType.INTERSECTION:
+			nodeInfo = {}
+		#Cutscenes
+		MapNodeType.OBSTACLE:
+			nodeInfo["Type"] = "Obstacle"
+		MapNodeType.GATE:
+			nodeInfo["Type"] = "Gate"
+		MapNodeType.PORTAL:
+			nodeInfo["Type"] = "Portal"
+		#Enemies
+		MapNodeType.ENEMY:
+			var battleInfo : BattleInfo = BattleInfo.new()
+			nodeInfo["Type"] = "Enemy"
+			battleInfo.region = region
+			battleInfo.calculate_difficulty(0)
+			nodeInfo["Info"] = battleInfo
+		MapNodeType.BOSS:
+			var battleInfo : BattleInfo = BattleInfo.new()
+			nodeInfo["Type"] = "Enemy"
+			battleInfo.region = region
+			#If you're the boss of the spawning region, you're the first rival battle
+			if Persist.spawnSphere == ((region - 1) as ColorCatagory.ColorTypes):
+				battleInfo.type = BattleInfo.BattleType.RIVAL
+			#The Final Boss
+			elif region == 0:
+				battleInfo.type = BattleInfo.BattleType.FINAL_BOSS
+			else:
+				battleInfo.type = BattleInfo.BattleType.BOSS
+			nodeInfo["Info"] = battleInfo
+		MapNodeType.SHOP:
+			nodeInfo["Type"] = "Shop"
+		MapNodeType.TREASURE:
+			nodeInfo["Type"] = "Treasure"
+		MapNodeType.RELEASER:
+			nodeInfo["Type"] = "Releaser"
+		MapNodeType.EVENT:
+			nodeInfo["Type"] = "Event"
+		MapNodeType.HOME:
+			nodeInfo["Type"] = "Home"

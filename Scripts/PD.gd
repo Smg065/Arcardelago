@@ -1,9 +1,15 @@
 extends Node
 class_name PD
 
+##A table that converts a region index to the text name
+const REGION_TO_NAME = {0 : "White", 1 : "Red", 2 : "Green", 3 : "Violet", 4 : "Orange", 5 : "Blue", 6 : "Yellow"}
+
 ##The RNG based on AP's seed
 var rng : RandomNumberGenerator
-##The game's difficulty
+##The game's difficulty[br]
+##0 = Easy
+##1 = Normal
+##2 = Hard
 var difficulty : int
 ##How many cards are in your region
 var cardsPerRegion : int
@@ -17,6 +23,12 @@ var nodePercents : Dictionary
 var spawnSphere : ColorCatagory.ColorTypes
 ##The order the sphere worlds are in
 var worldOrder : Dictionary
+##The depth of all regions based on the spawn sphere
+var dfsRegions : Dictionary
+##The number of gates you must open to directly go from spawn to the final boss.
+var gameDepth : int
+##The name of the region you spawn from
+var spawnName : String
 ##The seed of this game
 var apSeed : int
 ##The AP's game data
@@ -107,7 +119,6 @@ func hold_server_data(slotData : Dictionary) -> void:
 			toDelete = eachEntry
 	for eachEntry in toDelete:
 		nodePercents.erase(eachEntry)
-	##Get your spawning sphere
 	match slotData["spawning_sphere"]:
 		"Red Sphere":
 			spawnSphere = ColorCatagory.RED
@@ -122,6 +133,14 @@ func hold_server_data(slotData : Dictionary) -> void:
 		"Yellow Sphere":
 			spawnSphere = ColorCatagory.YELLOW
 	worldOrder = slotData["world_order"]
+	##Where you spawn from
+	spawnName = slotData["spawning_sphere"].split(' ')[0]
+	#Get the world order as a depth-first sorted dictionary
+	dfsRegions = depth_first_search(worldOrder, spawnName)
+	#Any of the deepest regions would show the game depth
+	gameDepth = dfsRegions[get_best(dfsRegions, square_bracket.bind(dfsRegions))[0]]
+	#Add 1 for the final boss region
+	gameDepth += 1
 	apSeed = slotData["seed"]
 	set_rand_seed(apSeed)
 
@@ -134,3 +153,16 @@ func pip_percentage(types : PackedStringArray):
 	if is_zero_approx(outSum):
 		return 0
 	return outSum / 100.0
+
+##Gets the difficulty score of the furthest depth
+func end_game_difficulty() -> int:
+	match difficulty:
+		#Easy
+		0:
+			return 100
+		#Hard
+		2:
+			return 200
+		#Normal
+		_:
+			return 150

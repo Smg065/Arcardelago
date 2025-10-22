@@ -7,7 +7,7 @@ var curScreen : ScreenType = ScreenType.WORLD_MAP
 
 enum ScreenType {WORLD_MAP, CUTSCENE, BATTLE, EVENT, SHOP, TREASURE, RELEASER, HOME}
 
-func switch_scenes(newScreen : ScreenType = ScreenType.WORLD_MAP):
-	screenNodes[curScreen].set_active(false)
+func switch_scenes(newScreen : ScreenType = ScreenType.WORLD_MAP, info : Dictionary = { }):
+	screenNodes[curScreen].set_active(false, {})
 	curScreen = newScreen
-	screenNodes[curScreen].set_active(true)
+	screenNodes[curScreen].set_active(true, info)

@@ -168,7 +168,6 @@ func stat_card() -> void:
 	
 	#Leave at least 2 point for abilities minimum
 	forStatroll = rng.randi_range(0, pointsAvailable - 2)
-	pointsAvailable -= forStatroll
 	
 	##How much attack you have. for. Statroll - statRatio becomes how much health you have.
 	var statRatio : int = rng.randi_range(0, forStatroll) + rng.randi_range(0, forStatroll)
@@ -177,6 +176,11 @@ func stat_card() -> void:
 	healthPoints += forStatroll - statRatio
 	baseHealth = healthPoints
 	baseAttack = attackPoints
+	
+	##The amount of points used for ability tags.
+	var forTags : int = pointsAvailable - forStatroll
+	
+	forTags
 
 ##A packed string array of the litteral names of the colors
 func stringify_colors() -> PackedStringArray:

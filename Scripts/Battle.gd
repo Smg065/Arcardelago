@@ -24,9 +24,12 @@ var mapStartPoint : Vector2
 var zoomVal : int
 
 ##Set the battle map as active
-func set_active(nState : bool):
+func set_active(nState : bool, nInfo : Dictionary):
 	visible = nState
-	setup_battle(battleInfo)
+	if nInfo.has("Info"):
+		setup_battle(nInfo["Info"])
+	else:
+		push_error("No Battle Data")
 
 ##Relay the battle information
 func setup_battle(nBattleInfo : BattleInfo):

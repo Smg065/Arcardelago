@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CardTagConstructor" load_steps=5 format=3 uid="uid://c5eyhudebxqr8"]
+
+[ext_resource type="Script" uid="uid://ba6r6aiks7hlu" path="res://Scripts/CardTags/CardTagConstructor.gd" id="1_11m4o"]
+[ext_resource type="Script" uid="uid://cg5kc6elt88px" path="res://Scripts/CardTags/CardTagEffectBase.gd" id="1_63ofu"]
+[ext_resource type="Script" uid="uid://bgah5odx2q5jd" path="res://Scripts/CardTags/CardTagTrapBase.gd" id="2_6k0mi"]
+[ext_resource type="Script" uid="uid://5y575gb0asnk" path="res://Scripts/CardTags/CardTagTriggerBase.gd" id="3_6k0mi"]
+
+[resource]
+script = ExtResource("1_11m4o")
+metadata/_custom_type_script = "uid://ba6r6aiks7hlu"

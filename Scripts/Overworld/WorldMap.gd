@@ -209,6 +209,7 @@ var mapOrder : Dictionary[MapRegion, Array]
 @export var mapSpot : Node2D
 @export var pipPrefab : PackedScene
 @export var pathPrefab : PackedScene
+##All the map nodes/map pips on the overworld
 @export var pips : Array[MapPip]
 var homePip : MapPip
 var nodesPerRegion : int = 10
@@ -254,6 +255,8 @@ func _ready() -> void:
 		spawn_region_nodes(eachRegion)
 	#Generate the paths
 	generate_all_paths()
+	#Setup the node info
+	generate_map_node_info()
 	#Set the player at the home pip
 	mapPlayer.set_current_pip(homePip)
 	mapPlayer.enabled = true
@@ -270,21 +273,18 @@ func get_region_by_name(inColor : String) -> MapRegion:
 
 ##Figure out how regions piece together
 func create_interregiongal_connections():
-	#Get the world order as a depth-first sorted dictionary
-	var spawnName = ColorCatagory.BASE_COLORS[Persist.spawnSphere as int].name
-	var dfsRegions := PD.depth_first_search(Persist.worldOrder, spawnName)
-	var deepestRegions := PD.get_best(dfsRegions, PD.square_bracket.bind(dfsRegions))
+	var deepestRegions := PD.get_best(Persist.dfsRegions, PD.square_bracket.bind(Persist.dfsRegions))
 	#Get the deepest node
 	var semifinalRegion := get_region_by_name(Persist.pick_random(deepestRegions))
 	semifinalRegion.neighborRegions.append(regions[0])
 	regions[0].previousRegion = semifinalRegion
 	#Mark bridges between regions that exist
-	for eachColor in dfsRegions:
+	for eachColor in Persist.dfsRegions:
 		#No gate of your spawn color
-		if spawnName == eachColor:
+		if Persist.spawnName == eachColor:
 			continue
 		#Get the path you'd take to get to this sphere logically
-		var path := PD.get_graph_path(Persist.worldOrder, spawnName, eachColor)
+		var path := PD.get_graph_path(Persist.worldOrder, Persist.spawnName, eachColor)
 		#Get rid of your own entry because you're obviously in there
 		path.erase(eachColor)
 		#You CAN show up earlier
@@ -293,7 +293,7 @@ func create_interregiongal_connections():
 		for eachOption in path:
 			connectorOptions.append(Persist.pick_random(path))
 		#Go for the one from the attepts selected that's the furthest along
-		var deepestBridges := PD.get_best(connectorOptions, PD.square_bracket.bind(dfsRegions))
+		var deepestBridges := PD.get_best(connectorOptions, PD.square_bracket.bind(Persist.dfsRegions))
 		var chosenBridge = Persist.pick_random(deepestBridges)
 		#Connect them for node construction
 		var startRegion = get_region_by_name(chosenBridge)
@@ -589,6 +589,11 @@ func generate_all_paths():
 	for eachPath in paths:
 		generate_path(eachPath)
 
+##Tell the individual nodes what info they have on scene transition
+func generate_map_node_info():
+	for eachPip in pips:
+		eachPip.build_info()
+
 ##Turns a path goal into actual path data
 func generate_path(inPath : MapWalkPip):
 	#Get the astar relevant to the region data
@@ -761,9 +766,9 @@ func pip_activated(activePip : MapPip):
 	if newScreenType == GameRoot.ScreenType.CUTSCENE:
 		print("Play cutscene!")
 	else:
-		gameRoot.switch_scenes(newScreenType)
+		gameRoot.switch_scenes(newScreenType, activePip.nodeInfo)
 
-func set_active(nState : bool):
+func set_active(nState : bool, _nInfo : Dictionary):
 	mapPlayer.enabled = nState
 	$WorldMapUI.visible = nState
-	super(nState)
+	super(nState, _nInfo)

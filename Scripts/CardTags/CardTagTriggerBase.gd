@@ -5,4 +5,4 @@ class_name CardTagTriggerBase
 var eventName : String
 
 func connect_signal():
-	print("lmao")
+	Persist.cardSignals[eventName]

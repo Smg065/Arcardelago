@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cpofxalps4yuo"]
+[gd_scene load_steps=11 format=3 uid="uid://cpofxalps4yuo"]
 
 [ext_resource type="Script" uid="uid://bqqtjwd0ms0k6" path="res://Scripts/Battle.gd" id="1_yh5fh"]
 [ext_resource type="Texture2D" uid="uid://bx1335alayi00" path="res://Sprites/Backdrops/WhiteBattleEdges.png" id="2_83ubk"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://bhoq5lxgdwfco" path="res://Sprites/Backdrops/OrangeBattleEdges.png" id="6_ix2yc"]
 [ext_resource type="Texture2D" uid="uid://dosa43dyl6ir8" path="res://Sprites/Backdrops/BlueBattleEdges.png" id="7_fmwbo"]
 [ext_resource type="Texture2D" uid="uid://8qxf7urhaeco" path="res://Sprites/Backdrops/YellowBattleEdges.png" id="8_8eejf"]
+[ext_resource type="Texture2D" uid="uid://dp7u5hmrs2hjc" path="res://Sprites/ColorGuide.png" id="9_w0ll1"]
 
 [node name="BattleScreen" type="CanvasLayer" node_paths=PackedStringArray("battlemap", "battleScroll", "battleBackground")]
 script = ExtResource("1_yh5fh")
@@ -27,6 +28,17 @@ mouse_filter = 2
 texture = ExtResource("2_83ubk")
 expand_mode = 5
 stretch_mode = 5
+
+[node name="MapScroll2" type="TextureRect" parent="Backdrop"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.25
+anchor_right = 0.75
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("9_w0ll1")
+metadata/_edit_use_anchors_ = true
 
 [node name="MapScroll" type="ScrollContainer" parent="Backdrop"]
 z_index = 1
@@ -59,6 +71,7 @@ color = Color(0, 0, 0, 0.49411765)
 metadata/_edit_use_anchors_ = true
 
 [node name="MidRow" type="ReferenceRect" parent="Backdrop/MapScroll/MapRatio/Battle"]
+z_index = 1
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 1
 anchors_preset = 14
@@ -74,6 +87,7 @@ border_color = Color(1, 1, 1, 1)
 border_width = 4.0
 
 [node name="Playfield" type="ReferenceRect" parent="Backdrop/MapScroll/MapRatio/Battle"]
+z_index = 1
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.5
@@ -88,6 +102,7 @@ border_width = 4.0
 metadata/_edit_use_anchors_ = true
 
 [node name="APAspect" type="AspectRatioContainer" parent="Backdrop/MapScroll/MapRatio/Battle/Playfield"]
+z_index = 1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -96,11 +111,13 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Playmat" type="TextureRect" parent="Backdrop/MapScroll/MapRatio/Battle/Playfield/APAspect"]
+z_index = 1
 layout_mode = 2
 expand_mode = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Frontmost2" parent="Backdrop/MapScroll/MapRatio/Battle/Playfield/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+z_index = 1
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.33333334
@@ -109,6 +126,7 @@ anchor_bottom = 0.39999998
 squarable = true
 
 [node name="Leftfront" parent="Backdrop/MapScroll/MapRatio/Battle/Playfield/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+z_index = 1
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.10144927
@@ -117,6 +135,7 @@ anchor_bottom = 0.5014492
 squarable = true
 
 [node name="Rightfront" parent="Backdrop/MapScroll/MapRatio/Battle/Playfield/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+z_index = 1
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.6666667
@@ -125,6 +144,7 @@ anchor_bottom = 0.5014492
 squarable = true
 
 [node name="Leftback" parent="Backdrop/MapScroll/MapRatio/Battle/Playfield/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+z_index = 1
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.5
@@ -133,6 +153,7 @@ anchor_bottom = 0.9
 squarable = true
 
 [node name="Rightback" parent="Backdrop/MapScroll/MapRatio/Battle/Playfield/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+z_index = 1
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.6666667
@@ -141,6 +162,7 @@ anchor_bottom = 0.9
 squarable = true
 
 [node name="Backmost2" parent="Backdrop/MapScroll/MapRatio/Battle/Playfield/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+z_index = 1
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.33333334
@@ -149,6 +171,7 @@ anchor_right = 0.66666675
 squarable = true
 
 [node name="Enemies" type="ReferenceRect" parent="Backdrop/MapScroll/MapRatio/Battle"]
+z_index = 1
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0

@@ -158,7 +158,7 @@ func stat_card() -> void:
 			if apItemFlags == 3:
 				pointsAvailable = 30
 			else:
-				pointsAvailable = randi_range(3, 27)
+				pointsAvailable = rng.randi_range(3, 27)
 	##The points used to modify stats
 	var forStatroll : int = 0
 	##The health this card has

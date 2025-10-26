@@ -21,6 +21,8 @@ var tileDensity : int
 var nodePercents : Dictionary
 ##The sphere you spawn with
 var spawnSphere : ColorCatagory.ColorTypes
+##The player who determines the final boss
+var finalBossOrigin : String
 ##The order the sphere worlds are in
 var worldOrder : Dictionary
 ##The depth of all regions based on the spawn sphere
@@ -133,7 +135,9 @@ func hold_server_data(slotData : Dictionary) -> void:
 		"Yellow Sphere":
 			spawnSphere = ColorCatagory.YELLOW
 	worldOrder = slotData["world_order"]
-	##Where you spawn from
+	#The player who determines the final boss
+	#finalBossOrigin = slotData["final_boss_origin"]
+	#Where you spawn from
 	spawnName = slotData["spawning_sphere"].split(' ')[0]
 	#Get the world order as a depth-first sorted dictionary
 	dfsRegions = depth_first_search(worldOrder, spawnName)

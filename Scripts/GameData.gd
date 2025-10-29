@@ -11,6 +11,9 @@ var fictionalWords : Dictionary[String, FictionalNameFlags]
 var existingNames : Dictionary[String, NameData]
 var allCards : Array[CardData]
 
+##The Item Handler for AP data, including save data
+var itemHandler : ItemHandler
+
 func json_save() -> String:
 	#Empty info
 	var saveData : Dictionary = {
@@ -18,8 +21,11 @@ func json_save() -> String:
 		"existingWords" : {},
 		"fictionalWords" : {},
 		"existingNames" : {},
-		"allCards" : []
+		"allCards" : [],
+		"usedItems" : {}
 	}
+	if itemHandler != null:
+		saveData["usedItems"] = itemHandler.json_save()
 	#Get each resources save info
 	for eachGameCardset in gameCardsets:
 		saveData["gameCardsets"][eachGameCardset] = gameCardsets[eachGameCardset].json_save()
@@ -31,6 +37,7 @@ func json_save() -> String:
 		saveData["existingNames"][eachExistingName] = existingNames[eachExistingName].json_save()
 	for eachCard in allCards:
 		saveData["allCards"].append(eachCard.json_save())
+	
 	#Return it as a JSON string
 	return JSON.stringify(saveData, "\t")
 
@@ -48,6 +55,8 @@ static func json_load(saveString : String) -> GameData:
 		gameData.gameCardsets[eachGameCardset] = GameCardset.json_load(saveData["gameCardsets"][eachGameCardset], gameData)
 	for eachCard in saveData["allCards"]:
 		gameData.allCards.append(CardData.json_load(eachCard, gameData))
+	gameData.itemHandler = ItemHandler.new()
+	gameData.itemHandler.json_load(saveData["usedItems"])
 	return gameData
 
 func save_as_file(ip, port, slot, password):

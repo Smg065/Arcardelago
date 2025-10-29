@@ -1,8 +1,10 @@
 extends Resource
-class_name Inventory
+class_name ItemHandler
 
+##What type of item each one that gets sent is
 enum ItemClasses {NONE, INSTANT, EVENT, INVENTORY}
 
+##An item group that has the AP ID group count
 class ApItemGroup:
 	var instants : Dictionary[String, int]
 	var events : PackedStringArray
@@ -99,12 +101,16 @@ class ApItemGroup:
 		}
 	
 	##Load Json
-	func load_json(inData : Dictionary):
+	func json_load(inData : Dictionary):
+		if inData == {}:
+			return
 		instants = inData["instants"]
 		events = inData["events"]
 		items = inData["items"]
 
+##AP items you received
 var receivedItems : ApItemGroup
+##AP items you've used
 var usedItems : ApItemGroup
 
 ##Emits when the inventory is updated
@@ -115,7 +121,9 @@ func _ready():
 	receivedItems = ApItemGroup.new()
 	for eachItem in Archipelago.conn.received_items:
 		receivedItems.recieved_ap_item(eachItem)
-	usedItems = ApItemGroup.new()
+	if usedItems == null:
+		usedItems = ApItemGroup.new()
+	update_inventory()
 
 ##Calls when you get an item during gameplay
 func recieved_ap_item(incomingItem : NetworkItem):
@@ -132,5 +140,5 @@ func json_save() -> Dictionary:
 
 ##Loads the used items from the json.
 func json_load(inData : Dictionary):
+	usedItems = ApItemGroup.new()
 	usedItems.json_load(inData)
-	update_inventory()

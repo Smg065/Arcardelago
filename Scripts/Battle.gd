@@ -14,6 +14,9 @@ var mapStartPoint : Vector2
 ##The scrollbox containing the displayed card info
 @export var battleScroll : ScrollContainer
 
+@export_category("Enemy Feild")
+@export var layouts : Array[Node]
+
 @export_category("Background Visuals")
 ##The background of the screen
 @export var battleBackground : TextureRect
@@ -35,6 +38,31 @@ func set_active(nState : bool, nInfo : Dictionary):
 func setup_battle(nBattleInfo : BattleInfo):
 	battleInfo = nBattleInfo
 	battleBackground.texture = battleBackgrounds[battleInfo.region]
+	var toEnable = 0
+	match battleInfo.type:
+		BattleInfo.BattleType.DEFAULT:
+			toEnable = 0
+		BattleInfo.BattleType.RIVAL:
+			toEnable = 1
+		BattleInfo.BattleType.BOSS:
+			toEnable = 2
+		BattleInfo.BattleType.FINAL_BOSS:
+			toEnable = 3
+	for eachLayout in layouts.size():
+		layouts[eachLayout].visible = eachLayout == toEnable
+	
+	if toEnable == 2:
+		#Rival battle logic
+		print("Rival Battle!")
+	else:
+		#Filter to the cards you need for this battle
+		for eachCard in Persist.game.allCards:
+			#
+			if !eachCard.enemyCard:
+				continue
+			#Color matching (only worry about in colored regions)
+			#if battleInfo.region != 0:
+				
 
 func _input(event: InputEvent) -> void:
 	if !mouseFocused and !draggingMap:

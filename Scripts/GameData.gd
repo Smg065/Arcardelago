@@ -112,3 +112,44 @@ static func get_save_path() -> String:
 	if OS.has_feature("editor"):
 		baseDir = "res://"
 	return baseDir + "saves"
+
+##Get all regions you have reached so far
+func reached_regions() -> PackedStringArray:
+	var output : PackedStringArray
+	#Determine the card pools that are unlocked.
+	for colorName in ColorCatagory.COLOR_NAMES:
+		var requiredRegions = PD.get_graph_path(Persist.worldOrder, Persist.spawnName, colorName)
+		var pathCompletable : bool = true
+		for eachRequired in requiredRegions:
+			if !itemHandler.usedItems.items.has(eachRequired + " Sphere"):
+				pathCompletable = false
+				break
+		if pathCompletable or Persist.spawnName == colorName:
+			output.append(colorName)
+	return output
+
+##The card pool used to fetch new cards
+func current_cardpool() -> Array[CardData]:
+	var reachedRegions := reached_regions()
+	var currentCardpool : Array[CardData] = []
+	#Go over all cards in your game
+	for eachCard in allCards:
+		#Enemies and defaults don't count
+		if eachCard.enemyCard or eachCard.isDefault:
+			continue
+		#No duplicates
+		if Persist.game.itemHandler.currentCards.has(eachCard):
+			continue
+		@warning_ignore("integer_division")
+		var regionColor : int = floori((eachCard.apId - 65000.0) / 100.0)
+		#Must have reached that region at least once
+		if !reachedRegions.has(ColorCatagory.COLOR_NAMES[regionColor]):
+			continue
+		#Must not have released this item
+		if Archipelago.conn.slot_locations[eachCard.apId]:
+			#If you have, it must be ghost stamped
+			if !eachCard.stamps.has("Ghost"):
+				continue
+		#It must be in the current cardpool
+		currentCardpool.append(eachCard)
+	return currentCardpool

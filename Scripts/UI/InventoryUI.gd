@@ -39,6 +39,8 @@ func _ready() -> void:
 		eachBar.max_value = Persist.cardsPerRegion
 	Persist.game.itemHandler.inventory_updated.connect(update_visuals)
 	Persist.game.itemHandler.update_inventory()
+	Archipelago.conn.set_hint_notify(update_bars)
+	#Archipelago.conn.
 
 func update_visuals(currentInventory : ItemHandler.ApItemGroup):
 	var permanentItems : PackedStringArray = Persist.game.itemHandler.receivedItems.items
@@ -64,6 +66,14 @@ func update_visuals(currentInventory : ItemHandler.ApItemGroup):
 		else:
 			stampIcons[eachColor].modulate = HalfModulated
 		stampCounts[eachColor].text = "x%s" % stampCount
+	update_bars([])
+
+func update_bars(_inHints : Array[NetworkHint]):
+	var hintedLocations : PackedInt64Array
+	for eachHint in Archipelago.conn.hints:
+		if eachHint.is_local():
+			hintedLocations.append(eachHint.item.loc_id)
+	for eachColor in 6:
 		#Bars
 		var foundCards : int = 0
 		var releasedCards : int = 0
@@ -73,8 +83,9 @@ func update_visuals(currentInventory : ItemHandler.ApItemGroup):
 			if cardColor == eachColor:
 				if Archipelago.conn.slot_locations[eachLocation]:
 					releasedCards += 1
+				if hintedLocations.has(eachLocation):
+					foundCards += 1
 		foundBars[eachColor].value = foundCards
 		releasedBars[eachColor].value = releasedCards
-		foundReleasedText[eachColor].text = "%2f:%2f" % [foundCards, releasedCards]
+		foundReleasedText[eachColor].text = "%2d:%2d" % [Persist.cardsPerRegion - foundCards, Persist.cardsPerRegion - releasedCards]
 	
-	currentInventory.items

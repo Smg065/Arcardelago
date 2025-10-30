@@ -43,9 +43,7 @@ func setup_filter():
 	set_card_scale(minSize)
 
 func show_current():
-	for eachCard in Persist.game.allCards:
-		if eachCard.enemyCard:
-			continue
+	for eachCard in Persist.game.current_cardpool():
 		add_card_from_data(eachCard)
 	sort_children()
 

@@ -11,10 +11,11 @@
 [ext_resource type="Texture2D" uid="uid://8qxf7urhaeco" path="res://Sprites/Backdrops/YellowBattleEdges.png" id="8_8eejf"]
 [ext_resource type="Texture2D" uid="uid://dp7u5hmrs2hjc" path="res://Sprites/ColorGuide.png" id="9_w0ll1"]
 
-[node name="BattleScreen" type="CanvasLayer" node_paths=PackedStringArray("battlemap", "battleScroll", "battleBackground")]
+[node name="BattleScreen" type="CanvasLayer" node_paths=PackedStringArray("battlemap", "battleScroll", "layouts", "battleBackground")]
 script = ExtResource("1_yh5fh")
 battlemap = NodePath("Backdrop/MapScroll/MapRatio")
 battleScroll = NodePath("Backdrop/MapScroll")
+layouts = [NodePath("Backdrop/MapScroll/MapRatio/Battle/Enemies/HordeLayout"), NodePath("Backdrop/MapScroll/MapRatio/Battle/Enemies/RivalLayout"), NodePath("Backdrop/MapScroll/MapRatio/Battle/Enemies/BossLayout"), NodePath("Backdrop/MapScroll/MapRatio/Battle/Enemies/FinalBoss")]
 battleBackground = NodePath("Backdrop")
 battleBackgrounds = Array[Texture2D]([ExtResource("2_83ubk"), ExtResource("3_w0ll1"), ExtResource("4_0500f"), ExtResource("5_sqcgj"), ExtResource("6_ix2yc"), ExtResource("7_fmwbo"), ExtResource("8_8eejf")])
 
@@ -185,6 +186,7 @@ border_width = 4.0
 metadata/_edit_use_anchors_ = true
 
 [node name="HordeLayout" type="Control" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -402,6 +404,90 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 2
 
 [node name="CardSlot2" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/BossLayout/RBackRow" instance=ExtResource("2_yh5fh")]
+layout_mode = 2
+
+[node name="FinalBoss" type="Control" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="BossSlot" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/FinalBoss" instance=ExtResource("2_yh5fh")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.333
+anchor_top = 0.1
+anchor_right = 0.6671875
+anchor_bottom = 0.9
+
+[node name="LFrontRow" type="HBoxContainer" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/FinalBoss"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.55
+anchor_right = 0.333
+anchor_bottom = 0.95
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="CardSlot" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/FinalBoss/LFrontRow" instance=ExtResource("2_yh5fh")]
+layout_mode = 2
+
+[node name="CardSlot7" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/FinalBoss/LFrontRow" instance=ExtResource("2_yh5fh")]
+layout_mode = 2
+
+[node name="LBackRow" type="HBoxContainer" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/FinalBoss"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.05
+anchor_right = 0.333
+anchor_bottom = 0.45
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="CardSlot" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/FinalBoss/LBackRow" instance=ExtResource("2_yh5fh")]
+layout_mode = 2
+
+[node name="CardSlot2" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/FinalBoss/LBackRow" instance=ExtResource("2_yh5fh")]
+layout_mode = 2
+
+[node name="RFrontRow" type="HBoxContainer" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/FinalBoss"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.667
+anchor_top = 0.55
+anchor_right = 1.0
+anchor_bottom = 0.95
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="CardSlot" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/FinalBoss/RFrontRow" instance=ExtResource("2_yh5fh")]
+layout_mode = 2
+
+[node name="CardSlot2" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/FinalBoss/RFrontRow" instance=ExtResource("2_yh5fh")]
+layout_mode = 2
+
+[node name="RBackRow" type="HBoxContainer" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/FinalBoss"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.667
+anchor_top = 0.05
+anchor_right = 1.0
+anchor_bottom = 0.45
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="CardSlot" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/FinalBoss/RBackRow" instance=ExtResource("2_yh5fh")]
+layout_mode = 2
+
+[node name="CardSlot2" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/FinalBoss/RBackRow" instance=ExtResource("2_yh5fh")]
 layout_mode = 2
 
 [connection signal="mouse_entered" from="Backdrop/MapScroll" to="." method="mouse_on_battlefield"]

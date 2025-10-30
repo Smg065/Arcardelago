@@ -51,6 +51,7 @@ func on_connection(inConn: ConnectionInfo, json: Dictionary):
 #Create a new game if the JSON game key can't find something similar
 func build_new_game(json: Dictionary):
 	Persist.game = GameData.new()
+	Persist.game.itemHandler = ItemHandler.new()
 	#Go over all the players
 	for eachPlayer in conn.players:
 		var currentSlot : NetworkSlot = eachPlayer.get_slot()

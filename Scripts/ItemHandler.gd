@@ -104,7 +104,8 @@ class ApItemGroup:
 	func json_load(inData : Dictionary):
 		if inData == {}:
 			return
-		instants = inData["instants"]
+		instants.clear()
+		instants.merge(inData["instants"])
 		events = inData["events"]
 		items = inData["items"]
 
@@ -112,6 +113,14 @@ class ApItemGroup:
 var receivedItems : ApItemGroup
 ##AP items you've used
 var usedItems : ApItemGroup
+##Current Cards
+var currentCards : Array[CardData]
+##Default Card Count
+var defaultCards : int
+##Current Money
+var currentMoney : int
+##Current Perks
+var currentPerks : int
 
 ##Emits when the inventory is updated
 signal inventory_updated(currentInventory : ApItemGroup)
@@ -132,13 +141,59 @@ func recieved_ap_item(incomingItem : NetworkItem):
 
 ##Call to update the inventory for gameplay
 func update_inventory():
-	inventory_updated.emit(receivedItems.get_difference(usedItems))
+	if receivedItems == null:
+		receivedItems = ApItemGroup.new()
+	var currentItems := receivedItems.get_difference(usedItems)
+	for eachType in currentItems.instants:
+		if currentItems.instants[eachType] > 0:
+			var count = currentItems.instants[eachType]
+			match eachType:
+				"Default Card":
+					defaultCards += count
+				"Money":
+					currentMoney += count * 10
+				"Perk":
+					currentPerks += count
+				"Unstable Trap":
+					for repeat_trap in count:
+						unstable_trap()
+				"Release Trap":
+					for repeat_trap in count:
+						release_trap()
+				"Trade Down Trap":
+					for repeat_trap in count:
+						trade_down_trap()
+	receivedItems.instants = currentItems.instants
+	inventory_updated.emit(currentItems)
+	
 
 ##Saves the used items to the json. Received items are saved APSide.
 func json_save() -> Dictionary:
+	if usedItems == null:
+		usedItems = ApItemGroup.new()
 	return usedItems.json_save()
 
 ##Loads the used items from the json.
 func json_load(inData : Dictionary):
 	usedItems = ApItemGroup.new()
 	usedItems.json_load(inData)
+
+##Each trap card you own has a 50% chance to release
+func unstable_trap():
+	var toRelease : Array[CardData]
+	for eachCard in currentCards:
+		#For each trap card
+		if eachCard.apItemFlags >= 4:
+			if Persist.rng.randi_range(0, 1) == 0:
+				toRelease.append(eachCard)
+	for eachReleased in toRelease:
+		currentCards.erase(eachReleased)
+	
+
+##Releases a random card you own
+func release_trap():
+	print("Release trap triggered")
+
+##Replaces one of the highest value cards you own with one of a lower quality
+func trade_down_trap():
+	print("Trade down trap triggered")

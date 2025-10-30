@@ -24,6 +24,8 @@ var debugColorScores : Dictionary[ColorCatagory.ColorTypes, float]
 var baseHealth : int = 1
 ##The attack this card has by default .
 var baseAttack : int = 1
+##The stamp info on this card
+var stamps : PackedStringArray
 
 @export_flags("Red", "Green", "Violet", "Orange", "Blue", "Yellow") var colors : int = 0
 

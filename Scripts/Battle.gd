@@ -16,6 +16,7 @@ var mapStartPoint : Vector2
 
 @export_category("Enemy Feild")
 @export var layouts : Array[Node]
+var validEnemies : Array[CardData]
 
 @export_category("Background Visuals")
 ##The background of the screen
@@ -50,19 +51,7 @@ func setup_battle(nBattleInfo : BattleInfo):
 			toEnable = 3
 	for eachLayout in layouts.size():
 		layouts[eachLayout].visible = eachLayout == toEnable
-	
-	if toEnable == 2:
-		#Rival battle logic
-		print("Rival Battle!")
-	else:
-		#Filter to the cards you need for this battle
-		for eachCard in Persist.game.allCards:
-			#
-			if !eachCard.enemyCard:
-				continue
-			#Color matching (only worry about in colored regions)
-			#if battleInfo.region != 0:
-				
+	update_valid_enemies()
 
 func _input(event: InputEvent) -> void:
 	if !mouseFocused and !draggingMap:
@@ -87,6 +76,28 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		if draggingMap:
 			battlemap.global_position += event.relative
+
+##Use the batlte info to update what enemies are allowed to show up
+func update_valid_enemies():
+	validEnemies.clear()
+	#Filter to the cards you need for this battle
+	for eachCard in Persist.game.allCards:
+		#Enemy Cards
+		if !eachCard.enemyCard:
+			continue
+		#Of the right difficulty
+		if battleInfo.difficulty < eachCard.powerScore:
+			continue
+		@warning_ignore("integer_division")
+		var enemyColor : int = (eachCard.apId - 6500000) / 10000
+		##Enemies that have an item of that color
+		var idColorMatch : bool = battleInfo.region == 0 or enemyColor == 0 or enemyColor == battleInfo.region
+		##Enemies that are part of this color set/are colorless
+		var cardColorMatch : bool = battleInfo.region == 0 or eachCard.colors == 0 or eachCard.colors & (2 ** (battleInfo.region - 1))
+		#Only one of the 2 kinds of colors need to match up
+		if !idColorMatch and !cardColorMatch:
+			continue
+		validEnemies.append(eachCard)
 
 ##Zooming in and out
 func change_zoom(zoomDir : int):

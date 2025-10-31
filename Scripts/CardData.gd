@@ -19,6 +19,9 @@ var fadeAngle : float
 @export var isDefault : bool
 ##If this card is from your Arcardelago.
 var isLocal : bool
+##The points this card is worth
+var powerScore : int
+
 var debugColorScores : Dictionary[ColorCatagory.ColorTypes, float]
 ##The health this card has by default.
 var baseHealth : int = 1
@@ -146,21 +149,22 @@ func stat_card() -> void:
 	#Pick the points you can use next
 	match stringify_item_quality():
 		"Filler":
-			pointsAvailable = 6
+			powerScore = 6
 		"Useful":
-			pointsAvailable = 12
+			powerScore = 12
 		"Progression":
-			pointsAvailable = 18
+			powerScore = 18
 		"Proguseful":
-			pointsAvailable = 24
+			powerScore = 24
 		"Trap":
-			return
+			powerScore = 24
 		"Location":
 			#Bosses
 			if apItemFlags == 3:
-				pointsAvailable = 30
+				powerScore = 30
 			else:
-				pointsAvailable = rng.randi_range(3, 27)
+				powerScore = rng.randi_range(3, 27)
+	pointsAvailable = powerScore
 	##The points used to modify stats
 	var forStatroll : int = 0
 	##The health this card has

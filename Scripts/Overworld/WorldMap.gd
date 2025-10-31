@@ -194,7 +194,7 @@ class MapRegion:
 		#If all else fails, error
 		push_error("No path from region %s to region %s!" % [index, inRegion.index])
 		return null
-	
+
 @export var mapPlayer : OverworldPlayer
 @export var diagonalMode : AStarGrid2D.DiagonalMode
 const CELL_SIZE = Vector2i(16, 16)
@@ -723,6 +723,7 @@ static func is_adjacent(regIndex1 : int, regIndex2 : int):
 	#If none of the above are true, it's distant
 	return false
 
+##When the player presses space on a map pip spot.
 func pip_activated(activePip : MapPip):
 	var gameRoot = get_parent()
 	if !(gameRoot is GameRoot):

@@ -116,5 +116,8 @@ func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 
 func _drop_data(_at_position: Vector2, data: Variant) -> void:
 	var inCard : CardUI = data["CardUI"]
+	#Self drops just kick back
+	if cardUi in flow.get_children():
+		return
 	add_card_from_ui_card(inCard)
 	sort_children()

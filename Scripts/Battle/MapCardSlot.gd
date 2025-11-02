@@ -7,6 +7,8 @@ class_name CardSlot
 var cardPrefab : PackedScene = load("res://Resources/CardUI.tscn")
 
 func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
+	if !playerInteractable:
+		return false
 	if typeof(data) != TYPE_DICTIONARY:
 		return false
 	var dict : Dictionary = data as Dictionary
@@ -30,18 +32,24 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 		get_child(0).square_stack(inCard)
 	else:
 		#Move a single card as a child to the new location
-		var cardToSetup : CardUI
 		if inCard.compressedCardData.size() == 0:
-			cardToSetup = inCard
 			inCard.shift_parent(self)
+			setup_card(inCard)
 		#Extract a single card and construct a new one to go here
 		else:
 			var newCard : CardUI = cardPrefab.instantiate()
 			add_child(newCard)
 			newCard.build(inCard.extract_data(1)[0])
-			cardToSetup = newCard
-		#Make it fit correctly
-		cardToSetup.set_min_from_height(0)
-		cardToSetup.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-		#Mouse controls exist here now
-		mouse_filter = Control.MOUSE_FILTER_STOP
+			setup_card(newCard)
+
+##Make it fit correctly
+func setup_card(cardToSetup : CardUI):
+	cardToSetup.set_min_from_height(0)
+	cardToSetup.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	#Mouse controls exist here now
+	mouse_filter = Control.MOUSE_FILTER_STOP
+
+##Make the card cease
+func release_card():
+	var childCard := get_child(0)
+	childCard.queue_free()

@@ -224,6 +224,12 @@ func filter(commands : Dictionary[String, Array]) -> void:
 	show()
 
 func _get_drag_data(_at_position: Vector2) -> Variant:
+	#Disable dragging uninteractable slots
+	var cardParent = get_parent()
+	if cardParent is CardSlot:
+		if !cardParent.playerInteractable:
+			return null
+	#Create a preview of this card while it moves along
 	var cardPreview = self.duplicate(0)
 	cardPreview.custom_minimum_size = Vector2(64 * ratio, 64)
 	cardPreview.set_anchors_and_offsets_preset(PRESET_CENTER)

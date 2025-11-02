@@ -1,6 +1,15 @@
 extends GameScreen
 class_name Battle
 
+##Card Data with the times it square stacks
+class EncounterSlot:
+	var cardData : CardData
+	var toStack : int = 1
+	var slotIndex : int = 0
+	func _init(nCardData : CardData, nSlotIndex : int) -> void:
+		cardData = nCardData
+		slotIndex = nSlotIndex
+
 ##If the mouse is over the battlefield
 var mouseFocused : bool
 var draggingMap : bool
@@ -17,6 +26,7 @@ var mapStartPoint : Vector2
 @export_category("Enemy Feild")
 @export var layouts : Array[Node]
 var validEnemies : Array[CardData]
+var currentEnemySlots : Array[CardSlot]
 
 @export_category("Background Visuals")
 ##The background of the screen
@@ -30,14 +40,18 @@ var zoomVal : int
 ##Set the battle map as active
 func set_active(nState : bool, nInfo : Dictionary):
 	visible = nState
-	if nInfo.has("Info"):
-		setup_battle(nInfo["Info"])
+	if visible:
+		if nInfo.has("Info"):
+			setup_battle(nInfo["Info"])
+		else:
+			push_error("No Battle Data")
 	else:
-		push_error("No Battle Data")
+		clear_board()
 
 ##Relay the battle information
 func setup_battle(nBattleInfo : BattleInfo):
 	battleInfo = nBattleInfo
+	#Graphical Updates
 	battleBackground.texture = battleBackgrounds[battleInfo.region]
 	var toEnable = 0
 	match battleInfo.type:
@@ -51,7 +65,22 @@ func setup_battle(nBattleInfo : BattleInfo):
 			toEnable = 3
 	for eachLayout in layouts.size():
 		layouts[eachLayout].visible = eachLayout == toEnable
+		#Get all card slots under it
+		if layouts[eachLayout].visible:
+			currentEnemySlots.clear()
+			for eachChild in layouts[eachLayout].get_children():
+				if eachChild is CardSlot:
+					currentEnemySlots.append(eachChild)
+				else:
+					for subChild in eachChild.get_children():
+						if subChild is CardSlot:
+							currentEnemySlots.append(subChild)
+						else:
+							push_warning("%s isn't a card slot, skipping" % eachChild.name)
+	#Enemy Construction
 	update_valid_enemies()
+	var battleEnemies := choose_enemy_cards()
+	setup_feild(battleEnemies)
 
 func _input(event: InputEvent) -> void:
 	if !mouseFocused and !draggingMap:
@@ -77,6 +106,116 @@ func _input(event: InputEvent) -> void:
 		if draggingMap:
 			battlemap.global_position += event.relative
 
+##Remove stuff
+func clear_board():
+	for eachEnemySlot in currentEnemySlots:
+		eachEnemySlot.release_card()
+
+##Place the cards down based on the encounter slot info
+func setup_feild(battleEnemies : Array[EncounterSlot]):
+	for eachEnemy in battleEnemies.size():
+		var eachEnemySlot : CardSlot = currentEnemySlots[battleEnemies[eachEnemy].slotIndex]
+		var enemyCard : CardUI = eachEnemySlot.cardPrefab.instantiate()
+		eachEnemySlot.add_child(enemyCard)
+		eachEnemySlot.setup_card(enemyCard)
+		enemyCard.build(battleEnemies[eachEnemy].cardData)
+		var extraEntries : int = int(pow(2, battleEnemies[eachEnemy].toStack)) - 1
+		for eachDataDupe in extraEntries:
+			enemyCard.compressedCardData.append(battleEnemies[eachEnemy].cardData)
+		enemyCard.new_compression_size()
+		enemyCard.update_compressed_vis()
+
+##Builds an array of enemies to battle
+func choose_enemy_cards() -> Array[EncounterSlot]:
+	var output : Array[EncounterSlot]
+	var pointsRemaining = battleInfo.difficulty
+	var table : Dictionary[int, Array]
+	var openSlots : Array[int] = []
+	openSlots.append_array(range(currentEnemySlots.size()))
+	match battleInfo.type:
+		BattleInfo.BattleType.BOSS:
+			#Find the boss for this region
+			for eachCard in Persist.game.allCards:
+				if eachCard.apItemFlags != 3:
+					continue
+				@warning_ignore("integer_division")
+				var bossColor = (eachCard.apItemFlags - 6500000) / 10000
+				if battleInfo.region != bossColor:
+					continue
+				#Found the boss card!
+				output.append(EncounterSlot.new(eachCard, 0))
+				openSlots.erase(0)
+				break
+			#Scale it to the difficulty
+			@warning_ignore("integer_division")
+			var bossMulti = pointsRemaining / 30
+			output[0].toStack = max(bossMulti, 1)
+			pointsRemaining = pointsRemaining % 30
+		BattleInfo.BattleType.FINAL_BOSS:
+			print("Final Boss")
+	for eachEnemy in validEnemies:
+		table = PD.append_dict_entry(table, eachEnemy.powerScore, eachEnemy)
+	#Fill Out Encounter
+	while pointsRemaining > 0:
+		var entryKey = 0
+		#Pick random while you don't have the points remaining as a key
+		if !table.keys().has(pointsRemaining):
+			entryKey = table.keys().pick_random()
+		else:
+			entryKey = pointsRemaining
+		pointsRemaining -= entryKey
+		var nextSlot : int = openSlots.pick_random()
+		openSlots.erase(nextSlot)
+		output.append(EncounterSlot.new(table[entryKey].pick_random(), nextSlot))
+		
+		var invalidKeys : Array[int] = []
+		for eachEntry in table.keys():
+			if eachEntry > pointsRemaining:
+				invalidKeys.append(eachEntry)
+		for eachEntry in invalidKeys:
+			table.erase(eachEntry)
+		##If there's 1 card left, only let exact matches be the last one filled
+		var canExactFill := (openSlots.size() > 1 or table.keys().has(pointsRemaining))
+		if !canExactFill or openSlots.size() <= 0 or table.size() <= 0:
+			break
+	#Stacking with Leftover Points
+	if pointsRemaining > 0:
+		var stackTable : Dictionary[int, Array]
+		for eachEnemy in output:
+			var stackBonus = (eachEnemy.cardData.baseAttack + eachEnemy.cardData.baseHealth) - 2
+			if stackBonus == 0 or stackBonus > pointsRemaining:
+				continue
+			stackTable = PD.append_dict_entry(stackTable, stackBonus, eachEnemy)
+		while pointsRemaining > 0:
+			var entryKey : int = stackTable.keys().pick_random()
+			pointsRemaining -= entryKey
+			stackTable[entryKey].pick_random().toStack += 1
+			var toDelete : Array[int]
+			for eachKey in stackTable.keys():
+				if eachKey > pointsRemaining:
+					continue
+				toDelete.append(eachKey)
+			for eachDeletion in toDelete:
+				stackTable.erase(eachDeletion)
+			#As long as there's stackable enemies, stack them
+			if stackTable.size() <= 0:
+				break
+	#Fallback if there's nothing valid to add to output
+	if output.size() == 0:
+		var nextSlot : int = openSlots.pick_random()
+		openSlots.erase(nextSlot)
+		var fallbackCard := EncounterSlot.new(validEnemies.pick_random(), nextSlot)
+		fallbackCard.toStack = pointsRemaining
+		output.append(fallbackCard)
+	#Default cards
+	if openSlots.size() > 1 and pointsRemaining > 0:
+		var nextSlot : int = openSlots.pick_random()
+		openSlots.erase(nextSlot)
+		var defaultFilling := EncounterSlot.new(CardData.new_default(true), nextSlot)
+		defaultFilling.toStack = pointsRemaining
+		output.append(defaultFilling)
+	return output
+
 ##Use the batlte info to update what enemies are allowed to show up
 func update_valid_enemies():
 	validEnemies.clear()
@@ -96,6 +235,9 @@ func update_valid_enemies():
 		var cardColorMatch : bool = battleInfo.region == 0 or eachCard.colors == 0 or eachCard.colors & (2 ** (battleInfo.region - 1))
 		#Only one of the 2 kinds of colors need to match up
 		if !idColorMatch and !cardColorMatch:
+			continue
+		#Bosses should not be random enemy encounters
+		if eachCard.apItemFlags == 3:
 			continue
 		validEnemies.append(eachCard)
 

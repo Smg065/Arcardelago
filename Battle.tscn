@@ -203,8 +203,9 @@ mouse_filter = 2
 [node name="FrontRow" type="HBoxContainer" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/HordeLayout"]
 layout_mode = 1
 anchors_preset = -1
+anchor_left = 0.05
 anchor_top = 0.55
-anchor_right = 1.0
+anchor_right = 0.95
 anchor_bottom = 0.95
 grow_horizontal = 2
 grow_vertical = 2
@@ -225,17 +226,12 @@ layout_mode = 2
 [node name="CardSlot5" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/HordeLayout/FrontRow" instance=ExtResource("2_yh5fh")]
 layout_mode = 2
 
-[node name="CardSlot6" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/HordeLayout/FrontRow" instance=ExtResource("2_yh5fh")]
-layout_mode = 2
-
-[node name="CardSlot7" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/HordeLayout/FrontRow" instance=ExtResource("2_yh5fh")]
-layout_mode = 2
-
 [node name="BackRow" type="HBoxContainer" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/HordeLayout"]
 layout_mode = 1
 anchors_preset = -1
+anchor_left = 0.05
 anchor_top = 0.05
-anchor_right = 1.0
+anchor_right = 0.95
 anchor_bottom = 0.45
 grow_horizontal = 2
 grow_vertical = 2
@@ -254,12 +250,6 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="CardSlot5" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/HordeLayout/BackRow" instance=ExtResource("2_yh5fh")]
-layout_mode = 2
-
-[node name="CardSlot6" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/HordeLayout/BackRow" instance=ExtResource("2_yh5fh")]
-layout_mode = 2
-
-[node name="CardSlot7" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies/HordeLayout/BackRow" instance=ExtResource("2_yh5fh")]
 layout_mode = 2
 
 [node name="RivalLayout" type="Control" parent="Backdrop/MapScroll/MapRatio/Battle/Enemies"]

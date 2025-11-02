@@ -68,19 +68,18 @@ func setup_battle(nBattleInfo : BattleInfo):
 		#Get all card slots under it
 		if layouts[eachLayout].visible:
 			currentEnemySlots.clear()
-			for eachChild in layouts[eachLayout].get_children():
-				if eachChild is CardSlot:
-					currentEnemySlots.append(eachChild)
-				else:
-					for subChild in eachChild.get_children():
-						if subChild is CardSlot:
-							currentEnemySlots.append(subChild)
-						else:
-							push_warning("%s isn't a card slot, skipping" % eachChild.name)
+			recursive_enemy_slot_search(layouts[eachLayout])
 	#Enemy Construction
 	update_valid_enemies()
 	var battleEnemies := choose_enemy_cards()
 	setup_feild(battleEnemies)
+
+func recursive_enemy_slot_search(currentNode : Node):
+	for eachChild in currentNode.get_children():
+		if eachChild is CardSlot:
+			currentEnemySlots.append(eachChild)
+		else:
+			recursive_enemy_slot_search(eachChild)
 
 func _input(event: InputEvent) -> void:
 	if !mouseFocused and !draggingMap:
@@ -119,7 +118,7 @@ func setup_feild(battleEnemies : Array[EncounterSlot]):
 		eachEnemySlot.add_child(enemyCard)
 		eachEnemySlot.setup_card(enemyCard)
 		enemyCard.build(battleEnemies[eachEnemy].cardData)
-		var extraEntries : int = int(pow(2, battleEnemies[eachEnemy].toStack)) - 1
+		var extraEntries : int = int(pow(2, battleEnemies[eachEnemy].toStack - 1)) - 1
 		for eachDataDupe in extraEntries:
 			enemyCard.compressedCardData.append(battleEnemies[eachEnemy].cardData)
 		enemyCard.new_compression_size()
@@ -136,10 +135,14 @@ func choose_enemy_cards() -> Array[EncounterSlot]:
 		BattleInfo.BattleType.BOSS:
 			#Find the boss for this region
 			for eachCard in Persist.game.allCards:
+				if !eachCard.enemyCard:
+					continue
 				if eachCard.apItemFlags != 3:
 					continue
 				@warning_ignore("integer_division")
-				var bossColor = (eachCard.apItemFlags - 6500000) / 10000
+				var bossColor = (eachCard.apId - 6500000) / 10000
+				print(eachCard.apId)
+				print(bossColor)
 				if battleInfo.region != bossColor:
 					continue
 				#Found the boss card!
@@ -159,7 +162,7 @@ func choose_enemy_cards() -> Array[EncounterSlot]:
 	while pointsRemaining > 0:
 		var entryKey = 0
 		#Pick random while you don't have the points remaining as a key
-		if !table.keys().has(pointsRemaining):
+		if !table.keys().has(pointsRemaining) and openSlots.size() != 1:
 			entryKey = table.keys().pick_random()
 		else:
 			entryKey = pointsRemaining
@@ -167,7 +170,6 @@ func choose_enemy_cards() -> Array[EncounterSlot]:
 		var nextSlot : int = openSlots.pick_random()
 		openSlots.erase(nextSlot)
 		output.append(EncounterSlot.new(table[entryKey].pick_random(), nextSlot))
-		
 		var invalidKeys : Array[int] = []
 		for eachEntry in table.keys():
 			if eachEntry > pointsRemaining:
@@ -182,8 +184,8 @@ func choose_enemy_cards() -> Array[EncounterSlot]:
 	if pointsRemaining > 0:
 		var stackTable : Dictionary[int, Array]
 		for eachEnemy in output:
-			var stackBonus = (eachEnemy.cardData.baseAttack + eachEnemy.cardData.baseHealth) - 2
-			if stackBonus == 0 or stackBonus > pointsRemaining:
+			var stackBonus = (eachEnemy.cardData.baseAttack + eachEnemy.cardData.baseHealth)
+			if stackBonus > pointsRemaining:
 				continue
 			stackTable = PD.append_dict_entry(stackTable, stackBonus, eachEnemy)
 		while pointsRemaining > 0:
@@ -201,14 +203,14 @@ func choose_enemy_cards() -> Array[EncounterSlot]:
 			if stackTable.size() <= 0:
 				break
 	#Fallback if there's nothing valid to add to output
-	if output.size() == 0:
+	if output.size() == 0 and validEnemies.size() > 0:
 		var nextSlot : int = openSlots.pick_random()
 		openSlots.erase(nextSlot)
 		var fallbackCard := EncounterSlot.new(validEnemies.pick_random(), nextSlot)
 		fallbackCard.toStack = pointsRemaining
 		output.append(fallbackCard)
 	#Default cards
-	if openSlots.size() > 1 and pointsRemaining > 0:
+	if openSlots.size() > 0 and pointsRemaining > 0:
 		var nextSlot : int = openSlots.pick_random()
 		openSlots.erase(nextSlot)
 		var defaultFilling := EncounterSlot.new(CardData.new_default(true), nextSlot)

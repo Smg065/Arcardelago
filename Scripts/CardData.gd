@@ -72,7 +72,8 @@ func json_save():
 		"isLocal" : isLocal,
 		"isDefault" : false,
 		"baseHealth" : baseHealth,
-		"baseAttack" : baseAttack
+		"baseAttack" : baseAttack,
+		"powerScore" : powerScore
 	}
 	return saveOutput
 
@@ -89,6 +90,7 @@ static func json_load(inDict, gameData : GameData) -> CardData:
 	cardData.isLocal = inDict["isLocal"]
 	cardData.baseHealth = inDict["baseHealth"]
 	cardData.baseAttack = inDict["baseAttack"]
+	cardData.powerScore = inDict["powerScore"]
 	cardData.nameData = gameData.existingNames[inDict["nameData"]]
 	for eachGame in gameData.gameCardsets:
 		if gameData.gameCardsets[eachGame].players.has(cardData.playerName):

@@ -72,7 +72,8 @@ static func get_graph_path(graph : Dictionary, node, goal) -> Array:
 static func square_bracket(key, iterable):
 	return iterable[key]
 
-##Runs the callable over each entry in an iterable, and returns the value(s) that are the highest. Invert for lowest.
+##Runs the callable over each entry in an iterable, and returns the value(s) that are the highest. Invert for lowest.[br]
+##Callale 
 static func get_best(iteratable, callable : Callable, isLesser := false) -> Array:
 	var output = []
 	var bestVal = -99999999

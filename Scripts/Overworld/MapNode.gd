@@ -35,6 +35,8 @@ var crossDirs : Dictionary[Vector2i, int]
 var gridPoint : Vector2i
 ##Node info
 var nodeInfo : Dictionary
+##The depth into the region
+var regionDepth : float
 
 ##Sets the pip up to be rendered as the type chosen
 func set_pip_type(nColorIndex : int, nMapNodeType : MapNodeType) -> void:
@@ -237,6 +239,32 @@ func register(inputDir : Vector2i, path : MapWalkPip):
 	pathDirs[inputDir] = path
 	availableDirs.erase(inputDir)
 
+##Calculates the Region Depth. Starts with In Region nodes called on Final Pip.
+func recursive_depth_search(regionNodes : Array[MapPip], checkedPaths : Array[MapWalkPip] = [], currentDepth : int = 1) -> Dictionary:
+	##The output pips to return
+	var output : Dictionary = {}
+	##The pips at this depth
+	var nextPips : Array[MapPip]
+	##Find all in-region pips that are at the end of unchecked paths
+	for eachPath in pathDirs.values():
+		if !checkedPaths.has(eachPath):
+			checkedPaths.append(eachPath)
+			nextPips.append(eachPath.other_pip(self))
+	#Apply those nodes
+	output[currentDepth] = nextPips
+	#Recursion for each connected node
+	for eachPip in nextPips:
+		#Merge the info gotten from the next depths
+		var toMerge := eachPip.recursive_depth_search(regionNodes, checkedPaths, currentDepth + 1)
+		for mergeKeys in toMerge.keys():
+			#If it's a new depth, just assign
+			if !output.has(mergeKeys):
+				output[mergeKeys] = toMerge[mergeKeys]
+			#Otherwise, append the new array to this key
+			else:
+				output[mergeKeys].append_array(toMerge[mergeKeys])
+	return output
+
 ##Construct the info for use
 func build_info():
 	nodeInfo["Region"] = region
@@ -258,7 +286,7 @@ func build_info():
 			var battleInfo : BattleInfo = BattleInfo.new()
 			nodeInfo["Type"] = "Enemy"
 			battleInfo.region = region
-			battleInfo.calculate_difficulty(0)
+			battleInfo.calculate_difficulty(regionDepth)
 			nodeInfo["Info"] = battleInfo
 		MapNodeType.BOSS:
 			var battleInfo : BattleInfo = BattleInfo.new()

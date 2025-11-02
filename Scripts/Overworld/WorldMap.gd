@@ -255,6 +255,9 @@ func _ready() -> void:
 		spawn_region_nodes(eachRegion)
 	#Generate the paths
 	generate_all_paths()
+	#Tell all map pips how deep into the region they go
+	for eachRegion in regions:
+		calculate_region_depth(eachRegion)
 	#Setup the node info
 	generate_map_node_info()
 	#Set the player at the home pip
@@ -522,6 +525,19 @@ func spawn_region_nodes(inRegion : MapRegion):
 		else:
 			push_warning("Remaining type unexpected! Falling back to enemy.")
 			finalPip.set_pip_type(inRegion.index, MapPip.MapNodeType.ENEMY)
+
+##Calculates the depth of all nodes in a region
+func calculate_region_depth(inRegion : MapRegion):
+	#Distance from the root for scaling
+	var nodeDepths := inRegion.finalPip.recursive_depth_search(inRegion.pips)
+	#The final key is the greatest depth
+	var sortedKeys = nodeDepths.keys()
+	sortedKeys.sort()
+	var greatestDepth : float = sortedKeys[-1]
+	for eachKey in nodeDepths:
+		var eachDepth : float = eachKey / greatestDepth
+		for eachPip in nodeDepths[eachKey]:
+			eachPip.regionDepth = eachDepth
 
 ##Creates a lookup table based on the connected paths on each node
 func group_pips_by_path_count(inPips : Array[MapPip]) -> Dictionary[int, Array]:

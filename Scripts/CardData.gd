@@ -13,6 +13,8 @@ var apId : int
 var apItemFlags : int
 ##If this card is a location instead of an item.
 var enemyCard : bool
+##If this card is a location, its address
+var apAddress : int
 ##The angle color fades has on this.
 var fadeAngle : float
 ##If this card has no item attacked.
@@ -39,13 +41,14 @@ const ORANGE = ColorCatagory.ColorTypes.ORANGE
 const BLUE = ColorCatagory.ColorTypes.BLUE
 const YELLOW = ColorCatagory.ColorTypes.YELLOW
 
-static func build(newApItemFlags : int, newApId : int, newData : NameData, newGameCardset : GameCardset, newPlayer : String, newIsLocal : bool, newEnemyCard : bool = false) -> CardData:
+static func build(newApItemFlags : int, newApId : int, newData : NameData, newGameCardset : GameCardset, newPlayer : String, newIsLocal : bool, newEnemyCard : bool = false, newApAddress = -1) -> CardData:
 	var cardData := CardData.new()
 	cardData.playerName = newPlayer
 	cardData.apId = newApId
 	cardData.gameCardset = newGameCardset
 	cardData.nameData = newData
 	cardData.enemyCard = newEnemyCard
+	cardData.apAddress = newApAddress
 	cardData.apItemFlags = newApItemFlags
 	cardData.fadeAngle = randf_range(0, 2*PI)
 	cardData.isLocal = newIsLocal
@@ -68,6 +71,7 @@ func json_save():
 		"nameData" : nameData.name,
 		"apItemFlags" : apItemFlags,
 		"enemyCard" : enemyCard,
+		"apAddress" : apAddress,
 		"fadeAngle" : fadeAngle,
 		"isLocal" : isLocal,
 		"isDefault" : false,
@@ -86,6 +90,7 @@ static func json_load(inDict, gameData : GameData) -> CardData:
 	cardData.apId = inDict["apId"]
 	cardData.apItemFlags = inDict["apItemFlags"]
 	cardData.enemyCard = inDict["enemyCard"]
+	cardData.apAddress = inDict["apAddress"]
 	cardData.fadeAngle = inDict["fadeAngle"]
 	cardData.isLocal = inDict["isLocal"]
 	cardData.baseHealth = inDict["baseHealth"]
@@ -186,9 +191,20 @@ func stat_card() -> void:
 	baseAttack = attackPoints
 	
 	##The amount of points used for ability tags.
-	var forTags : int = pointsAvailable - forStatroll
+	#var forTags : int = pointsAvailable - forStatroll
 	
-	forTags
+
+##Check if the item has been released or the location has been cleared
+func is_cleared() -> bool:
+	if isDefault:
+		return false
+	if enemyCard:
+		for eachItem in Archipelago.conn.received_items:
+			if eachItem.loc_id == apAddress:
+				return true
+	else:
+		return Archipelago.conn.slot_locations[apId]
+	return false
 
 ##A packed string array of the litteral names of the colors
 func stringify_colors() -> PackedStringArray:
@@ -329,3 +345,27 @@ func is_comparable(otherCard : CardData) -> bool:
 		return false
 	#Compare Names
 	return nameData.name == otherCard.nameData.name
+
+##Returns the int represenation of the cards quality
+func card_quality() -> int:
+	#Quality Floor
+	if isDefault:
+		return 0
+	if enemyCard:
+		return 0
+	match apItemFlags:
+		#Filler
+		0:
+			return 2
+		#Useful
+		1:
+			return 3
+		#Progression
+		2:
+			return 4
+		#Proguseful
+		3:
+			return 5
+		#Traps (>=4)
+		_:
+			return 1

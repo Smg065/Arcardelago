@@ -159,27 +159,28 @@ func choose_enemy_cards() -> Array[EncounterSlot]:
 	for eachEnemy in validEnemies:
 		table = PD.append_dict_entry(table, eachEnemy.powerScore, eachEnemy)
 	#Fill Out Encounter
-	while pointsRemaining > 0:
-		var entryKey = 0
-		#Pick random while you don't have the points remaining as a key
-		if !table.keys().has(pointsRemaining) and openSlots.size() != 1:
-			entryKey = table.keys().pick_random()
-		else:
-			entryKey = pointsRemaining
-		pointsRemaining -= entryKey
-		var nextSlot : int = openSlots.pick_random()
-		openSlots.erase(nextSlot)
-		output.append(EncounterSlot.new(table[entryKey].pick_random(), nextSlot))
-		var invalidKeys : Array[int] = []
-		for eachEntry in table.keys():
-			if eachEntry > pointsRemaining:
-				invalidKeys.append(eachEntry)
-		for eachEntry in invalidKeys:
-			table.erase(eachEntry)
-		##If there's 1 card left, only let exact matches be the last one filled
-		var canExactFill := (openSlots.size() > 1 or table.keys().has(pointsRemaining))
-		if !canExactFill or openSlots.size() <= 0 or table.size() <= 0:
-			break
+	if table.size() > 0:
+		while pointsRemaining > 0:
+			var entryKey = 0
+			#Pick random while you don't have the points remaining as a key
+			if !table.keys().has(pointsRemaining) and openSlots.size() != 1:
+				entryKey = table.keys().pick_random()
+			else:
+				entryKey = pointsRemaining
+			pointsRemaining -= entryKey
+			var nextSlot : int = openSlots.pick_random()
+			openSlots.erase(nextSlot)
+			output.append(EncounterSlot.new(table[entryKey].pick_random(), nextSlot))
+			var invalidKeys : Array[int] = []
+			for eachEntry in table.keys():
+				if eachEntry > pointsRemaining:
+					invalidKeys.append(eachEntry)
+			for eachEntry in invalidKeys:
+				table.erase(eachEntry)
+			##If there's 1 card left, only let exact matches be the last one filled
+			var canExactFill := (openSlots.size() > 1 or table.keys().has(pointsRemaining))
+			if !canExactFill or openSlots.size() <= 0 or table.size() <= 0:
+				break
 	#Stacking with Leftover Points
 	if pointsRemaining > 0:
 		var stackTable : Dictionary[int, Array]
@@ -188,20 +189,21 @@ func choose_enemy_cards() -> Array[EncounterSlot]:
 			if stackBonus > pointsRemaining:
 				continue
 			stackTable = PD.append_dict_entry(stackTable, stackBonus, eachEnemy)
-		while pointsRemaining > 0:
-			var entryKey : int = stackTable.keys().pick_random()
-			pointsRemaining -= entryKey
-			stackTable[entryKey].pick_random().toStack += 1
-			var toDelete : Array[int]
-			for eachKey in stackTable.keys():
-				if eachKey > pointsRemaining:
-					continue
-				toDelete.append(eachKey)
-			for eachDeletion in toDelete:
-				stackTable.erase(eachDeletion)
-			#As long as there's stackable enemies, stack them
-			if stackTable.size() <= 0:
-				break
+		if stackTable.size() > 0:
+			while pointsRemaining > 0:
+				var entryKey : int = stackTable.keys().pick_random()
+				pointsRemaining -= entryKey
+				stackTable[entryKey].pick_random().toStack += 1
+				var toDelete : Array[int]
+				for eachKey in stackTable.keys():
+					if eachKey > pointsRemaining:
+						continue
+					toDelete.append(eachKey)
+				for eachDeletion in toDelete:
+					stackTable.erase(eachDeletion)
+				#As long as there's stackable enemies, stack them
+				if stackTable.size() <= 0:
+					break
 	#Fallback if there's nothing valid to add to output
 	if output.size() == 0 and validEnemies.size() > 0:
 		var nextSlot : int = openSlots.pick_random()

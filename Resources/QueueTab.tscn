@@ -1,12 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://v03gwrp85nxm"]
+[gd_scene load_steps=4 format=3 uid="uid://v03gwrp85nxm"]
 
 [ext_resource type="Texture2D" uid="uid://yrmn87trm7jr" path="res://Sprites/SendQueue/QueueTab.png" id="1_peavh"]
 [ext_resource type="Texture2D" uid="uid://03qh3gaqf0pu" path="res://Sprites/SendQueue/ReceiveFog.png" id="2_5jljv"]
+[ext_resource type="Script" uid="uid://b2e1iv4xp8nrd" path="res://Scripts/UI/QueueTab.gd" id="2_i8hcr"]
 
 [node name="QueuedEvent" type="TextureRect"]
 custom_minimum_size = Vector2(64, 64)
 texture = ExtResource("1_peavh")
 expand_mode = 3
+script = ExtResource("2_i8hcr")
 
 [node name="QueuedSymbol" type="TextureRect" parent="."]
 z_index = -1

@@ -38,6 +38,8 @@ var game : GameData
 
 ##What cards you have right now
 var currentCards : Array[CardData]
+##Emit when your current cards change
+signal deck_changed()
 
 ##Makes a dictionary either create a new array at a key or append to it
 static func append_dict_entry(dict : Dictionary, key, value) -> Dictionary:
@@ -171,3 +173,22 @@ func end_game_difficulty() -> int:
 		#Normal
 		_:
 			return 150
+
+##Current Deck without cards that can't be released
+func releasable_cards() -> Array[CardData]:
+	var output : Array[CardData]
+	for eachCard in currentCards:
+		if eachCard.isDefault or eachCard.enemyCard:
+			continue
+		output.append(eachCard)
+	return output
+
+##Remove a card from your current cards
+func lose_card(toLose : CardData):
+	currentCards.erase(toLose)
+	deck_changed.emit()
+
+##Put a card in your current cards
+func gain_card(toGain : CardData):
+	currentCards.append(toGain)
+	deck_changed.emit()

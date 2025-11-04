@@ -5,8 +5,11 @@ class_name CardScrollbox
 @export var cardUi : PackedScene
 @export var minSize : int = 256
 @export var filtersMenu : MenuButton
+var battleCards : Array[CardData]
 
 func _ready() -> void:
+	Persist.deck_changed.connect(show_current)
+	show_current()
 	setup_filter()
 
 func set_card_scale(newMin : int):
@@ -39,16 +42,31 @@ func setup_filter():
 	popup.add_separator("Players")
 	for eachEntry in allPlayers:
 		popup.add_check_item(eachEntry)
-	show_current()
 	set_card_scale(minSize)
 
+##Make the Card Scrollbox display all card information that you have
 func show_current():
-	for eachCard in Persist.game.current_cardpool():
-		add_card_from_data(eachCard)
+	var previousCards : Array[CardData]
+	previousCards.append_array(battleCards)
+	for eachCardUi in flow.get_children():
+		previousCards.append_array(eachCardUi.all_card_data())
+	#Calculate the cards you will gain and lose based on the difference between the two
+	for eachCard in Persist.currentCards:
+		#Cards to remove are previous cards lacking all current cards
+		if previousCards.has(eachCard):
+			previousCards.erase(eachCard)
+			continue
+		#Add cards that are not in the previous card list
+		else:
+			add_card_from_data(eachCard)
+	#Any cards the previous cards did have and are not in the current cards get removed
+	for eachCard in previousCards:
+		remove_card_from_data(eachCard)
 	sort_children()
 
 ##Add a card to the scrollbox
 func add_card_from_data(nCard : CardData):
+	battleCards.erase(nCard)
 	#Try to compress it into other cards
 	for eachChild in flow.get_children():
 		var eachCard : CardUI = eachChild as CardUI
@@ -63,6 +81,8 @@ func add_card_from_data(nCard : CardData):
 func add_card_from_ui_card(nCardUI : CardUI):
 	var allChildren := flow.get_children()
 	nCardUI.shift_parent(flow)
+	for allData in nCardUI.all_card_data():
+		battleCards.erase(allData)
 	for eachChild in allChildren:
 		if nCardUI.cardData.is_comparable(eachChild.cardData):
 			var data := nCardUI.extract_data()
@@ -74,6 +94,13 @@ func add_card_from_ui_card(nCardUI : CardUI):
 	nCardUI.set_min_from_height(minSize)
 	nCardUI.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	nCardUI.set_stack_multi(false)
+
+##Remove card data from the scrollbox
+func remove_card_from_data(nCard : CardData):
+	for eachChild in flow.get_children():
+		var eachCard : CardUI = eachChild as CardUI
+		if eachCard.try_remove_card(nCard):
+			return
 
 ##One of the filters got toggled
 func toggle_filter(filterIndex : int):
@@ -100,6 +127,8 @@ func filter_items():
 ##Sort the children of the flowbox alphabetically
 func sort_children():
 	var allChildren := flow.get_children()
+	if allChildren.size() == 0:
+		return
 	allChildren.sort_custom(func(a: CardUI, b: CardUI): return 0 > a.cardName.naturalnocasecmp_to(b.cardName))
 	for eachChild in allChildren:
 		flow.remove_child(eachChild)
@@ -117,7 +146,7 @@ func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 func _drop_data(_at_position: Vector2, data: Variant) -> void:
 	var inCard : CardUI = data["CardUI"]
 	#Self drops just kick back
-	if cardUi in flow.get_children():
+	if inCard in flow.get_children():
 		return
 	add_card_from_ui_card(inCard)
 	sort_children()

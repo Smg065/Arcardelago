@@ -32,6 +32,12 @@ const HalfModulated = Color(1,1,1,.5)
 ##The icons that display what region item busters you have
 @export var stampCounts : Array[Label]
 
+@export_category("Events")
+@export var eventQueueHolder : HBoxContainer
+@export var queueTabPrefab : PackedScene
+@export var eventTextureTable : Dictionary[String, Texture2D]
+@export var eventReleaseTable : Dictionary[String, QueuedEvent.ReleaseType]
+
 func _ready() -> void:
 	for eachBar in foundBars:
 		eachBar.max_value = Persist.cardsPerRegion
@@ -42,9 +48,13 @@ func _ready() -> void:
 	Archipelago.conn.set_hint_notify(update_bars)
 	#Archipelago.conn.
 
+##Updates the items you've collected as visuals
 func update_visuals(currentInventory : ItemHandler.ApItemGroup):
 	var permanentItems : PackedStringArray = Persist.game.itemHandler.receivedItems.items
 	var usedItems : PackedStringArray = Persist.game.itemHandler.usedItems.items
+	goldLabel.text = ": %04d" % Persist.game.itemHandler.currentMoney
+	houseUpgradeLabel.text = "House Level: %s" % (currentInventory.items.count("House Upgrade") + 1)
+	#Items
 	for eachColor in 6:
 		var colorName = ColorCatagory.COLOR_NAMES[eachColor]
 		#If you have that color sphere
@@ -66,9 +76,20 @@ func update_visuals(currentInventory : ItemHandler.ApItemGroup):
 		else:
 			stampIcons[eachColor].modulate = HalfModulated
 		stampCounts[eachColor].text = "x%s" % stampCount
-	update_bars([])
+	#Events
+	for eachChild in eventQueueHolder.get_children():
+		eachChild.queue_free()
+	for eachEvent in currentInventory.events:
+		var newQueueTab : QueuedEvent = queueTabPrefab.instantiate()
+		eventQueueHolder.add_child(newQueueTab)
+		newQueueTab.eventName = eachEvent
+		newQueueTab.get_child(0).texture = eventTextureTable[eachEvent]
+		newQueueTab.releaseType = eventReleaseTable[eachEvent]
+		newQueueTab.tooltip_text = newQueueTab.eventName
+	update_bars()
 
-func update_bars(_inHints : Array[NetworkHint]):
+##Update the bars showing item information progress
+func update_bars(_inHints : Array[NetworkHint] = []):
 	var hintedLocations : PackedInt64Array
 	for eachHint in Archipelago.conn.hints:
 		if eachHint.is_local():

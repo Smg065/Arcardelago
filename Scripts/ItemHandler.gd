@@ -13,7 +13,6 @@ class ApItemGroup:
 	##Calls when you get an item to see if the inventory needs to be updated
 	func recieved_ap_item(incomingItem : NetworkItem):
 		var itemName : String = incomingItem.get_name()
-		print(itemName)
 		@warning_ignore("integer_division")
 		##The index that is used to determine which color the item is
 		var colorIndex : int = ((incomingItem.id - 6500000) / 10000) - 1
@@ -80,8 +79,9 @@ class ApItemGroup:
 		##The items you have access to
 		var currentItems : ApItemGroup = ApItemGroup.new()
 		for eachEntry in instants:
+			currentItems.instants[eachEntry] = instants[eachEntry]
 			if comparedGroup.instants.has(eachEntry):
-				currentItems[eachEntry] = instants[eachEntry] - comparedGroup[eachEntry]
+				currentItems.instants[eachEntry] -= comparedGroup.instants[eachEntry]
 		#Skip this if you've used all events so far
 		currentItems.events = events.duplicate()
 		for eachEntry in comparedGroup.events:
@@ -113,8 +113,6 @@ class ApItemGroup:
 var receivedItems : ApItemGroup
 ##AP items you've used
 var usedItems : ApItemGroup
-##Current Cards
-var currentCards : Array[CardData]
 ##Default Card Count
 var defaultCards : int
 ##Current Money
@@ -125,7 +123,7 @@ var currentPerks : int
 ##Emits when the inventory is updated
 signal inventory_updated(currentInventory : ApItemGroup)
 
-func _ready():
+func _init() -> void:
 	Archipelago.conn.obtained_item.connect(recieved_ap_item)
 	receivedItems = ApItemGroup.new()
 	for eachItem in Archipelago.conn.received_items:
@@ -135,9 +133,10 @@ func _ready():
 	update_inventory()
 
 ##Calls when you get an item during gameplay
-func recieved_ap_item(incomingItem : NetworkItem):
+func recieved_ap_item(incomingItem : NetworkItem, updateInventory := true):
 	receivedItems.recieved_ap_item(incomingItem)
-	update_inventory()
+	if updateInventory:
+		update_inventory()
 
 ##Call to update the inventory for gameplay
 func update_inventory():
@@ -150,6 +149,7 @@ func update_inventory():
 			match eachType:
 				"Default Card":
 					defaultCards += count
+					Persist.gain_card(CardData.new_default())
 				"Money":
 					currentMoney += count * 10
 				"Perk":
@@ -163,9 +163,8 @@ func update_inventory():
 				"Trade Down Trap":
 					for repeat_trap in count:
 						trade_down_trap()
-	receivedItems.instants = currentItems.instants
+	usedItems.instants = receivedItems.instants.duplicate()
 	inventory_updated.emit(currentItems)
-	
 
 ##Saves the used items to the json. Received items are saved APSide.
 func json_save() -> Dictionary:
@@ -181,19 +180,42 @@ func json_load(inData : Dictionary):
 ##Each trap card you own has a 50% chance to release
 func unstable_trap():
 	var toRelease : Array[CardData]
-	for eachCard in currentCards:
+	for eachCard in Persist.currentCards:
 		#For each trap card
-		if eachCard.apItemFlags >= 4:
+		if eachCard.apItemFlags >= 4 and !eachCard.enemyCard and !eachCard.isDefault:
 			if Persist.rng.randi_range(0, 1) == 0:
 				toRelease.append(eachCard)
 	for eachReleased in toRelease:
-		currentCards.erase(eachReleased)
-	
+		eachReleased.release()
 
 ##Releases a random card you own
 func release_trap():
-	print("Release trap triggered")
+	var releasableCards := Persist.releasable_cards()
+	if releasableCards.size() > 0:
+		releasableCards.pick_random().release()
 
 ##Replaces one of the highest value cards you own with one of a lower quality
 func trade_down_trap():
-	print("Trade down trap triggered")
+	var bestCards := PD.get_best(Persist.currentCards, func(a) : return a.card_quality())
+	#No cards in your deck means stop here
+	if bestCards.size() == 0:
+		return
+	##The high quality card you're replacing
+	var toLose : CardData = bestCards.pick_random()
+	#Cardpool
+	var highestScore : int = toLose.card_quality()
+	#You can lose default cards this way. Can't lose harmonized cards.
+	if highestScore == 0:
+		print("Lose a Default")
+		return
+	##Cards that are of lower quality than the highest quality items
+	var worseCards : Array[CardData]
+	for eachCard in Persist.game.current_cardpool():
+		var eachQuality = eachCard.card_quality()
+		if eachQuality < highestScore:
+			worseCards.append(eachCard)
+	worseCards.append(CardData.new_default())
+	##The card that the target card will become
+	var toGain : CardData = worseCards.pick_random()
+	Persist.lose_card(toLose)
+	Persist.gain_card(toGain)

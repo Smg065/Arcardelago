@@ -17,7 +17,9 @@ class_name CardUI
 
 @export var playerPip : Texture2D
 @export var enemyPip : Texture2D
+@export var clearedEnemyPip : Texture2D
 @export var bossPip : Texture2D
+@export var clearedBossPip : Texture2D
 
 const PLAYER_NAME_COLOR = "222222"
 
@@ -29,40 +31,45 @@ var partialFiltered : Array[bool]
 func build(nCardData : CardData):
 	cardData = nCardData
 	new_compression_size()
+	uiCardBackColor.colors = cardData.colors
+	uiCardPipColor.colors = cardData.colors
+	uiCardBackColor.build(cardData.fadeAngle)
 	if cardData.isDefault:
 		cardName = "Default"
-		name = cardName
-		uiCardWordTypesLabel.text = ""
-		uiCardPhoneticsLabel.text = ""
-		uiCardGameLabel.text = ""
 		uiCardBandColor.hide()
+		uiCardWordTypesLabel.hide()
+		uiCardPhoneticsLabel.hide()
 		if cardData.enemyCard:
 			uiCardPipColor.default(enemyPip)
 		else:
 			uiCardPipColor.default(playerPip)
 		uiCardBackColor.default()
-		update_rich_texts()
-		set_stack_multi()
-		return
-	cardName = " ".join([cardData.nameData.name, cardData.gameCardset.game])
-	name = cardName
-	uiCardBackColor.colors = cardData.colors
-	uiCardPipColor.colors = cardData.colors
-	uiCardSetPipColor.colors = cardData.gameCardset.setColor
-	uiCardSetPipColor.build(playerPip)
-	uiCardBackColor.build(cardData.fadeAngle)
-	if cardData.enemyCard:
-		uiCardBandColor.hide()
-		if cardData.apItemFlags == 3:
-			uiCardPipColor.build(bossPip)
-		else:
-			uiCardPipColor.build(enemyPip)
 	else:
-		uiCardBandColor.show()
-		uiCardPipColor.build(playerPip)
-		update_region_band()
+		cardName = " ".join([cardData.nameData.name, cardData.gameCardset.game])
+		if cardData.enemyCard:
+			uiCardBandColor.hide()
+			if cardData.apItemFlags == 3:
+				uiCardPipColor.build(bossPip, clearedBossPip)
+			else:
+				uiCardPipColor.build(enemyPip, clearedEnemyPip)
+		else:
+			uiCardBandColor.show()
+			uiCardPipColor.build(playerPip)
+			update_region_band()
+		uiCardSetPipColor.colors = cardData.gameCardset.setColor
+		uiCardSetPipColor.build(playerPip)
+	
+	name = cardName
 	update_rich_texts()
 	set_stack_multi()
+	check_cleared()
+
+func check_cleared():
+	if cardData.is_cleared():
+		if cardData.enemyCard:
+			uiCardPipColor.mark_cleared()
+		else:
+			uiCardBackColor.modulate = Color(1,1,1,0.5)
 
 func update_rich_texts():
 	#Universal Data
@@ -122,8 +129,15 @@ func update_players_display():
 				allPlayerNames.append(compressedCardData[cardIndex].playerName)
 	#Display
 	var playersNames : String = ", ".join(allPlayerNames).replace("[", "[lb]")
-	uiCardGameLabel.text = "[center][color=black][i][u]%s[/u][/i][/color][color=%s]\n%s" % [cardData.gameCardset.game, PLAYER_NAME_COLOR, playersNames]
-	uiCardGameLabel.tooltip_text = "%s\n%s" % [cardData.gameCardset.game, playersNames]
+	var gameName : String
+	if cardData.isDefault:
+		gameName = "Arcardelago"
+		playersNames = Archipelago.conn.slot_data["player_name"]
+	else:
+		gameName = cardData.gameCardset.game
+	
+	uiCardGameLabel.text = "[center][color=black][i][u]%s[/u][/i][/color][color=%s]\n%s" % [gameName, PLAYER_NAME_COLOR, playersNames]
+	uiCardGameLabel.tooltip_text = "%s\n%s" % [gameName, playersNames]
 	uiCardGameLabel.do_resize_text()
 
 ##Show how many cards of this type you have
@@ -149,6 +163,21 @@ func try_compress_card(inCard : CardData) -> bool:
 	new_compression_size()
 	update_compressed_vis()
 	return true
+
+##Tries to remove card data from this UI
+func try_remove_card(inCard : CardData) -> bool:
+	if compressedCardData.has(inCard):
+		compressedCardData.erase(inCard)
+		new_compression_size()
+		update_compressed_vis()
+		return true
+	if cardData == inCard:
+		if compressedCardData.size() == 0:
+			queue_free()
+		else:
+			build(compressedCardData.pop_front())
+		return true
+	return false
 
 ##Update compressed visuals
 func update_compressed_vis():
@@ -243,6 +272,8 @@ func _get_drag_data(_at_position: Vector2) -> Variant:
 ##Changes the cards parent and sets card slots
 func shift_parent(nParent : Node):
 	var parent = get_parent()
+	if parent is CardScrollbox:
+		parent.battleCards.append_array(all_card_data())
 	update_card_slot_mouse()
 	parent.remove_child(self)
 	nParent.add_child(self)
@@ -320,4 +351,11 @@ func extract_data(toExtract : int = -1) -> Array[CardData]:
 	#Catch broken data extractions
 	if toExtract > 0:
 		push_warning("Can't extract all card data!")
+	return output
+
+##Returns all card data in this card UI
+func all_card_data() -> Array[CardData]:
+	var output : Array[CardData]
+	output.append(cardData)
+	output.append_array(compressedCardData)
 	return output

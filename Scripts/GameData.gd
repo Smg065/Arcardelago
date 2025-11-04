@@ -138,7 +138,7 @@ func current_cardpool() -> Array[CardData]:
 		if eachCard.enemyCard or eachCard.isDefault:
 			continue
 		#No duplicates
-		if Persist.game.itemHandler.currentCards.has(eachCard):
+		if Persist.currentCards.has(eachCard):
 			continue
 		@warning_ignore("integer_division")
 		var regionColor : int = floori((eachCard.apId - 65000.0) / 100.0)

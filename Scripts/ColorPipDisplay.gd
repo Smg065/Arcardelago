@@ -9,7 +9,11 @@ const ORANGE = ColorCatagory.ColorTypes.ORANGE
 const BLUE = ColorCatagory.ColorTypes.BLUE
 const YELLOW = ColorCatagory.ColorTypes.YELLOW
 
-func build(inTexture : Texture2D) -> void:
+var clearedTexture : Texture2D
+
+##Create the pip's visuals
+func build(inTexture : Texture2D, nClearedTexture : Texture2D = inTexture) -> void:
+	clearedTexture = nClearedTexture
 	for eachChild in get_children():
 		eachChild.queue_free()
 	var toBuild : Array[ColorCatagory.ColorTypes]
@@ -57,3 +61,11 @@ func default(inTexture : Texture2D):
 	textureRect.self_modulate = Color.GRAY
 	add_child(textureRect)
 	textureRect.set_anchors_preset(Control.PRESET_FULL_RECT)
+
+##Run when the card is cleared
+func mark_cleared():
+	for eachChild in get_children():
+		if eachChild is TextureRect:
+			eachChild.texture = clearedTexture
+		else:
+			eachChild.texture_progress = clearedTexture

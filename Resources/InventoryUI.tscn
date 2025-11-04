@@ -1,14 +1,20 @@
-[gd_scene load_steps=20 format=3 uid="uid://b0alo1cixtioe"]
+[gd_scene load_steps=26 format=3 uid="uid://b0alo1cixtioe"]
 
 [ext_resource type="Script" uid="uid://lw44mf88d7sn" path="res://Scripts/UI/InventoryUI.gd" id="1_fs2gt"]
 [ext_resource type="Texture2D" uid="uid://bobudofbk4ghn" path="res://Sprites/Items/Bottle.png" id="1_tytll"]
 [ext_resource type="Texture2D" uid="uid://c5i1e5ic58wa8" path="res://Sprites/Items/Axe.png" id="2_pca7s"]
+[ext_resource type="PackedScene" uid="uid://v03gwrp85nxm" path="res://Resources/QueueTab.tscn" id="2_r61r5"]
+[ext_resource type="Texture2D" uid="uid://03qh3gaqf0pu" path="res://Sprites/SendQueue/ReceiveFog.png" id="3_2oril"]
 [ext_resource type="Texture2D" uid="uid://bb7sec0wehv6u" path="res://Sprites/Items/CastleKey.png" id="3_7if61"]
 [ext_resource type="Texture2D" uid="uid://bhyox5glrd4sp" path="res://Resources/Map/SphereGlow.tres" id="3_fs2gt"]
+[ext_resource type="Texture2D" uid="uid://mcl0v82b2d8" path="res://Sprites/SendQueue/ReceiveBlind.png" id="4_axx4b"]
 [ext_resource type="Texture2D" uid="uid://bloewd08ygdyy" path="res://Sprites/Items/Pickaxe.png" id="4_mo3od"]
+[ext_resource type="Texture2D" uid="uid://dj6cu6t3q353n" path="res://Sprites/SendQueue/ReceiveBooster.png" id="5_btr1u"]
 [ext_resource type="Texture2D" uid="uid://rrc6xk6qeowi" path="res://Sprites/Items/Boat.png" id="5_jokld"]
 [ext_resource type="Texture2D" uid="uid://c06olb4pwx842" path="res://Sprites/Items/Shovel.png" id="6_8t3v3"]
+[ext_resource type="Texture2D" uid="uid://bc8bkexai174j" path="res://Sprites/SendQueue/ReceiveTreasure.png" id="6_tol4c"]
 [ext_resource type="Texture2D" uid="uid://c4rq85iwlxihu" path="res://Sprites/Items/StampSteel.png" id="7_dmove"]
+[ext_resource type="Texture2D" uid="uid://bkrxtomfg8e3s" path="res://Sprites/SendQueue/ReceiveStackless.png" id="7_uxvhg"]
 [ext_resource type="Texture2D" uid="uid://d2rkbmevee2st" path="res://Sprites/Items/StampHarmony.png" id="8_svbju"]
 [ext_resource type="Texture2D" uid="uid://l1vniks2k0tq" path="res://Sprites/Items/StampHint.png" id="9_aknth"]
 [ext_resource type="Texture2D" uid="uid://c25jwjs78cxgq" path="res://Sprites/Items/StampGhost.png" id="10_6nq3p"]
@@ -23,7 +29,7 @@
 outline_size = 8
 outline_color = Color(0.33163944, 0.33163944, 0.3316394, 1)
 
-[node name="InventoryUI" type="Control" node_paths=PackedStringArray("sphereIcons", "goldLabel", "hintPointLabel", "houseUpgradeLabel", "backdropStrips", "foundBars", "releasedBars", "foundReleasedText", "obsticalBreakerIcons", "stampIcons", "stampCounts")]
+[node name="InventoryUI" type="Control" node_paths=PackedStringArray("sphereIcons", "goldLabel", "hintPointLabel", "houseUpgradeLabel", "backdropStrips", "foundBars", "releasedBars", "foundReleasedText", "obsticalBreakerIcons", "stampIcons", "stampCounts", "eventQueueHolder")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -31,7 +37,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_fs2gt")
-sphereIcons = [NodePath("Items/Sphere Items/Sphere Item Backdrop/Red Sphere"), NodePath("Items/Sphere Items/Sphere Item Backdrop/Green Sphere"), NodePath("Items/Sphere Items/Sphere Item Backdrop/Violet Sphere"), NodePath("Items/Sphere Items/Sphere Item Backdrop/Yellow Sphere"), NodePath("Items/Sphere Items/Sphere Item Backdrop/Blue Sphere"), NodePath("Items/Sphere Items/Sphere Item Backdrop/Orange Sphere")]
+sphereIcons = [NodePath("Items/Sphere Items/Sphere Item Backdrop/Red Sphere"), NodePath("Items/Sphere Items/Sphere Item Backdrop/Green Sphere"), NodePath("Items/Sphere Items/Sphere Item Backdrop/Violet Sphere"), NodePath("Items/Sphere Items/Sphere Item Backdrop/Orange Sphere"), NodePath("Items/Sphere Items/Sphere Item Backdrop/Blue Sphere"), NodePath("Items/Sphere Items/Sphere Item Backdrop/Yellow Sphere")]
 goldLabel = NodePath("Items/IncrementalCounters/GoldCounter/GoldLabel")
 hintPointLabel = NodePath("Items/IncrementalCounters/HintPointCounter/HintPointLabel")
 houseUpgradeLabel = NodePath("Items/House Upgrades/House Upgrade Label")
@@ -40,8 +46,24 @@ foundBars = [NodePath("Items/6ColorItems/Progress/Red Discovered"), NodePath("It
 releasedBars = [NodePath("Items/6ColorItems/Progress/Red Discovered/Red Released"), NodePath("Items/6ColorItems/Progress/Green Discovered/Green Released"), NodePath("Items/6ColorItems/Progress/Violet Discovered/Violet Released"), NodePath("Items/6ColorItems/Progress/Orange Discovered/Orange Released"), NodePath("Items/6ColorItems/Progress/Blue Discovered/Blue Released"), NodePath("Items/6ColorItems/Progress/Yellow Discovered/Yellow Released")]
 foundReleasedText = [NodePath("Items/6ColorItems/Progress/Red Discovered/Red Display"), NodePath("Items/6ColorItems/Progress/Green Discovered/Green Display"), NodePath("Items/6ColorItems/Progress/Violet Discovered/Violet Display"), NodePath("Items/6ColorItems/Progress/Orange Discovered/Orange Display"), NodePath("Items/6ColorItems/Progress/Blue Discovered/Blue Display"), NodePath("Items/6ColorItems/Progress/Yellow Discovered/Yellow Display")]
 obsticalBreakerIcons = [NodePath("Items/6ColorItems/ObstacleBusters/Bottle"), NodePath("Items/6ColorItems/ObstacleBusters/Axe"), NodePath("Items/6ColorItems/ObstacleBusters/CastleKey"), NodePath("Items/6ColorItems/ObstacleBusters/Pickaxe"), NodePath("Items/6ColorItems/ObstacleBusters/Boat"), NodePath("Items/6ColorItems/ObstacleBusters/Shovel")]
-stampIcons = [NodePath("Items/6ColorItems/Stamps/SteelStamp"), NodePath("Items/6ColorItems/Stamps/HarmonyStamp"), NodePath("Items/6ColorItems/Stamps/HintStamp"), NodePath("Items/6ColorItems/Stamps/GhostStamp"), NodePath("Items/6ColorItems/Stamps/SquareStamp"), NodePath("Items/6ColorItems/Stamps/GoldStamp")]
+stampIcons = [NodePath("Items/6ColorItems/Stamps/Steel Stamp"), NodePath("Items/6ColorItems/Stamps/Harmony Stamp"), NodePath("Items/6ColorItems/Stamps/Hint Stamp"), NodePath("Items/6ColorItems/Stamps/Ghost Stamp"), NodePath("Items/6ColorItems/Stamps/Square Stamp"), NodePath("Items/6ColorItems/Stamps/Gold Stamp")]
 stampCounts = [NodePath("Items/6ColorItems/StampCount/SteelCount"), NodePath("Items/6ColorItems/StampCount/HarmonyCount"), NodePath("Items/6ColorItems/StampCount/HintCount"), NodePath("Items/6ColorItems/StampCount/GhostCount"), NodePath("Items/6ColorItems/StampCount/SquareCount"), NodePath("Items/6ColorItems/StampCount/GoldCount")]
+eventQueueHolder = NodePath("EventQueueScrollbox/EventQueue")
+queueTabPrefab = ExtResource("2_r61r5")
+eventTextureTable = Dictionary[String, Texture2D]({
+"Blind Trap": ExtResource("4_axx4b"),
+"Booster Pack": ExtResource("5_btr1u"),
+"Fog Trap": ExtResource("3_2oril"),
+"Stackless Trap": ExtResource("7_uxvhg"),
+"Treasure": ExtResource("6_tol4c")
+})
+eventReleaseTable = Dictionary[String, int]({
+"Blind Trap": 2,
+"Booster Pack": 0,
+"Fog Trap": 1,
+"Stackless Trap": 1,
+"Treasure": 0
+})
 
 [node name="Items" type="ColorRect" parent="."]
 layout_mode = 1
@@ -655,7 +677,7 @@ color = Color(0, 0, 0, 0.8627451)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="SteelStamp" type="TextureRect" parent="Items/6ColorItems/Stamps"]
+[node name="Steel Stamp" type="TextureRect" parent="Items/6ColorItems/Stamps"]
 modulate = Color(0.5, 0.5, 0.5, 1)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -666,7 +688,7 @@ texture = ExtResource("7_dmove")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="HarmonyStamp" type="TextureRect" parent="Items/6ColorItems/Stamps"]
+[node name="Harmony Stamp" type="TextureRect" parent="Items/6ColorItems/Stamps"]
 modulate = Color(0.5, 0.5, 0.5, 1)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -677,7 +699,7 @@ texture = ExtResource("8_svbju")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="HintStamp" type="TextureRect" parent="Items/6ColorItems/Stamps"]
+[node name="Hint Stamp" type="TextureRect" parent="Items/6ColorItems/Stamps"]
 modulate = Color(0.5, 0.5, 0.5, 1)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -688,7 +710,7 @@ texture = ExtResource("9_aknth")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="GhostStamp" type="TextureRect" parent="Items/6ColorItems/Stamps"]
+[node name="Ghost Stamp" type="TextureRect" parent="Items/6ColorItems/Stamps"]
 modulate = Color(0.5, 0.5, 0.5, 1)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -699,7 +721,7 @@ texture = ExtResource("10_6nq3p")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="SquareStamp" type="TextureRect" parent="Items/6ColorItems/Stamps"]
+[node name="Square Stamp" type="TextureRect" parent="Items/6ColorItems/Stamps"]
 modulate = Color(0.5, 0.5, 0.5, 1)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -710,7 +732,7 @@ texture = ExtResource("11_p0s4d")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="GoldStamp" type="TextureRect" parent="Items/6ColorItems/Stamps"]
+[node name="Gold Stamp" type="TextureRect" parent="Items/6ColorItems/Stamps"]
 modulate = Color(0.5, 0.5, 0.5, 1)
 layout_mode = 2
 size_flags_horizontal = 3

@@ -84,7 +84,7 @@ func build_enemies(enemies : Array):
 		var itemNameData : NameData = get_name_data(eachEnemy[1])
 		var cardset : GameCardset = Persist.game.gameCardsets[eachPlayer.get_slot().game]
 		#Create card data from this information
-		var cardData : CardData = CardData.build(eachEnemy[2], eachEnemy[3], itemNameData, cardset, playerName, local, true)
+		var cardData : CardData = CardData.build(eachEnemy[2], eachEnemy[3], itemNameData, cardset, playerName, local, true, eachEnemy[4])
 		Persist.game.allCards.append(cardData)
 
 func scouts_to_cards():

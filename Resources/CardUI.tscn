@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dk6dmv5557rf6"]
+[gd_scene load_steps=20 format=3 uid="uid://dk6dmv5557rf6"]
 
 [ext_resource type="Script" uid="uid://kmrp78w2pwog" path="res://Scripts/CardUI.gd" id="1_xvg67"]
 [ext_resource type="Texture2D" uid="uid://dqag26jiqd610" path="res://Sprites/Card.png" id="2_2be0t"]
@@ -7,9 +7,11 @@
 [ext_resource type="Texture2D" uid="uid://ch1osftycds72" path="res://Sprites/EnemyPip.png" id="3_ny8h8"]
 [ext_resource type="Texture2D" uid="uid://dlp7mysr04id6" path="res://Sprites/CardEdge.png" id="3_xvg67"]
 [ext_resource type="Texture2D" uid="uid://cgckn8fmp8xav" path="res://Sprites/CardTexture.png" id="4_2n3nw"]
+[ext_resource type="Texture2D" uid="uid://bgotjhbg3bw2b" path="res://Sprites/EnemyPipCleared.png" id="4_57p5r"]
 [ext_resource type="Texture2D" uid="uid://b8ihd5q3rb3dc" path="res://Sprites/BossPip.png" id="4_dgc14"]
 [ext_resource type="Script" uid="uid://leehmvr1x5lu" path="res://addons/AutoSizeText/ui/AutoSizeRichTextLabel.gd" id="6_2n3nw"]
 [ext_resource type="Script" uid="uid://c2oydyjvp4cw6" path="res://Scripts/ColorSpectrumRect.gd" id="6_5f00q"]
+[ext_resource type="Texture2D" uid="uid://becuosakowxiq" path="res://Sprites/BossPipCleared.png" id="6_oaued"]
 [ext_resource type="Texture2D" uid="uid://d251snkuc658e" path="res://Sprites/DamagePanel.png" id="11_njo2f"]
 [ext_resource type="Script" uid="uid://d11kfgsd6jgt" path="res://addons/AutoSizeText/ui/AutoSizeLabel.gd" id="12_m8awi"]
 [ext_resource type="Texture2D" uid="uid://dx80tqmn85b78" path="res://Sprites/HeartPanel.png" id="13_pos1q"]
@@ -56,7 +58,9 @@ uiCardDamage = NodePath("RenderBox/CardContainer/DamageIcon/DamageText")
 uiCardCount = NodePath("RenderBox/CardContainer/CardCount")
 playerPip = ExtResource("2_xvg67")
 enemyPip = ExtResource("3_ny8h8")
+clearedEnemyPip = ExtResource("4_57p5r")
 bossPip = ExtResource("4_dgc14")
+clearedBossPip = ExtResource("6_oaued")
 
 [node name="RenderBox" type="Control" parent="."]
 layout_mode = 2
@@ -73,10 +77,10 @@ mouse_filter = 2
 
 [node name="ColorPipDisplay" parent="RenderBox/CardContainer" instance=ExtResource("3_jqbn0")]
 layout_mode = 1
-anchor_left = 0.059994444
-anchor_top = 0.04
-anchor_right = 0.20666298
-anchor_bottom = 0.14999999
+anchor_left = 0.05163062
+anchor_top = 0.037037037
+anchor_right = 0.2240804
+anchor_bottom = 0.16049382
 
 [node name="CardCount" type="Label" parent="RenderBox/CardContainer"]
 visible = false
@@ -87,10 +91,11 @@ anchor_top = 0.04
 anchor_right = 0.20700002
 anchor_bottom = 0.15
 size_flags_horizontal = 4
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.52156866)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.5019608)
+theme_override_colors/font_outline_color = Color(0.5019608, 0.5019608, 0.5019608, 1)
+theme_override_constants/shadow_offset_y = 4
 theme_override_constants/outline_size = 8
-theme_override_constants/shadow_outline_size = 16
 theme_override_font_sizes/font_size = 38
 text = "X"
 horizontal_alignment = 1
@@ -104,9 +109,9 @@ metadata/_custom_type_script = "uid://d11kfgsd6jgt"
 
 [node name="SetPipDisplay" parent="RenderBox/CardContainer" instance=ExtResource("3_jqbn0")]
 layout_mode = 1
-anchor_left = 0.20683539
+anchor_left = 0.2758153
 anchor_top = 0.8765432
-anchor_right = 0.31030524
+anchor_right = 0.37928516
 anchor_bottom = 0.9506173
 
 [node name="CardBack" type="TextureRect" parent="RenderBox/CardContainer"]
@@ -186,18 +191,20 @@ mouse_filter = 2
 [node name="CardName" type="RichTextLabel" parent="RenderBox/CardContainer/CardText"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.22408037
-anchor_top = 0.037037037
+anchor_left = 0.24100001
+anchor_top = 0.037
 anchor_right = 0.91387945
 anchor_bottom = 0.14814815
+offset_left = 0.15092468
+offset_top = 0.024000168
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
-theme_override_font_sizes/normal_font_size = 36
-theme_override_font_sizes/bold_font_size = 36
-theme_override_font_sizes/bold_italics_font_size = 36
-theme_override_font_sizes/italics_font_size = 36
-theme_override_font_sizes/mono_font_size = 36
+theme_override_font_sizes/normal_font_size = 35
+theme_override_font_sizes/bold_font_size = 35
+theme_override_font_sizes/bold_italics_font_size = 35
+theme_override_font_sizes/italics_font_size = 35
+theme_override_font_sizes/mono_font_size = 35
 bbcode_enabled = true
 text = "[bgcolor=BLACK][center]CARD_NAME_HERE"
 vertical_alignment = 1
@@ -263,18 +270,18 @@ text = "[color=BLACK]When you"
 [node name="GameName" type="RichTextLabel" parent="RenderBox/CardContainer/CardText"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.3447952
+anchor_left = 0.39653015
 anchor_top = 0.86419755
-anchor_right = 0.7586747
+anchor_right = 0.7241847
 anchor_bottom = 0.962963
 size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 1
-theme_override_font_sizes/normal_font_size = 23
-theme_override_font_sizes/bold_font_size = 23
-theme_override_font_sizes/bold_italics_font_size = 23
-theme_override_font_sizes/italics_font_size = 23
-theme_override_font_sizes/mono_font_size = 23
+theme_override_font_sizes/normal_font_size = 19
+theme_override_font_sizes/bold_font_size = 19
+theme_override_font_sizes/bold_italics_font_size = 19
+theme_override_font_sizes/italics_font_size = 19
+theme_override_font_sizes/mono_font_size = 19
 bbcode_enabled = true
 text = "[bgcolor=BLACK][left]ERR_GAME_NAME_AND_PLAYER"
 horizontal_alignment = 1
@@ -282,21 +289,25 @@ vertical_alignment = 1
 script = ExtResource("6_2n3nw")
 watch_text_change = true
 metadata/_custom_type_script = "uid://leehmvr1x5lu"
+metadata/_edit_use_anchors_ = true
 
 [node name="PhoneticScroll" type="RichTextLabel" parent="RenderBox/CardContainer/CardText"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.051630598
-anchor_top = 0.8
-anchor_right = 0.9483694
-anchor_bottom = 0.8518519
+anchor_left = 0.2754297
+anchor_top = 0.80246913
+anchor_right = 0.72457033
+anchor_bottom = 0.8640742
+offset_left = 0.17888927
+offset_right = -0.17889404
+offset_bottom = 0.07998657
 grow_horizontal = 2
 mouse_filter = 1
-theme_override_font_sizes/normal_font_size = 23
-theme_override_font_sizes/bold_font_size = 23
-theme_override_font_sizes/bold_italics_font_size = 23
-theme_override_font_sizes/italics_font_size = 23
-theme_override_font_sizes/mono_font_size = 23
+theme_override_font_sizes/normal_font_size = 18
+theme_override_font_sizes/bold_font_size = 18
+theme_override_font_sizes/bold_italics_font_size = 18
+theme_override_font_sizes/italics_font_size = 18
+theme_override_font_sizes/mono_font_size = 18
 bbcode_enabled = true
 text = "[color=black]ERR PHONETIC RENDER"
 horizontal_alignment = 1
@@ -304,13 +315,14 @@ vertical_alignment = 1
 script = ExtResource("6_2n3nw")
 watch_text_change = true
 metadata/_custom_type_script = "uid://leehmvr1x5lu"
+metadata/_edit_use_anchors_ = true
 
 [node name="DamageIcon" type="TextureRect" parent="RenderBox/CardContainer"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.03438562
-anchor_top = 0.86419755
-anchor_right = 0.17234543
+anchor_top = 0.7993827
+anchor_right = 0.26288158
 anchor_bottom = 0.962963
 offset_left = 2.0
 offset_top = 2.0
@@ -329,7 +341,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 34
+theme_override_font_sizes/font_size = 38
 text = "1"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -343,8 +355,8 @@ metadata/_custom_type_script = "uid://d11kfgsd6jgt"
 [node name="HealthIcon" type="TextureRect" parent="RenderBox/CardContainer"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.82765454
-anchor_top = 0.86419755
+anchor_left = 0.7371184
+anchor_top = 0.7993827
 anchor_right = 0.9656144
 anchor_bottom = 0.962963
 offset_left = 2.0
@@ -364,7 +376,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 34
+theme_override_font_sizes/font_size = 38
 text = "1"
 horizontal_alignment = 1
 vertical_alignment = 1

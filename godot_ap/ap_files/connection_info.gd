@@ -4,6 +4,8 @@ class_name ConnectionInfo
 
 var serv_version: Version
 var gen_version: Version
+var hint_cost: float
+var location_check_points: int
 var seed_name: String
 var uid: int
 

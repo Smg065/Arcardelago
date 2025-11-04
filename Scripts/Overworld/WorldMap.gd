@@ -263,6 +263,7 @@ func _ready() -> void:
 	#Set the player at the home pip
 	mapPlayer.set_current_pip(homePip)
 	mapPlayer.enabled = true
+	Persist.game.itemHandler.inventory_updated.connect(inventory_updated)
 
 ##Construct a region
 func generate_region(index : int, coords : PackedVector2Array):
@@ -785,7 +786,18 @@ func pip_activated(activePip : MapPip):
 	else:
 		gameRoot.switch_scenes(newScreenType, activePip.nodeInfo)
 
+##When you get a new inventory state
+func inventory_updated(currentInventory : ItemHandler.ApItemGroup):
+	var gameRoot = get_parent() as GameRoot
+	if currentInventory.events.has("Booster Pack"):
+		Persist.game.itemHandler.usedItems.events.append("Booster Pack")
+		gameRoot.boosterPack.setup()
+	elif currentInventory.events.has("Treasure"):
+		Persist.game.itemHandler.usedItems.events.append("Treasure")
+		gameRoot.switch_scenes(GameRoot.ScreenType.TREASURE)
+
 func set_active(nState : bool, _nInfo : Dictionary):
 	mapPlayer.enabled = nState
 	$WorldMapUI.visible = nState
+	inventory_updated(Persist.game.itemHandler.current_inventory())
 	super(nState, _nInfo)

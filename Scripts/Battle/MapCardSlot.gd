@@ -3,8 +3,11 @@ class_name CardSlot
 
 @export var playerInteractable : bool
 @export var squarable : bool
+@export var isSource : bool
 
 var cardPrefab : PackedScene = load("res://Resources/CardUI.tscn")
+@warning_ignore("unused_signal")
+signal holding_updated(slot : CardSlot)
 
 func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 	if !playerInteractable:

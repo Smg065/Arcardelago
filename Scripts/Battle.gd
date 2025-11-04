@@ -23,10 +23,15 @@ var mapStartPoint : Vector2
 ##The scrollbox containing the displayed card info
 @export var battleScroll : ScrollContainer
 
+@export_category("Player Feild")
+@export var playerSlots : Array[CardSlot]
+
 @export_category("Enemy Feild")
 @export var layouts : Array[Node]
 var validEnemies : Array[CardData]
 var currentEnemySlots : Array[CardSlot]
+##The scrollbox containing the displayed card info
+@export var battleFog : TextureRect
 
 @export_category("Background Visuals")
 ##The background of the screen
@@ -73,6 +78,18 @@ func setup_battle(nBattleInfo : BattleInfo):
 	update_valid_enemies()
 	var battleEnemies := choose_enemy_cards()
 	setup_feild(battleEnemies)
+	#Handle Event Tags
+	var curInventory := Persist.game.itemHandler.current_inventory()
+	if curInventory.events.has("Fog Trap"):
+		Persist.game.itemHandler.usedItems.events.append("Fog Trap")
+		battleFog.show()
+	else:
+		battleFog.hide()
+	var hasStackless : bool = curInventory.events.has("Stackless Trap")
+	if hasStackless:
+		Persist.game.itemHandler.usedItems.events.append("Stackless Trap")
+	for eachSlot in playerSlots:
+		eachSlot.squarable = !hasStackless
 
 func recursive_enemy_slot_search(currentNode : Node):
 	for eachChild in currentNode.get_children():

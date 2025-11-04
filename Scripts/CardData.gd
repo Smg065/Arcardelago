@@ -9,12 +9,12 @@ var gameCardset : GameCardset
 var nameData : NameData
 ##The item you can find at this card's location.
 var apId : int
+##If this card is a location, its address
+var apAddress : int
 ##The quality of the item
 var apItemFlags : int
 ##If this card is a location instead of an item.
 var enemyCard : bool
-##If this card is a location, its address
-var apAddress : int
 ##The angle color fades has on this.
 var fadeAngle : float
 ##If this card has no item attacked.
@@ -45,10 +45,10 @@ static func build(newApItemFlags : int, newApId : int, newData : NameData, newGa
 	var cardData := CardData.new()
 	cardData.playerName = newPlayer
 	cardData.apId = newApId
+	cardData.apAddress = newApAddress
 	cardData.gameCardset = newGameCardset
 	cardData.nameData = newData
 	cardData.enemyCard = newEnemyCard
-	cardData.apAddress = newApAddress
 	cardData.apItemFlags = newApItemFlags
 	cardData.fadeAngle = randf_range(0, 2*PI)
 	cardData.isLocal = newIsLocal
@@ -369,3 +369,17 @@ func card_quality() -> int:
 		#Traps (>=4)
 		_:
 			return 1
+
+##Scouts the APID to the players
+func scout():
+	if isDefault or enemyCard:
+		push_error("Cannot Scout This Item!")
+		return
+	Archipelago.conn.scout(apId, 1, Persist.game.itemHandler.new_known_card)
+##Releases the item in the card to the APWorld
+func release():
+	if isDefault or enemyCard:
+		push_error("Cannot Release This Item!")
+	print(apAddress)
+	Archipelago.collect_location(apAddress)
+	Persist.lose_card(self)

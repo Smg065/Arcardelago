@@ -85,13 +85,13 @@ func update_rich_texts():
 	#Display stats
 	
 	#Degault cards can't have special data
+	update_players_display()
 	if cardData.isDefault:
 		return
 	uiCardWordTypesLabel.text = "[center][bgcolor=snow][color=black]" + "/".join(cardData.unique_parts_of_speech())
 	uiCardPhoneticsLabel.text = "[center][bgcolor=slategray]" + ", ".join(cardData.rich_phonetic_symbols())
 	uiCardWordTypesLabel.do_resize_text()
 	uiCardPhoneticsLabel.do_resize_text()
-	update_players_display()
 
 ##Set the colors of the new region band
 func update_region_band():
@@ -276,12 +276,21 @@ func shift_parent(nParent : Node):
 	update_card_slot_mouse()
 	parent.remove_child(self)
 	nParent.add_child(self)
+	try_notify_slot_moved(parent)
 
+##Notify scrollbox when a card is placed for battles
 func warn_scrollbox_battlecard(movingData : Array[CardData]):
 	var parent = get_parent()
 	if parent.name == "CardGrid":
 		var cardScrollbox = parent.get_parent().get_parent()
 		cardScrollbox.battleCards.append_array(movingData)
+
+##Notify card slots when data moves, and add cards you buy or find
+func try_notify_slot_moved(oldParent):
+	if oldParent is CardSlot:
+		if oldParent.isSource:
+			Persist.currentCards.append_array(all_card_data())
+		oldParent.holding_updated.emit(oldParent)
 
 ##Allow the slot to stop taking mouse events
 func update_card_slot_mouse():

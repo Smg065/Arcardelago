@@ -1,0 +1,41 @@
+[gd_scene load_steps=3 format=3 uid="uid://cs1r2xdomavr6"]
+
+[ext_resource type="Script" uid="uid://hwtqjo2rxpby" path="res://Scripts/UI/BoosterPackMenu.gd" id="1_ey564"]
+[ext_resource type="PackedScene" uid="uid://dj0bi4scf7x7c" path="res://Resources/Battle/CardSlot.tscn" id="2_i82h3"]
+
+[node name="Booster Pack" type="CanvasLayer" node_paths=PackedStringArray("cardSlots")]
+script = ExtResource("1_ey564")
+cardSlots = [NodePath("MidCards/CardSlot"), NodePath("MidCards/CardSlot2"), NodePath("MidCards/CardSlot3")]
+
+[node name="BosterBackdrop" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.06666667, 0.06666667, 0.06666667, 0.49803922)
+
+[node name="MidCards" type="HBoxContainer" parent="."]
+z_index = 1
+anchors_preset = -1
+anchor_left = 0.25
+anchor_top = 0.25
+anchor_right = 0.75
+anchor_bottom = 0.75
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CardSlot" parent="MidCards" instance=ExtResource("2_i82h3")]
+layout_mode = 2
+playerInteractable = true
+isSource = true
+
+[node name="CardSlot2" parent="MidCards" instance=ExtResource("2_i82h3")]
+layout_mode = 2
+playerInteractable = true
+isSource = true
+
+[node name="CardSlot3" parent="MidCards" instance=ExtResource("2_i82h3")]
+layout_mode = 2
+playerInteractable = true
+isSource = true

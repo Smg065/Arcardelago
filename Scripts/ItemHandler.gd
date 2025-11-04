@@ -105,7 +105,8 @@ class ApItemGroup:
 		if inData == {}:
 			return
 		instants.clear()
-		instants.merge(inData["instants"])
+		for eachKey in inData["instants"]:
+			instants[eachKey] = int(inData["instants"][eachKey])
 		events = inData["events"]
 		items = inData["items"]
 
@@ -122,6 +123,7 @@ var currentPerks : int
 
 ##Emits when the inventory is updated
 signal inventory_updated(currentInventory : ApItemGroup)
+signal hints_updated()
 
 func _init() -> void:
 	Archipelago.conn.obtained_item.connect(recieved_ap_item)
@@ -142,7 +144,7 @@ func recieved_ap_item(incomingItem : NetworkItem, updateInventory := true):
 func update_inventory():
 	if receivedItems == null:
 		receivedItems = ApItemGroup.new()
-	var currentItems := receivedItems.get_difference(usedItems)
+	var currentItems := current_inventory()
 	for eachType in currentItems.instants:
 		if currentItems.instants[eachType] > 0:
 			var count = currentItems.instants[eachType]
@@ -206,7 +208,6 @@ func trade_down_trap():
 	var highestScore : int = toLose.card_quality()
 	#You can lose default cards this way. Can't lose harmonized cards.
 	if highestScore == 0:
-		print("Lose a Default")
 		return
 	##Cards that are of lower quality than the highest quality items
 	var worseCards : Array[CardData]
@@ -218,4 +219,14 @@ func trade_down_trap():
 	##The card that the target card will become
 	var toGain : CardData = worseCards.pick_random()
 	Persist.lose_card(toLose)
+	toGain.scout()
 	Persist.gain_card(toGain)
+
+##Creates the current inventory
+func current_inventory() -> ApItemGroup:
+	return receivedItems.get_difference(usedItems)
+
+##When you scout a card this function will run
+func new_known_card(itemData : NetworkItem):
+	itemData.output()
+	hints_updated.emit()

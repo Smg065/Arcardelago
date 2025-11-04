@@ -43,7 +43,7 @@ func on_connection(inConn: ConnectionInfo, json: Dictionary):
 	var gameInfo = GameData.find_valid_game(ip, port, slot, password)
 	if gameInfo != "":
 		Persist.game = GameData.json_load(gameInfo)
-		Persist.hold_server_data(json["slot_data"])
+		Persist.hold_server_data(json)
 		get_tree().change_scene_to_file("res://Gameplay.tscn")
 	else:
 		build_new_game(json)
@@ -67,7 +67,7 @@ func build_new_game(json: Dictionary):
 	conn.load_locations()
 	var locationIds : Array[int] = []
 	locationIds.append_array(conn.slot_locations.keys())
-	Persist.hold_server_data(json["slot_data"])
+	Persist.hold_server_data(json)
 	build_enemies(json["slot_data"]["enemies"])
 	Archipelago.send_command("LocationScouts", {"locations": locationIds, "create_as_hint": 0})
 
@@ -97,7 +97,7 @@ func scouts_to_cards():
 		var itemNameData : NameData = get_name_data(eachItem.get_name())
 		var cardset : GameCardset = Persist.game.gameCardsets[eachPlayer.get_slot().game]
 		#Create card data from this information
-		var cardData : CardData = CardData.build(eachItem.flags, eachEntry, itemNameData, cardset, playerName, eachItem.is_local())
+		var cardData : CardData = CardData.build(eachItem.flags, eachEntry, itemNameData, cardset, playerName, eachItem.is_local(), false, eachItem.loc_id)
 		Persist.game.allCards.append(cardData)
 	_initalWordQueueSize = _wordQueue.size()
 	progressBar.max_value = _initalWordQueueSize + Persist.game.fictionalWords.size()

@@ -45,7 +45,7 @@ backdropStrips = [NodePath("Items/6ColorBackdrop/RedBackdrop"), NodePath("Items/
 foundBars = [NodePath("Items/6ColorItems/Progress/Red Discovered"), NodePath("Items/6ColorItems/Progress/Green Discovered"), NodePath("Items/6ColorItems/Progress/Violet Discovered"), NodePath("Items/6ColorItems/Progress/Orange Discovered"), NodePath("Items/6ColorItems/Progress/Blue Discovered"), NodePath("Items/6ColorItems/Progress/Yellow Discovered")]
 releasedBars = [NodePath("Items/6ColorItems/Progress/Red Discovered/Red Released"), NodePath("Items/6ColorItems/Progress/Green Discovered/Green Released"), NodePath("Items/6ColorItems/Progress/Violet Discovered/Violet Released"), NodePath("Items/6ColorItems/Progress/Orange Discovered/Orange Released"), NodePath("Items/6ColorItems/Progress/Blue Discovered/Blue Released"), NodePath("Items/6ColorItems/Progress/Yellow Discovered/Yellow Released")]
 foundReleasedText = [NodePath("Items/6ColorItems/Progress/Red Discovered/Red Display"), NodePath("Items/6ColorItems/Progress/Green Discovered/Green Display"), NodePath("Items/6ColorItems/Progress/Violet Discovered/Violet Display"), NodePath("Items/6ColorItems/Progress/Orange Discovered/Orange Display"), NodePath("Items/6ColorItems/Progress/Blue Discovered/Blue Display"), NodePath("Items/6ColorItems/Progress/Yellow Discovered/Yellow Display")]
-obsticalBreakerIcons = [NodePath("Items/6ColorItems/ObstacleBusters/Bottle"), NodePath("Items/6ColorItems/ObstacleBusters/Axe"), NodePath("Items/6ColorItems/ObstacleBusters/CastleKey"), NodePath("Items/6ColorItems/ObstacleBusters/Pickaxe"), NodePath("Items/6ColorItems/ObstacleBusters/Boat"), NodePath("Items/6ColorItems/ObstacleBusters/Shovel")]
+obsticalBreakerIcons = [NodePath("Items/6ColorItems/ObstacleBusters/Bottle"), NodePath("Items/6ColorItems/ObstacleBusters/Axe"), NodePath("Items/6ColorItems/ObstacleBusters/Castle Key"), NodePath("Items/6ColorItems/ObstacleBusters/Pickaxe"), NodePath("Items/6ColorItems/ObstacleBusters/Boat"), NodePath("Items/6ColorItems/ObstacleBusters/Shovel")]
 stampIcons = [NodePath("Items/6ColorItems/Stamps/Steel Stamp"), NodePath("Items/6ColorItems/Stamps/Harmony Stamp"), NodePath("Items/6ColorItems/Stamps/Hint Stamp"), NodePath("Items/6ColorItems/Stamps/Ghost Stamp"), NodePath("Items/6ColorItems/Stamps/Square Stamp"), NodePath("Items/6ColorItems/Stamps/Gold Stamp")]
 stampCounts = [NodePath("Items/6ColorItems/StampCount/SteelCount"), NodePath("Items/6ColorItems/StampCount/HarmonyCount"), NodePath("Items/6ColorItems/StampCount/HintCount"), NodePath("Items/6ColorItems/StampCount/GhostCount"), NodePath("Items/6ColorItems/StampCount/SquareCount"), NodePath("Items/6ColorItems/StampCount/GoldCount")]
 eventQueueHolder = NodePath("EventQueueScrollbox/EventQueue")
@@ -616,7 +616,7 @@ texture = ExtResource("2_pca7s")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="CastleKey" type="TextureRect" parent="Items/6ColorItems/ObstacleBusters"]
+[node name="Castle Key" type="TextureRect" parent="Items/6ColorItems/ObstacleBusters"]
 modulate = Color(0.5, 0.5, 0.5, 1)
 layout_mode = 2
 size_flags_horizontal = 3

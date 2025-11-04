@@ -12,14 +12,14 @@ Running the project itself will produce just the basic console, designed as an a
   - Run `/disconnect` to exit a slot
 - Use like a standard TextClient
   - Has autofill for all its own `/` commands, and some server `!` commands
-    - This includes item/location name filling for '!hint' / '!hint_location'
+	- This includes item/location name filling for '!hint' / '!hint_location'
   - Has a `Hints` tab.
-    - LClick a column header to sort by that column (ties remain in previous order)
-    - LClick the currently sorted-by column to invert its sort direction
-    - RClick a column header that supports filtering (currently only `Status`) to open the filtering menu
-      - `Found` hints are filtered out by default
-    - Supports [New Hint Statuses](https://github.com/ArchipelagoMW/Archipelago/pull/3506), if connecting to a server that has those changes.
-      - Clicking on a new status (of a hint that you are the `Receiving Player` for) will popup a dropdown of buttons, allowing you to select a new status to use.
+	- LClick a column header to sort by that column (ties remain in previous order)
+	- LClick the currently sorted-by column to invert its sort direction
+	- RClick a column header that supports filtering (currently only `Status`) to open the filtering menu
+	  - `Found` hints are filtered out by default
+	- Supports [New Hint Statuses](https://github.com/ArchipelagoMW/Archipelago/pull/3506), if connecting to a server that has those changes.
+	  - Clicking on a new status (of a hint that you are the `Receiving Player` for) will popup a dropdown of buttons, allowing you to select a new status to use.
 
 ## In a Project
 

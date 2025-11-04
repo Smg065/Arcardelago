@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dp7hihr25b70y"]
+[gd_scene load_steps=13 format=3 uid="uid://dp7hihr25b70y"]
 
 [ext_resource type="PackedScene" uid="uid://d0amflih465nl" path="res://WorldMap.tscn" id="1_inlal"]
 [ext_resource type="Script" uid="uid://bt5dbsbv315ql" path="res://Scripts/GameRoot.gd" id="1_k2aq1"]
@@ -9,13 +9,14 @@
 [ext_resource type="PackedScene" uid="uid://3ic2c4ms3m5y" path="res://Event.tscn" id="7_83vju"]
 [ext_resource type="PackedScene" uid="uid://26c6es3texj3" path="res://Home.tscn" id="8_824mg"]
 [ext_resource type="PackedScene" uid="uid://dun0jbik6ab7f" path="res://Cutscene.tscn" id="9_ies6u"]
+[ext_resource type="PackedScene" uid="uid://cs1r2xdomavr6" path="res://BoosterPack.tscn" id="10_83vju"]
 [ext_resource type="PackedScene" uid="uid://cifjnmtp52uco" path="res://Resources/CardScrollbox.tscn" id="10_c8c3f"]
 [ext_resource type="PackedScene" uid="uid://b0alo1cixtioe" path="res://Resources/InventoryUI.tscn" id="11_vhwld"]
 
-[node name="Game" type="Node" node_paths=PackedStringArray("screenNodes")]
+[node name="Game" type="Node" node_paths=PackedStringArray("screenNodes", "boosterPack")]
 script = ExtResource("1_k2aq1")
 screenNodes = {
-0: NodePath("WorldMap"),
+0: NodePath("World Map"),
 1: NodePath("Cutscene"),
 2: NodePath("Battlescreen"),
 3: NodePath("Event"),
@@ -24,8 +25,9 @@ screenNodes = {
 6: NodePath("Releaser"),
 7: NodePath("Home")
 }
+boosterPack = NodePath("Booster Pack")
 
-[node name="WorldMap" parent="." instance=ExtResource("1_inlal")]
+[node name="World Map" parent="." instance=ExtResource("1_inlal")]
 follow_viewport_enabled = true
 
 [node name="Battlescreen" parent="." instance=ExtResource("2_vrd06")]
@@ -47,6 +49,10 @@ visible = false
 visible = false
 
 [node name="Cutscene" parent="." instance=ExtResource("9_ies6u")]
+visible = false
+
+[node name="Booster Pack" parent="." instance=ExtResource("10_83vju")]
+visible = false
 
 [node name="Supermenu" type="CanvasLayer" parent="."]
 
@@ -67,7 +73,7 @@ metadata/_edit_use_anchors_ = true
 [node name="ScrollContainer" parent="Supermenu/DeckSelection" instance=ExtResource("10_c8c3f")]
 layout_mode = 1
 
-[node name="ReferenceRect" type="ReferenceRect" parent="Supermenu"]
+[node name="Inventory" type="ReferenceRect" parent="Supermenu"]
 anchors_preset = -1
 anchor_top = 0.5
 anchor_right = 0.25
@@ -79,5 +85,5 @@ grow_vertical = 0
 border_color = Color(1, 0.9666667, 0, 1)
 border_width = 8.0
 
-[node name="InventoryMenu" parent="Supermenu/ReferenceRect" instance=ExtResource("11_vhwld")]
+[node name="InventoryMenu" parent="Supermenu/Inventory" instance=ExtResource("11_vhwld")]
 layout_mode = 1

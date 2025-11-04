@@ -44,8 +44,8 @@ func _ready() -> void:
 	for eachBar in releasedBars:
 		eachBar.max_value = Persist.cardsPerRegion
 	Persist.game.itemHandler.inventory_updated.connect(update_visuals)
+	Persist.game.itemHandler.hints_updated.connect(update_bars)
 	Persist.game.itemHandler.update_inventory()
-	Archipelago.conn.set_hint_notify(update_bars)
 	#Archipelago.conn.
 
 ##Updates the items you've collected as visuals
@@ -53,6 +53,13 @@ func update_visuals(currentInventory : ItemHandler.ApItemGroup):
 	var permanentItems : PackedStringArray = Persist.game.itemHandler.receivedItems.items
 	var usedItems : PackedStringArray = Persist.game.itemHandler.usedItems.items
 	goldLabel.text = ": %04d" % Persist.game.itemHandler.currentMoney
+	var hintCost : int = roundi(Archipelago.conn.slot_locations.size() * (Archipelago.conn.hint_cost / 100))
+	var locationsChecked : int = 0
+	for eachCheck in Archipelago.conn.locations:
+		if Archipelago.conn.locations[eachCheck].hint_status == NetworkHint.Status.FOUND:
+			locationsChecked += 1
+	locationsChecked *= Archipelago.conn.location_check_points
+	hintPointLabel.text = ": %03d/%03d" % [locationsChecked, hintCost]
 	houseUpgradeLabel.text = "House Level: %s" % (currentInventory.items.count("House Upgrade") + 1)
 	#Items
 	for eachColor in 6:
@@ -90,10 +97,6 @@ func update_visuals(currentInventory : ItemHandler.ApItemGroup):
 
 ##Update the bars showing item information progress
 func update_bars(_inHints : Array[NetworkHint] = []):
-	var knownLocations : PackedInt64Array
-	for eachHint in Archipelago.conn.hints:
-		if eachHint.is_local():
-			knownLocations.append(eachHint.item.loc_id)
 	for eachColor in 6:
 		#Bars
 		var foundCards : int = 0
@@ -105,7 +108,7 @@ func update_bars(_inHints : Array[NetworkHint] = []):
 				if Archipelago.conn.slot_locations[eachLocation]:
 					releasedCards += 1
 					foundCards += 1
-				elif knownLocations.has(eachLocation):
+				elif Archipelago.conn._scout_cache.has(eachLocation):
 					foundCards += 1
 		foundBars[eachColor].value = foundCards
 		releasedBars[eachColor].value = releasedCards

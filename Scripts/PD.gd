@@ -35,6 +35,8 @@ var spawnName : String
 var apSeed : int
 ##The AP's game data
 var game : GameData
+##Hint Points
+var hintPoints : int
 
 ##What cards you have right now
 var currentCards : Array[CardData]
@@ -110,8 +112,9 @@ func pick_random(inArray : Array):
 	#Use the RNG if there's 2 or more options
 	return inArray[rng.randi_range(0, inArray.size() - 1)]
 
-##Takes the server data about this game and stores them
-func hold_server_data(slotData : Dictionary) -> void:
+##Takes the slot data about this game and stores them
+func hold_server_data(inData : Dictionary) -> void:
+	var slotData : Dictionary = inData["slot_data"]
 	difficulty = slotData["difficulty"]
 	cardsPerRegion = slotData["cards_per_region"]
 	mapRadius = slotData["map_radius"]

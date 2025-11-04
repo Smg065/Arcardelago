@@ -2,6 +2,7 @@ extends Node
 class_name GameRoot
 
 @export var screenNodes : Dictionary[ScreenType, GameScreen]
+@export var boosterPack : BoosterPackUI
 
 var curScreen : ScreenType = ScreenType.WORLD_MAP
 

@@ -397,6 +397,8 @@ func _handle_command(json: Dictionary) -> void:
 			conn = ConnectionInfo.new()
 			conn.serv_version = Version.from(json["version"])
 			conn.gen_version = Version.from(json["generator_version"])
+			conn.hint_cost = json["hint_cost"]
+			conn.location_check_points = json["location_check_points"]
 			conn.seed_name = json["seed_name"]
 			handle_datapackage_checksums(json["datapackage_checksums"])
 			var args: Dictionary = {"name":creds.slot,"password":creds.pwd,"uuid":conn.uid,

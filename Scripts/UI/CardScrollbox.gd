@@ -63,6 +63,8 @@ func show_current():
 	for eachCard in previousCards:
 		remove_card_from_data(eachCard)
 	sort_children()
+	set_card_scale(minSize)
+	filter_items()
 
 ##Add a card to the scrollbox
 func add_card_from_data(nCard : CardData):
@@ -80,7 +82,6 @@ func add_card_from_data(nCard : CardData):
 ##Add a card from an existing card data
 func add_card_from_ui_card(nCardUI : CardUI):
 	var allChildren := flow.get_children()
-	nCardUI.shift_parent(flow)
 	for allData in nCardUI.all_card_data():
 		battleCards.erase(allData)
 	for eachChild in allChildren:
@@ -90,7 +91,9 @@ func add_card_from_ui_card(nCardUI : CardUI):
 			eachChild.new_compression_size()
 			eachChild.update_compressed_vis()
 			eachChild.set_stack_multi(false)
+			print(battleCards.size())
 			return
+	nCardUI.shift_parent(flow)
 	nCardUI.set_min_from_height(minSize)
 	nCardUI.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	nCardUI.set_stack_multi(false)

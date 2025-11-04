@@ -90,10 +90,10 @@ func update_visuals(currentInventory : ItemHandler.ApItemGroup):
 
 ##Update the bars showing item information progress
 func update_bars(_inHints : Array[NetworkHint] = []):
-	var hintedLocations : PackedInt64Array
+	var knownLocations : PackedInt64Array
 	for eachHint in Archipelago.conn.hints:
 		if eachHint.is_local():
-			hintedLocations.append(eachHint.item.loc_id)
+			knownLocations.append(eachHint.item.loc_id)
 	for eachColor in 6:
 		#Bars
 		var foundCards : int = 0
@@ -104,7 +104,8 @@ func update_bars(_inHints : Array[NetworkHint] = []):
 			if cardColor == eachColor:
 				if Archipelago.conn.slot_locations[eachLocation]:
 					releasedCards += 1
-				if hintedLocations.has(eachLocation):
+					foundCards += 1
+				elif knownLocations.has(eachLocation):
 					foundCards += 1
 		foundBars[eachColor].value = foundCards
 		releasedBars[eachColor].value = releasedCards

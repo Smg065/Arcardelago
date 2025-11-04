@@ -202,7 +202,7 @@ func filter(commands : Dictionary[String, Array]) -> void:
 			return
 	#Filter non-defaults out when there's no type strings
 	elif cardData.isDefault:
-		hide()
+		visible = commands.size() <= 0
 		return
 	#Game is also straight forward
 	if commands.has("Games"):
@@ -272,11 +272,16 @@ func _get_drag_data(_at_position: Vector2) -> Variant:
 ##Changes the cards parent and sets card slots
 func shift_parent(nParent : Node):
 	var parent = get_parent()
-	if parent is CardScrollbox:
-		parent.battleCards.append_array(all_card_data())
+	warn_scrollbox_battlecard(all_card_data())
 	update_card_slot_mouse()
 	parent.remove_child(self)
 	nParent.add_child(self)
+
+func warn_scrollbox_battlecard(movingData : Array[CardData]):
+	var parent = get_parent()
+	if parent.name == "CardGrid":
+		var cardScrollbox = parent.get_parent().get_parent()
+		cardScrollbox.battleCards.append_array(movingData)
 
 ##Allow the slot to stop taking mouse events
 func update_card_slot_mouse():
@@ -351,6 +356,7 @@ func extract_data(toExtract : int = -1) -> Array[CardData]:
 	#Catch broken data extractions
 	if toExtract > 0:
 		push_warning("Can't extract all card data!")
+	warn_scrollbox_battlecard(output)
 	return output
 
 ##Returns all card data in this card UI

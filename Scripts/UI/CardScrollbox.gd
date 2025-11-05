@@ -12,7 +12,7 @@ func _ready() -> void:
 	show_current()
 	setup_filter()
 
-func set_card_scale(newMin : int):
+func set_card_scale(newMin : int = minSize):
 	minSize = newMin
 	for eachChild in flow.get_children():
 		eachChild.set_min_from_height(minSize)
@@ -42,7 +42,7 @@ func setup_filter():
 	popup.add_separator("Players")
 	for eachEntry in allPlayers:
 		popup.add_check_item(eachEntry)
-	set_card_scale(minSize)
+	set_card_scale()
 
 ##Make the Card Scrollbox display all card information that you have
 func show_current():
@@ -63,7 +63,7 @@ func show_current():
 	for eachCard in previousCards:
 		remove_card_from_data(eachCard)
 	sort_children()
-	set_card_scale(minSize)
+	set_card_scale()
 	filter_items()
 
 ##Add a card to the scrollbox
@@ -91,7 +91,6 @@ func add_card_from_ui_card(nCardUI : CardUI):
 			eachChild.new_compression_size()
 			eachChild.update_compressed_vis()
 			eachChild.set_stack_multi(false)
-			print(battleCards.size())
 			return
 	nCardUI.shift_parent(flow)
 	nCardUI.set_min_from_height(minSize)
@@ -137,6 +136,12 @@ func sort_children():
 		flow.remove_child(eachChild)
 	for eachChild in allChildren:
 		flow.add_child(eachChild)
+
+##Return all cards from shops and slots after the originals are cleared
+func return_cards():
+	for eachCard in battleCards.duplicate():
+		add_card_from_data(eachCard)
+	set_card_scale()
 
 func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 	if typeof(data) != TYPE_DICTIONARY:

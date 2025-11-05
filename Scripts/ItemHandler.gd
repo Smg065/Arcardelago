@@ -140,6 +140,11 @@ func spend(cost : int):
 	currentMoney -= cost
 	cash_updated.emit()
 
+##Earn money and update the display for it
+func earn(income : int):
+	currentMoney += income
+	cash_updated.emit()
+
 ##Calls when you get an item during gameplay
 func recieved_ap_item(incomingItem : NetworkItem, updateInventory := true):
 	receivedItems.recieved_ap_item(incomingItem)
@@ -159,8 +164,7 @@ func update_inventory():
 					defaultCards += count
 					Persist.gain_card(CardData.new_default())
 				"Money":
-					currentMoney += count * 10
-					cash_updated.emit()
+					earn(count * 10)
 				"Perk":
 					currentPerks += count
 				"Unstable Trap":

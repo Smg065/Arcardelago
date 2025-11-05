@@ -358,10 +358,10 @@ func card_quality() -> int:
 		0:
 			return 2
 		#Useful
-		1:
+		2:
 			return 3
 		#Progression
-		2:
+		1:
 			return 4
 		#Proguseful
 		3:

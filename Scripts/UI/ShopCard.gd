@@ -20,6 +20,8 @@ func display_cost():
 func purchasable() -> bool:
 	return Persist.game.itemHandler.currentMoney >= cardCost
 
+##Mark this slot as purchased and unavailable now
 func purchase():
+	hide()
 	costLabel.text = "SOLD"
 	playerInteractable = false

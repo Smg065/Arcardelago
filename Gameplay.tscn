@@ -13,7 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://cifjnmtp52uco" path="res://Resources/CardScrollbox.tscn" id="10_c8c3f"]
 [ext_resource type="PackedScene" uid="uid://b0alo1cixtioe" path="res://Resources/InventoryUI.tscn" id="11_vhwld"]
 
-[node name="Game" type="Node" node_paths=PackedStringArray("screenNodes", "boosterPack")]
+[node name="Game" type="Node" node_paths=PackedStringArray("screenNodes", "boosterPack", "scrollBox")]
 script = ExtResource("1_k2aq1")
 screenNodes = {
 0: NodePath("World Map"),
@@ -26,6 +26,7 @@ screenNodes = {
 7: NodePath("Home")
 }
 boosterPack = NodePath("Booster Pack")
+scrollBox = NodePath("Supermenu/DeckSelection/ScrollContainer")
 
 [node name="World Map" parent="." instance=ExtResource("1_inlal")]
 visible = false

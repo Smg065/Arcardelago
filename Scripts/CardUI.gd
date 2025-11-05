@@ -294,6 +294,7 @@ func try_notify_slot_moved(oldParent):
 	if oldParent is CardSlot:
 		if oldParent is ShopCard:
 			Persist.game.itemHandler.spend(oldParent.cardCost)
+			oldParent.purchase()
 		if oldParent.isSource:
 			Persist.currentCards.append_array(all_card_data())
 		oldParent.holding_updated.emit(oldParent)

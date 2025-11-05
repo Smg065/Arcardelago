@@ -17,6 +17,11 @@ func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 	var dict : Dictionary = data as Dictionary
 	if !dict.has("IsArcardelago"):
 		return false
+	var cardSource = data["CardUI"].get_parent()
+	if cardSource is CardSlot:
+		#No source to source dragging
+		if cardSource.isSource or isSource:
+			return false
 	if get_child_count() > 0:
 		if !squarable:
 			return false
@@ -54,5 +59,7 @@ func setup_card(cardToSetup : CardUI):
 
 ##Make the card cease
 func release_card():
+	if get_child_count() <= 0:
+		return
 	var childCard := get_child(0)
 	childCard.queue_free()

@@ -119,6 +119,10 @@ func _input(event: InputEvent) -> void:
 func clear_board():
 	for eachEnemySlot in currentEnemySlots:
 		eachEnemySlot.release_card()
+	for eachPlayerSlot in playerSlots:
+		eachPlayerSlot.release_card()
+	var gameRoot : GameRoot = get_parent()
+	gameRoot.scrollBox.return_cards()
 
 ##Place the cards down based on the encounter slot info
 func setup_feild(battleEnemies : Array[EncounterSlot]):
@@ -269,3 +273,21 @@ func mouse_on_battlefield() -> void:
 ##Needed to stop mouse events
 func mouse_off_battlefield() -> void:
 	mouseFocused = false
+
+##Earns gold and goes back to the map
+func battle_won():
+	match battleInfo.type:
+		BattleInfo.BattleType.DEFAULT:
+			Persist.game.itemHandler.earn(1)
+		BattleInfo.BattleType.RIVAL:
+			Persist.game.itemHandler.earn(5)
+		BattleInfo.BattleType.BOSS:
+			Persist.game.itemHandler.earn(5)
+		BattleInfo.BattleType.FINAL_BOSS:
+			Persist.game.itemHandler.earn(50)
+	var gameRoot : GameRoot = get_parent()
+	gameRoot.clear_map_pip()
+	gameRoot.switch_scenes()
+
+func start_battle_pressed() -> void:
+	battle_won() 

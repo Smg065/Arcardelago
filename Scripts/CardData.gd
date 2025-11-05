@@ -370,16 +370,42 @@ func card_quality() -> int:
 		_:
 			return 1
 
+##Calculate the value of this card data
+func card_value(useDifficulty : bool = true) -> int:
+	var output := card_quality() + 1
+	if enemyCard:
+		output = ceili(powerScore / 6.0) + 2
+	#Stamp Prices increase the value
+	for eachStamp in stamps:
+		match eachStamp:
+			"Steel":
+				output += 1
+			"Harmony":
+				output += 2
+			"Ghost":
+				output += 3
+			"Square":
+				output += 2
+			"Gold":
+				output += 3
+	if !useDifficulty:
+		return output
+	match Persist.difficulty:
+		1:
+			output = floori(output * 1.5)
+		2:
+			output = output * 2
+	return output
+
 ##Scouts the APID to the players
 func scout():
 	if isDefault or enemyCard:
 		push_error("Cannot Scout This Item!")
 		return
-	Archipelago.conn.scout(apId, 1, Persist.game.itemHandler.new_known_card)
+	Archipelago.conn.scout(apId, 2, Persist.game.itemHandler.new_known_card)
 ##Releases the item in the card to the APWorld
 func release():
 	if isDefault or enemyCard:
 		push_error("Cannot Release This Item!")
-	print(apAddress)
 	Archipelago.collect_location(apAddress)
 	Persist.lose_card(self)

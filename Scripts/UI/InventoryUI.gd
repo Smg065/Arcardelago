@@ -1,7 +1,7 @@
 extends Control
 class_name InventoryUI
 
-const HalfModulated = Color(1,1,1,.5)
+const HalfModulated = Color(.5,.5,.5 ,.5)
 
 ##Displays the spheres you have.
 @export var sphereIcons : Array[TextureRect]
@@ -45,21 +45,13 @@ func _ready() -> void:
 		eachBar.max_value = Persist.cardsPerRegion
 	Persist.game.itemHandler.inventory_updated.connect(update_visuals)
 	Persist.game.itemHandler.hints_updated.connect(update_bars)
+	Persist.game.itemHandler.cash_updated.connect(update_counters)
 	Persist.game.itemHandler.update_inventory()
 	#Archipelago.conn.
 
 ##Updates the items you've collected as visuals
 func update_visuals(currentInventory : ItemHandler.ApItemGroup):
 	var permanentItems : PackedStringArray = Persist.game.itemHandler.receivedItems.items
-	var usedItems : PackedStringArray = Persist.game.itemHandler.usedItems.items
-	goldLabel.text = ": %04d" % Persist.game.itemHandler.currentMoney
-	var hintCost : int = roundi(Archipelago.conn.slot_locations.size() * (Archipelago.conn.hint_cost / 100))
-	var locationsChecked : int = 0
-	for eachCheck in Archipelago.conn.locations:
-		if Archipelago.conn.locations[eachCheck].hint_status == NetworkHint.Status.FOUND:
-			locationsChecked += 1
-	locationsChecked *= Archipelago.conn.location_check_points
-	hintPointLabel.text = ": %03d/%03d" % [locationsChecked, hintCost]
 	houseUpgradeLabel.text = "House Level: %s" % (currentInventory.items.count("House Upgrade") + 1)
 	#Items
 	for eachColor in 6:
@@ -67,10 +59,10 @@ func update_visuals(currentInventory : ItemHandler.ApItemGroup):
 		#If you have that color sphere
 		sphereIcons[eachColor].visible = permanentItems.has(colorName + " Sphere")
 		#If you've reached the region of this color
-		if sphereIcons[eachColor].visible and usedItems.has(colorName + " Sphere"):
-			backdropStrips[eachColor].modulate = HalfModulated
-		else:
+		if Persist.game.reached_regions().has(colorName):
 			backdropStrips[eachColor].modulate = Color.WHITE
+		else:
+			backdropStrips[eachColor].modulate = HalfModulated
 		#Obstacle Breakers
 		if currentInventory.items.has(obsticalBreakerIcons[eachColor].name):
 			obsticalBreakerIcons[eachColor].modulate = Color.WHITE
@@ -113,4 +105,14 @@ func update_bars(_inHints : Array[NetworkHint] = []):
 		foundBars[eachColor].value = foundCards
 		releasedBars[eachColor].value = releasedCards
 		foundReleasedText[eachColor].text = "%2d:%2d" % [Persist.cardsPerRegion - foundCards, Persist.cardsPerRegion - releasedCards]
-	
+
+##Update the gold and hint points
+func update_counters() -> void:
+	goldLabel.text = ": %04d" % Persist.game.itemHandler.currentMoney
+	var hintCost : int = roundi(Archipelago.conn.slot_locations.size() * (Archipelago.conn.hint_cost / 100))
+	var locationsChecked : int = 0
+	for eachCheck in Archipelago.conn.locations:
+		if Archipelago.conn.locations[eachCheck].hint_status == NetworkHint.Status.FOUND:
+			locationsChecked += 1
+	locationsChecked *= Archipelago.conn.location_check_points
+	hintPointLabel.text = ": %03d/%03d" % [locationsChecked, hintCost]

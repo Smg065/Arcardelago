@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ShopItemInfo" load_steps=3 format=3 uid="uid://djrwxevlhpkih"]
+
+[ext_resource type="Script" uid="uid://ba3kxomianfkj" path="res://Scripts/ShopItemInfo.gd" id="1_8lnvh"]
+[ext_resource type="Texture2D" uid="uid://ckoh76byvww2f" path="res://Sprites/ShopIcons/Perk.png" id="1_rgrjt"]
+
+[resource]
+script = ExtResource("1_8lnvh")
+name = "Perk"
+icon = ExtResource("1_rgrjt")
+price = PackedInt32Array(2, 3, 4)
+metadata/_custom_type_script = "uid://ba3kxomianfkj"

@@ -1,6 +1,122 @@
-[gd_scene load_steps=2 format=3 uid="uid://c3amjevm3t2k0"]
+[gd_scene load_steps=14 format=3 uid="uid://c3amjevm3t2k0"]
 
 [ext_resource type="Script" uid="uid://baidr8w0nldel" path="res://Scripts/Shop.gd" id="1_c53l5"]
+[ext_resource type="PackedScene" uid="uid://2i1f6byv4fh6" path="res://ShopCardSlot.tscn" id="2_f511j"]
+[ext_resource type="PackedScene" uid="uid://dj0bi4scf7x7c" path="res://Resources/Battle/CardSlot.tscn" id="3_c0ofq"]
+[ext_resource type="PackedScene" uid="uid://cwvqqqxytkxka" path="res://ShopItemButton.tscn" id="3_svtxo"]
+[ext_resource type="Script" uid="uid://ba3kxomianfkj" path="res://Scripts/ShopItemInfo.gd" id="4_bmy5l"]
+[ext_resource type="Resource" uid="uid://cgxejlgojsjh5" path="res://Resources/ShopItems/ExtraLife.tres" id="5_u5mf3"]
+[ext_resource type="Resource" uid="uid://cc8uyejeg5kom" path="res://Resources/ShopItems/Treasure.tres" id="6_8rl2n"]
+[ext_resource type="Resource" uid="uid://n5r6j7ikg0d6" path="res://Resources/ShopItems/Shield.tres" id="7_olj3c"]
+[ext_resource type="Resource" uid="uid://bh1gu5i11mm00" path="res://Resources/ShopItems/BoosterPack.tres" id="8_yfn0r"]
+[ext_resource type="Resource" uid="uid://djrwxevlhpkih" path="res://Resources/ShopItems/Perk.tres" id="9_ysly5"]
+[ext_resource type="Resource" uid="uid://18ulh76ofrjt" path="res://Resources/ShopItems/RandomCard.tres" id="10_v17rq"]
+[ext_resource type="Resource" uid="uid://bhn6sdwyl0ael" path="res://Resources/ShopItems/Scout.tres" id="11_5qpgp"]
+[ext_resource type="Resource" uid="uid://g47wd8v2mcaj" path="res://Resources/ShopItems/Burger.tres" id="12_yxl17"]
 
-[node name="Shop" type="CanvasLayer"]
+[node name="Shop" type="CanvasLayer" node_paths=PackedStringArray("shopItemsHolder", "cardSeller", "sellButton", "cardReleaser", "releaserButton")]
 script = ExtResource("1_c53l5")
+shopCardPrefab = ExtResource("2_f511j")
+itemButtonPrefab = ExtResource("3_svtxo")
+itemTable = Dictionary[ExtResource("4_bmy5l"), int]({
+ExtResource("5_u5mf3"): 1,
+ExtResource("6_8rl2n"): 2,
+ExtResource("7_olj3c"): 2,
+ExtResource("8_yfn0r"): 4,
+ExtResource("9_ysly5"): 6,
+ExtResource("10_v17rq"): 6,
+ExtResource("11_5qpgp"): 10,
+ExtResource("12_yxl17"): 10
+})
+shopItemsHolder = NodePath("Items/VBoxContainer/RandomItems")
+cardSeller = NodePath("Items/VBoxContainer/FixedItems/Card Seller/CardSlot")
+sellButton = NodePath("Items/VBoxContainer/FixedItems/Card Seller/Sell Button")
+cardReleaser = NodePath("Items/VBoxContainer/FixedItems/Card Seller/CardSlot")
+releaserButton = NodePath("Items/VBoxContainer/FixedItems/Card Seller/Sell Button")
+
+[node name="Items" type="ReferenceRect" parent="."]
+anchors_preset = -1
+anchor_left = 0.25
+anchor_top = 0.05
+anchor_right = 0.75
+anchor_bottom = 0.90000004
+grow_horizontal = 2
+grow_vertical = 2
+border_width = 8.0
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Items"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RandomItems" type="HBoxContainer" parent="Items/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="FixedItems" type="HBoxContainer" parent="Items/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Card Seller" type="Control" parent="Items/VBoxContainer/FixedItems"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CardSlot" parent="Items/VBoxContainer/FixedItems/Card Seller" instance=ExtResource("3_c0ofq")]
+layout_mode = 1
+anchors_preset = -1
+offset_bottom = -58.399994
+playerInteractable = true
+squarable = true
+
+[node name="Sell Button" type="Button" parent="Items/VBoxContainer/FixedItems/Card Seller"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -48.400024
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 32
+text = "Sell - 0G"
+
+[node name="Card Releaser2" type="Control" parent="Items/VBoxContainer/FixedItems"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CardSlot" parent="Items/VBoxContainer/FixedItems/Card Releaser2" instance=ExtResource("3_c0ofq")]
+layout_mode = 1
+anchors_preset = -1
+offset_bottom = -58.399994
+playerInteractable = true
+squarable = true
+
+[node name="Releaser Button" type="Button" parent="Items/VBoxContainer/FixedItems/Card Releaser2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -48.400024
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 32
+text = "Release - 0G"
+
+[node name="Leave Shop" type="Button" parent="."]
+anchors_preset = -1
+anchor_left = 0.35
+anchor_top = 1.0
+anchor_right = 0.65
+anchor_bottom = 1.0
+offset_top = -37.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 32
+text = "Exit Shop"
+
+[connection signal="pressed" from="Leave Shop" to="." method="leave_shop"]

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ShopItemInfo" load_steps=3 format=3 uid="uid://cgxejlgojsjh5"]
+
+[ext_resource type="Script" uid="uid://ba3kxomianfkj" path="res://Scripts/ShopItemInfo.gd" id="1_ajpae"]
+[ext_resource type="Texture2D" uid="uid://bst1d4l8kh5yi" path="res://Sprites/ShopIcons/Life.png" id="1_hjhwi"]
+
+[resource]
+script = ExtResource("1_ajpae")
+name = "Life"
+icon = ExtResource("1_hjhwi")
+price = PackedInt32Array(6, 9, 12)
+metadata/_custom_type_script = "uid://ba3kxomianfkj"

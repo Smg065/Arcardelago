@@ -121,10 +121,10 @@ func reached_regions() -> PackedStringArray:
 		var requiredRegions = PD.get_graph_path(Persist.worldOrder, Persist.spawnName, colorName)
 		var pathCompletable : bool = true
 		for eachRequired in requiredRegions:
-			if !itemHandler.usedItems.items.has(eachRequired + " Sphere"):
+			if !itemHandler.usedItems.items.has(eachRequired + " Sphere") and !Persist.spawnName == eachRequired:
 				pathCompletable = false
 				break
-		if pathCompletable or Persist.spawnName == colorName:
+		if pathCompletable:
 			output.append(colorName)
 	return output
 

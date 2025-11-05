@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ShopItemInfo" load_steps=3 format=3 uid="uid://bh1gu5i11mm00"]
+
+[ext_resource type="Script" uid="uid://ba3kxomianfkj" path="res://Scripts/ShopItemInfo.gd" id="1_acnjd"]
+[ext_resource type="Texture2D" uid="uid://dj6cu6t3q353n" path="res://Sprites/SendQueue/ReceiveBooster.png" id="1_o27wh"]
+
+[resource]
+script = ExtResource("1_acnjd")
+name = "Booster Pack"
+icon = ExtResource("1_o27wh")
+price = PackedInt32Array(4, 6, 8)
+metadata/_custom_type_script = "uid://ba3kxomianfkj"

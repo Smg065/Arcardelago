@@ -18,6 +18,7 @@ pipPrefab = ExtResource("4_eceo5")
 pathPrefab = ExtResource("3_aypb6")
 
 [node name="WorldMapUI" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="WorldMapLabel" type="Label" parent="WorldMapUI"]
 anchors_preset = 5

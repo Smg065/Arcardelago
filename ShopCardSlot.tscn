@@ -1,0 +1,49 @@
+[gd_scene load_steps=4 format=3 uid="uid://2i1f6byv4fh6"]
+
+[ext_resource type="Texture2D" uid="uid://dlp7mysr04id6" path="res://Sprites/CardEdge.png" id="1_8dngu"]
+[ext_resource type="Script" uid="uid://bsvvdf1xwi13n" path="res://Scripts/UI/ShopCard.gd" id="2_7itj5"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_poslg"]
+font_size = 35
+
+[node name="ShopCardSlot" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="CardSlot" type="TextureRect" parent="." node_paths=PackedStringArray("costLabel")]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -64.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("1_8dngu")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_7itj5")
+costLabel = NodePath("../CostLabel")
+playerInteractable = true
+isSource = true
+
+[node name="CostLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -64.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0G"
+label_settings = SubResource("LabelSettings_poslg")
+horizontal_alignment = 1
+vertical_alignment = 1

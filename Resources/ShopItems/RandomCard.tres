@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ShopItemInfo" load_steps=3 format=3 uid="uid://18ulh76ofrjt"]
+
+[ext_resource type="Texture2D" uid="uid://3fwq26sk8pxb" path="res://Sprites/ShopIcons/RandomCard.png" id="1_wgmhy"]
+[ext_resource type="Script" uid="uid://ba3kxomianfkj" path="res://Scripts/ShopItemInfo.gd" id="1_yejla"]
+
+[resource]
+script = ExtResource("1_yejla")
+name = "Random Card"
+icon = ExtResource("1_wgmhy")
+price = PackedInt32Array(3, 4, 6)
+metadata/_custom_type_script = "uid://ba3kxomianfkj"

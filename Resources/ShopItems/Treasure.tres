@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ShopItemInfo" load_steps=3 format=3 uid="uid://cc8uyejeg5kom"]
+
+[ext_resource type="Script" uid="uid://ba3kxomianfkj" path="res://Scripts/ShopItemInfo.gd" id="1_2utsr"]
+[ext_resource type="Texture2D" uid="uid://bc8bkexai174j" path="res://Sprites/SendQueue/ReceiveTreasure.png" id="1_3cxlg"]
+
+[resource]
+script = ExtResource("1_2utsr")
+name = "Treasure"
+icon = ExtResource("1_3cxlg")
+price = PackedInt32Array(4, 6, 8)
+metadata/_custom_type_script = "uid://ba3kxomianfkj"

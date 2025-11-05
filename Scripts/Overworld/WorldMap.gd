@@ -262,7 +262,6 @@ func _ready() -> void:
 	generate_map_node_info()
 	#Set the player at the home pip
 	mapPlayer.set_current_pip(homePip)
-	mapPlayer.enabled = true
 	Persist.game.itemHandler.inventory_updated.connect(inventory_updated)
 
 ##Construct a region
@@ -781,19 +780,17 @@ func pip_activated(activePip : MapPip):
 		_:
 			newScreenType = GameRoot.ScreenType.WORLD_MAP
 	#Cutscenes
-	if newScreenType == GameRoot.ScreenType.CUTSCENE:
-		print("Play cutscene!")
-	else:
-		gameRoot.switch_scenes(newScreenType, activePip.nodeInfo)
+	gameRoot.switch_scenes(newScreenType, activePip.nodeInfo)
 
 ##When you get a new inventory state
-func inventory_updated(currentInventory : ItemHandler.ApItemGroup):
+func inventory_updated(_currentInventory : ItemHandler.ApItemGroup):
 	var gameRoot = get_parent() as GameRoot
-	if currentInventory.events.has("Booster Pack"):
-		Persist.game.itemHandler.usedItems.events.append("Booster Pack")
+	#If you're not on the main menu without the booster pack visible, don't cause event
+	if gameRoot.boosterPack.visible or !visible:
+		return
+	if Persist.game.itemHandler.try_event("Booster Pack"):
 		gameRoot.boosterPack.setup()
-	elif currentInventory.events.has("Treasure"):
-		Persist.game.itemHandler.usedItems.events.append("Treasure")
+	elif Persist.game.itemHandler.try_event("Treasure"):
 		gameRoot.switch_scenes(GameRoot.ScreenType.TREASURE)
 
 func set_active(nState : bool, _nInfo : Dictionary):
@@ -801,3 +798,7 @@ func set_active(nState : bool, _nInfo : Dictionary):
 	$WorldMapUI.visible = nState
 	inventory_updated(Persist.game.itemHandler.current_inventory())
 	super(nState, _nInfo)
+
+##Clear the node the player is at
+func player_clear_node():
+	mapPlayer.curPip.defeat()

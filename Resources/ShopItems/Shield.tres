@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ShopItemInfo" load_steps=3 format=3 uid="uid://n5r6j7ikg0d6"]
+
+[ext_resource type="Texture2D" uid="uid://cven2anwr1kpu" path="res://Sprites/ShopIcons/Sheild.png" id="1_prvs3"]
+[ext_resource type="Script" uid="uid://ba3kxomianfkj" path="res://Scripts/ShopItemInfo.gd" id="1_y7302"]
+
+[resource]
+script = ExtResource("1_y7302")
+name = "Shield"
+icon = ExtResource("1_prvs3")
+price = PackedInt32Array(2, 4, 6)
+metadata/_custom_type_script = "uid://ba3kxomianfkj"

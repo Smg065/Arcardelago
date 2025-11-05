@@ -2,5 +2,20 @@
 
 [ext_resource type="Script" uid="uid://cmteudlhxf2sd" path="res://Scripts/Cutscene.gd" id="1_7bhn1"]
 
-[node name="Cutscene" type="CanvasLayer"]
+[node name="Cutscene" type="CanvasLayer" node_paths=PackedStringArray("videoPlayer", "backdrop")]
 script = ExtResource("1_7bhn1")
+videoPlayer = NodePath("CutsceneStream")
+backdrop = NodePath("Backdrop")
+
+[node name="CutsceneStream" type="VideoStreamPlayer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Backdrop" type="TextureRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[connection signal="finished" from="CutsceneStream" to="." method="cutscene_over"]

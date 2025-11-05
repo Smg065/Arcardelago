@@ -124,6 +124,7 @@ var currentPerks : int
 ##Emits when the inventory is updated
 signal inventory_updated(currentInventory : ApItemGroup)
 signal hints_updated()
+signal cash_updated()
 
 func _init() -> void:
 	Archipelago.conn.obtained_item.connect(recieved_ap_item)
@@ -133,6 +134,11 @@ func _init() -> void:
 	if usedItems == null:
 		usedItems = ApItemGroup.new()
 	update_inventory()
+
+##Spend money and update display for it
+func spend(cost : int):
+	currentMoney -= cost
+	cash_updated.emit()
 
 ##Calls when you get an item during gameplay
 func recieved_ap_item(incomingItem : NetworkItem, updateInventory := true):
@@ -154,6 +160,7 @@ func update_inventory():
 					Persist.gain_card(CardData.new_default())
 				"Money":
 					currentMoney += count * 10
+					cash_updated.emit()
 				"Perk":
 					currentPerks += count
 				"Unstable Trap":
@@ -219,7 +226,8 @@ func trade_down_trap():
 	##The card that the target card will become
 	var toGain : CardData = worseCards.pick_random()
 	Persist.lose_card(toLose)
-	toGain.scout()
+	if !toGain.isDefault:
+		toGain.scout()
 	Persist.gain_card(toGain)
 
 ##Creates the current inventory
@@ -230,3 +238,23 @@ func current_inventory() -> ApItemGroup:
 func new_known_card(itemData : NetworkItem):
 	itemData.output()
 	hints_updated.emit()
+
+##Try to activate an event
+func try_event(eventName : String) -> bool:
+	if current_inventory().events.has(eventName):
+		usedItems.events.append(eventName)
+		return true
+	return false
+
+##Use the item
+func use_item(itemName : String, reusable : bool = false) -> bool:
+	if reusable:
+		if receivedItems.items.has(itemName):
+			if !usedItems.items.has(itemName):
+				usedItems.items.append(itemName)
+			return true
+		return false
+	if current_inventory().items.has(itemName):
+		usedItems.items.append(itemName)
+		return true
+	return false

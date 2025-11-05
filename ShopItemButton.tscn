@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://cwvqqqxytkxka"]
+
+[ext_resource type="Texture2D" uid="uid://bdro4mvx8dgjy" path="res://Sprites/Delete.png" id="1_fea3p"]
+[ext_resource type="Script" uid="uid://c2vv2ps43imoa" path="res://Scripts/UI/ShopItemButton.gd" id="2_jbb8p"]
+
+[node name="ShopItemButton" type="Button"]
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 32
+text = "0G"
+icon = ExtResource("1_fea3p")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+script = ExtResource("2_jbb8p")
+
+[connection signal="pressed" from="." to="." method="pressed"]

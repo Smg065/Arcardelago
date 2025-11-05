@@ -28,6 +28,7 @@ screenNodes = {
 boosterPack = NodePath("Booster Pack")
 
 [node name="World Map" parent="." instance=ExtResource("1_inlal")]
+visible = false
 follow_viewport_enabled = true
 
 [node name="Battlescreen" parent="." instance=ExtResource("2_vrd06")]
@@ -46,7 +47,6 @@ visible = false
 visible = false
 
 [node name="Home" parent="." instance=ExtResource("8_824mg")]
-visible = false
 
 [node name="Cutscene" parent="." instance=ExtResource("9_ies6u")]
 visible = false

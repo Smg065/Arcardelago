@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ShopItemInfo" load_steps=3 format=3 uid="uid://bhn6sdwyl0ael"]
+
+[ext_resource type="Texture2D" uid="uid://1e8b0o13wk81" path="res://Sprites/ShopIcons/Scout.png" id="1_3ymwq"]
+[ext_resource type="Script" uid="uid://ba3kxomianfkj" path="res://Scripts/ShopItemInfo.gd" id="1_ay3tx"]
+
+[resource]
+script = ExtResource("1_ay3tx")
+name = "Scout"
+icon = ExtResource("1_3ymwq")
+price = PackedInt32Array(1, 2, 3)
+metadata/_custom_type_script = "uid://ba3kxomianfkj"

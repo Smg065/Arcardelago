@@ -277,8 +277,10 @@ func build_info():
 		#Cutscenes
 		MapNodeType.OBSTACLE:
 			nodeInfo["Type"] = "Obstacle"
+			nodeInfo["Color"] = colorIndex
 		MapNodeType.GATE:
 			nodeInfo["Type"] = "Gate"
+			nodeInfo["Color"] = colorIndex
 		MapNodeType.PORTAL:
 			nodeInfo["Type"] = "Portal"
 		#Enemies

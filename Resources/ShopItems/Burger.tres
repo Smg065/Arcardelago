@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ShopItemInfo" load_steps=3 format=3 uid="uid://g47wd8v2mcaj"]
+
+[ext_resource type="Texture2D" uid="uid://cjl4dp4m8g7qk" path="res://Sprites/ShopIcons/Burger.png" id="1_eendv"]
+[ext_resource type="Script" uid="uid://ba3kxomianfkj" path="res://Scripts/ShopItemInfo.gd" id="1_l1p2g"]
+
+[resource]
+script = ExtResource("1_l1p2g")
+name = "Burger"
+icon = ExtResource("1_eendv")
+price = PackedInt32Array(3, 4, 6)
+metadata/_custom_type_script = "uid://ba3kxomianfkj"

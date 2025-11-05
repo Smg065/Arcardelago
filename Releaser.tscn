@@ -1,6 +1,79 @@
-[gd_scene load_steps=2 format=3 uid="uid://rmla3d3vqoar"]
+[gd_scene load_steps=11 format=3 uid="uid://rmla3d3vqoar"]
 
 [ext_resource type="Script" uid="uid://dqng2sd2mn64o" path="res://Scripts/Releaser.gd" id="1_ln082"]
+[ext_resource type="Texture2D" uid="uid://bx1335alayi00" path="res://Sprites/Backdrops/WhiteBattleEdges.png" id="2_8eh4w"]
+[ext_resource type="Texture2D" uid="uid://b3pjntrbp2phm" path="res://Sprites/Backdrops/RedBattleEdges.png" id="3_fb0fd"]
+[ext_resource type="Texture2D" uid="uid://bmv2ui1ix6wfx" path="res://Sprites/Backdrops/GreenBattleEdges.png" id="4_vrtkt"]
+[ext_resource type="Texture2D" uid="uid://b5iqhugsmawxd" path="res://Sprites/Backdrops/PurpleBattleEdges.png" id="5_cr6mt"]
+[ext_resource type="Texture2D" uid="uid://bhoq5lxgdwfco" path="res://Sprites/Backdrops/OrangeBattleEdges.png" id="6_rtb8n"]
+[ext_resource type="Texture2D" uid="uid://dosa43dyl6ir8" path="res://Sprites/Backdrops/BlueBattleEdges.png" id="7_na58j"]
+[ext_resource type="Texture2D" uid="uid://8qxf7urhaeco" path="res://Sprites/Backdrops/YellowBattleEdges.png" id="8_84663"]
+[ext_resource type="Texture2D" uid="uid://d25degu42t1xi" path="res://Sprites/Monolith.png" id="9_vrtkt"]
+[ext_resource type="PackedScene" uid="uid://dj0bi4scf7x7c" path="res://Resources/Battle/CardSlot.tscn" id="10_cr6mt"]
 
-[node name="Releaser" type="CanvasLayer"]
+[node name="Releaser" type="CanvasLayer" node_paths=PackedStringArray("backdrop", "cardSlots", "releaseButton")]
 script = ExtResource("1_ln082")
+backdrop = NodePath("Backdrop")
+backdropOptions = Array[Texture2D]([ExtResource("2_8eh4w"), ExtResource("3_fb0fd"), ExtResource("4_vrtkt"), ExtResource("5_cr6mt"), ExtResource("6_rtb8n"), ExtResource("7_na58j"), ExtResource("8_84663")])
+cardSlots = [NodePath("Monolith/MidCards/CardSlot"), NodePath("Monolith/MidCards/CardSlot2"), NodePath("Monolith/MidCards/CardSlot3")]
+releaseButton = NodePath("Monolith/ReleaseButton")
+
+[node name="Backdrop" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_na58j")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Monolith" type="TextureRect" parent="."]
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+texture = ExtResource("9_vrtkt")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="MidCards" type="HBoxContainer" parent="Monolith"]
+z_index = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.059670784
+anchor_top = 0.2685185
+anchor_right = 0.9423868
+anchor_bottom = 0.6867284
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="CardSlot" parent="Monolith/MidCards" instance=ExtResource("10_cr6mt")]
+layout_mode = 2
+playerInteractable = true
+
+[node name="CardSlot2" parent="Monolith/MidCards" instance=ExtResource("10_cr6mt")]
+layout_mode = 2
+playerInteractable = true
+
+[node name="CardSlot3" parent="Monolith/MidCards" instance=ExtResource("10_cr6mt")]
+layout_mode = 2
+playerInteractable = true
+
+[node name="ReleaseButton" type="Button" parent="Monolith"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.055555556
+anchor_top = 0.77006173
+anchor_right = 0.93621397
+anchor_bottom = 0.8904321
+grow_horizontal = 2
+grow_vertical = 0
+text = "Release"
+metadata/_edit_use_anchors_ = true
+
+[connection signal="pressed" from="Monolith/ReleaseButton" to="." method="release_cards"]

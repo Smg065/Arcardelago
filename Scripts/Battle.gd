@@ -79,15 +79,8 @@ func setup_battle(nBattleInfo : BattleInfo):
 	var battleEnemies := choose_enemy_cards()
 	setup_feild(battleEnemies)
 	#Handle Event Tags
-	var curInventory := Persist.game.itemHandler.current_inventory()
-	if curInventory.events.has("Fog Trap"):
-		Persist.game.itemHandler.usedItems.events.append("Fog Trap")
-		battleFog.show()
-	else:
-		battleFog.hide()
-	var hasStackless : bool = curInventory.events.has("Stackless Trap")
-	if hasStackless:
-		Persist.game.itemHandler.usedItems.events.append("Stackless Trap")
+	battleFog.visible = Persist.game.itemHandler.try_event("Fog Trap")
+	var hasStackless : bool = Persist.game.itemHandler.try_event("Stackless Trap")
 	for eachSlot in playerSlots:
 		eachSlot.squarable = !hasStackless
 
@@ -158,8 +151,6 @@ func choose_enemy_cards() -> Array[EncounterSlot]:
 					continue
 				@warning_ignore("integer_division")
 				var bossColor = (eachCard.apId - 6500000) / 10000
-				print(eachCard.apId)
-				print(bossColor)
 				if battleInfo.region != bossColor:
 					continue
 				#Found the boss card!

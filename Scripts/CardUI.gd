@@ -174,6 +174,7 @@ func try_remove_card(inCard : CardData) -> bool:
 	if cardData == inCard:
 		if compressedCardData.size() == 0:
 			queue_free()
+			try_notify_slot_moved(get_parent())
 		else:
 			build(compressedCardData.pop_front())
 		return true
@@ -258,6 +259,9 @@ func _get_drag_data(_at_position: Vector2) -> Variant:
 	if cardParent is CardSlot:
 		if !cardParent.playerInteractable:
 			return null
+		if cardParent is ShopCard:
+			if !cardParent.purchasable():
+				return null
 	#Create a preview of this card while it moves along
 	var cardPreview = self.duplicate(0)
 	cardPreview.custom_minimum_size = Vector2(64 * ratio, 64)
@@ -288,6 +292,8 @@ func warn_scrollbox_battlecard(movingData : Array[CardData]):
 ##Notify card slots when data moves, and add cards you buy or find
 func try_notify_slot_moved(oldParent):
 	if oldParent is CardSlot:
+		if oldParent is ShopCard:
+			Persist.game.itemHandler.spend(oldParent.cardCost)
 		if oldParent.isSource:
 			Persist.currentCards.append_array(all_card_data())
 		oldParent.holding_updated.emit(oldParent)
@@ -358,6 +364,7 @@ func extract_data(toExtract : int = -1) -> Array[CardData]:
 			else:
 				update_card_slot_mouse()
 				queue_free()
+				try_notify_slot_moved(get_parent())
 			toExtract -= 1
 	update_compressed_vis()
 	if get_parent() is CardSlot:
@@ -373,4 +380,11 @@ func all_card_data() -> Array[CardData]:
 	var output : Array[CardData]
 	output.append(cardData)
 	output.append_array(compressedCardData)
+	return output
+
+##Card value
+func card_value(useDifficulty : bool = true) -> int:
+	var output : int = 0
+	for eachCard in all_card_data():
+		output += eachCard.card_value(useDifficulty)
 	return output

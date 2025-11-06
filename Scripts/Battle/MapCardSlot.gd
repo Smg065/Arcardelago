@@ -22,22 +22,23 @@ func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 		#No source to source dragging
 		if cardSource.isSource or isSource:
 			return false
-	if get_child_count() > 0:
+	var curCard : CardUI = get_card()
+	if curCard != null:
 		if !squarable:
 			return false
-		var curCard : CardUI = get_child(0)
 		if curCard == data["CardUI"]:
 			return false
 		if !curCard.cardData.is_comparable(data["CardUI"].cardData):
 			return false
-		return get_child(0).square_stackable(data["CardUI"])
+		return curCard.square_stackable(data["CardUI"])
 	return true
 
 func _drop_data(_at_position: Vector2, data: Variant) -> void:
 	var inCard : CardUI = data["CardUI"]
 	#Move squarable data over
-	if get_child_count() > 0:
-		get_child(0).square_stack(inCard)
+	var curCard : CardUI = get_card()
+	if curCard != null:
+		curCard.square_stack(inCard)
 	else:
 		#Move a single card as a child to the new location
 		if inCard.compressedCardData.size() == 0:
@@ -49,6 +50,7 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 			add_child(newCard)
 			newCard.build(inCard.extract_data(1)[0])
 			setup_card(newCard)
+	holding_updated.emit(self)
 
 ##Make it fit correctly
 func setup_card(cardToSetup : CardUI):
@@ -57,9 +59,15 @@ func setup_card(cardToSetup : CardUI):
 	#Mouse controls exist here now
 	mouse_filter = Control.MOUSE_FILTER_STOP
 
+##Gets the card that's in the slot
+func get_card() -> CardUI:
+	if get_child_count() <= 0:
+		return null
+	return get_child(0) as CardUI
+
 ##Make the card cease
 func release_card():
-	if get_child_count() <= 0:
+	var childCard := get_card()
+	if childCard == null:
 		return
-	var childCard := get_child(0)
 	childCard.queue_free()

@@ -13,34 +13,39 @@ const INVENTORY = ItemClasses.INVENTORY
 
 ##The table containing all item names to item types.
 const ITEM_NAME_TABLE : Dictionary[String, ItemClasses] = {
+	#Filler
 	"Default Card"    : INSTANT,
 	"Money"           : INSTANT,
 	"Booster Pack"    : EVENT,
 	"Perk"            : INSTANT,
 	"Random Card"     : INSTANT,
 	"Scout"           : INSTANT,
-	"Sheild"          : EVENT,
+	"Shield"          : EVENT,
 	"Treasure"        : EVENT,
 	"Burger"          : INSTANT,
-	"Extra Life"      : EVENT,
+	"Extra Life"      : INSTANT,
+	#Useful
 	"Steel Stamp"     : INVENTORY,
 	"Harmony Stamp"   : INVENTORY,
 	"Ghost Stamp"     : INVENTORY,
 	"Square Stamp"    : INVENTORY,
 	"Gold Stamp"      : INVENTORY,
 	"House Upgrade"   : INVENTORY,
+	#Progression
 	"Bottle"          : INVENTORY,
 	"Axe"             : INVENTORY,
 	"Castle Key"      : INVENTORY,
 	"Pickaxe"         : INVENTORY,
 	"Boat"            : INVENTORY,
 	"Shovel"          : INVENTORY,
+	#Proguseful
 	"Red Sphere"      : INVENTORY,
 	"Green Sphere"    : INVENTORY,
 	"Violet Sphere"   : INVENTORY,
 	"Orange Sphere"   : INVENTORY,
 	"Blue Sphere"     : INVENTORY,
 	"Yellow Sphere"   : INVENTORY,
+	#Traps
 	"Unstable Trap"   : INSTANT,
 	"Fog Trap"        : EVENT,
 	"Release Trap"    : INSTANT,
@@ -264,19 +269,38 @@ func update_inventory():
 				"Trade Down Trap":
 					for repeat_trap in count:
 						trade_down_trap()
-	usedItems.instants = receivedItems.instants.duplicate()
+	usedItems.instants = localItems.combine(receivedItems).instants
 	inventory_updated.emit(currentItems)
 
 ##Saves the used items to the json. Received items are saved APSide.
 func json_save() -> Dictionary:
 	if usedItems == null:
 		usedItems = ApItemGroup.new()
-	return usedItems.json_save()
+	if localItems == null:
+		localItems = ApItemGroup.new()
+	return {
+		"usedItems" : usedItems.json_save(),
+		"localItems" : localItems.json_save(),
+		"currentMoney" : currentMoney,
+		"currentPerks" : currentPerks,
+		"curgers" : curgers,
+		"burgotals" : burgotals,
+		"currentLives" : currentLives,
+		"overscouts" : overscouts
+		}
 
 ##Loads the used items from the json.
 func json_load(inData : Dictionary):
 	usedItems = ApItemGroup.new()
-	usedItems.json_load(inData)
+	localItems = ApItemGroup.new()
+	usedItems.json_load(inData["usedItems"])
+	localItems.json_load(inData["localItems"])
+	currentMoney = inData["currentMoney"]
+	currentPerks = inData["currentPerks"]
+	curgers = inData["curgers"]
+	burgotals = inData["burgotals"]
+	currentLives = inData["currentLives"]
+	overscouts = inData["overscouts"]
 
 ##Each trap card you own has a 50% chance to release
 func unstable_trap():

@@ -29,10 +29,10 @@ ExtResource("11_5qpgp"): 10,
 ExtResource("12_yxl17"): 10
 })
 shopItemsHolder = NodePath("Items/VBoxContainer/RandomItems")
-cardSeller = NodePath("Items/VBoxContainer/FixedItems/Card Seller/CardSlot")
-sellButton = NodePath("Items/VBoxContainer/FixedItems/Card Seller/Sell Button")
-cardReleaser = NodePath("Items/VBoxContainer/FixedItems/Card Seller/CardSlot")
-releaserButton = NodePath("Items/VBoxContainer/FixedItems/Card Seller/Sell Button")
+cardSeller = NodePath("Items/VBoxContainer/FixedItems/Sell Control/Sell Slot")
+sellButton = NodePath("Items/VBoxContainer/FixedItems/Sell Control/Sell Button")
+cardReleaser = NodePath("Items/VBoxContainer/FixedItems/Releaser Control/Release Slot")
+releaserButton = NodePath("Items/VBoxContainer/FixedItems/Releaser Control/Releaser Button")
 
 [node name="Items" type="ReferenceRect" parent="."]
 anchors_preset = -1
@@ -61,18 +61,18 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Card Seller" type="Control" parent="Items/VBoxContainer/FixedItems"]
+[node name="Sell Control" type="Control" parent="Items/VBoxContainer/FixedItems"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="CardSlot" parent="Items/VBoxContainer/FixedItems/Card Seller" instance=ExtResource("3_c0ofq")]
+[node name="Sell Slot" parent="Items/VBoxContainer/FixedItems/Sell Control" instance=ExtResource("3_c0ofq")]
 layout_mode = 1
 anchors_preset = -1
 offset_bottom = -58.399994
 playerInteractable = true
 squarable = true
 
-[node name="Sell Button" type="Button" parent="Items/VBoxContainer/FixedItems/Card Seller"]
+[node name="Sell Button" type="Button" parent="Items/VBoxContainer/FixedItems/Sell Control"]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 1.0
@@ -84,18 +84,18 @@ grow_vertical = 0
 theme_override_font_sizes/font_size = 32
 text = "Sell - 0G"
 
-[node name="Card Releaser2" type="Control" parent="Items/VBoxContainer/FixedItems"]
+[node name="Releaser Control" type="Control" parent="Items/VBoxContainer/FixedItems"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="CardSlot" parent="Items/VBoxContainer/FixedItems/Card Releaser2" instance=ExtResource("3_c0ofq")]
+[node name="Release Slot" parent="Items/VBoxContainer/FixedItems/Releaser Control" instance=ExtResource("3_c0ofq")]
 layout_mode = 1
 anchors_preset = -1
 offset_bottom = -58.399994
 playerInteractable = true
 squarable = true
 
-[node name="Releaser Button" type="Button" parent="Items/VBoxContainer/FixedItems/Card Releaser2"]
+[node name="Releaser Button" type="Button" parent="Items/VBoxContainer/FixedItems/Releaser Control"]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 1.0

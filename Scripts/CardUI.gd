@@ -297,7 +297,7 @@ func try_notify_slot_moved(oldParent):
 			oldParent.purchase()
 		if oldParent.isSource:
 			Persist.currentCards.append_array(all_card_data())
-		oldParent.holding_updated.emit(oldParent)
+		oldParent.holding_updated.emit(oldParent as CardSlot)
 
 ##Allow the slot to stop taking mouse events
 func update_card_slot_mouse():

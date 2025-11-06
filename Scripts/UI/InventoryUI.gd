@@ -9,6 +9,10 @@ const HalfModulated = Color(.5,.5,.5 ,.5)
 @export var goldLabel : Label
 ##Displays the hint points.
 @export var hintPointLabel : Label
+##Displays the lives you have.
+@export var lifeLabel : Label
+##Displays the burgers you have.
+@export var burgel : Label
 ##Displays the house level.
 @export var houseUpgradeLabel : Label
 ##Displays the backdrops of reachable regions.
@@ -36,6 +40,7 @@ const HalfModulated = Color(.5,.5,.5 ,.5)
 @export var eventQueueHolder : HBoxContainer
 @export var queueTabPrefab : PackedScene
 @export var eventTextureTable : Dictionary[String, Texture2D]
+##The release conditions for the events
 @export var eventReleaseTable : Dictionary[String, QueuedEvent.ReleaseType]
 
 func _ready() -> void:
@@ -52,7 +57,7 @@ func _ready() -> void:
 ##Updates the items you've collected as visuals
 func update_visuals(currentInventory : ItemHandler.ApItemGroup):
 	var permanentItems : PackedStringArray = Persist.game.itemHandler.receivedItems.items
-	houseUpgradeLabel.text = "House Level: %s" % (currentInventory.items.count("House Upgrade") + 1)
+	houseUpgradeLabel.text = "House Lvl: %s" % (currentInventory.items.count("House Upgrade") + 1)
 	#Items
 	for eachColor in 6:
 		var colorName = ColorCatagory.COLOR_NAMES[eachColor]

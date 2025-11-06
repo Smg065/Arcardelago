@@ -9,9 +9,11 @@ class_name Shop
 
 @export var cardSeller : CardSlot
 @export var sellButton : Button
+@export var sellValue : int
 
 @export var cardReleaser : CardSlot
 @export var releaserButton : Button
+@export var releaseCost : int
 
 var itemWeightMax : int
 var currentCardpool : Array[CardData]
@@ -21,6 +23,13 @@ func _ready() -> void:
 	itemWeightMax = 0
 	for eachValue in itemTable.values():
 		itemWeightMax += eachValue
+	Persist.game.itemHandler.inventory_updated.connect(inventory_updated)
+	Persist.game.itemHandler.cash_updated.connect(sell_button_clickable)
+	Persist.game.itemHandler.cash_updated.connect(release_button_clickable)
+	cardSeller.holding_updated.connect(sell_slot_updated)
+	cardReleaser.holding_updated.connect(release_slot_updated)
+	sell_button_clickable()
+	release_button_clickable()
 
 ##Sets if this screen is active in the map viewer or not
 func set_active(nState : bool, nInfo : Dictionary):
@@ -77,7 +86,46 @@ func bought_item(boughtItem : ShopItemButton):
 
 ##Exit the shop
 func leave_shop():
+	cardSeller.release_card()
+	cardReleaser.release_card()
 	var gameRoot : GameRoot = get_parent()
 	gameRoot.scrollBox.return_cards()
 	gameRoot.clear_map_pip()
 	gameRoot.switch_scenes()
+
+##Calls when the sell slot card changes
+func sell_slot_updated(_slot : CardSlot):
+	var curCard : CardUI = cardSeller.get_card()
+	if curCard == null:
+		sellValue = -1
+	else:
+		sellValue = ceili(curCard.card_value(false) * 0.5)
+	sell_button_clickable()
+
+##Calls when the release slot card changes
+func release_slot_updated(_slot : CardSlot):
+	var curCard : CardUI = cardReleaser.get_card()
+	if curCard == null:
+		releaseCost = -1
+	else:
+		releaseCost = ceili(curCard.card_value() * 0.75)
+	release_button_clickable()
+
+##Updates if you can click the sell button
+func sell_button_clickable():
+	sellButton.text = "Sell - %sG" % max(sellValue, 0)
+	sellButton.disabled = cardSeller.get_card() == null
+
+##Updates if you can click the release button
+func release_button_clickable():
+	releaserButton.text = "Release - %sG" % max(releaseCost, 0)
+	releaserButton.disabled = cardReleaser.get_card() == null or releaseCost > Persist.game.itemHandler.currentMoney
+
+##When you get a new inventory state
+func inventory_updated(_currentInventory : ItemHandler.ApItemGroup):
+	var gameRoot = get_parent() as GameRoot
+	#If you're not on the main menu without the booster pack visible, don't cause event
+	if gameRoot.boosterPack.visible or !visible:
+		return
+	if Persist.game.itemHandler.try_event("Booster Pack"):
+		gameRoot.boosterPack.setup()

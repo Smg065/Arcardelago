@@ -195,3 +195,11 @@ func lose_card(toLose : CardData):
 func gain_card(toGain : CardData):
 	currentCards.append(toGain)
 	deck_changed.emit()
+
+##Put a random card in your current cards
+func gain_random():
+	var currentCardpool := game.current_cardpool()
+	if currentCardpool.size() > 0:
+		gain_card(currentCardpool.pick_random())
+	else:
+		gain_card(CardData.new_default())

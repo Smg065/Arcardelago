@@ -9,7 +9,10 @@ var gameCardsets : Dictionary[String, GameCardset]
 var existingWords : Dictionary[String, NameFlags]
 var fictionalWords : Dictionary[String, FictionalNameFlags]
 var existingNames : Dictionary[String, NameData]
+##All cards that exist in this game
 var allCards : Array[CardData]
+##Locations that have been scouted this game
+var knownLoctions : PackedInt32Array
 
 ##The Item Handler for AP data, including save data
 var itemHandler : ItemHandler
@@ -153,3 +156,29 @@ func current_cardpool() -> Array[CardData]:
 		#It must be in the current cardpool
 		currentCardpool.append(eachCard)
 	return currentCardpool
+
+##Scout for a card you haven't seen yet.
+func scout_unknown():
+	##A list of all cards you have not come across yet
+	var unknownCards : Array[CardData]
+	for eachCard in allCards:
+		#This is just a hint, don't do that
+		if eachCard.enemyCard:
+			continue
+		#But cards you don't know but can scout are fair game
+		if knownLoctions.has(eachCard.apId):
+			continue
+		unknownCards.append(eachCard)
+	##Prioritize Non-Cardpool cards if possible first.
+	var priorityUnknowns : Array[CardData] = unknownCards.duplicate()
+	for inCardpool in current_cardpool():
+		priorityUnknowns.erase(inCardpool)
+	var toScout : CardData = null
+	if priorityUnknowns.size() > 0:
+		toScout = priorityUnknowns.pick_random()
+	elif unknownCards.size() > 0:
+		toScout = unknownCards.pick_random()
+	if toScout != null:
+		toScout.scout()
+	else:
+		Persist.game.itemHandler.increase_overscouts()

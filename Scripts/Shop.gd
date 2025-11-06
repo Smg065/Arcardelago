@@ -14,6 +14,7 @@ class_name Shop
 @export var releaserButton : Button
 
 var itemWeightMax : int
+var currentCardpool : Array[CardData]
 
 ##Precalculate the shop info
 func _ready() -> void:
@@ -32,12 +33,12 @@ func set_active(nState : bool, nInfo : Dictionary):
 func setup_shop():
 	for eachChild in shopItemsHolder.get_children():
 		eachChild.queue_free()
-	var currentCardpool := Persist.game.current_cardpool()
+	currentCardpool = Persist.game.current_cardpool()
 	for i in 5:
 		if randi_range(1,5)<=2:
 			setup_item()
 		else:
-			setup_card(currentCardpool)
+			setup_card()
 
 ##Adds an item from the item table based on a weighted roll
 func setup_item():
@@ -53,7 +54,7 @@ func setup_item():
 	shopItemsHolder.add_child(newItem)
 
 ##Adds a card from the cardpool, or a default card
-func setup_card(currentCardpool : Array[CardData]):
+func setup_card():
 	var newCardSlotRoot : Control = shopCardPrefab.instantiate()
 	var newCardSlot : ShopCard = newCardSlotRoot.get_child(0)
 	var newCard : CardUI = newCardSlot.cardPrefab.instantiate()
@@ -72,10 +73,11 @@ func setup_card(currentCardpool : Array[CardData]):
 ##Item Bought
 func bought_item(boughtItem : ShopItemButton):
 	Persist.game.itemHandler.spend(boughtItem.cost)
-	print(boughtItem.itemInfo.name)
+	Persist.game.itemHandler.received_item(boughtItem.itemInfo.name)
 
 ##Exit the shop
 func leave_shop():
 	var gameRoot : GameRoot = get_parent()
+	gameRoot.scrollBox.return_cards()
 	gameRoot.clear_map_pip()
 	gameRoot.switch_scenes()

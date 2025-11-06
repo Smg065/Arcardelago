@@ -100,7 +100,7 @@ func update_bars(_inHints : Array[NetworkHint] = []):
 				if Archipelago.conn.slot_locations[eachLocation]:
 					releasedCards += 1
 					foundCards += 1
-				elif Archipelago.conn._scout_cache.has(eachLocation):
+				elif Persist.game.knownLoctions.has(eachLocation):
 					foundCards += 1
 		foundBars[eachColor].value = foundCards
 		releasedBars[eachColor].value = releasedCards

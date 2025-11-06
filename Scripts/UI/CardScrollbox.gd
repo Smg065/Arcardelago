@@ -99,6 +99,7 @@ func add_card_from_ui_card(nCardUI : CardUI):
 
 ##Remove card data from the scrollbox
 func remove_card_from_data(nCard : CardData):
+	battleCards.erase(nCard)
 	for eachChild in flow.get_children():
 		var eachCard : CardUI = eachChild as CardUI
 		if eachCard.try_remove_card(nCard):

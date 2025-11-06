@@ -4,63 +4,67 @@ class_name ItemHandler
 ##What type of item each one that gets sent is
 enum ItemClasses {NONE, INSTANT, EVENT, INVENTORY}
 
-##An item group that has the AP ID group count
+##Instant Item Class
+const INSTANT = ItemClasses.INSTANT
+##Event Item Class
+const EVENT = ItemClasses.EVENT
+##Inventory Item Class
+const INVENTORY = ItemClasses.INVENTORY
+
+##The table containing all item names to item types.
+const ITEM_NAME_TABLE : Dictionary[String, ItemClasses] = {
+	"Default Card"    : INSTANT,
+	"Money"           : INSTANT,
+	"Booster Pack"    : EVENT,
+	"Perk"            : INSTANT,
+	"Random Card"     : INSTANT,
+	"Scout"           : INSTANT,
+	"Sheild"          : EVENT,
+	"Treasure"        : EVENT,
+	"Burger"          : INSTANT,
+	"Extra Life"      : EVENT,
+	"Steel Stamp"     : INVENTORY,
+	"Harmony Stamp"   : INVENTORY,
+	"Ghost Stamp"     : INVENTORY,
+	"Square Stamp"    : INVENTORY,
+	"Gold Stamp"      : INVENTORY,
+	"House Upgrade"   : INVENTORY,
+	"Bottle"          : INVENTORY,
+	"Axe"             : INVENTORY,
+	"Castle Key"      : INVENTORY,
+	"Pickaxe"         : INVENTORY,
+	"Boat"            : INVENTORY,
+	"Shovel"          : INVENTORY,
+	"Red Sphere"      : INVENTORY,
+	"Green Sphere"    : INVENTORY,
+	"Violet Sphere"   : INVENTORY,
+	"Orange Sphere"   : INVENTORY,
+	"Blue Sphere"     : INVENTORY,
+	"Yellow Sphere"   : INVENTORY,
+	"Unstable Trap"   : INSTANT,
+	"Fog Trap"        : EVENT,
+	"Release Trap"    : INSTANT,
+	"Trade Down Trap" : INSTANT,
+	"Stackless Trap"  : EVENT,
+	"Blind Trap"      : EVENT
+}
+
+##An item group that holds AP-Compatable items.
 class ApItemGroup:
 	var instants : Dictionary[String, int]
 	var events : PackedStringArray
 	var items : PackedStringArray
 	
 	##Calls when you get an item to see if the inventory needs to be updated
-	func recieved_ap_item(incomingItem : NetworkItem):
+	func received_ap_item(incomingItem : NetworkItem):
 		var itemName : String = incomingItem.get_name()
-		@warning_ignore("integer_division")
-		##The index that is used to determine which color the item is
-		var colorIndex : int = ((incomingItem.id - 6500000) / 10000) - 1
-		##The index that is used to determine which type of item this actually is
-		var itemIndex : int = incomingItem.id % 10000
-		var itemClass : ItemClasses
-			
-		match itemIndex:
-			#Default Card
-			0:
-				itemClass = ItemClasses.INSTANT
-			#Money
-			1:
-				itemClass = ItemClasses.INSTANT
-			#Booster Pack
-			2:
-				itemClass = ItemClasses.EVENT
-			#Perk
-			3:
-				itemClass = ItemClasses.INSTANT
-			#Stamp
-			1000:
-				itemClass = ItemClasses.INVENTORY
-			#House Upgrade
-			1001:
-				itemClass = ItemClasses.INVENTORY
-			#Obstacle Busters
-			2000:
-				itemClass = ItemClasses.INVENTORY
-			#Spheres
-			3000:
-				itemClass = ItemClasses.INVENTORY
-			#Traps
-			4000:
-				match colorIndex:
-					0:
-						itemClass = ItemClasses.INSTANT
-					1:
-						itemClass = ItemClasses.EVENT
-					2:
-						itemClass = ItemClasses.INSTANT
-					3:
-						itemClass = ItemClasses.INSTANT
-					4:
-						itemClass = ItemClasses.EVENT
-					5:
-						itemClass = ItemClasses.EVENT
-		
+		received_item(itemName)
+	
+	##Non-ap version of item reception
+	func received_item(itemName : String):
+		var itemClass : ItemClasses = ItemClasses.NONE
+		if ITEM_NAME_TABLE.has(itemName):
+			itemClass = ITEM_NAME_TABLE[itemName]
 		match itemClass:
 			ItemClasses.INSTANT:
 				if instants.has(itemName):
@@ -73,6 +77,21 @@ class ApItemGroup:
 				items.append(itemName)
 			_:
 				push_error("No item class found for item " + itemName)
+	
+	##Used to combine local and received APItems
+	func combine(combineGroup : ApItemGroup) -> ApItemGroup:
+		var output := ApItemGroup.new()
+		output.instants.merge(instants)
+		for otherInstants in combineGroup.instants:
+			if output.instants.has(otherInstants):
+				output.instants[otherInstants] += combineGroup.instants[otherInstants]
+			else:
+				output.instants[otherInstants] = combineGroup.instants[otherInstants]
+		output.events.append_array(events)
+		output.events.append_array(combineGroup.events)
+		output.items.append_array(items)
+		output.items.append_array(combineGroup.items)
+		return output
 	
 	##Called on received items, using used items as an input, to create the current items
 	func get_difference(comparedGroup : ApItemGroup) -> ApItemGroup:
@@ -112,23 +131,42 @@ class ApItemGroup:
 
 ##AP items you received
 var receivedItems : ApItemGroup
-##AP items you've used
+##Items that are sendable by AP but you found locally.
+var localItems : ApItemGroup
+##Items you've used
 var usedItems : ApItemGroup
-##Default Card Count
-var defaultCards : int
 ##Current Money
 var currentMoney : int
 ##Current Perks
 var currentPerks : int
+##Current Burgers
+var curgers : int
+##The total burgers you have found
+var burgotals : int
+##Current Exra Lives
+var currentLives : int
+##Overscouts
+var overscouts : int
 
 ##Emits when the inventory is updated
 signal inventory_updated(currentInventory : ApItemGroup)
+##Emits when new locations are cleared
 signal hints_updated()
+##Emits when your money changes
 signal cash_updated()
+##Emits when you gain a perk
+signal perks_updated()
+##Emits when your burgers change
+signal burgdated()
+##Emits when your lives are updated
+signal lives_updated()
+##Emits when you scout past the scouting total
+signal overscouts_updated()
 
 func _init() -> void:
-	Archipelago.conn.obtained_item.connect(recieved_ap_item)
+	Archipelago.conn.obtained_item.connect(received_ap_item)
 	receivedItems = ApItemGroup.new()
+	localItems = ApItemGroup.new()
 	for eachItem in Archipelago.conn.received_items:
 		receivedItems.recieved_ap_item(eachItem)
 	if usedItems == null:
@@ -145,11 +183,51 @@ func earn(income : int):
 	currentMoney += income
 	cash_updated.emit()
 
+##Increases the total perks you have
+func gain_perks(newPerks : int):
+	currentPerks += newPerks
+	perks_updated.emit()
+
+##Increases the total burgers you have
+func burgain(burgearnings : int):
+	curgers += burgearnings
+	burgotals += burgearnings
+	burgdated.emit()
+
+##Decrease the total burgers you have
+func eat(orderSize : int):
+	curgers -= orderSize
+	burgdated.emit()
+
+##Increases the total extra lives you have
+func gain_life(newLives : int):
+	currentLives += newLives
+	lives_updated.emit()
+
+##Dedcrease the total extra lives you have.[br]
+##Returns false if there's no lives remaining
+func lose_life() -> bool:
+	if currentLives == 0:
+		return false
+	currentLives -= 1
+	lives_updated.emit()
+	return true
+
+##Increase the number of scouts you've done that exceed the scout cap
+func increase_overscouts():
+	overscouts += 1
+	overscouts_updated.emit()
+
 ##Calls when you get an item during gameplay
-func recieved_ap_item(incomingItem : NetworkItem, updateInventory := true):
-	receivedItems.recieved_ap_item(incomingItem)
+func received_ap_item(incomingItem : NetworkItem, updateInventory := true):
+	receivedItems.received_ap_item(incomingItem)
 	if updateInventory:
 		update_inventory()
+
+##Calls when you find an item in your own world
+func received_item(incomingItem : String):
+	localItems.received_item(incomingItem)
+	update_inventory()
 
 ##Call to update the inventory for gameplay
 func update_inventory():
@@ -161,12 +239,22 @@ func update_inventory():
 			var count = currentItems.instants[eachType]
 			match eachType:
 				"Default Card":
-					defaultCards += count
-					Persist.gain_card(CardData.new_default())
+					for eachDefault in count:
+						Persist.gain_card(CardData.new_default())
 				"Money":
 					earn(count * 10)
 				"Perk":
-					currentPerks += count
+					gain_perks(count)
+				"Random Card":
+					for eachScout in count:
+						Persist.gain_random()
+				"Scout":
+					for eachScout in count:
+						Persist.game.scout_unknown()
+				"Burger":
+					burgain(count)
+				"Extra Life":
+					gain_life(count)
 				"Unstable Trap":
 					for repeat_trap in count:
 						unstable_trap()
@@ -236,7 +324,7 @@ func trade_down_trap():
 
 ##Creates the current inventory
 func current_inventory() -> ApItemGroup:
-	return receivedItems.get_difference(usedItems)
+	return localItems.combine(receivedItems).get_difference(usedItems)
 
 ##When you scout a card this function will run
 func new_known_card(itemData : NetworkItem):

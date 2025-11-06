@@ -402,6 +402,8 @@ func scout():
 	if isDefault or enemyCard:
 		push_error("Cannot Scout This Item!")
 		return
+	if !Persist.game.knownLoctions.has(apId):
+		Persist.game.knownLoctions.append(apId)
 	Archipelago.conn.scout(apId, 2, Persist.game.itemHandler.new_known_card)
 ##Releases the item in the card to the APWorld
 func release():

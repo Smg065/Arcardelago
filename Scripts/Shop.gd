@@ -129,3 +129,23 @@ func inventory_updated(_currentInventory : ItemHandler.ApItemGroup):
 		return
 	if Persist.game.itemHandler.try_event("Booster Pack"):
 		gameRoot.boosterPack.setup()
+
+func sell_pressed() -> void:
+	Persist.game.itemHandler.earn(sellValue)
+	var cardData : CardUI = cardSeller.get_card()
+	if cardData == null:
+		return
+	for eachData in cardData.all_card_data():
+		Persist.lose_card(eachData)
+	cardSeller.release_card()
+	sellButton.disabled = true
+
+func releaser_pressed() -> void:
+	Persist.game.itemHandler.spend(releaseCost)
+	var cardData : CardUI = cardReleaser.get_card()
+	if cardData == null:
+		return
+	for eachData in cardData.all_card_data():
+		eachData.release()
+	cardReleaser.release_card()
+	releaserButton.disabled = true

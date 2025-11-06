@@ -51,6 +51,8 @@ func _ready() -> void:
 	Persist.game.itemHandler.inventory_updated.connect(update_visuals)
 	Persist.game.itemHandler.hints_updated.connect(update_bars)
 	Persist.game.itemHandler.cash_updated.connect(update_counters)
+	Persist.game.itemHandler.burgdated.connect(update_counters)
+	Persist.game.itemHandler.lives_updated.connect(update_counters)
 	Persist.game.itemHandler.update_inventory()
 	#Archipelago.conn.
 
@@ -121,3 +123,5 @@ func update_counters() -> void:
 			locationsChecked += 1
 	locationsChecked *= Archipelago.conn.location_check_points
 	hintPointLabel.text = ": %03d/%03d" % [locationsChecked, hintCost]
+	burgel.text = ": %04d" % Persist.game.itemHandler.curgers
+	lifeLabel.text = ": %02d" % Persist.game.itemHandler.currentLives

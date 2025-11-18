@@ -1,10 +1,48 @@
 extends GameScreen
 class_name Home
 
+var houseLevel : int
+var highestLevelReward : int
+
 func _ready() -> void:
 	var gameRoot : GameRoot = get_parent()
 	gameRoot.boosterPack.setup()
 
-func exit_house():
+func set_active(nState : bool, nInfo : Dictionary) -> void:
+	if nState:
+		ColorCatagory.get_color(ColorCatagory.BASE_COLORS[nInfo["Region"] - 1].colorType)
+		claim_house_rewards()
+	super(nState, nInfo)
+
+##Update the total house level
+func notify_house_level() -> void:
+	var curInventory := Persist.game.itemHandler.current_inventory()
+	houseLevel = curInventory.items.count("House Upgrade") + 1
+
+##Get all rewards up to the date
+func claim_house_rewards() -> void:
+	notify_house_level()
+	#10 gold if it's a new start
+	if highestLevelReward == 0:
+		Persist.game.itemHandler.earn(10)
+	while highestLevelReward < houseLevel:
+		match highestLevelReward % 4:
+			#A booster pack to start so you have options
+			0:
+				Persist.game.itemHandler.received_item("Booster Pack")
+			#2 Default Cards to build up defences
+			1:
+				Persist.game.itemHandler.received_item("Default Card", false)
+				Persist.game.itemHandler.received_item("Default Card")
+			#A perk to start with more power to get to later parts
+			2:
+				Persist.game.itemHandler.gain_perks(1)
+			#A life to face-tank a difficult situation
+			3:
+				Persist.game.itemHandler.gain_life(1)
+		highestLevelReward += 1
+
+##Leave the house
+func exit_house() -> void:
 	var gameRoot : GameRoot = get_parent()
 	gameRoot.switch_scenes()

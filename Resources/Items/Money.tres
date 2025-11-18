@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ItemInfo" load_steps=3 format=3 uid="uid://bvbihnq6k6m8r"]
+
+[ext_resource type="Texture2D" uid="uid://1xnprywewpia" path="res://Sprites/Items/Money.png" id="1_od4xp"]
+[ext_resource type="Script" uid="uid://deyftckpqw4ql" path="res://Scripts/ItemInfo.gd" id="2_ee0yc"]
+
+[resource]
+script = ExtResource("2_ee0yc")
+name = "Money"
+icon = ExtResource("1_od4xp")
+metadata/_custom_type_script = "uid://ba3kxomianfkj"

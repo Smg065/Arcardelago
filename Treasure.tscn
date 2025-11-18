@@ -1,6 +1,85 @@
-[gd_scene load_steps=2 format=3 uid="uid://cq5yk4gayfnpc"]
+[gd_scene load_steps=7 format=3 uid="uid://cq5yk4gayfnpc"]
 
 [ext_resource type="Script" uid="uid://faodmv2tch4r" path="res://Scripts/Treasure.gd" id="1_r4olm"]
+[ext_resource type="PackedScene" uid="uid://dj0bi4scf7x7c" path="res://Resources/Battle/CardSlot.tscn" id="2_mgk8x"]
+[ext_resource type="Texture2D" uid="uid://br0o243gkidbu" path="res://Sprites/TreasureSceneBase.png" id="3_4hrw4"]
+[ext_resource type="Texture2D" uid="uid://dhw7e0wp6t57c" path="res://Sprites/TreasureSceneOverlay.png" id="4_mullh"]
+[ext_resource type="Texture2D" uid="uid://dh02q8c8olt14" path="res://Sprites/TreasureSceneLidBase.png" id="5_dc762"]
+[ext_resource type="Texture2D" uid="uid://c843uv406u61t" path="res://Sprites/TreasureSceneLidOverlay.png" id="6_tpwe0"]
 
-[node name="Treasure" type="CanvasLayer"]
+[node name="Treasure" type="CanvasLayer" node_paths=PackedStringArray("optionPair", "overlayTextures", "lidBack")]
 script = ExtResource("1_r4olm")
+optionPair = NodePath("RewardHBox")
+slotPrefab = ExtResource("2_mgk8x")
+overlayTextures = [NodePath("TreasureRatio/ChestBack/ChestOverlay"), NodePath("TreasureRatio/LidSpace/ChestLid/ChestOverlay")]
+lidBack = NodePath("TreasureRatio/LidSpace/ChestLid")
+
+[node name="TreasureRatio" type="AspectRatioContainer" parent="."]
+anchors_preset = -1
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+ratio = 1.3
+metadata/_edit_use_anchors_ = true
+
+[node name="ChestBack" type="TextureRect" parent="TreasureRatio"]
+layout_mode = 2
+texture = ExtResource("3_4hrw4")
+expand_mode = 1
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true
+
+[node name="ChestOverlay" type="TextureRect" parent="TreasureRatio/ChestBack"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 8
+texture = ExtResource("4_mullh")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="LidSpace" type="Control" parent="TreasureRatio"]
+layout_mode = 2
+
+[node name="ChestLid" type="TextureRect" parent="TreasureRatio/LidSpace"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -0.28395063
+anchor_right = 1.0
+anchor_bottom = 0.7160494
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_dc762")
+expand_mode = 1
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true
+
+[node name="ChestOverlay" type="TextureRect" parent="TreasureRatio/LidSpace/ChestLid"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 8
+texture = ExtResource("6_tpwe0")
+expand_mode = 1
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true
+
+[node name="RewardHBox" type="HBoxContainer" parent="."]
+anchors_preset = -1
+anchor_left = 0.25
+anchor_top = 0.25
+anchor_right = 0.75
+anchor_bottom = 0.7
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1

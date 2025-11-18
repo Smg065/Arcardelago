@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource("1_y7302")
+price = PackedInt32Array(2, 4, 6)
 name = "Shield"
 icon = ExtResource("1_prvs3")
-price = PackedInt32Array(2, 4, 6)
 metadata/_custom_type_script = "uid://ba3kxomianfkj"

@@ -31,8 +31,10 @@ ExtResource("12_yxl17"): 10
 shopItemsHolder = NodePath("Items/VBoxContainer/RandomItems")
 cardSeller = NodePath("Items/VBoxContainer/FixedItems/Sell Control/Sell Slot")
 sellButton = NodePath("Items/VBoxContainer/FixedItems/Sell Control/Sell Button")
+sellValue = null
 cardReleaser = NodePath("Items/VBoxContainer/FixedItems/Releaser Control/Release Slot")
 releaserButton = NodePath("Items/VBoxContainer/FixedItems/Releaser Control/Releaser Button")
+releaseCost = null
 
 [node name="Items" type="ReferenceRect" parent="."]
 anchors_preset = -1

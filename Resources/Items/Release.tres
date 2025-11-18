@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ItemInfo" load_steps=3 format=3 uid="uid://wew5n7vcpqyc"]
+
+[ext_resource type="Texture2D" uid="uid://oyq3dbe4ebtp" path="res://Sprites/Items/Release.png" id="1_tccbj"]
+[ext_resource type="Script" uid="uid://deyftckpqw4ql" path="res://Scripts/ItemInfo.gd" id="2_ilwi0"]
+
+[resource]
+script = ExtResource("2_ilwi0")
+name = "Default Card"
+icon = ExtResource("1_tccbj")
+metadata/_custom_type_script = "uid://ba3kxomianfkj"

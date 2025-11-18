@@ -3,7 +3,6 @@ class_name Shop
 
 @export var shopCardPrefab : PackedScene
 @export var itemButtonPrefab : PackedScene
-@export var itemTable : Dictionary[ShopItemInfo, int]
 
 @export var shopItemsHolder : HBoxContainer
 
@@ -21,7 +20,7 @@ var currentCardpool : Array[CardData]
 ##Precalculate the shop info
 func _ready() -> void:
 	itemWeightMax = 0
-	for eachValue in itemTable.values():
+	for eachValue in PD.shopItemTable.values():
 		itemWeightMax += eachValue
 	Persist.game.itemHandler.inventory_updated.connect(inventory_updated)
 	Persist.game.itemHandler.cash_updated.connect(sell_button_clickable)
@@ -54,8 +53,8 @@ func setup_item():
 	var newItemInfo : ShopItemInfo
 	var newItem : ShopItemButton = itemButtonPrefab.instantiate()
 	var weightedRoll := randi_range(1, itemWeightMax)
-	for eachItem in itemTable:
-		weightedRoll -= itemTable[eachItem]
+	for eachItem in PD.shopItemTable:
+		weightedRoll -= PD.shopItemTable[eachItem]
 		if weightedRoll <= 0:
 			newItemInfo = eachItem
 			break

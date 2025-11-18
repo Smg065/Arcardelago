@@ -38,6 +38,32 @@ var game : GameData
 ##Hint Points
 var hintPoints : int
 
+##Shop items, where the value is the weight that they show up.
+static var shopItemTable : Dictionary[ShopItemInfo, int] = {
+	load("res://Resources/ShopItems/BoosterPack.tres") : 4,
+	load("res://Resources/ShopItems/Burger.tres") : 10,
+	load("res://Resources/ShopItems/ExtraLife.tres") : 1,
+	load("res://Resources/ShopItems/Perk.tres") : 6,
+	load("res://Resources/ShopItems/RandomCard.tres") : 6,
+	load("res://Resources/ShopItems/Scout.tres") : 10,
+	load("res://Resources/ShopItems/Shield.tres") : 2,
+	load("res://Resources/ShopItems/Treasure.tres") : 2
+}
+
+##Treasure items, where the value is the copies of the given item.
+static var treasureItemTable : Dictionary[ItemInfo, int] = {
+	load("res://Resources/ShopItems/Scout.tres") : 5,
+	load("res://Resources/Items/DefaultCard.tres") : 4,
+	load("res://Resources/ShopItems/Burger.tres") : 3,
+	load("res://Resources/ShopItems/Perk.tres") : 2,
+	load("res://Resources/ShopItems/RandomCard.tres") : 2,
+	load("res://Resources/ShopItems/BoosterPack.tres") : 1,
+	load("res://Resources/ShopItems/ExtraLife.tres") : 1,
+	load("res://Resources/ShopItems/Shield.tres") : 1,
+	load("res://Resources/Items/Money.tres") : 1,
+	load("res://Resources/Items/Release.tres") : 1
+}
+
 ##What cards you have right now
 var currentCards : Array[CardData]
 ##Emit when your current cards change
@@ -176,6 +202,12 @@ func end_game_difficulty() -> int:
 		#Normal
 		_:
 			return 150
+
+##Highest quality cards in the given card list
+static func best_cards(inCards : Array[CardData]) -> Array[CardData]:
+	var outCards : Array[CardData]
+	outCards.append_array(PD.get_best(inCards, func(a) : return a.card_quality()) as Array[CardData])
+	return outCards
 
 ##Current Deck without cards that can't be released
 func releasable_cards() -> Array[CardData]:

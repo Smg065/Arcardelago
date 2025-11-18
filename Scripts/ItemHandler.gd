@@ -230,9 +230,10 @@ func received_ap_item(incomingItem : NetworkItem, updateInventory := true):
 		update_inventory()
 
 ##Calls when you find an item in your own world
-func received_item(incomingItem : String):
+func received_item(incomingItem : String, updateOnComplete : bool = true):
 	localItems.received_item(incomingItem)
-	update_inventory()
+	if updateOnComplete:
+		update_inventory()
 
 ##Call to update the inventory for gameplay
 func update_inventory():
@@ -321,7 +322,7 @@ func release_trap():
 
 ##Replaces one of the highest value cards you own with one of a lower quality
 func trade_down_trap():
-	var bestCards := PD.get_best(Persist.currentCards, func(a) : return a.card_quality())
+	var bestCards := PD.best_cards(Persist.currentCards)
 	#No cards in your deck means stop here
 	if bestCards.size() == 0:
 		return

@@ -93,6 +93,12 @@ const MULTI_PHSCR_TONE_GOAL = 5
 @export_flags("Progression", "Useful", "Trap") var itemQualityFlags : PackedInt32Array
 @export var itemSourcePref : SourcePref
 
+@export_group("Home Info", "home")
+@export var homeBedroom : HomeStructure
+@export var homeLobby : HomeStructure
+@export var homeKitchen : HomeStructure
+@export var homeWorkspace : HomeStructure
+
 static func get_color(inColorType : ColorTypes) -> Color:
 	match inColorType:
 		RED:

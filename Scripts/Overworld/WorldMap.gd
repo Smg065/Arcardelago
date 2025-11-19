@@ -796,8 +796,8 @@ func inventory_updated(_currentInventory : ItemHandler.ApItemGroup):
 func set_active(nState : bool, _nInfo : Dictionary):
 	mapPlayer.enabled = nState
 	$WorldMapUI.visible = nState
-	inventory_updated(Persist.game.itemHandler.current_inventory())
 	super(nState, _nInfo)
+	inventory_updated(Persist.game.itemHandler.current_inventory())
 
 ##Clear the node the player is at
 func player_clear_node():

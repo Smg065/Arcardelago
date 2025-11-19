@@ -1,7 +1,28 @@
-[gd_resource type="Resource" script_class="ColorCatagory" load_steps=24 format=3 uid="uid://b2g5amqfgqxp1"]
+[gd_resource type="Resource" script_class="ColorCatagory" load_steps=29 format=3 uid="uid://b2g5amqfgqxp1"]
 
 [ext_resource type="Script" uid="uid://dt6bcuot6d2k" path="res://Scripts/ColorCatagory.gd" id="1_4p0c6"]
+[ext_resource type="Script" uid="uid://bghb3ehj1t8og" path="res://Scripts/HomeStructure.gd" id="1_4p6eu"]
 [ext_resource type="Script" uid="uid://byt0cotie0pr4" path="res://Scripts/WordWeight.gd" id="1_gj8v7"]
+
+[sub_resource type="Resource" id="Resource_4pky0"]
+script = ExtResource("1_4p6eu")
+name = "Campsite"
+metadata/_custom_type_script = "uid://bghb3ehj1t8og"
+
+[sub_resource type="Resource" id="Resource_kui3y"]
+script = ExtResource("1_4p6eu")
+name = "Cookhouse"
+metadata/_custom_type_script = "uid://bghb3ehj1t8og"
+
+[sub_resource type="Resource" id="Resource_kcr6m"]
+script = ExtResource("1_4p6eu")
+name = "Study"
+metadata/_custom_type_script = "uid://bghb3ehj1t8og"
+
+[sub_resource type="Resource" id="Resource_8hht0"]
+script = ExtResource("1_4p6eu")
+name = "Quarry"
+metadata/_custom_type_script = "uid://bghb3ehj1t8og"
 
 [sub_resource type="Resource" id="Resource_gj8v7"]
 script = ExtResource("1_gj8v7")
@@ -175,4 +196,8 @@ phonDiacriticCommand = PackedStringArray("Strong articulation", "More rounded", 
 phonVowelRoundPref = Array[bool]([true])
 phonToneGoal = PackedFloat32Array(1)
 itemQualityFlags = PackedInt32Array(3)
+homeBedroom = SubResource("Resource_4pky0")
+homeLobby = SubResource("Resource_kcr6m")
+homeKitchen = SubResource("Resource_kui3y")
+homeWorkspace = SubResource("Resource_8hht0")
 metadata/_custom_type_script = "uid://dt6bcuot6d2k"

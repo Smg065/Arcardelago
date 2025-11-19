@@ -48,6 +48,7 @@ visible = false
 visible = false
 
 [node name="Home" parent="." instance=ExtResource("8_824mg")]
+visible = false
 
 [node name="Cutscene" parent="." instance=ExtResource("9_ies6u")]
 visible = false

@@ -1,7 +1,28 @@
-[gd_resource type="Resource" script_class="ColorCatagory" load_steps=30 format=3 uid="uid://dfknjeg1c2tf4"]
+[gd_resource type="Resource" script_class="ColorCatagory" load_steps=35 format=3 uid="uid://dfknjeg1c2tf4"]
 
 [ext_resource type="Script" uid="uid://byt0cotie0pr4" path="res://Scripts/WordWeight.gd" id="1_1f3sf"]
+[ext_resource type="Script" uid="uid://bghb3ehj1t8og" path="res://Scripts/HomeStructure.gd" id="1_fog0h"]
 [ext_resource type="Script" uid="uid://dt6bcuot6d2k" path="res://Scripts/ColorCatagory.gd" id="1_gb2qe"]
+
+[sub_resource type="Resource" id="Resource_fm6mu"]
+script = ExtResource("1_fog0h")
+name = "Bunk"
+metadata/_custom_type_script = "uid://bghb3ehj1t8og"
+
+[sub_resource type="Resource" id="Resource_7vbqy"]
+script = ExtResource("1_fog0h")
+name = "Mess"
+metadata/_custom_type_script = "uid://bghb3ehj1t8og"
+
+[sub_resource type="Resource" id="Resource_6bint"]
+script = ExtResource("1_fog0h")
+name = "War Room"
+metadata/_custom_type_script = "uid://bghb3ehj1t8og"
+
+[sub_resource type="Resource" id="Resource_04ta3"]
+script = ExtResource("1_fog0h")
+name = "Munitions"
+metadata/_custom_type_script = "uid://bghb3ehj1t8og"
 
 [sub_resource type="Resource" id="Resource_1f3sf"]
 script = ExtResource("1_1f3sf")
@@ -196,4 +217,8 @@ phonDiacriticCommand = PackedStringArray("Nasalized", "Creaky voiced", "Dental",
 phonConsonantSound = Array[int]([1])
 phonConsonantShape = Array[int]([11])
 itemQualityFlags = PackedInt32Array(4, 5, 6, 7)
+homeBedroom = SubResource("Resource_fm6mu")
+homeLobby = SubResource("Resource_6bint")
+homeKitchen = SubResource("Resource_7vbqy")
+homeWorkspace = SubResource("Resource_04ta3")
 metadata/_custom_type_script = "uid://dt6bcuot6d2k"

@@ -1,12 +1,10 @@
 extends GameScreen
 class_name Home
 
+##The current level of the house
 var houseLevel : int
+##The highest level you've claimed
 var highestLevelReward : int
-
-func _ready() -> void:
-	var gameRoot : GameRoot = get_parent()
-	gameRoot.boosterPack.setup()
 
 func set_active(nState : bool, nInfo : Dictionary) -> void:
 	if nState:
@@ -24,7 +22,9 @@ func claim_house_rewards() -> void:
 	notify_house_level()
 	#10 gold if it's a new start
 	if highestLevelReward == 0:
-		Persist.game.itemHandler.earn(10)
+		var toEarn = 10 - (Persist.difficulty * 5)
+		if toEarn > 0:
+			Persist.game.itemHandler.earn(toEarn)
 	while highestLevelReward < houseLevel:
 		match highestLevelReward % 4:
 			#A booster pack to start so you have options

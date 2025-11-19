@@ -1,7 +1,28 @@
-[gd_resource type="Resource" script_class="ColorCatagory" load_steps=27 format=3 uid="uid://b08h6rksm0yer"]
+[gd_resource type="Resource" script_class="ColorCatagory" load_steps=32 format=3 uid="uid://b08h6rksm0yer"]
 
+[ext_resource type="Script" uid="uid://bghb3ehj1t8og" path="res://Scripts/HomeStructure.gd" id="1_7cniq"]
 [ext_resource type="Script" uid="uid://dt6bcuot6d2k" path="res://Scripts/ColorCatagory.gd" id="1_ptdfw"]
 [ext_resource type="Script" uid="uid://byt0cotie0pr4" path="res://Scripts/WordWeight.gd" id="1_to8bt"]
+
+[sub_resource type="Resource" id="Resource_vfcwo"]
+script = ExtResource("1_7cniq")
+name = "Quarters"
+metadata/_custom_type_script = "uid://bghb3ehj1t8og"
+
+[sub_resource type="Resource" id="Resource_otexl"]
+script = ExtResource("1_7cniq")
+name = "Potluck"
+metadata/_custom_type_script = "uid://bghb3ehj1t8og"
+
+[sub_resource type="Resource" id="Resource_ntxai"]
+script = ExtResource("1_7cniq")
+name = "Moot Hall"
+metadata/_custom_type_script = "uid://bghb3ehj1t8og"
+
+[sub_resource type="Resource" id="Resource_o6t2m"]
+script = ExtResource("1_7cniq")
+name = "Commons"
+metadata/_custom_type_script = "uid://bghb3ehj1t8og"
 
 [sub_resource type="Resource" id="Resource_to8bt"]
 script = ExtResource("1_to8bt")
@@ -193,4 +214,8 @@ phonDiacriticCommand = PackedStringArray("Voiced", "Egressive airflow", "Sliding
 phonVowelGoal = PackedVector2Array(1, -1)
 phonConsonantVoiced = Array[int]([2])
 itemSourcePref = 2
+homeBedroom = SubResource("Resource_vfcwo")
+homeLobby = SubResource("Resource_ntxai")
+homeKitchen = SubResource("Resource_otexl")
+homeWorkspace = SubResource("Resource_o6t2m")
 metadata/_custom_type_script = "uid://dt6bcuot6d2k"

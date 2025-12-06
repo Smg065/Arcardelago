@@ -5,10 +5,15 @@ class_name Home
 var houseLevel : int
 ##The highest level you've claimed
 var highestLevelReward : int
+##The region your home is in
+var region : int
+
+@export var grounds : Texture2D
+@export var buttons : Array[TextureButton]
 
 func set_active(nState : bool, nInfo : Dictionary) -> void:
 	if nState:
-		ColorCatagory.get_color(ColorCatagory.BASE_COLORS[nInfo["Region"] - 1].colorType)
+		region = nInfo["Region"]
 		claim_house_rewards()
 	super(nState, nInfo)
 
@@ -16,6 +21,36 @@ func set_active(nState : bool, nInfo : Dictionary) -> void:
 func notify_house_level() -> void:
 	var curInventory := Persist.game.itemHandler.current_inventory()
 	houseLevel = curInventory.items.count("House Upgrade") + 1
+
+##Construct the houses visuals
+func construct_house():
+	var colorCat := ColorCatagory.BASE_COLORS[region - 1]
+	for buttonIndex in buttons.size():
+		var eachButton := buttons[buttonIndex]
+		match buttonIndex:
+			0:
+				setup_room(eachButton, colorCat.homeBedroom)
+			1:
+				setup_room(eachButton, colorCat.homeKitchen)
+			2:
+				setup_room(eachButton, colorCat.homeLobby)
+			3:
+				setup_room(eachButton, colorCat.homeWorkspace)
+
+##Sets up the button's layer to either be usable or not
+func setup_room(inButton : TextureButton, roomInfo : HomeStructure):
+	inButton.tooltip_text = roomInfo.name
+	var texToUse
+	if roomInfo.unlocks > houseLevel:
+		inButton.disabled = true
+		texToUse = roomInfo.missingArea
+	else:
+		inButton.disabled = false
+		texToUse = roomInfo.builtArea
+	inButton.texture_normal = texToUse
+	var clickMask := BitMap.new()
+	clickMask.create_from_image_alpha(texToUse.get_image())
+	inButton.texture_click_mask = clickMask
 
 ##Get all rewards up to the date
 func claim_house_rewards() -> void:

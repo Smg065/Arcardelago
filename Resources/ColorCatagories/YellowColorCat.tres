@@ -1,27 +1,36 @@
-[gd_resource type="Resource" script_class="ColorCatagory" load_steps=32 format=3 uid="uid://b08h6rksm0yer"]
+[gd_resource type="Resource" script_class="ColorCatagory" load_steps=37 format=3 uid="uid://b08h6rksm0yer"]
 
+[ext_resource type="Texture2D" uid="uid://cjrcxgaejaokt" path="res://Sprites/Houses/BedroomFallback.png" id="1_1uaoj"]
 [ext_resource type="Script" uid="uid://bghb3ehj1t8og" path="res://Scripts/HomeStructure.gd" id="1_7cniq"]
 [ext_resource type="Script" uid="uid://dt6bcuot6d2k" path="res://Scripts/ColorCatagory.gd" id="1_ptdfw"]
 [ext_resource type="Script" uid="uid://byt0cotie0pr4" path="res://Scripts/WordWeight.gd" id="1_to8bt"]
+[ext_resource type="Texture2D" uid="uid://ro8u1duikiel" path="res://Sprites/Houses/Potluck.png" id="2_4qe22"]
+[ext_resource type="Texture2D" uid="uid://btsmgwvf67aan" path="res://Sprites/Houses/GroundYellow.png" id="3_rh7ul"]
+[ext_resource type="Texture2D" uid="uid://dgu2ta6b6q0xl" path="res://Sprites/Houses/LobbyFallback.png" id="5_y2kh7"]
+[ext_resource type="Texture2D" uid="uid://de5ayrd82bigw" path="res://Sprites/Houses/WorkspaceFallback.png" id="6_t4ym8"]
 
 [sub_resource type="Resource" id="Resource_vfcwo"]
 script = ExtResource("1_7cniq")
 name = "Quarters"
+builtArea = ExtResource("1_1uaoj")
 metadata/_custom_type_script = "uid://bghb3ehj1t8og"
 
 [sub_resource type="Resource" id="Resource_otexl"]
 script = ExtResource("1_7cniq")
 name = "Potluck"
+builtArea = ExtResource("2_4qe22")
 metadata/_custom_type_script = "uid://bghb3ehj1t8og"
 
 [sub_resource type="Resource" id="Resource_ntxai"]
 script = ExtResource("1_7cniq")
 name = "Moot Hall"
+builtArea = ExtResource("5_y2kh7")
 metadata/_custom_type_script = "uid://bghb3ehj1t8og"
 
 [sub_resource type="Resource" id="Resource_o6t2m"]
 script = ExtResource("1_7cniq")
 name = "Commons"
+builtArea = ExtResource("6_t4ym8")
 metadata/_custom_type_script = "uid://bghb3ehj1t8og"
 
 [sub_resource type="Resource" id="Resource_to8bt"]
@@ -214,6 +223,7 @@ phonDiacriticCommand = PackedStringArray("Voiced", "Egressive airflow", "Sliding
 phonVowelGoal = PackedVector2Array(1, -1)
 phonConsonantVoiced = Array[int]([2])
 itemSourcePref = 2
+homeGround = ExtResource("3_rh7ul")
 homeBedroom = SubResource("Resource_vfcwo")
 homeLobby = SubResource("Resource_ntxai")
 homeKitchen = SubResource("Resource_otexl")

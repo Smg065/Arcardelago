@@ -94,6 +94,7 @@ const MULTI_PHSCR_TONE_GOAL = 5
 @export var itemSourcePref : SourcePref
 
 @export_group("Home Info", "home")
+@export var homeGround : Texture2D = load("res://Sprites/Houses/GroundFallback.png")
 @export var homeBedroom : HomeStructure
 @export var homeLobby : HomeStructure
 @export var homeKitchen : HomeStructure

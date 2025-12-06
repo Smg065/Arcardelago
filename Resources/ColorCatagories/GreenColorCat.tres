@@ -1,27 +1,44 @@
-[gd_resource type="Resource" script_class="ColorCatagory" load_steps=30 format=3 uid="uid://phrybrlhjuue"]
+[gd_resource type="Resource" script_class="ColorCatagory" load_steps=39 format=3 uid="uid://phrybrlhjuue"]
 
 [ext_resource type="Script" uid="uid://dt6bcuot6d2k" path="res://Scripts/ColorCatagory.gd" id="1_3x53w"]
 [ext_resource type="Script" uid="uid://byt0cotie0pr4" path="res://Scripts/WordWeight.gd" id="1_8llx3"]
+[ext_resource type="Texture2D" uid="uid://b5188y2hvx327" path="res://Sprites/Houses/Lounge.png" id="1_di2ms"]
 [ext_resource type="Script" uid="uid://bghb3ehj1t8og" path="res://Scripts/HomeStructure.gd" id="1_rsuo1"]
+[ext_resource type="Texture2D" uid="uid://c7qxmm6xifhvw" path="res://Sprites/Houses/LoungeBroken.png" id="2_mhl4i"]
+[ext_resource type="Texture2D" uid="uid://cxx2vjy3whet" path="res://Sprites/Houses/Kitchen.png" id="4_kro80"]
+[ext_resource type="Texture2D" uid="uid://bo5b2fhjq0t3q" path="res://Sprites/Houses/GroundGreen.png" id="4_mhl4i"]
+[ext_resource type="Texture2D" uid="uid://df137tqlqpb3q" path="res://Sprites/Houses/KitchenBroken.png" id="5_gj6fo"]
+[ext_resource type="Texture2D" uid="uid://br1o5cgv83x27" path="res://Sprites/Houses/Observatory.png" id="6_dubag"]
+[ext_resource type="Texture2D" uid="uid://b0h1y3k6lc2vh" path="res://Sprites/Houses/ObservatoryBroken.png" id="7_naoi1"]
+[ext_resource type="Texture2D" uid="uid://bmog08262exou" path="res://Sprites/Houses/Garden.png" id="8_wov6v"]
+[ext_resource type="Texture2D" uid="uid://dx1qxusd23fbe" path="res://Sprites/Houses/GardenBroken.png" id="9_0pd3q"]
 
 [sub_resource type="Resource" id="Resource_gkhrv"]
 script = ExtResource("1_rsuo1")
 name = "Lounge"
+missingArea = ExtResource("2_mhl4i")
+builtArea = ExtResource("1_di2ms")
 metadata/_custom_type_script = "uid://bghb3ehj1t8og"
 
 [sub_resource type="Resource" id="Resource_t6gfx"]
 script = ExtResource("1_rsuo1")
 name = "Kitchen"
+missingArea = ExtResource("5_gj6fo")
+builtArea = ExtResource("4_kro80")
 metadata/_custom_type_script = "uid://bghb3ehj1t8og"
 
 [sub_resource type="Resource" id="Resource_lbajd"]
 script = ExtResource("1_rsuo1")
 name = "Observatory"
+missingArea = ExtResource("7_naoi1")
+builtArea = ExtResource("6_dubag")
 metadata/_custom_type_script = "uid://bghb3ehj1t8og"
 
 [sub_resource type="Resource" id="Resource_swah2"]
 script = ExtResource("1_rsuo1")
 name = "Garden"
+missingArea = ExtResource("9_0pd3q")
+builtArea = ExtResource("8_wov6v")
 metadata/_custom_type_script = "uid://bghb3ehj1t8og"
 
 [sub_resource type="Resource" id="Resource_8llx3"]
@@ -189,6 +206,7 @@ phonVowelGoal = PackedVector2Array(-1, 1)
 phonVowelRoundPref = Array[bool]([false])
 phonConsonantSound = Array[int]([5])
 phonToneGoal = PackedFloat32Array(-1)
+homeGround = ExtResource("4_mhl4i")
 homeBedroom = SubResource("Resource_gkhrv")
 homeLobby = SubResource("Resource_lbajd")
 homeKitchen = SubResource("Resource_t6gfx")

@@ -1,27 +1,36 @@
-[gd_resource type="Resource" script_class="ColorCatagory" load_steps=35 format=3 uid="uid://dfknjeg1c2tf4"]
+[gd_resource type="Resource" script_class="ColorCatagory" load_steps=40 format=3 uid="uid://dfknjeg1c2tf4"]
 
 [ext_resource type="Script" uid="uid://byt0cotie0pr4" path="res://Scripts/WordWeight.gd" id="1_1f3sf"]
 [ext_resource type="Script" uid="uid://bghb3ehj1t8og" path="res://Scripts/HomeStructure.gd" id="1_fog0h"]
 [ext_resource type="Script" uid="uid://dt6bcuot6d2k" path="res://Scripts/ColorCatagory.gd" id="1_gb2qe"]
+[ext_resource type="Texture2D" uid="uid://b3tlmcrgs5kq6" path="res://Sprites/Houses/Bunks.png" id="1_xsopo"]
+[ext_resource type="Texture2D" uid="uid://b2juamgw7b73i" path="res://Sprites/Houses/Mess.png" id="3_7jhn1"]
+[ext_resource type="Texture2D" uid="uid://bgg0lc7w8dn3k" path="res://Sprites/Houses/GroundRed.png" id="3_mcbn1"]
+[ext_resource type="Texture2D" uid="uid://6v8ew5vccjm" path="res://Sprites/Houses/WarRoom.png" id="4_mcbn1"]
+[ext_resource type="Texture2D" uid="uid://dhi8x4kkedo2e" path="res://Sprites/Houses/Munitions.png" id="5_wh4a7"]
 
 [sub_resource type="Resource" id="Resource_fm6mu"]
 script = ExtResource("1_fog0h")
 name = "Bunk"
+builtArea = ExtResource("1_xsopo")
 metadata/_custom_type_script = "uid://bghb3ehj1t8og"
 
 [sub_resource type="Resource" id="Resource_7vbqy"]
 script = ExtResource("1_fog0h")
 name = "Mess"
+builtArea = ExtResource("3_7jhn1")
 metadata/_custom_type_script = "uid://bghb3ehj1t8og"
 
 [sub_resource type="Resource" id="Resource_6bint"]
 script = ExtResource("1_fog0h")
 name = "War Room"
+builtArea = ExtResource("4_mcbn1")
 metadata/_custom_type_script = "uid://bghb3ehj1t8og"
 
 [sub_resource type="Resource" id="Resource_04ta3"]
 script = ExtResource("1_fog0h")
 name = "Munitions"
+builtArea = ExtResource("5_wh4a7")
 metadata/_custom_type_script = "uid://bghb3ehj1t8og"
 
 [sub_resource type="Resource" id="Resource_1f3sf"]
@@ -217,6 +226,7 @@ phonDiacriticCommand = PackedStringArray("Nasalized", "Creaky voiced", "Dental",
 phonConsonantSound = Array[int]([1])
 phonConsonantShape = Array[int]([11])
 itemQualityFlags = PackedInt32Array(4, 5, 6, 7)
+homeGround = ExtResource("3_mcbn1")
 homeBedroom = SubResource("Resource_fm6mu")
 homeLobby = SubResource("Resource_6bint")
 homeKitchen = SubResource("Resource_7vbqy")

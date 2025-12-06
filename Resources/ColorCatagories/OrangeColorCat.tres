@@ -1,27 +1,36 @@
-[gd_resource type="Resource" script_class="ColorCatagory" load_steps=29 format=3 uid="uid://b2g5amqfgqxp1"]
+[gd_resource type="Resource" script_class="ColorCatagory" load_steps=34 format=3 uid="uid://b2g5amqfgqxp1"]
 
 [ext_resource type="Script" uid="uid://dt6bcuot6d2k" path="res://Scripts/ColorCatagory.gd" id="1_4p0c6"]
 [ext_resource type="Script" uid="uid://bghb3ehj1t8og" path="res://Scripts/HomeStructure.gd" id="1_4p6eu"]
+[ext_resource type="Texture2D" uid="uid://cjrcxgaejaokt" path="res://Sprites/Houses/BedroomFallback.png" id="1_bmfps"]
 [ext_resource type="Script" uid="uid://byt0cotie0pr4" path="res://Scripts/WordWeight.gd" id="1_gj8v7"]
+[ext_resource type="Texture2D" uid="uid://c3y5tfb7nb0gx" path="res://Sprites/Houses/GroundFallback.png" id="3_l38tv"]
+[ext_resource type="Texture2D" uid="uid://y1wkth1qbf12" path="res://Sprites/Houses/KitchenFallback.png" id="4_hage4"]
+[ext_resource type="Texture2D" uid="uid://dgu2ta6b6q0xl" path="res://Sprites/Houses/LobbyFallback.png" id="5_expce"]
+[ext_resource type="Texture2D" uid="uid://de5ayrd82bigw" path="res://Sprites/Houses/WorkspaceFallback.png" id="6_4bgmk"]
 
 [sub_resource type="Resource" id="Resource_4pky0"]
 script = ExtResource("1_4p6eu")
 name = "Campsite"
+builtArea = ExtResource("1_bmfps")
 metadata/_custom_type_script = "uid://bghb3ehj1t8og"
 
 [sub_resource type="Resource" id="Resource_kui3y"]
 script = ExtResource("1_4p6eu")
 name = "Cookhouse"
+builtArea = ExtResource("4_hage4")
 metadata/_custom_type_script = "uid://bghb3ehj1t8og"
 
 [sub_resource type="Resource" id="Resource_kcr6m"]
 script = ExtResource("1_4p6eu")
 name = "Study"
+builtArea = ExtResource("5_expce")
 metadata/_custom_type_script = "uid://bghb3ehj1t8og"
 
 [sub_resource type="Resource" id="Resource_8hht0"]
 script = ExtResource("1_4p6eu")
 name = "Quarry"
+builtArea = ExtResource("6_4bgmk")
 metadata/_custom_type_script = "uid://bghb3ehj1t8og"
 
 [sub_resource type="Resource" id="Resource_gj8v7"]
@@ -196,6 +205,7 @@ phonDiacriticCommand = PackedStringArray("Strong articulation", "More rounded", 
 phonVowelRoundPref = Array[bool]([true])
 phonToneGoal = PackedFloat32Array(1)
 itemQualityFlags = PackedInt32Array(3)
+homeGround = ExtResource("3_l38tv")
 homeBedroom = SubResource("Resource_4pky0")
 homeLobby = SubResource("Resource_kcr6m")
 homeKitchen = SubResource("Resource_kui3y")

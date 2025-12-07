@@ -8,6 +8,6 @@ var copies : int
 func setup_info(nItemInfo : ItemInfo, callback : Callable):
 	itemInfo = nItemInfo
 	icon = nItemInfo.icon
-	tooltip_text = "%sX%x" % [itemInfo.name, copies]
-	text = "%sX%x" % [itemInfo.name, copies]
+	tooltip_text = "%s x%x" % [itemInfo.name, copies]
+	text = "%s x%x" % [itemInfo.name, copies]
 	pressed.connect(callback.bind(self))

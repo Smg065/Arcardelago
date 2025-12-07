@@ -8,12 +8,13 @@ var highestLevelReward : int
 ##The region your home is in
 var region : int
 
-@export var grounds : Texture2D
+@export var grounds : TextureRect
 @export var buttons : Array[TextureButton]
 
 func set_active(nState : bool, nInfo : Dictionary) -> void:
 	if nState:
 		region = nInfo["Region"]
+		construct_house()
 		claim_house_rewards()
 	super(nState, nInfo)
 
@@ -25,6 +26,7 @@ func notify_house_level() -> void:
 ##Construct the houses visuals
 func construct_house():
 	var colorCat := ColorCatagory.BASE_COLORS[region - 1]
+	grounds.texture = colorCat.homeGround
 	for buttonIndex in buttons.size():
 		var eachButton := buttons[buttonIndex]
 		match buttonIndex:

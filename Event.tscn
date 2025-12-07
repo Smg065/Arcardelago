@@ -2,5 +2,52 @@
 
 [ext_resource type="Script" uid="uid://b0fwcew4x3xef" path="res://Scripts/Event.gd" id="1_73ndy"]
 
-[node name="Event" type="CanvasLayer"]
+[node name="Event" type="CanvasLayer" node_paths=PackedStringArray("eventImage", "buttonVBox", "eventLabel")]
 script = ExtResource("1_73ndy")
+eventImage = NodePath("EventImage")
+buttonVBox = NodePath("EventImage/SceneScreen/ButtonSpace/Options")
+eventLabel = NodePath("EventImage/SceneScreen/MarginContainer/EventText")
+
+[node name="EventImage" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SceneScreen" type="VBoxContainer" parent="EventImage"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="Control" parent="EventImage/SceneScreen"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="EventText" type="RichTextLabel" parent="EventImage/SceneScreen/MarginContainer"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.25
+anchor_top = 0.5
+anchor_right = 0.75
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+fit_content = true
+
+[node name="ButtonSpace" type="MarginContainer" parent="EventImage/SceneScreen"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="Options" type="VBoxContainer" parent="EventImage/SceneScreen/ButtonSpace"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4

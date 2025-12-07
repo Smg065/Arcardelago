@@ -15,7 +15,7 @@ func set_active(nState : bool, nInfo : Dictionary):
 		#Overlay color
 		var overlayColor : Color
 		if nInfo.has("Region"):
-			overlayColor = ColorCatagory.get_color(ColorCatagory.BASE_COLORS[nInfo["Region"]].colorType)
+			overlayColor = ColorCatagory.get_color(ColorCatagory.BASE_COLORS[nInfo["Region"] - 1].colorType)
 		else:
 			overlayColor = Color.WHITE
 		for eachTexture in overlayTextures:
@@ -38,7 +38,8 @@ func set_active(nState : bool, nInfo : Dictionary):
 					newCard = random_best_card()
 				newSlot.add_child(newCard)
 				newSlot.setup_card(newCard)
-				newSlot.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
+				newSlot.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+				newSlot.size_flags_vertical = Control.SIZE_EXPAND_FILL
 				newSlot.isSource = true
 				newSlot.playerInteractable = true
 				newSlot.holding_updated.connect(card_selected)
@@ -46,6 +47,8 @@ func set_active(nState : bool, nInfo : Dictionary):
 			#Items
 				var itemButton : MultiItemButton = multi_item()
 				itemButton.alignment = HORIZONTAL_ALIGNMENT_FILL
+				itemButton.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+				itemButton.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 				optionPair.add_child(itemButton)
 	super(nState, nInfo)
 
@@ -70,8 +73,8 @@ func multi_item() -> MultiItemButton:
 	var randomItem : ItemInfo = itempool.pick_random()
 	itempool.erase(randomItem)
 	var itemButton : MultiItemButton = MultiItemButton.new()
-	itemButton.setup_info(randomItem, item_claimed)
 	itemButton.copies = PD.treasureItemTable[randomItem]
+	itemButton.setup_info(randomItem, item_claimed)
 	return itemButton
 
 ##Get the number of copies of items to claim

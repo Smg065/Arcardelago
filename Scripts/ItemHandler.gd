@@ -363,6 +363,8 @@ func trade_down_trap():
 ##Creates the current inventory
 func current_inventory() -> ApItemGroup:
 	var currentInventory := localItems.combine(receivedItems).get_difference(usedItems)
+	CSM.setoccur("Inventory Items", currentInventory.items)
+	CSM.setoccur("Inventory Events", currentInventory.events)
 	return currentInventory
 
 ##When you scout a card this function will run

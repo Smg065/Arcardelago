@@ -7,5 +7,5 @@ script = ExtResource("1_ymhj4")
 name = "Owned Cards"
 cardText = "%s perk you own"
 signalType = 1
-signalFilters = Array[int]([7])
+signalFilters = Array[int]([8])
 metadata/_custom_type_script = "uid://4ppjkr8cdt22"

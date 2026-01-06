@@ -1,11 +1,11 @@
 [gd_resource type="Resource" script_class="EffectSignalInfo" load_steps=2 format=3 uid="uid://j6hcgisj3l2o"]
 
-[ext_resource type="Script" uid="uid://4ppjkr8cdt22" path="res://Scripts/EffectSignalInfo.gd" id="1_pkk8t"]
+[ext_resource type="Script" uid="uid://4ppjkr8cdt22" path="res://Scripts/EffectSignalInfo.gd" id="1_k2vbm"]
 
 [resource]
-script = ExtResource("1_pkk8t")
-name = "Inventory Sphere"
-cardText = "%s sphere in your inventory"
+script = ExtResource("1_k2vbm")
+name = "Inventory Items"
+cardText = "%s in your inventory"
 signalType = 1
 signalFilters = Array[int]([3])
 metadata/_custom_type_script = "uid://4ppjkr8cdt22"

@@ -20,7 +20,7 @@ class_name EffectSignalInfo
 enum SignalType {INSTANT, OCCURANCES, COUNTER}
 
 ##The types of data expected to be passed in
-enum FilterTypes {CARD, NUMERIC, NODE, SPHERE, STAMP, INCOME_SOURCE, PURCHASABLES, PERK}
+enum FilterTypes {CARD, NUMERIC, NODE, ITEMS, EVENTS, INSTANTS, INCOME_SOURCE, PURCHASABLES, PERK}
 
 ##Gets the prefix for when this starts the card
 func get_text(prefixed : bool = false, textInjects : PackedStringArray = PackedStringArray()):

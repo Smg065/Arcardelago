@@ -51,6 +51,10 @@ func delcount(inName : String, toRemove : int, ...args):
 
 #----- OCCURANCES ------
 
+##Sets the occurances to this array
+func setoccur(inName : String, ocurrances : Array, ...args):
+	signalLookup[inName].set_occurances(ocurrances, args)
+
 ##Adds this occurance to a signal collection
 func addoccur(inName : String, ocurrance, ...args):
 	signalLookup[inName].add_occurance(ocurrance, args)

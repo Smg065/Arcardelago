@@ -7,5 +7,5 @@ script = ExtResource("1_sotbt")
 name = "Spent Gold"
 cardText = "gold you have spent on %s"
 signalType = 2
-signalFilters = Array[int]([6])
+signalFilters = Array[int]([7])
 metadata/_custom_type_script = "uid://4ppjkr8cdt22"

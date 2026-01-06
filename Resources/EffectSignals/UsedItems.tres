@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="EffectSignalInfo" load_steps=2 format=3 uid="uid://xthb81uh2tei"]
+
+[ext_resource type="Script" uid="uid://4ppjkr8cdt22" path="res://Scripts/EffectSignalInfo.gd" id="1_3jlwa"]
+
+[resource]
+script = ExtResource("1_3jlwa")
+name = "Used Items"
+cardText = "%s item you have used"
+signalType = 1
+signalFilters = Array[int]([3])
+metadata/_custom_type_script = "uid://4ppjkr8cdt22"

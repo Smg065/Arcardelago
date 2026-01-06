@@ -80,7 +80,7 @@ func setup_card():
 
 ##Item Bought
 func bought_item(boughtItem : ShopItemButton):
-	Persist.game.itemHandler.spend(boughtItem.cost)
+	Persist.game.itemHandler.spend(boughtItem.cost, boughtItem.itemInfo)
 	Persist.game.itemHandler.received_item(boughtItem.itemInfo.name)
 
 ##Exit the shop
@@ -130,7 +130,7 @@ func inventory_updated(_currentInventory : ItemHandler.ApItemGroup):
 		gameRoot.boosterPack.setup()
 
 func sell_pressed() -> void:
-	Persist.game.itemHandler.earn(sellValue)
+	Persist.game.itemHandler.earn(sellValue, "Sold")
 	var cardData : CardUI = cardSeller.get_card()
 	if cardData == null:
 		return
@@ -140,10 +140,10 @@ func sell_pressed() -> void:
 	sellButton.disabled = true
 
 func releaser_pressed() -> void:
-	Persist.game.itemHandler.spend(releaseCost)
 	var cardData : CardUI = cardReleaser.get_card()
 	if cardData == null:
 		return
+	Persist.game.itemHandler.spend(releaseCost, cardData)
 	for eachData in cardData.all_card_data():
 		eachData.release()
 	cardReleaser.release_card()

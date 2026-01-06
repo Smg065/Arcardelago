@@ -73,4 +73,5 @@ func setup_event(eventToSetup : EventNodeData):
 ##Goes back to the overworld
 func exit_event():
 	var gameRoot : GameRoot = get_parent()
+	gameRoot.clear_map_pip()
 	gameRoot.switch_scenes()

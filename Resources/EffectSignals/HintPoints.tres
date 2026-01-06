@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EffectSignalInfo" load_steps=2 format=3 uid="uid://cx8he42kn543t"]
+
+[ext_resource type="Script" uid="uid://4ppjkr8cdt22" path="res://Scripts/EffectSignalInfo.gd" id="1_xlbh2"]
+
+[resource]
+script = ExtResource("1_xlbh2")
+name = "Hint Points"
+cardText = "hint point you have"
+signalType = 2
+metadata/_custom_type_script = "uid://4ppjkr8cdt22"

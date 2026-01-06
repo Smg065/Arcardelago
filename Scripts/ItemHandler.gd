@@ -179,14 +179,23 @@ func _init() -> void:
 	update_inventory()
 
 ##Spend money and update display for it
-func spend(cost : int):
+func spend(cost : int, target):
 	currentMoney -= cost
 	cash_updated.emit()
+	#Bought card data
+	if target is CardUI:
+		CSM.addoccur("Spent Gold", {"Spent" : cost, "CardData" : target.all_card_data()})
+	#Bought shop info
+	if target is ShopItemInfo:
+		CSM.addoccur("Spent Gold", {"Spent" : cost, "ShopItem" : target})
+	CSM.setcount("Inventory Gold", currentMoney)
 
 ##Earn money and update the display for it
-func earn(income : int):
+func earn(income : int, source : String):
 	currentMoney += income
 	cash_updated.emit()
+	CSM.addoccur("Earned Gold", source)
+	CSM.setcount("Inventory Gold", currentMoney)
 
 ##Increases the total perks you have
 func gain_perks(newPerks : int):
@@ -198,16 +207,19 @@ func burgain(burgearnings : int):
 	curgers += burgearnings
 	burgotals += burgearnings
 	burgdated.emit()
+	CSM.setcount("Inventory Burgers", curgers)
 
 ##Decrease the total burgers you have
 func eat(orderSize : int):
 	curgers -= orderSize
 	burgdated.emit()
+	CSM.setcount("Inventory Burgers", curgers)
 
 ##Increases the total extra lives you have
 func gain_life(newLives : int):
 	currentLives += newLives
 	lives_updated.emit()
+	CSM.setcount("Inventory Lives", currentLives)
 
 ##Dedcrease the total extra lives you have.[br]
 ##Returns false if there's no lives remaining
@@ -216,6 +228,7 @@ func lose_life() -> bool:
 		return false
 	currentLives -= 1
 	lives_updated.emit()
+	CSM.setcount("Inventory Lives", currentLives)
 	return true
 
 ##Increase the number of scouts you've done that exceed the scout cap
@@ -248,7 +261,7 @@ func update_inventory():
 					for eachDefault in count:
 						Persist.gain_card(CardData.new_default())
 				"Money":
-					earn(count * 10)
+					earn(count * 10, "Item")
 				"Perk":
 					gain_perks(count)
 				"Random Card":
@@ -349,7 +362,8 @@ func trade_down_trap():
 
 ##Creates the current inventory
 func current_inventory() -> ApItemGroup:
-	return localItems.combine(receivedItems).get_difference(usedItems)
+	var currentInventory := localItems.combine(receivedItems).get_difference(usedItems)
+	return currentInventory
 
 ##When you scout a card this function will run
 func new_known_card(itemData : NetworkItem):

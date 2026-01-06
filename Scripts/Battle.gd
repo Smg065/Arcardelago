@@ -278,13 +278,13 @@ func mouse_off_battlefield() -> void:
 func battle_won():
 	match battleInfo.type:
 		BattleInfo.BattleType.DEFAULT:
-			Persist.game.itemHandler.earn(1)
+			Persist.game.itemHandler.earn(1, "Battle")
 		BattleInfo.BattleType.RIVAL:
-			Persist.game.itemHandler.earn(5)
+			Persist.game.itemHandler.earn(5, "Rival Battle")
 		BattleInfo.BattleType.BOSS:
-			Persist.game.itemHandler.earn(5)
+			Persist.game.itemHandler.earn(5, "Boss Battle")
 		BattleInfo.BattleType.FINAL_BOSS:
-			Persist.game.itemHandler.earn(50)
+			Persist.game.itemHandler.earn(50, "Boss Battle")
 	var gameRoot : GameRoot = get_parent()
 	gameRoot.clear_map_pip()
 	gameRoot.switch_scenes()

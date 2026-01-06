@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="EffectSignalInfo" load_steps=2 format=3 uid="uid://n080ap1yle5f"]
+
+[ext_resource type="Script" uid="uid://4ppjkr8cdt22" path="res://Scripts/EffectSignalInfo.gd" id="1_sotbt"]
+
+[resource]
+script = ExtResource("1_sotbt")
+name = "Spent Gold"
+cardText = "gold you have spent on %s"
+signalType = 2
+signalFilters = Array[int]([6])
+metadata/_custom_type_script = "uid://4ppjkr8cdt22"

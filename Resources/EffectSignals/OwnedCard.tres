@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="EffectSignalInfo" load_steps=2 format=3 uid="uid://ccwlgx2h81y5u"]
+
+[ext_resource type="Script" uid="uid://4ppjkr8cdt22" path="res://Scripts/EffectSignalInfo.gd" id="1_lrqfg"]
+
+[resource]
+script = ExtResource("1_lrqfg")
+name = "Owned Cards"
+cardText = "%s card you own"
+signalType = 1
+signalFilters = Array[int]([0])
+metadata/_custom_type_script = "uid://4ppjkr8cdt22"

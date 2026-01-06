@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="EffectSignalInfo" load_steps=2 format=3 uid="uid://crp2h1qe07wx1"]
+
+[ext_resource type="Script" uid="uid://4ppjkr8cdt22" path="res://Scripts/EffectSignalInfo.gd" id="1_62bng"]
+
+[resource]
+script = ExtResource("1_62bng")
+name = "Field Cards"
+cardText = "%s card in your field"
+signalType = 1
+signalFilters = Array[int]([0])
+metadata/_custom_type_script = "uid://4ppjkr8cdt22"

@@ -22,6 +22,7 @@ config/icon="res://icon.svg"
 
 Archipelago="*res://godot_ap/autoloads/archipelago.tscn"
 Persist="*res://Scripts/PD.gd"
+CSM="*res://Scripts/CardSignalManager.gd"
 
 [display]
 

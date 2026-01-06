@@ -144,6 +144,10 @@ func direction_availability(worldMap : WorldMap):
 func defeat(nDefeated : bool = true) -> void:
 	#Set the new value
 	defeated = nDefeated
+	if defeated:
+		CSM.addoccur("Cleared Nodes", self)
+	else:
+		CSM.deloccur("Cleared Nodes", self)
 	#Obviously you can't really 'defeat' nodes that aren't defeatable
 	if defeatable():
 		#Non-Auto tiles update the visual

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="EffectSignalInfo" load_steps=2 format=3 uid="uid://b06u1p00j13be"]
+
+[ext_resource type="Script" uid="uid://4ppjkr8cdt22" path="res://Scripts/EffectSignalInfo.gd" id="1_nlcsf"]
+
+[resource]
+script = ExtResource("1_nlcsf")
+name = "Battle End"
+cardText = "the battle ends"
+metadata/_custom_type_script = "uid://4ppjkr8cdt22"

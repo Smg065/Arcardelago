@@ -97,6 +97,10 @@ static func find_valid_game(ip, port, slot, password) -> String:
 					print(FileAccess.get_open_error())
 					continue
 				checkSave.read(file)
+				#Make sure there's enough slots to check
+				if Archipelago.conn.slots.size() < checkSave.aplock.player_id:
+					continue
+				#Check if the aplock is valid
 				if checkSave.aplock.valid:
 					var lockNotifs : Array[String] = checkSave.aplock.lock(Archipelago.conn)
 					for eachWarning in lockNotifs:

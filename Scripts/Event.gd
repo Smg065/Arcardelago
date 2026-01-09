@@ -66,6 +66,10 @@ func setup_event(eventToSetup : EventNodeData):
 	eventImage.texture = eventToSetup.eventImage
 	if eventToSetup.eventOptions.size() == 0:
 		eventToSetup.add_exit_button()
+	#Empty out the previous event data
+	for eachChild in buttonVBox.get_children():
+		eachChild.queue_free()
+	#Fill in the new event
 	for eachButton in eventToSetup.construct_buttons(self):
 		buttonVBox.add_child(eachButton)
 	eventLabel.text = eventToSetup.eventText

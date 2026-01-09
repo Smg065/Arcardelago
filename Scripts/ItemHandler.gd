@@ -155,8 +155,6 @@ var overscouts : int
 
 ##Emits when the inventory is updated
 signal inventory_updated(currentInventory : ApItemGroup)
-##Emits when new locations are cleared
-signal hints_updated()
 ##Emits when your money changes
 signal cash_updated()
 ##Emits when you gain a perk
@@ -369,13 +367,13 @@ func current_inventory() -> ApItemGroup:
 
 ##When you scout a card this function will run
 func new_known_card(itemData : NetworkItem):
-	itemData.output()
-	hints_updated.emit()
+	CSM.addoccur("Scouts", itemData)
 
 ##Try to activate an event
 func try_event(eventName : String) -> bool:
 	if current_inventory().events.has(eventName):
 		usedItems.events.append(eventName)
+		CSM.setoccur("Used Events", usedItems.events)
 		return true
 	return false
 
@@ -385,9 +383,11 @@ func use_item(itemName : String, reusable : bool = false) -> bool:
 		if receivedItems.items.has(itemName):
 			if !usedItems.items.has(itemName):
 				usedItems.items.append(itemName)
+				CSM.setoccur("Used Items", usedItems.items)
 			return true
 		return false
 	if current_inventory().items.has(itemName):
 		usedItems.items.append(itemName)
+		CSM.setoccur("Used Items", usedItems.items)
 		return true
 	return false

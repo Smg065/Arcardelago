@@ -49,12 +49,11 @@ func _ready() -> void:
 	for eachBar in releasedBars:
 		eachBar.max_value = Persist.cardsPerRegion
 	Persist.game.itemHandler.inventory_updated.connect(update_visuals)
-	Persist.game.itemHandler.hints_updated.connect(update_bars)
 	Persist.game.itemHandler.cash_updated.connect(update_counters)
 	Persist.game.itemHandler.burgdated.connect(update_counters)
 	Persist.game.itemHandler.lives_updated.connect(update_counters)
 	Persist.game.itemHandler.update_inventory()
-	#Archipelago.conn.
+	Archipelago.conn.set_hint_notify(update_bars)
 
 ##Updates the items you've collected as visuals
 func update_visuals(currentInventory : ItemHandler.ApItemGroup):
@@ -107,8 +106,11 @@ func update_bars(_inHints : Array[NetworkHint] = []):
 				if Archipelago.conn.slot_locations[eachLocation]:
 					releasedCards += 1
 					foundCards += 1
-				elif Persist.game.knownLoctions.has(eachLocation):
-					foundCards += 1
+					continue
+				for eachHint in Archipelago.conn.hints:
+					if eachLocation == eachHint.item.loc_id:
+						foundCards += 1
+						break
 		foundBars[eachColor].value = foundCards
 		releasedBars[eachColor].value = releasedCards
 		foundReleasedText[eachColor].text = "%2d:%2d" % [Persist.cardsPerRegion - foundCards, Persist.cardsPerRegion - releasedCards]

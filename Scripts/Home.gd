@@ -61,7 +61,7 @@ func claim_house_rewards() -> void:
 	if highestLevelReward == 0:
 		var toEarn = 10 - (Persist.difficulty * 5)
 		if toEarn > 0:
-			Persist.game.itemHandler.earn(toEarn, "House")
+			Persist.game.itemHandler.earn(toEarn, {"Type" : "House"})
 	while highestLevelReward < houseLevel:
 		match highestLevelReward % 4:
 			#A booster pack to start so you have options

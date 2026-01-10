@@ -276,16 +276,17 @@ func mouse_off_battlefield() -> void:
 
 ##Earns gold and goes back to the map
 func battle_won():
+	var gameRoot : GameRoot = get_parent()
+	var earningReport := {"Type" : "Battle", "Pip" : gameRoot.get_map_pip()}
 	match battleInfo.type:
 		BattleInfo.BattleType.DEFAULT:
-			Persist.game.itemHandler.earn(1, "Battle")
+			Persist.game.itemHandler.earn(1, earningReport)
 		BattleInfo.BattleType.RIVAL:
-			Persist.game.itemHandler.earn(5, "Rival Battle")
+			Persist.game.itemHandler.earn(5, earningReport)
 		BattleInfo.BattleType.BOSS:
-			Persist.game.itemHandler.earn(5, "Boss Battle")
+			Persist.game.itemHandler.earn(5, earningReport)
 		BattleInfo.BattleType.FINAL_BOSS:
-			Persist.game.itemHandler.earn(50, "Boss Battle")
-	var gameRoot : GameRoot = get_parent()
+			Persist.game.itemHandler.earn(50, earningReport)
 	gameRoot.clear_map_pip()
 	gameRoot.switch_scenes()
 

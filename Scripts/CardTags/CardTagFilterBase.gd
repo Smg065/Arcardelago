@@ -3,11 +3,14 @@ extends CardTagBase
 class_name CardTagFilterBase
 
 enum FilterTypes {CARD, NUMERIC, NODE, ITEMS, EVENTS, INSTANTS, INCOME_SOURCE, PURCHASABLES, PERK, BUNDLE}
+enum ArgumentTypes {STRING, INT, BOOL}
 
 ##The name of the filter type to use
 @export var filterName : String
-##
-@export var filterTypes : FilterTypes
+##The catagory this filter uses
+@export var filterTypes : Array[FilterTypes]
+##The expected arguments as a dictionary
+@export var expectedArgs : Dictionary[String, ArgumentTypes]
 
 ##Validates the variable type given the filter
 static func validate_type(filterType : FilterTypes, input) -> bool:
@@ -29,19 +32,39 @@ static func validate_type(filterType : FilterTypes, input) -> bool:
 						return filterType == FilterTypes.INSTANTS
 			return false
 		FilterTypes.INCOME_SOURCE:
-			return input is String
+			if input is Dictionary:
+				return "Earned" in input
+			return false
 		FilterTypes.PURCHASABLES:
-			return input is Dictionary
+			if input is Dictionary:
+				return "Spent" in input
+			return false
 		FilterTypes.PERK:
 			return true
 	return false
 
 ##Builds the text of the filter
 @warning_ignore("unused_parameter")
-func construct_filter_text(...args) -> String:
+func construct_filter_text(input, args : Dictionary) -> String:
 	return ""
 
 ##Checks if the given type passes
-@warning_ignore("unused_parameter")
-func filter_passes(input) -> bool:
+func filter_passes(_input, args : Dictionary) -> bool:
+	for eachExpected in expectedArgs:
+		if !eachExpected in args:
+			push_error("Incorrect argument!")
+			return false
+		match expectedArgs[eachExpected]:
+			ArgumentTypes.STRING:
+				if !args[eachExpected] is String:
+					push_error("Expected %s to be a string!" % eachExpected)
+					return false
+			ArgumentTypes.INT:
+				if !args[eachExpected] is int:
+					push_error("Expected %s to be a integer!" % eachExpected)
+					return false
+			ArgumentTypes.BOOL:
+				if !args[eachExpected] is bool:
+					push_error("Expected %s to be a bool!" % eachExpected)
+					return false
 	return true

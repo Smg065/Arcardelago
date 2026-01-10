@@ -5,10 +5,20 @@ class_name CardSignalManager
 ##Signal directory
 const SIGNAL_DIR = "res://Resources/EffectSignals/"
 
+##Filter directory
+const FILTER_DIR = "res://Resources/EffectFilters/"
+
 ##The dictionary containing all Effect Signals
 var signalLookup : Dictionary[String, ESB]
 
+##The dictionary containing all Filter Effects
+var filterLookup : Dictionary[String, CardTagFilterBase]
+
 func _init() -> void:
+	construct_signals()
+	construct_filters()
+
+func construct_signals():
 	#Constructs all the signals
 	var files := ResourceLoader.list_directory(SIGNAL_DIR)
 	for filename in files:
@@ -24,6 +34,14 @@ func _init() -> void:
 				signalBase = ESOB.new()
 		signalBase.info = signalInfo
 		signalLookup[signalInfo.name] = signalBase
+
+func construct_filters():
+	#Constructs all the filters
+	var files := ResourceLoader.list_directory(FILTER_DIR)
+	for filename in files:
+		var filepath = FILTER_DIR + filename
+		var filterTag : CardTagFilterBase = load(filepath)
+		filterLookup[filterTag.filterName] = filterTag
 
 ##Attaches a callable to a signal by name
 func consig(inName : String, inCallable : Callable):

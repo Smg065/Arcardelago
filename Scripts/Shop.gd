@@ -130,10 +130,10 @@ func inventory_updated(_currentInventory : ItemHandler.ApItemGroup):
 		gameRoot.boosterPack.setup()
 
 func sell_pressed() -> void:
-	Persist.game.itemHandler.earn(sellValue, "Sold")
 	var cardData : CardUI = cardSeller.get_card()
 	if cardData == null:
 		return
+	Persist.game.itemHandler.earn(sellValue, {"Type" : "Sold", "CardData" : cardSeller.get_card().all_card_data()})
 	for eachData in cardData.all_card_data():
 		Persist.lose_card(eachData)
 	cardSeller.release_card()

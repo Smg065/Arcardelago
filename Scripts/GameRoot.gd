@@ -20,3 +20,7 @@ func switch_scenes(newScreen : ScreenType = ScreenType.WORLD_MAP, info : Diction
 ##Marks the node the player is at as clear on the map
 func clear_map_pip():
 	screenNodes[ScreenType.WORLD_MAP].player_clear_node()
+
+##Gets the node the player is at
+func get_map_pip() -> MapPip:
+	return screenNodes[ScreenType.WORLD_MAP].mapPlayer.curPip

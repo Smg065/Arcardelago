@@ -189,9 +189,10 @@ func spend(cost : int, target):
 	CSM.setcount("Inventory Gold", currentMoney)
 
 ##Earn money and update the display for it
-func earn(income : int, source : String):
+func earn(income : int, source : Dictionary):
 	currentMoney += income
 	cash_updated.emit()
+	source["Earned"] = income
 	CSM.addoccur("Earned Gold", source)
 	CSM.setcount("Inventory Gold", currentMoney)
 
@@ -259,7 +260,7 @@ func update_inventory():
 					for eachDefault in count:
 						Persist.gain_card(CardData.new_default())
 				"Money":
-					earn(count * 10, "Item")
+					earn(count * 10, {"Type" : "Item"})
 				"Perk":
 					gain_perks(count)
 				"Random Card":

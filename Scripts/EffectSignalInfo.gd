@@ -1,4 +1,4 @@
-extends Resource
+extends CardTagBase
 class_name EffectSignalInfo
 
 ##The name of the signal
@@ -12,9 +12,6 @@ class_name EffectSignalInfo
 
 ##The kind of signal script this will use
 @export var signalFilters : Array[FilterTypes]
-
-##The kind of signal script this will use
-@export_range(0, 30) var effectCost : int = 1
 
 ##The kinds of signals that exist for effects
 enum SignalType {INSTANT, OCCURANCES, COUNTER}

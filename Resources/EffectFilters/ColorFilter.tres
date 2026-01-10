@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="CardTagFilterColor" load_steps=2 format=3 uid="uid://rarya8bvhlc0"]
+
+[ext_resource type="Script" uid="uid://8rbt7w5juf00" path="res://Scripts/CardTags/Effects/ColorFilter.gd" id="1_2j13m"]
+
+[resource]
+script = ExtResource("1_2j13m")
+filterName = "Color"
+filterTypes = Array[int]([0, 2, 3, 4, 5, 6, 7, 8])
+expectedArgs = Dictionary[String, int]({
+"colorFlags": 1,
+"exact": 2,
+"invert": 2
+})
+metadata/_custom_type_script = "uid://8rbt7w5juf00"

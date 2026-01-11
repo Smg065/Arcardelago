@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_ymhj4")
-name = "Owned Cards"
+name = "Owned Perks"
 cardText = "%s perk you own"
 signalType = 1
 signalFilters = Array[int]([8])

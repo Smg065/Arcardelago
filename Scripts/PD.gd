@@ -132,11 +132,16 @@ func random_color(hMn : float, hMx : float, sMn : float, sMx : float, vMn : floa
 
 ##Picks a random element from the random seed
 func pick_random(inArray : Array):
+	#Just use the seeded version but pass in this seed
+	return seeded_pick_random(rng, inArray)
+
+##A static version of pick random that takes RNG as an input
+static func seeded_pick_random(inRng : RandomNumberGenerator, inArray : Array):
 	#Don't use the RNG if there's no options, for seed stability
 	if inArray.size() == 1:
 		return inArray[0]
 	#Use the RNG if there's 2 or more options
-	return inArray[rng.randi_range(0, inArray.size() - 1)]
+	return inArray[inRng.randi_range(0, inArray.size() - 1)]
 
 ##Takes the slot data about this game and stores them
 func hold_server_data(inData : Dictionary) -> void:

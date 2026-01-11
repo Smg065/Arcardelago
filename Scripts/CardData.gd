@@ -27,8 +27,10 @@ var powerScore : int
 var debugColorScores : Dictionary[ColorCatagory.ColorTypes, float]
 ##The health this card has by default.
 var baseHealth : int = 1
-##The attack this card has by default .
+##The attack this card has by default.
 var baseAttack : int = 1
+##The abilities this card has
+var abilities : Array[CardAbilityBundle]
 ##The stamp info on this card
 var stamps : PackedStringArray
 
@@ -65,6 +67,9 @@ static func build(newApItemFlags : int, newApId : int, newData : NameData, newGa
 func json_save():
 	if isDefault:
 		return {"isDefault" : true}
+	var abilityDict : Array[Dictionary] = []
+	for eachAbility in abilities:
+		abilityDict.append(eachAbility.json_save())
 	var saveOutput : Dictionary = {
 		"playerName" : playerName,
 		"apId" : apId,
@@ -77,7 +82,8 @@ func json_save():
 		"isDefault" : false,
 		"baseHealth" : baseHealth,
 		"baseAttack" : baseAttack,
-		"powerScore" : powerScore
+		"powerScore" : powerScore,
+		"abilities" : abilityDict
 	}
 	return saveOutput
 
@@ -106,6 +112,8 @@ static func json_load(inDict, gameData : GameData) -> CardData:
 				gameData.gameCardsets[eachGame].playerCards.append(cardData)
 				break
 	cardData.colors = cardData.calculate_color()
+	for eachAbility in inDict["abilities"]:
+		cardData.abilities.append(CardAbilityBundle.json_load(eachAbility))
 	return cardData
 
 ##Creates a default card
@@ -174,13 +182,32 @@ func stat_card() -> void:
 	pointsAvailable = powerScore
 	##The points used to modify stats
 	var forStatroll : int = 0
+	##Highest number of abilities this card can have based on power score
+	var maxAbilities : int = clampi(floori(powerScore / 2.0) - 1, 0, 3)
+	var weights := PackedFloat32Array()
+	for eachAbility in maxAbilities + 1:
+		match eachAbility:
+			0:
+				weights.append(2)
+			1:
+				weights.append(5)
+			2:
+				weights.append(2)
+			3:
+				weights.append(1)
+	##The number of abilities this card has
+	var abilityCount = rng.rand_weighted(weights)
 	##The health this card has
 	var healthPoints : int = 1
 	##The attack this card has
 	var attackPoints : int = 1
 	
-	#Leave at least 2 point for abilities minimum
-	forStatroll = rng.randi_range(0, pointsAvailable - 2)
+	#Leave at least 2 point per each ability minimum
+	if abilityCount > 0:
+		forStatroll = rng.randi_range(0, pointsAvailable - (abilityCount * 2))
+	else:
+		#No abilities, means all points go into stats
+		forStatroll = pointsAvailable
 	
 	##How much attack you have. for. Statroll - statRatio becomes how much health you have.
 	var statRatio : int = rng.randi_range(0, forStatroll) + rng.randi_range(0, forStatroll)
@@ -191,8 +218,37 @@ func stat_card() -> void:
 	baseAttack = attackPoints
 	
 	##The amount of points used for ability tags.
-	#var forTags : int = pointsAvailable - forStatroll
-	
+	var forTags : int = pointsAvailable - forStatroll
+	##Get the number of points that can shift (all ability tags need 2)
+	var distributable = forTags - (abilityCount * 2)
+	var randomWeights := PackedFloat32Array()
+	var randomPoints := PackedInt32Array()
+	var weightSum : float = 0
+	#Decide how many of the distributable points each ability gets
+	for _i in abilityCount:
+		var eachWeight := rng.randf()
+		weightSum += eachWeight
+		randomWeights.append(eachWeight)
+	var pointSum : int = 0
+	#Get the minimum absolute required
+	for weightIndex in randomWeights.size():
+		var result = randomWeights[weightIndex] * distributable / weightSum
+		randomPoints.append(floori(result))
+		randomWeights[weightIndex] = result - randomPoints[weightIndex]
+		randomPoints[weightIndex] += 2
+		pointSum += randomPoints[weightIndex]
+	#Cleanup remainder
+	while pointSum < forTags:
+		var results := PD.get_best(range(randomWeights.size()), PD.square_bracket.bind(randomWeights))
+		var resultIndex : int = PD.seeded_pick_random(rng, results)
+		randomWeights[resultIndex] -= 1
+		randomPoints[resultIndex] += 1
+		pointSum += 1
+	#Give the amount of points to each entry
+	for eachPoints in randomPoints:
+		print(eachPoints)
+		var thing = CardAbilityBundle.new()
+		abilities.append(thing)
 
 ##Check if the item has been released or the location has been cleared
 func is_cleared() -> bool:

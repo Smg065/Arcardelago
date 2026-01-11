@@ -9,7 +9,7 @@ class_name CardTagBase
 ## 6 Points - Filler Items[br]
 ##12 Points - Useful Items[br]
 ##18 Points - Progresison Items[br]
-##24 Points - Proguseful Items[br]
+##24 Points - Proguseful Items & Traps
 @export var cost : int
 
 ##Strings that represent what this effect does.

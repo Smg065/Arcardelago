@@ -2,7 +2,7 @@ extends CardTagBase
 ##The base that makes all filters work.
 class_name CardTagFilterBase
 
-enum FilterTypes {CARD, NUMERIC, NODE, ITEMS, EVENTS, INSTANTS, INCOME_SOURCE, PURCHASABLES, PERK, BUNDLE}
+enum FilterTypes {CARD, NUMERIC, NODE, ITEMS, EVENTS, INSTANTS, INCOME_SOURCE, PURCHASABLES, PERK}
 enum ArgumentTypes {STRING, INT, BOOL}
 
 ##The name of the filter type to use

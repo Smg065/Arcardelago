@@ -174,21 +174,76 @@ func deloccur(inName : String, ocurrance, ...args):
 ##Constructs an ability using the points you have to use
 func construct_abiity(points : int, previousTags : Array[CardTagBase], metaTags : PackedStringArray) -> CardAbilityBundle:
 	var newAbility := CardAbilityBundle.new()
-	var potentialTriggers := get_compatable_entries(signalLookup, previousTags, metaTags, true)
-	var potentialFilters := get_compatable_entries(filterLookup, previousTags, metaTags)
-	var potentialEffects := get_compatable_entries(effectLookup, previousTags, metaTags)
-	
+	var psTriggers := potential_subsets("Triggers", previousTags, metaTags)
+	var psFilters := potential_subsets("Filters", previousTags, metaTags)
+	var psEffects := potential_subsets("Effects", previousTags, metaTags)
+	#Triggers Layer
+	for esT in psTriggers:
+		#Get the costs
+		var triggersCost := 0
+		#Append the 'Previous Tags' list
+		var addedTriggerTags := previousTags.duplicate()
+		for triggerNames in esT:
+			triggersCost += esT[triggerNames].cost
+			if not esT[triggerNames] in addedTriggerTags:
+				addedTriggerTags.append(esT[triggerNames])
+		addedTriggerTags.append_array(esT.values())
+		#Effects Layer
+		for esE in psEffects:
+			var effectsCost := 0
+			var effectsCompatable : bool = true
+			var addedEffectTags := addedTriggerTags.duplicate()
+			for effectNames in esE:
+				effectsCost += esE[effectNames].cost
+				if not esE[effectNames].compatable(addedTriggerTags, metaTags):
+					effectsCompatable = false
+					break
+				if not esE[effectNames] in addedEffectTags:
+					addedEffectTags.append(esE[effectNames])
+			#If any of the tags are incompatable
+			if !effectsCompatable:
+				continue
+			#Prevent tag combinations that just can't get enough points, no matter what
+			if triggersCost + effectsCost < points:
+				continue
+			#No filters needed on perfect matches!
+			if triggersCost + effectsCost == points:
+				print(esE, esT)
+			#
+			
 	newAbility.triggers.append("eggs")
 	newAbility.effects.append("test")
 	return newAbility
 
-func get_compatable_entries(toLookup : Dictionary, previousTags : Array[CardTagBase], metaTags : PackedStringArray, isEsb : bool = false) -> PackedStringArray:
-	var validEntries := PackedStringArray()
+##Get all subets that only consist of potential entries
+func potential_subsets(subsetType : String, previousTags : Array[CardTagBase], metaTags : PackedStringArray) -> Array:
+	var output : Array = []
+	var potentialEntries : Dictionary[String, CardTagBase] = get_compatable_entries(subsetType, previousTags, metaTags)
+	for eachSubset in _tagSubsets[subsetType]:
+		var validSubset : bool = true
+		var potentialOutput : Dictionary[String, CardTagBase] = {}
+		for eachEntry in eachSubset:
+			if not eachEntry in potentialEntries:
+				validSubset = false
+				break
+			potentialOutput[eachEntry] = potentialEntries[eachEntry]
+		if validSubset:
+			output.append(potentialOutput)
+	return output
+
+##Get all entries that are self-compatable in this collection
+func get_compatable_entries(subsetType : String, previousTags : Array[CardTagBase], metaTags : PackedStringArray) -> Dictionary[String, CardTagBase]:
+	var validEntries : Dictionary[String, CardTagBase] = {}
+	var toLookup : Dictionary
+	match subsetType:
+		"Triggers":
+			toLookup = signalLookup
+		"Effects":
+			toLookup = effectLookup
+		"Filters":
+			toLookup = filterLookup
 	for eachEntry in toLookup:
-		if isEsb:
-			if toLookup[eachEntry].info.compatable(previousTags, metaTags):
-				validEntries.append(eachEntry)
-		else:
-			if toLookup[eachEntry].compatable(previousTags, metaTags):
-				validEntries.append(eachEntry)
+		var entryData := get_entry(subsetType, eachEntry)
+		if entryData.compatable(previousTags, metaTags):
+			validEntries[eachEntry] = entryData
 	return validEntries

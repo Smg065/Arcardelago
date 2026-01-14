@@ -24,11 +24,12 @@ func compatable(previousTags : Array[CardTagBase], metaTags : PackedStringArray 
 	var allPreviousTags := PackedStringArray()
 	allPreviousTags.append_array(metaTags)
 	#Backsearch for tag conflicts with the tags this entry has
-	for previousTag in previousTags:
-		if !previousTag.compatable([self], metaTags):
-			return false
-		#Gather previous tags while we're here
-		allPreviousTags.append_array(previousTag.tags)
+	if previousTags.size() > 1:
+		for previousTag in previousTags:
+			if !previousTag.compatable([self], metaTags):
+				return false
+			#Gather previous tags while we're here
+			allPreviousTags.append_array(previousTag.tags)
 	#For each unique tag
 	var seenTags := PackedStringArray()
 	for eachTag in allPreviousTags:

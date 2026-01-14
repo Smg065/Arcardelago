@@ -80,27 +80,30 @@ func construct_valid_subsets(collectionType : String, inputLookup : PackedString
 	var output : Array[PackedStringArray] = []
 	for eachType in typeCollections:
 		#For each compatable tag combination
-		for eachEntry in recursive_compatability(collectionType, typeCollections[eachType]):
-			#Only append unique ones
-			if !eachEntry in output:
-				output.append(eachEntry)
+		if collectionType != "Filters":
+			output.append_array(recursive_compatability(collectionType, typeCollections[eachType], 3))
+		else:
+			#Make sure there's no duplicate entries for filters
+			for eachFilter in recursive_compatability(collectionType, typeCollections[eachType], 3):
+				if !eachFilter in output:
+					output.append(eachFilter)
 	return output
 
 ##Recursively steps down each combination of input lookups and checks for compatability problems
-func recursive_compatability(collectionType : String, inputLookup : Array, previousTags : Dictionary[String, CardTagBase] = {}) -> Array[PackedStringArray]:
+func recursive_compatability(collectionType : String, inputLookup : Array, maxSize : int, previousTags : Dictionary[String, CardTagBase] = {}) -> Array[PackedStringArray]:
 	var lookupCopy := inputLookup.duplicate()
 	var entryName : String = lookupCopy.pop_back()
 	var eachEntry := get_entry(collectionType, entryName)
 	var validCombinations : Array[PackedStringArray] = []
-	#While there's recursive steps left
-	if not lookupCopy.is_empty():
+	#While there's recursive steps left, and recurring won't give you too many tags
+	if not lookupCopy.is_empty() and previousTags.size() < maxSize - 1:
 		#See all entries that exclude this
-		validCombinations = recursive_compatability(collectionType, lookupCopy, previousTags)
+		validCombinations = recursive_compatability(collectionType, lookupCopy, maxSize, previousTags)
 		#If you're allowed to include all previous attempt, include those
 		if eachEntry.compatable(previousTags.values()):
 			var previousTagsAndThis := previousTags.duplicate()
 			previousTagsAndThis[entryName] = eachEntry
-			validCombinations.append_array(recursive_compatability(collectionType, lookupCopy, previousTagsAndThis))
+			validCombinations.append_array(recursive_compatability(collectionType, lookupCopy, maxSize, previousTagsAndThis))
 	#When you're at the root of this recursive branch
 	else:
 		var exclusiveEntry := PackedStringArray()

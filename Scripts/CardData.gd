@@ -246,8 +246,7 @@ func stat_card() -> void:
 		pointSum += 1
 	#Give the amount of points to each entry
 	for eachPoints in randomPoints:
-		print(eachPoints)
-		var thing = CardAbilityBundle.new()
+		var thing := CSM.construct_abiity(eachPoints, [], [])
 		abilities.append(thing)
 
 ##Check if the item has been released or the location has been cleared

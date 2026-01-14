@@ -24,6 +24,10 @@ Archipelago="*res://godot_ap/autoloads/archipelago.tscn"
 Persist="*res://Scripts/PD.gd"
 CSM="*res://Scripts/CardSignalManager.gd"
 
+[debug]
+
+settings/gdscript/max_call_stack=2047
+
 [display]
 
 window/size/extend_to_title=true

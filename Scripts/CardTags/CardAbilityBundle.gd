@@ -21,11 +21,11 @@ static func json_load(inData : Dictionary) -> CardAbilityBundle:
 	var ncab := CardAbilityBundle.new()
 	ncab.triggers = inData.triggers
 	ncab.effects = inData.effects
-	ncab.filters = inData.filters
+	#ncab.filters = inData.filters
 	return ncab
 
 ##Setup all triggers to filter passes
-func ability_triggered():
+func setup_signals():
 	#All signal types must match
 	var filterCallable : Callable
 	match CSM.signalLookup[triggers[0]].info.signalType:

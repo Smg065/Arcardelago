@@ -72,7 +72,7 @@ func build_new_game(json: Dictionary):
 	Archipelago.send_command("LocationScouts", {"locations": locationIds, "create_as_hint": 0})
 
 func scouts_updated():
-	if conn._scout_cache.size() == 120:
+	if conn._scout_cache.size() == (Persist.cardsPerRegion * 6):
 		conn.new_scouts_cached.disconnect(scouts_updated)
 		scouts_to_cards()
 

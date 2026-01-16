@@ -172,11 +172,18 @@ func deloccur(inName : String, ocurrance, ...args):
 #----- CONSTRUCTOR ------
 
 ##Constructs an ability using the points you have to use
-func construct_abiity(points : int, previousTags : Array[CardTagBase], metaTags : PackedStringArray) -> CardAbilityBundle:
+func construct_abiity(points : int, colors : int, previousTags : Array[CardTagBase], metaTags : PackedStringArray) -> CardAbilityBundle:
 	var newAbility := CardAbilityBundle.new()
-	var psTriggers := potential_subsets("Triggers", previousTags, metaTags)
-	var psFilters := potential_subsets("Filters", previousTags, metaTags)
-	var psEffects := potential_subsets("Effects", previousTags, metaTags)
+	##All subsets that contain potential effects this can use
+	var psTriggers := potential_subsets("Triggers", colors, previousTags, metaTags)
+	##All subsets that contain potential fitlers this can use
+	var psFilters := potential_subsets("Filters", colors, previousTags, metaTags)
+	##All subsets that contain potential effects this can use
+	var psEffects := potential_subsets("Effects", colors, previousTags, metaTags)
+	
+	##A dictionary containing valid entries and goals
+	var pointLookup : Dictionary[int, Array]
+	
 	#Triggers Layer
 	for esT in psTriggers:
 		#Get the costs
@@ -206,19 +213,24 @@ func construct_abiity(points : int, previousTags : Array[CardTagBase], metaTags 
 			#Prevent tag combinations that just can't get enough points, no matter what
 			if triggersCost + effectsCost < points:
 				continue
+			#At minimum, just the effects and triggers work
+			pointLookup = PD.append_dict_entry(pointLookup, triggersCost + effectsCost, CardAbilityBundle.new())
 			#No filters needed on perfect matches!
 			if triggersCost + effectsCost == points:
-				print(esE, esT)
-			#
-			
+				continue
+			#Trigger filters
+			for triggerNames in esT:
+				triggersCost += esT[triggerNames].cost
+				if not esT[triggerNames] in addedTriggerTags:
+					addedTriggerTags.append(esT[triggerNames])
 	newAbility.triggers.append("eggs")
 	newAbility.effects.append("test")
 	return newAbility
 
 ##Get all subets that only consist of potential entries
-func potential_subsets(subsetType : String, previousTags : Array[CardTagBase], metaTags : PackedStringArray) -> Array:
+func potential_subsets(subsetType : String, colors : int, previousTags : Array[CardTagBase], metaTags : PackedStringArray) -> Array:
 	var output : Array = []
-	var potentialEntries : Dictionary[String, CardTagBase] = get_compatable_entries(subsetType, previousTags, metaTags)
+	var potentialEntries : Dictionary[String, CardTagBase] = get_compatable_entries(subsetType, colors, previousTags, metaTags)
 	for eachSubset in _tagSubsets[subsetType]:
 		var validSubset : bool = true
 		var potentialOutput : Dictionary[String, CardTagBase] = {}
@@ -232,7 +244,7 @@ func potential_subsets(subsetType : String, previousTags : Array[CardTagBase], m
 	return output
 
 ##Get all entries that are self-compatable in this collection
-func get_compatable_entries(subsetType : String, previousTags : Array[CardTagBase], metaTags : PackedStringArray) -> Dictionary[String, CardTagBase]:
+func get_compatable_entries(subsetType : String, colors : int, previousTags : Array[CardTagBase], metaTags : PackedStringArray) -> Dictionary[String, CardTagBase]:
 	var validEntries : Dictionary[String, CardTagBase] = {}
 	var toLookup : Dictionary
 	match subsetType:
@@ -244,6 +256,8 @@ func get_compatable_entries(subsetType : String, previousTags : Array[CardTagBas
 			toLookup = filterLookup
 	for eachEntry in toLookup:
 		var entryData := get_entry(subsetType, eachEntry)
+		if (entryData.colors | colors) and entryData.colors != colors:
+			continue
 		if entryData.compatable(previousTags, metaTags):
 			validEntries[eachEntry] = entryData
 	return validEntries

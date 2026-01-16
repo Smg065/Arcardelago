@@ -245,9 +245,9 @@ func stat_card() -> void:
 		randomPoints[resultIndex] += 1
 		pointSum += 1
 	#Give the amount of points to each entry
-	for eachPoints in randomPoints:
-		var thing := CSM.construct_abiity(eachPoints, [], [])
-		abilities.append(thing)
+	#for eachPoints in randomPoints:
+	#	var thing := CSM.construct_abiity(eachPoints, colors, [], [])
+	#	abilities.append(thing)
 
 ##Check if the item has been released or the location has been cleared
 func is_cleared() -> bool:

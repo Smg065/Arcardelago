@@ -12,12 +12,11 @@ class_name EffectSignalInfo
 
 ##The kind of signal script this will use
 @export var signalFilters : Array[FilterTypes]
+##The types of data expected to be passed in
+enum FilterTypes {CARD, NUMERIC, NODE, ITEMS, EVENTS, INSTANTS, INCOME_SOURCE, PURCHASABLES, PERK}
 
 ##The kinds of signals that exist for effects
 enum SignalType {INSTANT, OCCURANCES, COUNTER}
-
-##The types of data expected to be passed in
-enum FilterTypes {CARD, NUMERIC, NODE, ITEMS, EVENTS, INSTANTS, INCOME_SOURCE, PURCHASABLES, PERK}
 
 ##Gets the prefix for when this starts the card
 func get_text(prefixed : bool = false, textInjects : PackedStringArray = PackedStringArray()):

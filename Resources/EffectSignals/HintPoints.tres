@@ -7,4 +7,5 @@ script = ExtResource("1_xlbh2")
 name = "Hint Points"
 cardText = "hint point you have"
 signalType = 2
+cost = 12
 metadata/_custom_type_script = "uid://4ppjkr8cdt22"

@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="CardTagFilterColor" load_steps=2 format=3 uid="uid://rarya8bvhlc0"]
 
-[ext_resource type="Script" uid="uid://8rbt7w5juf00" path="res://Scripts/CardTags/Effects/ColorFilter.gd" id="1_2j13m"]
+[ext_resource type="Script" uid="uid://8rbt7w5juf00" path="res://Scripts/CardTags/Filters/ColorFilter.gd" id="1_2j13m"]
 
 [resource]
 script = ExtResource("1_2j13m")
@@ -11,4 +11,5 @@ expectedArgs = Dictionary[String, int]({
 "exact": 2,
 "invert": 2
 })
+divisor = 6
 metadata/_custom_type_script = "uid://8rbt7w5juf00"

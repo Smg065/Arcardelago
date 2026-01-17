@@ -21,8 +21,20 @@ static func json_load(inData : Dictionary) -> CardAbilityBundle:
 	var ncab := CardAbilityBundle.new()
 	ncab.triggers = inData.triggers
 	ncab.effects = inData.effects
-	#ncab.filters = inData.filters
+	for eachFilter in inData.filters:
+		ncab.filters.append(eachFilter)
 	return ncab
+
+##Return all tags that would be on this
+func get_tags() -> Array[CardTagBase]:
+	var output : Array[CardTagBase] = []
+	for eachTrigger in triggers:
+		output.append(CSM.signalLookup[eachTrigger].info)
+	for eachEffect in effects:
+		output.append(CSM.effectLookup[eachEffect])
+	for eachFilter in filters:
+		output.append(CSM.filterLookup[eachFilter.name])
+	return output
 
 ##Setup all triggers to filter passes
 func setup_signals():
@@ -72,6 +84,7 @@ func construct_filter_function_array(entryIndex : int, appliedType : String) -> 
 				output.append(CSM.filterLookup[eachFilter.name].filter_passes.bind(eachFilter.args))
 	return output
 
+##Return the filter constructor
 func create_trigger(signalName : String):
 	var signalInfo := CSM.signalLookup[signalName].info
 	for eachType in signalInfo.signalFilters:

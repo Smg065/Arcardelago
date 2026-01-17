@@ -8,4 +8,5 @@ name = "Used Items"
 cardText = "%s item you have used"
 signalType = 1
 signalFilters = Array[int]([3])
+cost = 18
 metadata/_custom_type_script = "uid://4ppjkr8cdt22"

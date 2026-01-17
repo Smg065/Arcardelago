@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="CardTagEffectBase" load_steps=2 format=3 uid="uid://cepwk3351b7ft"]
+
+[ext_resource type="Script" uid="uid://cg5kc6elt88px" path="res://Scripts/CardTags/CardTagEffectBase.gd" id="1_1ahhg"]
+
+[resource]
+script = ExtResource("1_1ahhg")
+effectName = "Print"
+signalFilters = Array[int]([0])
+metadata/_custom_type_script = "uid://cg5kc6elt88px"

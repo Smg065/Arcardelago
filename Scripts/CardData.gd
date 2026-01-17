@@ -245,9 +245,17 @@ func stat_card() -> void:
 		randomPoints[resultIndex] += 1
 		pointSum += 1
 	#Give the amount of points to each entry
-	#for eachPoints in randomPoints:
-	#	var thing := CSM.construct_abiity(eachPoints, colors, [], [])
-	#	abilities.append(thing)
+	var metaTags : PackedStringArray = PackedStringArray()
+	
+	#Previous tags that have been put on this card
+	var allTags : Array[CardTagBase] = []
+	for eachPoints in randomPoints:
+		var newAbility := CSM.construct_abiity(rng, eachPoints, colors, allTags, metaTags)
+		if newAbility == null:
+			push_warning("No valid entries for %s points" % eachPoints)
+			continue
+		allTags.append_array(newAbility.get_tags())
+		abilities.append(newAbility)
 
 ##Check if the item has been released or the location has been cleared
 func is_cleared() -> bool:

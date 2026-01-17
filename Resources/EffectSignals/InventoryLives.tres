@@ -7,4 +7,5 @@ script = ExtResource("1_7552q")
 name = "Inventory Lives"
 cardText = "life in your inventory"
 signalType = 2
+cost = 2
 metadata/_custom_type_script = "uid://4ppjkr8cdt22"

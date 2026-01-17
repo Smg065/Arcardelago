@@ -8,4 +8,5 @@ name = "Owned Perks"
 cardText = "%s perk you own"
 signalType = 1
 signalFilters = Array[int]([8])
+cost = 15
 metadata/_custom_type_script = "uid://4ppjkr8cdt22"

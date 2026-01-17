@@ -6,4 +6,5 @@
 script = ExtResource("1_rek5o")
 name = "Round Start"
 cardText = "a round starts"
+cost = 2
 metadata/_custom_type_script = "uid://4ppjkr8cdt22"

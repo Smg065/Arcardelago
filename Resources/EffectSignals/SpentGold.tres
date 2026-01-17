@@ -8,4 +8,5 @@ name = "Spent Gold"
 cardText = "gold you have spent on %s"
 signalType = 1
 signalFilters = Array[int]([7])
+cost = 5
 metadata/_custom_type_script = "uid://4ppjkr8cdt22"

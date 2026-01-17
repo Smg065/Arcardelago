@@ -8,4 +8,5 @@ name = "Uncleared Nodes"
 cardText = "%s node that has not been cleared"
 signalType = 1
 signalFilters = Array[int]([2])
+cost = 27
 metadata/_custom_type_script = "uid://4ppjkr8cdt22"

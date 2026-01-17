@@ -8,4 +8,5 @@ name = "Released"
 cardText = "%s card you have released"
 signalType = 1
 signalFilters = Array[int]([0])
+cost = 4
 metadata/_custom_type_script = "uid://4ppjkr8cdt22"

@@ -11,6 +11,8 @@ enum ArgumentTypes {STRING, INT, BOOL}
 @export var filterTypes : Array[FilterTypes]
 ##The expected arguments as a dictionary
 @export var expectedArgs : Dictionary[String, ArgumentTypes]
+##The divisor on average
+@export var divisor : int = 1
 
 ##Validates the variable type given the filter
 static func validate_type(filterType : FilterTypes, input) -> bool:

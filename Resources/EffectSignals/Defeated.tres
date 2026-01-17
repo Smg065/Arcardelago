@@ -7,4 +7,5 @@ script = ExtResource("1_jw44a")
 name = "Defeated"
 cardText = "%s is defeated by %s"
 signalFilters = Array[int]([0, 0])
+cost = 5
 metadata/_custom_type_script = "uid://4ppjkr8cdt22"

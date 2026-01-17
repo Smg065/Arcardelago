@@ -8,4 +8,5 @@ name = "Used Events"
 cardText = "%s event you have triggered"
 signalType = 1
 signalFilters = Array[int]([4])
+cost = 8
 metadata/_custom_type_script = "uid://4ppjkr8cdt22"

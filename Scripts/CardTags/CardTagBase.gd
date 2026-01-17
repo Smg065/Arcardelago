@@ -10,7 +10,7 @@ class_name CardTagBase
 ##12 Points - Useful Items[br]
 ##18 Points - Progresison Items[br]
 ##24 Points - Proguseful Items & Traps
-@export var cost : int
+@export var cost : int = 1
 
 ##Strings that represent what this effect does.
 @export var tags : PackedStringArray

@@ -8,4 +8,5 @@ name = "Battle Cards"
 cardText = "%s card in battle"
 signalType = 1
 signalFilters = Array[int]([0])
+cost = 16
 metadata/_custom_type_script = "uid://4ppjkr8cdt22"

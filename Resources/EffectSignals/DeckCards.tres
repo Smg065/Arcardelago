@@ -8,4 +8,5 @@ name = "Deck Cards"
 cardText = "%s card in your deck"
 signalType = 1
 signalFilters = Array[int]([0])
+cost = 20
 metadata/_custom_type_script = "uid://4ppjkr8cdt22"

@@ -8,6 +8,9 @@ const SIGNAL_DIR = "res://Resources/EffectSignals/"
 ##Filter directory
 const FILTER_DIR = "res://Resources/EffectFilters/"
 
+##Effect directory
+const EFFECTS_DIR = "res://Resources/Effects/"
+
 ##The dictionary containing all Effect Signals
 var signalLookup : Dictionary[String, ESB]
 
@@ -59,7 +62,12 @@ func construct_filters():
 
 ##Builds all effects to be used
 func construct_effects():
-	pass
+	#Constructs all the filters
+	var files := ResourceLoader.list_directory(EFFECTS_DIR)
+	for filename in files:
+		var filepath = EFFECTS_DIR + filename
+		var effectTag : CardTagEffectBase = load(filepath)
+		effectLookup[effectTag.effectName] = effectTag
 
 ##Valid subset construction based on catagories to speed up generation
 func construct_valid_subsets(collectionType : String, inputLookup : PackedStringArray):
@@ -172,8 +180,7 @@ func deloccur(inName : String, ocurrance, ...args):
 #----- CONSTRUCTOR ------
 
 ##Constructs an ability using the points you have to use
-func construct_abiity(points : int, colors : int, previousTags : Array[CardTagBase], metaTags : PackedStringArray) -> CardAbilityBundle:
-	var newAbility := CardAbilityBundle.new()
+func construct_abiity(rng : RandomNumberGenerator, points : int, colors : int, previousTags : Array[CardTagBase], metaTags : PackedStringArray) -> CardAbilityBundle:
 	##All subsets that contain potential effects this can use
 	var psTriggers := potential_subsets("Triggers", colors, previousTags, metaTags)
 	##All subsets that contain potential fitlers this can use
@@ -182,50 +189,145 @@ func construct_abiity(points : int, colors : int, previousTags : Array[CardTagBa
 	var psEffects := potential_subsets("Effects", colors, previousTags, metaTags)
 	
 	##A dictionary containing valid entries and goals
-	var pointLookup : Dictionary[int, Array]
+	var bestSolutions : Array = []
 	
-	#Triggers Layer
+	#The distance from the target points
+	var bestPointDistance : int = 99
+	
+	#Create all valid card configurations
 	for esT in psTriggers:
 		#Get the costs
 		var triggersCost := 0
 		#Append the 'Previous Tags' list
-		var addedTriggerTags := previousTags.duplicate()
 		for triggerNames in esT:
 			triggersCost += esT[triggerNames].cost
-			if not esT[triggerNames] in addedTriggerTags:
-				addedTriggerTags.append(esT[triggerNames])
-		addedTriggerTags.append_array(esT.values())
+		var triggerTags : Array[CardTagBase] = esT.values()
 		#Effects Layer
 		for esE in psEffects:
 			var effectsCost := 0
 			var effectsCompatable : bool = true
-			var addedEffectTags := addedTriggerTags.duplicate()
 			for effectNames in esE:
 				effectsCost += esE[effectNames].cost
-				if not esE[effectNames].compatable(addedTriggerTags, metaTags):
+				if not esE[effectNames].compatable(triggerTags, metaTags):
 					effectsCompatable = false
 					break
-				if not esE[effectNames] in addedEffectTags:
-					addedEffectTags.append(esE[effectNames])
+			var effectTags : Array[CardTagBase] = esE.values()
 			#If any of the tags are incompatable
 			if !effectsCompatable:
 				continue
-			#Prevent tag combinations that just can't get enough points, no matter what
-			if triggersCost + effectsCost < points:
-				continue
-			#At minimum, just the effects and triggers work
-			pointLookup = PD.append_dict_entry(pointLookup, triggersCost + effectsCost, CardAbilityBundle.new())
-			#No filters needed on perfect matches!
-			if triggersCost + effectsCost == points:
-				continue
+			
 			#Trigger filters
-			for triggerNames in esT:
-				triggersCost += esT[triggerNames].cost
-				if not esT[triggerNames] in addedTriggerTags:
-					addedTriggerTags.append(esT[triggerNames])
-	newAbility.triggers.append("eggs")
-	newAbility.effects.append("test")
+			var baseTags : Array[CardTagBase]
+			baseTags.append_array(triggerTags)
+			baseTags.append_array(effectTags)
+			
+			#Check if the base combo meets or beats the current distance score
+			var basePointCost : int = triggersCost + effectsCost
+			var basePointDistance : int = abs(points - basePointCost)
+			#If it beats it, set the new standard
+			if basePointDistance < bestPointDistance:
+				bestPointDistance = basePointDistance
+				bestSolutions.clear()
+			#If it meets it, append it to the point lookup
+			if basePointDistance == bestPointDistance:
+				var baseSolution := {}
+				for eachTag in baseTags:
+					baseSolution[eachTag] = []
+					for eachFilter in eachTag.signalFilters:
+						baseSolution[eachTag].append(null)
+				bestSolutions.append(baseSolution)
+			
+			#No filters needed on perfect matches, or tag combinations need more points
+			if basePointCost <= points:
+				continue
+			var results := recursive_tag_combos(baseTags, psFilters)
+			for eachKey in results:
+				var filterPointDistance = abs(points - eachKey)
+				if filterPointDistance < bestPointDistance:
+					bestPointDistance = filterPointDistance
+					bestSolutions.clear()
+				if filterPointDistance == bestPointDistance:
+					bestSolutions.append_array(results[eachKey])
+	
+	#Make it more likely to select simpler cards
+	var weights := PackedFloat32Array()
+	for eachSolution in bestSolutions:
+		var totalCount = 0
+		for eachTag in eachSolution:
+			totalCount += 1
+			totalCount += eachSolution[eachTag].size() - eachSolution[eachTag].count(null)
+		weights.append(1 / float(totalCount))
+	#If there's nothing to choose, return null to show there's no valid abilities left
+	if weights.is_empty():
+		return null
+	#Choose one
+	var chosenSolution = bestSolutions[rng.rand_weighted(weights)]
+	#Translate it
+	var newAbility := CardAbilityBundle.new()
+	for eachTag in chosenSolution:
+		if eachTag is EffectSignalInfo:
+			newAbility.triggers.append(eachTag.name)
+		if eachTag is CardTagEffectBase:
+			newAbility.effects.append(eachTag.effectName)
+	for eachTag in chosenSolution:
+		for eachFilterBundle in chosenSolution[eachTag]:
+			if eachFilterBundle == null:
+				continue
+			for eachFilter in eachFilterBundle:
+				var hasFilter : bool = false
+				var targetIndex : int = -1
+				for filterIndex in newAbility.filters.size():
+					if newAbility.filters[filterIndex].name == eachFilter:
+						hasFilter = true
+						targetIndex = filterIndex
+						break
+				if !hasFilter:
+					newAbility.filters.append({"name" : eachFilter})
+				if eachTag is EffectSignalInfo:
+					newAbility.filters[targetIndex] = PD.append_dict_entry(newAbility.filters[targetIndex], "Triggers", newAbility.triggers.find(eachTag.name))
+				if eachTag is CardTagEffectBase:
+					newAbility.filters[targetIndex] = PD.append_dict_entry(newAbility.filters[targetIndex], "Effects", newAbility.effects.find(eachTag.effectName))
 	return newAbility
+
+##Return all filter permutations
+func recursive_tag_combos(allTags : Array[CardTagBase], psFilters, tagAttempts : Dictionary = {}, currentCost : int = 0) -> Dictionary:
+	var output : Dictionary = {}
+	#Tag plugins
+	for eachTag in allTags:
+		if not eachTag in tagAttempts:
+			tagAttempts[eachTag] = []
+		var attemptsIndex = tagAttempts[eachTag].size()
+		if attemptsIndex >= eachTag.signalFilters.size():
+			continue
+		#All filtered version of this tag
+		for esF in psFilters:
+			if not eachTag.signalFilters[attemptsIndex] in esF.values()[0].filterTypes:
+				continue
+			var newTagAttempt := tagAttempts.duplicate()
+			newTagAttempt[eachTag].append(esF)
+			var divisorSize : float = 1
+			for eachFilter in esF:
+				divisorSize *= esF[eachFilter].divisor
+			var newCost : int = currentCost + ceili(eachTag.cost / divisorSize)
+			var upstream := recursive_tag_combos(allTags, psFilters, newTagAttempt, newCost)
+			for eachKey in upstream:
+				if not eachKey in output:
+					output[eachKey] = []
+				for eachEntry in upstream[eachKey]:
+					if not eachEntry in output[eachKey]:
+						output[eachKey].append(eachEntry)
+		#All unfiltered versions of this tag
+		var filterlessAttempt := tagAttempts.duplicate()
+		filterlessAttempt[eachTag].append(null)
+		var noFilterUpstream := recursive_tag_combos(allTags, psFilters, filterlessAttempt, currentCost + eachTag.cost)
+		for eachKey in noFilterUpstream:
+			if not eachKey in output:
+				output[eachKey] = []
+			for eachEntry in noFilterUpstream[eachKey]:
+				if not eachEntry in output[eachKey]:
+					output[eachKey].append(eachEntry)
+		return output
+	return {currentCost : [tagAttempts.duplicate()]}
 
 ##Get all subets that only consist of potential entries
 func potential_subsets(subsetType : String, colors : int, previousTags : Array[CardTagBase], metaTags : PackedStringArray) -> Array:

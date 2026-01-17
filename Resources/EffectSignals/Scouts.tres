@@ -8,4 +8,5 @@ name = "Scouts"
 cardText = "%s card you have scouted"
 signalType = 1
 signalFilters = Array[int]([0])
+cost = 12
 metadata/_custom_type_script = "uid://4ppjkr8cdt22"

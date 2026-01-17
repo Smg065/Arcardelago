@@ -7,4 +7,5 @@ script = ExtResource("1_1k8fc")
 name = "Eaten Burgers"
 cardText = "burger that has been eaten"
 signalType = 2
+cost = 3
 metadata/_custom_type_script = "uid://4ppjkr8cdt22"

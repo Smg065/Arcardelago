@@ -60,9 +60,12 @@ static func build(newApItemFlags : int, newApId : int, newData : NameData, newGa
 	#Player cards are your items
 	else:
 		cardData.gameCardset.playerCards.append(cardData)
-	cardData.colors = cardData.calculate_color()
-	cardData.stat_card()
 	return cardData
+
+##Stat colors once the word data for a card is found
+func generate_card_info():
+	colors = calculate_color()
+	stat_card()
 
 func json_save():
 	if isDefault:
@@ -154,6 +157,7 @@ func stat_card() -> void:
 	if isDefault:
 		baseHealth = 1
 		baseAttack = 1
+		powerScore = 2
 		return
 	#Otherwise, lot more to consider
 	

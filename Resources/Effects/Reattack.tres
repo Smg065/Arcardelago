@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CardTagEffectBase" load_steps=2 format=3 uid="uid://dlmerohfje25f"]
+
+[ext_resource type="Script" uid="uid://cg5kc6elt88px" path="res://Scripts/CardTags/CardTagEffectBase.gd" id="1_ldss7"]
+
+[resource]
+script = ExtResource("1_ldss7")
+effectName = "Reattack"
+cardText = "attack again"
+compatableTriggers = Array[int]([0])
+cost = 6
+metadata/_custom_type_script = "uid://cg5kc6elt88px"

@@ -97,6 +97,6 @@ func get_flag_type():
 func get_score(baseColor : ColorCatagory) -> float:
 	var outScore : float = 0
 	#You only get the amount of score based to the size
-	for index in weights.size():
+	for index in nameFlags.size():
 		outScore += nameFlags[index].get_score(baseColor) * weights[index]
 	return outScore

@@ -5,5 +5,7 @@
 [resource]
 script = ExtResource("1_1ahhg")
 effectName = "Print"
+cardText = "print %s cards"
 signalFilters = Array[int]([0])
+compatableTriggers = Array[int]([0, 1, 2])
 metadata/_custom_type_script = "uid://cg5kc6elt88px"

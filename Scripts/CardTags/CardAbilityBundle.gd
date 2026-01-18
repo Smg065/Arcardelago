@@ -92,3 +92,29 @@ func create_trigger(signalName : String):
 		for eachFilter in CSM.filterLookup:
 			if eachType in CSM.filterLookup[eachFilter].filterTypes:
 				validFilters.append(eachFilter)
+
+##Display what this card does
+func construct_text() -> String:
+	var triggersOutput : Array[String] = []
+	var effectsOutput : Array[String] = []
+	for triggerIndex in triggers.size():
+		var eachTrigger := CSM.signalLookup[triggers[triggerIndex]].info
+		var passStrings : Array[String] = []
+		for filterSlots in eachTrigger.signalFilters.size():
+			var filterText := ""
+			for eachFilter in filters:
+				if float(triggerIndex) in eachFilter.Triggers:
+					filterText = ColorCatagory.COLOR_NAMES.pick_random().to_lower()
+			passStrings.append(filterText)
+		triggersOutput.append(eachTrigger.get_text(triggerIndex == 0, passStrings))
+	for effectIndex in effects.size():
+		var eachEffect := CSM.effectLookup[effects[effectIndex]]
+		var passStrings : Array[String] = []
+		for filterSlots in eachEffect.signalFilters.size():
+			var filterText := ""
+			for eachFilter in filters:
+				if float(effectIndex) in eachFilter.Effects:
+					filterText = ColorCatagory.COLOR_NAMES.pick_random().to_lower()
+			passStrings.append(filterText)
+		effectsOutput.append(eachEffect.get_text(passStrings))
+	return ", ".join([" or ".join(triggersOutput), " and ".join(effectsOutput)]) + "."

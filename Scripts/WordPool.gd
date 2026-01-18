@@ -247,6 +247,10 @@ func fictional_names_check_existing():
 		allowRepass = false
 		try_request()
 	else:
+		#Get all cards to stat
+		for eachCard in Persist.game.allCards:
+			eachCard.generate_card_info()
+		#And save to not need to do this again
 		save_game_as_new()
 
 func save_game_as_new():

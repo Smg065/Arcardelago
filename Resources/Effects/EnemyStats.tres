@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CardTagEffectBase" load_steps=2 format=3 uid="uid://cqyq8tr0ry7ho"]
+
+[ext_resource type="Script" uid="uid://cg5kc6elt88px" path="res://Scripts/CardTags/CardTagEffectBase.gd" id="1_8u0f6"]
+
+[resource]
+script = ExtResource("1_8u0f6")
+effectName = "Enemy Stats"
+cardText = "enemy %s cards get -1/-1"
+signalFilters = Array[int]([0])
+compatableTriggers = Array[int]([0, 1, 2])
+cost = 15
+metadata/_custom_type_script = "uid://cg5kc6elt88px"

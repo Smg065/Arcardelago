@@ -14,6 +14,7 @@ class_name CardUI
 @export var uiCardHealth : AutoSizeLabel
 @export var uiCardDamage : AutoSizeLabel
 @export var uiCardCount : AutoSizeLabel
+@export var uiCardAbilities : AutoSizeRichTextLabel
 
 @export var playerPip : Texture2D
 @export var enemyPip : Texture2D
@@ -83,7 +84,10 @@ func update_rich_texts():
 	uiCardNameLabel.do_resize_text()
 	uiCardItemFlagLabel.do_resize_text()
 	#Display stats
-	
+	var allAbilityText := PackedStringArray()
+	for eachAbility in cardData.abilities:
+		allAbilityText.append(eachAbility.construct_text())
+	uiCardAbilities.text = "[color=black]%s[/color]" % "\n\n".join(allAbilityText)
 	#Degault cards can't have special data
 	update_players_display()
 	if cardData.isDefault:

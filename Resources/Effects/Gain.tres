@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CardTagEffectBase" load_steps=2 format=3 uid="uid://cpm30ddi0evi6"]
+
+[ext_resource type="Script" uid="uid://cg5kc6elt88px" path="res://Scripts/CardTags/CardTagEffectBase.gd" id="1_370aj"]
+
+[resource]
+script = ExtResource("1_370aj")
+effectName = "Gain"
+cardText = "all %s cards gain the type %s"
+signalFilters = Array[int]([0, 0])
+compatableTriggers = Array[int]([0])
+cost = 5
+metadata/_custom_type_script = "uid://cg5kc6elt88px"

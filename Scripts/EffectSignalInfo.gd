@@ -19,7 +19,7 @@ enum FilterTypes {CARD, NUMERIC, NODE, ITEMS, EVENTS, INSTANTS, INCOME_SOURCE, P
 enum SignalType {INSTANT, OCCURANCES, COUNTER}
 
 ##Gets the prefix for when this starts the card
-func get_text(prefixed : bool = false, textInjects : PackedStringArray = PackedStringArray()):
+func get_text(prefixed : bool = false, textInjects : Array[String] = []):
 	var prefix = ""
 	if prefixed:
 		match signalType:

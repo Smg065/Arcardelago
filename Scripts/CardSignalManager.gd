@@ -81,7 +81,7 @@ func construct_valid_subsets(collectionType : String, inputLookup : PackedString
 			"Filters":
 				lookupTypes = get_entry(collectionType, eachEntry).filterTypes as Array[int]
 			"Effects":
-				lookupTypes = [get_entry(collectionType, eachEntry).cost]
+				lookupTypes = get_entry(collectionType, eachEntry).compatableTriggers as Array[int]
 		for eachType in lookupTypes:
 			typeCollections = PD.append_dict_entry(typeCollections, eachType, eachEntry)
 	#Then check for compatability via blacklist or whitelist tags

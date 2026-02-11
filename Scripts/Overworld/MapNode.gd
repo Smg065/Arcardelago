@@ -236,7 +236,7 @@ func set_grid_point(nGridPoint : Vector2i, nRegion : int, worldMap : WorldMap):
 	gridPoint = nGridPoint
 	region = nRegion
 	direction_availability(worldMap)
-	global_position = (gridPoint * WorldMap.CELL_SIZE) + (WorldMap.CELL_SIZE / 2)
+	global_position = (gridPoint * WorldMap.CELL_SIZE) + Vector2i(WorldMap.CELL_SIZE / 2.0)
 
 ##Register a path to an input direction
 func register(inputDir : Vector2i, path : MapWalkPip):

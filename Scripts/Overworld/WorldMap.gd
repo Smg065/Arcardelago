@@ -229,7 +229,7 @@ var nodesUsedPercents : Dictionary[String, float] = {
 func _ready() -> void:
 	aStar = AStarGrid2D.new()
 	var mapSize := Vector2i(Persist.mapRadius, Persist.mapRadius) * 2
-	var startPoint : Vector2i = -mapSize / 2
+	var startPoint : Vector2i = -mapSize / 2.0
 	var centerRadius := Persist.mapRadius / (PI * 1.5)
 	aStar.region = Rect2i(startPoint, mapSize)
 	aStar.cell_size = CELL_SIZE
@@ -802,3 +802,9 @@ func set_active(nState : bool, _nInfo : Dictionary):
 ##Clear the node the player is at
 func player_clear_node():
 	mapPlayer.curPip.defeat()
+
+##Resets the map state and sends the player home
+func reset():
+	for eachPip in pips:
+		eachPip.defeat(false)
+	mapPlayer.set_current_pip(homePip)

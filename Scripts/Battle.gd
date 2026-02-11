@@ -22,14 +22,17 @@ var mapStartPoint : Vector2
 @export var battlemap : AspectRatioContainer
 ##The scrollbox containing the displayed card info
 @export var battleScroll : ScrollContainer
-
+##The button that starts the battle
+@export var battleStart : Button
+##The timer that makes battles step
+@export var stepTimer : Timer
 @export_category("Player Feild")
-@export var playerSlots : Array[CardSlot]
+@export var playerSlots : Array[BattleCardSlot]
 
 @export_category("Enemy Feild")
 @export var layouts : Array[Node]
 var validEnemies : Array[CardData]
-var currentEnemySlots : Array[CardSlot]
+var currentEnemySlots : Array[BattleCardSlot]
 ##The scrollbox containing the displayed card info
 @export var battleFog : TextureRect
 
@@ -39,12 +42,18 @@ var currentEnemySlots : Array[CardSlot]
 ##The options the background would use
 @export var battleBackgrounds : Array[Texture2D]
 
+##The number of the round
+var currentRound : int
+##The current cards that are active in battle
+var activeSlots : Array[BattleCardSlot]
+
 ##The zoom of the map. Range from 0-20
 var zoomVal : int
 
 ##Set the battle map as active
 func set_active(nState : bool, nInfo : Dictionary):
 	visible = nState
+	set_step_timer(false)
 	if visible:
 		if nInfo.has("Info"):
 			setup_battle(nInfo["Info"])
@@ -52,6 +61,14 @@ func set_active(nState : bool, nInfo : Dictionary):
 			push_error("No Battle Data")
 	else:
 		clear_board()
+
+##Resets the board's meta state
+func set_step_timer(nState : bool):
+	battleStart.disabled = nState
+	if battleStart.disabled:
+		stepTimer.start()
+	else:
+		stepTimer.stop()
 
 ##Relay the battle information
 func setup_battle(nBattleInfo : BattleInfo):
@@ -86,7 +103,7 @@ func setup_battle(nBattleInfo : BattleInfo):
 
 func recursive_enemy_slot_search(currentNode : Node):
 	for eachChild in currentNode.get_children():
-		if eachChild is CardSlot:
+		if eachChild is BattleCardSlot:
 			currentEnemySlots.append(eachChild)
 		else:
 			recursive_enemy_slot_search(eachChild)
@@ -120,6 +137,7 @@ func clear_board():
 	for eachEnemySlot in currentEnemySlots:
 		eachEnemySlot.release_card()
 	for eachPlayerSlot in playerSlots:
+		eachPlayerSlot.playerInteractable = true
 		eachPlayerSlot.release_card()
 	var gameRoot : GameRoot = get_parent()
 	gameRoot.scrollBox.return_cards()
@@ -276,6 +294,8 @@ func mouse_off_battlefield() -> void:
 
 ##Earns gold and goes back to the map
 func battle_won():
+	clear_damage()
+	activeSlots.clear()
 	var gameRoot : GameRoot = get_parent()
 	var earningReport := {"Type" : "Battle", "Pip" : gameRoot.get_map_pip()}
 	match battleInfo.type:
@@ -290,5 +310,80 @@ func battle_won():
 	gameRoot.clear_map_pip()
 	gameRoot.switch_scenes()
 
+##Lose the battle and die
+func battle_lost():
+	clear_damage()
+	var gameRoot : GameRoot = get_parent()
+	gameRoot.die()
+	activeSlots.clear()
+
 func start_battle_pressed() -> void:
-	battle_won() 
+	activeSlots.clear()
+	currentRound = 0
+	for eachSlot in playerSlots:
+		eachSlot.playerInteractable = false
+		if eachSlot.get_card() == null:
+			continue
+		activeSlots.append(eachSlot)
+	for eachSlot in currentEnemySlots:
+		if eachSlot.get_card() == null:
+			continue
+		activeSlots.append(eachSlot)
+	set_step_timer(true)
+	new_round()
+
+func new_round() -> void:
+	currentRound += 1
+	for eachSlot in activeSlots:
+		eachSlot.roundAttacks = 0
+
+func round_step() -> void:
+	var highestSpeed : int = PD.MIN_INT
+	var fastestAttackers : Array[BattleCardSlot]
+	for eachSlot in activeSlots:
+		if eachSlot.attacks_remaining():
+			if highestSpeed < eachSlot.speed:
+				fastestAttackers.clear()
+				highestSpeed = eachSlot.speed
+			if highestSpeed == eachSlot.speed:
+				fastestAttackers.append(eachSlot)
+	if fastestAttackers.is_empty():
+		new_round()
+		return
+	var attacker : BattleCardSlot = fastestAttackers.pick_random()
+	attack(attacker)
+
+##Attack
+func attack(attacker : BattleCardSlot, baseAttack : bool = true) -> void:
+	if baseAttack:
+		attacker.roundAttacks += 1
+	var highestVulnerability : int = PD.MIN_INT
+	var mostVulnerable : Array[BattleCardSlot]
+	for eachSlot in activeSlots:
+		#Attack the other field
+		if attacker.enemySlot == eachSlot.enemySlot:
+			continue
+		if highestVulnerability < eachSlot.vulnerability:
+			mostVulnerable.clear()
+			highestVulnerability = eachSlot.vulnerability
+		if highestVulnerability == eachSlot.vulnerability:
+			mostVulnerable.append(eachSlot)
+	if mostVulnerable.is_empty():
+		if attacker.enemySlot:
+			battle_lost()
+		else:
+			battle_won()
+		return
+	var attacked : BattleCardSlot = mostVulnerable.pick_random()
+	var cardAlive : bool = attacked.is_attacked(attacker)
+	if not cardAlive:
+		activeSlots.erase(attacked)
+
+func clear_damage():
+	for eachSlot in playerSlots:
+		eachSlot.damageMod = 0
+	for eachSlot in currentEnemySlots:
+		eachSlot.damageMod = 0
+
+func step_timeout() -> void:
+	round_step()

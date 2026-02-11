@@ -24,3 +24,14 @@ func clear_map_pip():
 ##Gets the node the player is at
 func get_map_pip() -> MapPip:
 	return screenNodes[ScreenType.WORLD_MAP].mapPlayer.curPip
+
+##Lose a life
+func die() -> void:
+	#Full game over (inventory clear and house reset)
+	if not Persist.game.itemHandler.lose_life():
+		Persist.clear_cards()
+		screenNodes[ScreenType.HOME].highestLevelReward = 0
+	#Call for a map reset
+	screenNodes[ScreenType.WORLD_MAP].reset()
+	#Go home
+	switch_scenes(ScreenType.HOME, screenNodes[ScreenType.WORLD_MAP].homePip.nodeInfo)

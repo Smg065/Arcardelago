@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cpofxalps4yuo"]
+[gd_scene format=3 uid="uid://cpofxalps4yuo"]
 
 [ext_resource type="Script" uid="uid://bqqtjwd0ms0k6" path="res://Scripts/Battle.gd" id="1_yh5fh"]
 [ext_resource type="Texture2D" uid="uid://bx1335alayi00" path="res://Sprites/Backdrops/WhiteBattleEdges.png" id="2_83ubk"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://dosa43dyl6ir8" path="res://Sprites/Backdrops/BlueBattleEdges.png" id="7_fmwbo"]
 [ext_resource type="Texture2D" uid="uid://8qxf7urhaeco" path="res://Sprites/Backdrops/YellowBattleEdges.png" id="8_8eejf"]
 [ext_resource type="Texture2D" uid="uid://dp7u5hmrs2hjc" path="res://Sprites/ColorGuide.png" id="9_w0ll1"]
+[ext_resource type="Script" uid="uid://dtfv4qcc08jyh" path="res://Scripts/Battle/BattleCardSlot.gd" id="11_0500f"]
 
 [sub_resource type="Gradient" id="Gradient_0500f"]
 offsets = PackedFloat32Array(0.2769953, 0.9389671)
@@ -28,17 +29,19 @@ colors = PackedColorArray(0, 0, 0, 0, 0.39215687, 0.39215687, 0.39215687, 1)
 gradient = SubResource("Gradient_w0ll1")
 fill_from = Vector2(1, 1)
 
-[node name="BattleScreen" type="CanvasLayer" node_paths=PackedStringArray("battlemap", "battleScroll", "playerSlots", "layouts", "battleFog", "battleBackground")]
+[node name="BattleScreen" type="CanvasLayer" unique_id=376769288 node_paths=PackedStringArray("battlemap", "battleScroll", "battleStart", "stepTimer", "playerSlots", "layouts", "battleFog", "battleBackground")]
 script = ExtResource("1_yh5fh")
 battlemap = NodePath("BackmatSpot/Backmat/MapScroll/MapRatio")
 battleScroll = NodePath("BackmatSpot/Backmat/MapScroll")
+battleStart = NodePath("Start Battle")
+stepTimer = NodePath("StepTimer")
 playerSlots = [NodePath("BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Playfield/APAspect/Playmat/Frontmost"), NodePath("BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Playfield/APAspect/Playmat/Leftfront"), NodePath("BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Playfield/APAspect/Playmat/Rightfront"), NodePath("BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Playfield/APAspect/Playmat/Leftback"), NodePath("BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Playfield/APAspect/Playmat/Rightback"), NodePath("BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Playfield/APAspect/Playmat/Backmost")]
 layouts = [NodePath("BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/HordeLayout"), NodePath("BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/RivalLayout"), NodePath("BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/BossLayout"), NodePath("BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/FinalBoss")]
 battleFog = NodePath("BackmatSpot/Backmat/MapScroll/MapRatio/Battle/FogBase")
 battleBackground = NodePath("Backdrop")
 battleBackgrounds = Array[Texture2D]([ExtResource("2_83ubk"), ExtResource("3_w0ll1"), ExtResource("4_0500f"), ExtResource("5_sqcgj"), ExtResource("6_ix2yc"), ExtResource("7_fmwbo"), ExtResource("8_8eejf")])
 
-[node name="Backdrop" type="TextureRect" parent="."]
+[node name="Backdrop" type="TextureRect" parent="." unique_id=1884474033]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -49,7 +52,7 @@ texture = ExtResource("2_83ubk")
 expand_mode = 5
 stretch_mode = 5
 
-[node name="BackmatSpot" type="AspectRatioContainer" parent="."]
+[node name="BackmatSpot" type="AspectRatioContainer" parent="." unique_id=1960588885]
 anchors_preset = -1
 anchor_left = 0.25
 anchor_right = 0.75
@@ -61,11 +64,11 @@ offset_bottom = -72.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Backmat" type="TextureRect" parent="BackmatSpot"]
+[node name="Backmat" type="TextureRect" parent="BackmatSpot" unique_id=702969447]
 layout_mode = 2
 texture = ExtResource("9_w0ll1")
 
-[node name="MapScroll" type="ScrollContainer" parent="BackmatSpot/Backmat"]
+[node name="MapScroll" type="ScrollContainer" parent="BackmatSpot/Backmat" unique_id=1108147190]
 z_index = 1
 layout_mode = 1
 anchors_preset = 15
@@ -78,14 +81,14 @@ scroll_vertical_custom_step = 0.0
 horizontal_scroll_mode = 3
 vertical_scroll_mode = 3
 
-[node name="MapRatio" type="AspectRatioContainer" parent="BackmatSpot/Backmat/MapScroll"]
+[node name="MapRatio" type="AspectRatioContainer" parent="BackmatSpot/Backmat/MapScroll" unique_id=376673365]
 custom_minimum_size = Vector2(1028, 1028)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_default_cursor_shape = 6
 
-[node name="Battle" type="ColorRect" parent="BackmatSpot/Backmat/MapScroll/MapRatio"]
+[node name="Battle" type="ColorRect" parent="BackmatSpot/Backmat/MapScroll/MapRatio" unique_id=815501519]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -93,7 +96,7 @@ mouse_filter = 1
 color = Color(0, 0, 0, 0.49411765)
 metadata/_edit_use_anchors_ = true
 
-[node name="MidRow" type="ReferenceRect" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle"]
+[node name="MidRow" type="ReferenceRect" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle" unique_id=1809476151]
 z_index = 1
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 1
@@ -109,7 +112,7 @@ mouse_filter = 2
 border_color = Color(1, 1, 1, 1)
 border_width = 4.0
 
-[node name="Playfield" type="ReferenceRect" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle"]
+[node name="Playfield" type="ReferenceRect" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle" unique_id=1317215134]
 z_index = 1
 layout_mode = 1
 anchors_preset = -1
@@ -124,7 +127,7 @@ border_color = Color(0.98, 0.47040004, 0.63177335, 1)
 border_width = 4.0
 metadata/_edit_use_anchors_ = true
 
-[node name="APAspect" type="AspectRatioContainer" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Playfield"]
+[node name="APAspect" type="AspectRatioContainer" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Playfield" unique_id=595675167]
 z_index = 1
 layout_mode = 1
 anchors_preset = 15
@@ -133,73 +136,103 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Playmat" type="TextureRect" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Playfield/APAspect"]
+[node name="Playmat" type="TextureRect" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Playfield/APAspect" unique_id=1947135173]
 z_index = 1
 layout_mode = 2
 expand_mode = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Frontmost" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Playfield/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+[node name="Frontmost" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Playfield/APAspect/Playmat" unique_id=2122164027 instance=ExtResource("2_yh5fh")]
 z_index = 1
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.33333334
 anchor_right = 0.66666675
 anchor_bottom = 0.39999998
+script = ExtResource("11_0500f")
+damageMod = 0
+enemySlot = false
+baseVulnerability = 3
+baseSpeed = 6
 playerInteractable = true
 squarable = true
 
-[node name="Leftfront" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Playfield/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+[node name="Leftfront" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Playfield/APAspect/Playmat" unique_id=655092420 instance=ExtResource("2_yh5fh")]
 z_index = 1
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.10144927
 anchor_right = 0.3333334
 anchor_bottom = 0.5014492
+script = ExtResource("11_0500f")
+damageMod = 0
+enemySlot = false
+baseVulnerability = 3
+baseSpeed = 4
 playerInteractable = true
 squarable = true
 
-[node name="Rightfront" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Playfield/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+[node name="Rightfront" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Playfield/APAspect/Playmat" unique_id=956470272 instance=ExtResource("2_yh5fh")]
 z_index = 1
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.6666667
 anchor_top = 0.10144927
 anchor_bottom = 0.5014492
+script = ExtResource("11_0500f")
+damageMod = 0
+enemySlot = false
+baseVulnerability = 3
+baseSpeed = 4
 playerInteractable = true
 squarable = true
 
-[node name="Leftback" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Playfield/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+[node name="Leftback" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Playfield/APAspect/Playmat" unique_id=1295260482 instance=ExtResource("2_yh5fh")]
 z_index = 1
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.5
 anchor_right = 0.3333334
 anchor_bottom = 0.9
+script = ExtResource("11_0500f")
+damageMod = 0
+enemySlot = false
+baseVulnerability = 2
+baseSpeed = 3
 playerInteractable = true
 squarable = true
 
-[node name="Rightback" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Playfield/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+[node name="Rightback" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Playfield/APAspect/Playmat" unique_id=1556559839 instance=ExtResource("2_yh5fh")]
 z_index = 1
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.6666667
 anchor_top = 0.5
 anchor_bottom = 0.9
+script = ExtResource("11_0500f")
+damageMod = 0
+enemySlot = false
+baseVulnerability = 2
+baseSpeed = 3
 playerInteractable = true
 squarable = true
 
-[node name="Backmost" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Playfield/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+[node name="Backmost" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Playfield/APAspect/Playmat" unique_id=987804419 instance=ExtResource("2_yh5fh")]
 z_index = 1
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.33333334
 anchor_top = 0.6
 anchor_right = 0.66666675
+script = ExtResource("11_0500f")
+damageMod = 0
+enemySlot = false
+baseVulnerability = 2
+baseSpeed = 1
 playerInteractable = true
 squarable = true
 
-[node name="Enemies" type="ReferenceRect" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle"]
+[node name="Enemies" type="ReferenceRect" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle" unique_id=965747094]
 z_index = 1
 layout_mode = 1
 anchors_preset = -1
@@ -213,7 +246,7 @@ border_color = Color(0.32, 0.55799997, 1, 1)
 border_width = 4.0
 metadata/_edit_use_anchors_ = true
 
-[node name="HordeLayout" type="Control" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies"]
+[node name="HordeLayout" type="Control" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies" unique_id=852556555]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -222,7 +255,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="FrontRow" type="HBoxContainer" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/HordeLayout"]
+[node name="FrontRow" type="HBoxContainer" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/HordeLayout" unique_id=181364221]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.05
@@ -233,22 +266,47 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="CardSlot" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/HordeLayout/FrontRow" instance=ExtResource("2_yh5fh")]
+[node name="FrontLeftmost" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/HordeLayout/FrontRow" unique_id=457676645 instance=ExtResource("2_yh5fh")]
 layout_mode = 2
+script = ExtResource("11_0500f")
+damageMod = 0
+enemySlot = true
+baseVulnerability = 3
+baseSpeed = 5
 
-[node name="CardSlot2" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/HordeLayout/FrontRow" instance=ExtResource("2_yh5fh")]
+[node name="FrontMidleft" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/HordeLayout/FrontRow" unique_id=1732646417 instance=ExtResource("2_yh5fh")]
 layout_mode = 2
+script = ExtResource("11_0500f")
+damageMod = 0
+enemySlot = true
+baseVulnerability = 3
+baseSpeed = 5
 
-[node name="CardSlot3" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/HordeLayout/FrontRow" instance=ExtResource("2_yh5fh")]
+[node name="FrontMidmost" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/HordeLayout/FrontRow" unique_id=1865039555 instance=ExtResource("2_yh5fh")]
 layout_mode = 2
+script = ExtResource("11_0500f")
+damageMod = 0
+enemySlot = true
+baseVulnerability = 3
+baseSpeed = 5
 
-[node name="CardSlot4" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/HordeLayout/FrontRow" instance=ExtResource("2_yh5fh")]
+[node name="FrontMidRight" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/HordeLayout/FrontRow" unique_id=1830649368 instance=ExtResource("2_yh5fh")]
 layout_mode = 2
+script = ExtResource("11_0500f")
+damageMod = 0
+enemySlot = true
+baseVulnerability = 3
+baseSpeed = 5
 
-[node name="CardSlot5" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/HordeLayout/FrontRow" instance=ExtResource("2_yh5fh")]
+[node name="FrontRightmost" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/HordeLayout/FrontRow" unique_id=1407131486 instance=ExtResource("2_yh5fh")]
 layout_mode = 2
+script = ExtResource("11_0500f")
+damageMod = 0
+enemySlot = true
+baseVulnerability = 3
+baseSpeed = 5
 
-[node name="BackRow" type="HBoxContainer" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/HordeLayout"]
+[node name="BackRow" type="HBoxContainer" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/HordeLayout" unique_id=1173178633]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.05
@@ -259,22 +317,47 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="CardSlot" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/HordeLayout/BackRow" instance=ExtResource("2_yh5fh")]
+[node name="BackLeftmost" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/HordeLayout/BackRow" unique_id=1398003799 instance=ExtResource("2_yh5fh")]
 layout_mode = 2
+script = ExtResource("11_0500f")
+damageMod = 0
+enemySlot = true
+baseVulnerability = 2
+baseSpeed = 2
 
-[node name="CardSlot2" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/HordeLayout/BackRow" instance=ExtResource("2_yh5fh")]
+[node name="BackMidLeft" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/HordeLayout/BackRow" unique_id=2066586048 instance=ExtResource("2_yh5fh")]
 layout_mode = 2
+script = ExtResource("11_0500f")
+damageMod = 0
+enemySlot = true
+baseVulnerability = 2
+baseSpeed = 2
 
-[node name="CardSlot3" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/HordeLayout/BackRow" instance=ExtResource("2_yh5fh")]
+[node name="BackMid" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/HordeLayout/BackRow" unique_id=360944643 instance=ExtResource("2_yh5fh")]
 layout_mode = 2
+script = ExtResource("11_0500f")
+damageMod = 0
+enemySlot = true
+baseVulnerability = 2
+baseSpeed = 2
 
-[node name="CardSlot4" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/HordeLayout/BackRow" instance=ExtResource("2_yh5fh")]
+[node name="BackMidRight" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/HordeLayout/BackRow" unique_id=1919969487 instance=ExtResource("2_yh5fh")]
 layout_mode = 2
+script = ExtResource("11_0500f")
+damageMod = 0
+enemySlot = true
+baseVulnerability = 2
+baseSpeed = 2
 
-[node name="CardSlot5" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/HordeLayout/BackRow" instance=ExtResource("2_yh5fh")]
+[node name="BackRightmost" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/HordeLayout/BackRow" unique_id=752633109 instance=ExtResource("2_yh5fh")]
 layout_mode = 2
+script = ExtResource("11_0500f")
+damageMod = 0
+enemySlot = true
+baseVulnerability = 2
+baseSpeed = 2
 
-[node name="RivalLayout" type="Control" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies"]
+[node name="RivalLayout" type="Control" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies" unique_id=1663327379]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -284,7 +367,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="APAspect" type="AspectRatioContainer" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/RivalLayout"]
+[node name="APAspect" type="AspectRatioContainer" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/RivalLayout" unique_id=898447565]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -292,54 +375,84 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Playmat" type="TextureRect" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/RivalLayout/APAspect"]
+[node name="Playmat" type="TextureRect" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/RivalLayout/APAspect" unique_id=1155161041]
 layout_mode = 2
 expand_mode = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Frontmost2" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/RivalLayout/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+[node name="Frontmost" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/RivalLayout/APAspect/Playmat" unique_id=364934304 instance=ExtResource("2_yh5fh")]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.33333334
 anchor_top = 0.6
 anchor_right = 0.66666675
+script = ExtResource("11_0500f")
+damageMod = 0
+enemySlot = true
+baseVulnerability = 4
+baseSpeed = 6
 
-[node name="Leftfront" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/RivalLayout/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+[node name="Leftfront" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/RivalLayout/APAspect/Playmat" unique_id=163912195 instance=ExtResource("2_yh5fh")]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.5
 anchor_right = 0.3333334
 anchor_bottom = 0.9
+script = ExtResource("11_0500f")
+damageMod = 0
+enemySlot = true
+baseVulnerability = 3
+baseSpeed = 4
 
-[node name="Rightfront" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/RivalLayout/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+[node name="Rightfront" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/RivalLayout/APAspect/Playmat" unique_id=1789920247 instance=ExtResource("2_yh5fh")]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.6666667
 anchor_top = 0.5
 anchor_bottom = 0.9
+script = ExtResource("11_0500f")
+damageMod = 0
+enemySlot = true
+baseVulnerability = 3
+baseSpeed = 4
 
-[node name="Leftback" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/RivalLayout/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+[node name="Leftback" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/RivalLayout/APAspect/Playmat" unique_id=43117619 instance=ExtResource("2_yh5fh")]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.10144927
 anchor_right = 0.3333334
 anchor_bottom = 0.5014492
+script = ExtResource("11_0500f")
+damageMod = 0
+enemySlot = true
+baseVulnerability = 2
+baseSpeed = 3
 
-[node name="Rightback" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/RivalLayout/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+[node name="Rightback" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/RivalLayout/APAspect/Playmat" unique_id=266017031 instance=ExtResource("2_yh5fh")]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.6666667
 anchor_top = 0.10144927
 anchor_bottom = 0.5014492
+script = ExtResource("11_0500f")
+damageMod = 0
+enemySlot = true
+baseVulnerability = 2
+baseSpeed = 3
 
-[node name="Backmost2" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/RivalLayout/APAspect/Playmat" instance=ExtResource("2_yh5fh")]
+[node name="Backmost" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/RivalLayout/APAspect/Playmat" unique_id=2066612174 instance=ExtResource("2_yh5fh")]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.33333334
 anchor_right = 0.66666675
 anchor_bottom = 0.4
+script = ExtResource("11_0500f")
+damageMod = 0
+enemySlot = true
+baseVulnerability = 2
+baseSpeed = 1
 
-[node name="BossLayout" type="Control" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies"]
+[node name="BossLayout" type="Control" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies" unique_id=804500126]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -349,15 +462,20 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="BossSlot" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/BossLayout" instance=ExtResource("2_yh5fh")]
+[node name="BossSlot" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/BossLayout" unique_id=295770754 instance=ExtResource("2_yh5fh")]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.333
 anchor_top = 0.1
 anchor_right = 0.6671875
 anchor_bottom = 0.9
+script = ExtResource("11_0500f")
+damageMod = 0
+enemySlot = true
+baseVulnerability = 3
+baseSpeed = 7
 
-[node name="LFrontRow" type="HBoxContainer" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/BossLayout"]
+[node name="LFrontRow" type="HBoxContainer" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/BossLayout" unique_id=839587700]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.55
@@ -367,13 +485,23 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="CardSlot" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/BossLayout/LFrontRow" instance=ExtResource("2_yh5fh")]
+[node name="FrontLeftmost" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/BossLayout/LFrontRow" unique_id=1872571081 instance=ExtResource("2_yh5fh")]
 layout_mode = 2
+script = ExtResource("11_0500f")
+damageMod = 0
+enemySlot = true
+baseVulnerability = 4
+baseSpeed = 5
 
-[node name="CardSlot7" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/BossLayout/LFrontRow" instance=ExtResource("2_yh5fh")]
+[node name="FrontLeftmid" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/BossLayout/LFrontRow" unique_id=1625022871 instance=ExtResource("2_yh5fh")]
 layout_mode = 2
+script = ExtResource("11_0500f")
+damageMod = 0
+enemySlot = true
+baseVulnerability = 4
+baseSpeed = 5
 
-[node name="LBackRow" type="HBoxContainer" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/BossLayout"]
+[node name="LBackRow" type="HBoxContainer" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/BossLayout" unique_id=856822721]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.05
@@ -383,13 +511,23 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="CardSlot" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/BossLayout/LBackRow" instance=ExtResource("2_yh5fh")]
+[node name="BackLeftmost" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/BossLayout/LBackRow" unique_id=682659942 instance=ExtResource("2_yh5fh")]
 layout_mode = 2
+script = ExtResource("11_0500f")
+damageMod = 0
+enemySlot = true
+baseVulnerability = 2
+baseSpeed = 2
 
-[node name="CardSlot2" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/BossLayout/LBackRow" instance=ExtResource("2_yh5fh")]
+[node name="BackLeftMid" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/BossLayout/LBackRow" unique_id=949089229 instance=ExtResource("2_yh5fh")]
 layout_mode = 2
+script = ExtResource("11_0500f")
+damageMod = 0
+enemySlot = true
+baseVulnerability = 2
+baseSpeed = 2
 
-[node name="RFrontRow" type="HBoxContainer" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/BossLayout"]
+[node name="RFrontRow" type="HBoxContainer" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/BossLayout" unique_id=1727588327]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.667
@@ -400,13 +538,23 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="CardSlot" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/BossLayout/RFrontRow" instance=ExtResource("2_yh5fh")]
+[node name="FrontRightmid" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/BossLayout/RFrontRow" unique_id=673827663 instance=ExtResource("2_yh5fh")]
 layout_mode = 2
+script = ExtResource("11_0500f")
+damageMod = 0
+enemySlot = true
+baseVulnerability = 4
+baseSpeed = 5
 
-[node name="CardSlot2" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/BossLayout/RFrontRow" instance=ExtResource("2_yh5fh")]
+[node name="FrontRightmost" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/BossLayout/RFrontRow" unique_id=386957102 instance=ExtResource("2_yh5fh")]
 layout_mode = 2
+script = ExtResource("11_0500f")
+damageMod = 0
+enemySlot = true
+baseVulnerability = 4
+baseSpeed = 5
 
-[node name="RBackRow" type="HBoxContainer" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/BossLayout"]
+[node name="RBackRow" type="HBoxContainer" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/BossLayout" unique_id=304347897]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.667
@@ -417,13 +565,23 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="CardSlot" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/BossLayout/RBackRow" instance=ExtResource("2_yh5fh")]
+[node name="BackRightMid" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/BossLayout/RBackRow" unique_id=1915073676 instance=ExtResource("2_yh5fh")]
 layout_mode = 2
+script = ExtResource("11_0500f")
+damageMod = 0
+enemySlot = true
+baseVulnerability = 2
+baseSpeed = 2
 
-[node name="CardSlot2" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/BossLayout/RBackRow" instance=ExtResource("2_yh5fh")]
+[node name="BackRightmost" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/BossLayout/RBackRow" unique_id=1459424962 instance=ExtResource("2_yh5fh")]
 layout_mode = 2
+script = ExtResource("11_0500f")
+damageMod = 0
+enemySlot = true
+baseVulnerability = 2
+baseSpeed = 2
 
-[node name="FinalBoss" type="Control" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies"]
+[node name="FinalBoss" type="Control" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies" unique_id=2095182957]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -433,7 +591,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="BossSlot" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/FinalBoss" instance=ExtResource("2_yh5fh")]
+[node name="BossSlot" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/FinalBoss" unique_id=1876045938 instance=ExtResource("2_yh5fh")]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.333
@@ -441,7 +599,7 @@ anchor_top = 0.1
 anchor_right = 0.6671875
 anchor_bottom = 0.9
 
-[node name="LFrontRow" type="HBoxContainer" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/FinalBoss"]
+[node name="LFrontRow" type="HBoxContainer" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/FinalBoss" unique_id=1693264843]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.55
@@ -451,13 +609,13 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="CardSlot" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/FinalBoss/LFrontRow" instance=ExtResource("2_yh5fh")]
+[node name="CardSlot" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/FinalBoss/LFrontRow" unique_id=2060539563 instance=ExtResource("2_yh5fh")]
 layout_mode = 2
 
-[node name="CardSlot7" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/FinalBoss/LFrontRow" instance=ExtResource("2_yh5fh")]
+[node name="CardSlot7" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/FinalBoss/LFrontRow" unique_id=1155500371 instance=ExtResource("2_yh5fh")]
 layout_mode = 2
 
-[node name="LBackRow" type="HBoxContainer" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/FinalBoss"]
+[node name="LBackRow" type="HBoxContainer" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/FinalBoss" unique_id=1427762581]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.05
@@ -467,13 +625,13 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="CardSlot" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/FinalBoss/LBackRow" instance=ExtResource("2_yh5fh")]
+[node name="CardSlot" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/FinalBoss/LBackRow" unique_id=442395547 instance=ExtResource("2_yh5fh")]
 layout_mode = 2
 
-[node name="CardSlot2" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/FinalBoss/LBackRow" instance=ExtResource("2_yh5fh")]
+[node name="CardSlot2" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/FinalBoss/LBackRow" unique_id=1841852503 instance=ExtResource("2_yh5fh")]
 layout_mode = 2
 
-[node name="RFrontRow" type="HBoxContainer" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/FinalBoss"]
+[node name="RFrontRow" type="HBoxContainer" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/FinalBoss" unique_id=73919889]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.667
@@ -484,13 +642,13 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="CardSlot" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/FinalBoss/RFrontRow" instance=ExtResource("2_yh5fh")]
+[node name="CardSlot" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/FinalBoss/RFrontRow" unique_id=1100039360 instance=ExtResource("2_yh5fh")]
 layout_mode = 2
 
-[node name="CardSlot2" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/FinalBoss/RFrontRow" instance=ExtResource("2_yh5fh")]
+[node name="CardSlot2" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/FinalBoss/RFrontRow" unique_id=2033320511 instance=ExtResource("2_yh5fh")]
 layout_mode = 2
 
-[node name="RBackRow" type="HBoxContainer" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/FinalBoss"]
+[node name="RBackRow" type="HBoxContainer" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/FinalBoss" unique_id=1863390030]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.667
@@ -501,13 +659,13 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="CardSlot" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/FinalBoss/RBackRow" instance=ExtResource("2_yh5fh")]
+[node name="CardSlot" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/FinalBoss/RBackRow" unique_id=1806473620 instance=ExtResource("2_yh5fh")]
 layout_mode = 2
 
-[node name="CardSlot2" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/FinalBoss/RBackRow" instance=ExtResource("2_yh5fh")]
+[node name="CardSlot2" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/Enemies/FinalBoss/RBackRow" unique_id=1369387313 instance=ExtResource("2_yh5fh")]
 layout_mode = 2
 
-[node name="FogBase" type="TextureRect" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle"]
+[node name="FogBase" type="TextureRect" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle" unique_id=2008070532]
 visible = false
 z_index = 4
 layout_mode = 1
@@ -519,7 +677,7 @@ grow_vertical = 2
 texture = SubResource("NoiseTexture2D_ix2yc")
 metadata/_edit_use_anchors_ = true
 
-[node name="FogEdge" type="TextureRect" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/FogBase"]
+[node name="FogEdge" type="TextureRect" parent="BackmatSpot/Backmat/MapScroll/MapRatio/Battle/FogBase" unique_id=1725912492]
 z_index = 3
 layout_mode = 1
 anchors_preset = -1
@@ -530,9 +688,9 @@ grow_horizontal = 2
 mouse_filter = 2
 texture = SubResource("GradientTexture2D_0500f")
 
-[node name="Start Battle" type="Button" parent="."]
+[node name="Start Battle" type="Button" parent="." unique_id=575101740]
 custom_minimum_size = Vector2(0, 64)
-anchors_preset = -1
+anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -544,6 +702,9 @@ offset_bottom = -2.0
 grow_horizontal = 2
 text = "Start"
 
+[node name="StepTimer" type="Timer" parent="." unique_id=1524787219]
+
 [connection signal="mouse_entered" from="BackmatSpot/Backmat/MapScroll" to="." method="mouse_on_battlefield"]
 [connection signal="mouse_exited" from="BackmatSpot/Backmat/MapScroll" to="." method="mouse_off_battlefield"]
 [connection signal="pressed" from="Start Battle" to="." method="start_battle_pressed"]
+[connection signal="timeout" from="StepTimer" to="." method="step_timeout"]

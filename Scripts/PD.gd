@@ -1,6 +1,9 @@
 extends Node
 class_name PD
 
+##The smallest an int can be
+const MIN_INT = -9223372036854775808
+
 ##A table that converts a region index to the text name
 const REGION_TO_NAME = {0 : "White", 1 : "Red", 2 : "Green", 3 : "Violet", 4 : "Orange", 5 : "Blue", 6 : "Yellow"}
 
@@ -232,6 +235,18 @@ func lose_card(toLose : CardData):
 func gain_card(toGain : CardData):
 	currentCards.append(toGain)
 	deck_changed.emit()
+
+##Lose all non-location, non-default cards
+func clear_cards():
+	var expendableCards : Array[CardData]
+	for eachCard in currentCards:
+		if eachCard.isDefault:
+			continue
+		if eachCard.enemyCard:
+			continue
+		expendableCards.append(eachCard)
+	for eachCard in expendableCards:
+		currentCards.erase(eachCard)
 
 ##Put a random card in your current cards
 func gain_random():

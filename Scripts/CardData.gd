@@ -188,6 +188,8 @@ func stat_card() -> void:
 	var forStatroll : int = 0
 	##Highest number of abilities this card can have based on power score
 	var maxAbilities : int = clampi(floori(powerScore / 2.0) - 1, 0, 3)
+	##TODO: REMOVE OVERRIDE THAT SETS ABILITY COUNT TO 0
+	maxAbilities = 0
 	var weights := PackedFloat32Array()
 	for eachAbility in maxAbilities + 1:
 		match eachAbility:
@@ -202,9 +204,9 @@ func stat_card() -> void:
 	##The number of abilities this card has
 	var abilityCount = rng.rand_weighted(weights)
 	##The health this card has
-	var healthPoints : int = 1
+	var healthPoints : int = 0
 	##The attack this card has
-	var attackPoints : int = 1
+	var attackPoints : int = 0
 	
 	#Leave at least 2 point per each ability minimum
 	if abilityCount > 0:

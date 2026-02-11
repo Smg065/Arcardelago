@@ -149,8 +149,8 @@ func generate_path(usedAStar : AStarGrid2D, globalAStar : AStarGrid2D) -> bool:
 		globalAStar.set_point_weight_scale(eachPoint, PATH_COST)
 	
 	#Add the start and end
-	pathPoints.insert(0, pathPoint1.global_position - Vector2(WorldMap.CELL_SIZE / 2))
-	pathPoints.append(pathPoint2.global_position - Vector2(WorldMap.CELL_SIZE / 2))
+	pathPoints.insert(0, pathPoint1.global_position - Vector2(WorldMap.CELL_SIZE / 2.0))
+	pathPoints.append(pathPoint2.global_position - Vector2(WorldMap.CELL_SIZE / 2.0))
 	
 	#Cleanup redundant points
 	var lastDir = Vector2.ZERO
@@ -191,7 +191,7 @@ func generate_path(usedAStar : AStarGrid2D, globalAStar : AStarGrid2D) -> bool:
 	
 	#Create the curve itself
 	for eachPoint in pathPoints:
-		curve.add_point(eachPoint + Vector2(WorldMap.CELL_SIZE / 2))
+		curve.add_point(eachPoint + Vector2(WorldMap.CELL_SIZE / 2.0))
 	
 	#Make the visuals have this
 	$PathVis.points = curve.get_baked_points()

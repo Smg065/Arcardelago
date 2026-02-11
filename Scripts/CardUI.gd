@@ -340,6 +340,16 @@ func set_stack_multi(showStacked : bool = true):
 	uiCardHealth.text = str(cardData.baseHealth * multi)
 	uiCardDamage.text = str(cardData.baseAttack * multi)
 
+##Applies the current damage and returns false if the card is dead
+func apply_damage(sustainedDamage : int) -> bool:
+	var newHealth := maxi((cardData.baseHealth * (stack_size() + 1)) - sustainedDamage, 0)
+	uiCardHealth.text = str(newHealth)
+	if newHealth == 0:
+		modulate = Color.SLATE_GRAY
+		return false
+	modulate = Color.WHITE
+	return true
+
 ##Extract the given number of non partial-filtered card data entries.[br]
 ##Leave empty to extract all unfiltered entries.
 func extract_data(toExtract : int = -1) -> Array[CardData]:

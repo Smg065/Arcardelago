@@ -150,6 +150,8 @@ func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 	var dict : Dictionary = data as Dictionary
 	if !dict.has("IsArcardelago"):
 		return false
+	if "Card" != dict["Type"]:
+		return false
 	return true
 
 func _drop_data(_at_position: Vector2, data: Variant) -> void:

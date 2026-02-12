@@ -324,13 +324,13 @@ func unstable_trap():
 			if Persist.rng.randi_range(0, 1) == 0:
 				toRelease.append(eachCard)
 	for eachReleased in toRelease:
-		eachReleased.release()
+		eachReleased.release(false)
 
 ##Releases a random card you own
 func release_trap():
 	var releasableCards := Persist.releasable_cards()
 	if releasableCards.size() > 0:
-		releasableCards.pick_random().release()
+		releasableCards.pick_random().release(false)
 
 ##Replaces one of the highest value cards you own with one of a lower quality
 func trade_down_trap():
@@ -385,10 +385,14 @@ func use_item(itemName : String, reusable : bool = false) -> bool:
 			if !usedItems.items.has(itemName):
 				usedItems.items.append(itemName)
 				CSM.setoccur("Used Items", usedItems.items)
+			inventory_updated.emit(current_inventory())
 			return true
+		inventory_updated.emit(current_inventory())
 		return false
 	if current_inventory().items.has(itemName):
 		usedItems.items.append(itemName)
 		CSM.setoccur("Used Items", usedItems.items)
+		inventory_updated.emit(current_inventory())
 		return true
+	inventory_updated.emit(current_inventory())
 	return false

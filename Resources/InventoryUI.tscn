@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://b0alo1cixtioe"]
+[gd_scene format=3 uid="uid://b0alo1cixtioe"]
 
 [ext_resource type="Script" uid="uid://lw44mf88d7sn" path="res://Scripts/UI/InventoryUI.gd" id="1_fs2gt"]
 [ext_resource type="Texture2D" uid="uid://bobudofbk4ghn" path="res://Sprites/Items/Bottle.png" id="1_tytll"]
@@ -27,12 +27,13 @@
 [ext_resource type="Texture2D" uid="uid://b0522nrbokphs" path="res://Sprites/Items/Gold.png" id="13_svbju"]
 [ext_resource type="Texture2D" uid="uid://drfcsgstnmw2j" path="res://Sprites/SpheresBackdrop.png" id="15_p0s4d"]
 [ext_resource type="Texture2D" uid="uid://broe0x11xgb58" path="res://Sprites/Items/HouseUpgrade.png" id="17_obj6a"]
+[ext_resource type="Script" uid="uid://c43qvmuh6rwb4" path="res://Scripts/InventoryStamp.gd" id="24_tol4c"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_dmove"]
 outline_size = 8
 outline_color = Color(0.33163944, 0.33163944, 0.3316394, 1)
 
-[node name="InventoryUI" type="Control" node_paths=PackedStringArray("sphereIcons", "goldLabel", "hintPointLabel", "lifeLabel", "burgel", "houseUpgradeLabel", "backdropStrips", "foundBars", "releasedBars", "foundReleasedText", "obsticalBreakerIcons", "stampIcons", "stampCounts", "eventQueueHolder")]
+[node name="InventoryUI" type="Control" unique_id=1336376490 node_paths=PackedStringArray("sphereIcons", "goldLabel", "hintPointLabel", "lifeLabel", "burgel", "houseUpgradeLabel", "backdropStrips", "foundBars", "releasedBars", "foundReleasedText", "obsticalBreakerIcons", "stampIcons", "stampCounts", "eventQueueHolder")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -72,7 +73,7 @@ eventReleaseTable = Dictionary[String, int]({
 "Treasure": 0
 })
 
-[node name="Items" type="ColorRect" parent="."]
+[node name="Items" type="ColorRect" parent="." unique_id=1328119837]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -82,7 +83,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.050980393, 0.078431375, 0.10980392, 1)
 
-[node name="ItemboxLayout" type="VBoxContainer" parent="Items"]
+[node name="ItemboxLayout" type="VBoxContainer" parent="Items" unique_id=1010403363]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -90,11 +91,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TopRow" type="HBoxContainer" parent="Items/ItemboxLayout"]
+[node name="TopRow" type="HBoxContainer" parent="Items/ItemboxLayout" unique_id=329602167]
 layout_mode = 2
 alignment = 1
 
-[node name="Sphere Item Backdrop" type="TextureRect" parent="Items/ItemboxLayout/TopRow"]
+[node name="Sphere Item Backdrop" type="TextureRect" parent="Items/ItemboxLayout/TopRow" unique_id=28892007]
 layout_mode = 2
 tooltip_text = "Sphere Holder"
 texture = ExtResource("15_p0s4d")
@@ -102,7 +103,7 @@ expand_mode = 3
 stretch_mode = 4
 metadata/_edit_use_anchors_ = true
 
-[node name="Red Sphere" type="TextureRect" parent="Items/ItemboxLayout/TopRow/Sphere Item Backdrop"]
+[node name="Red Sphere" type="TextureRect" parent="Items/ItemboxLayout/TopRow/Sphere Item Backdrop" unique_id=834422937]
 modulate = Color(0.78039217, 0.45882353, 0.5019608, 1)
 layout_mode = 1
 anchors_preset = -1
@@ -117,7 +118,7 @@ expand_mode = 1
 stretch_mode = 5
 metadata/_edit_use_anchors_ = true
 
-[node name="Green Sphere" type="TextureRect" parent="Items/ItemboxLayout/TopRow/Sphere Item Backdrop"]
+[node name="Green Sphere" type="TextureRect" parent="Items/ItemboxLayout/TopRow/Sphere Item Backdrop" unique_id=534159408]
 modulate = Color(0.45490196, 0.7529412, 0.45490196, 1)
 layout_mode = 1
 anchors_preset = -1
@@ -133,7 +134,7 @@ expand_mode = 1
 stretch_mode = 5
 metadata/_edit_use_anchors_ = true
 
-[node name="Violet Sphere" type="TextureRect" parent="Items/ItemboxLayout/TopRow/Sphere Item Backdrop"]
+[node name="Violet Sphere" type="TextureRect" parent="Items/ItemboxLayout/TopRow/Sphere Item Backdrop" unique_id=986669574]
 modulate = Color(0.7921569, 0.5803922, 0.7607843, 1)
 layout_mode = 1
 anchors_preset = -1
@@ -149,7 +150,7 @@ expand_mode = 1
 stretch_mode = 5
 metadata/_edit_use_anchors_ = true
 
-[node name="Yellow Sphere" type="TextureRect" parent="Items/ItemboxLayout/TopRow/Sphere Item Backdrop"]
+[node name="Yellow Sphere" type="TextureRect" parent="Items/ItemboxLayout/TopRow/Sphere Item Backdrop" unique_id=841151486]
 modulate = Color(0.9254902, 0.88235295, 0.56078434, 1)
 layout_mode = 1
 anchors_preset = -1
@@ -164,7 +165,7 @@ expand_mode = 1
 stretch_mode = 5
 metadata/_edit_use_anchors_ = true
 
-[node name="Blue Sphere" type="TextureRect" parent="Items/ItemboxLayout/TopRow/Sphere Item Backdrop"]
+[node name="Blue Sphere" type="TextureRect" parent="Items/ItemboxLayout/TopRow/Sphere Item Backdrop" unique_id=828449743]
 modulate = Color(0.4627451, 0.49411765, 0.7411765, 1)
 layout_mode = 1
 anchors_preset = -1
@@ -179,7 +180,7 @@ expand_mode = 1
 stretch_mode = 5
 metadata/_edit_use_anchors_ = true
 
-[node name="Orange Sphere" type="TextureRect" parent="Items/ItemboxLayout/TopRow/Sphere Item Backdrop"]
+[node name="Orange Sphere" type="TextureRect" parent="Items/ItemboxLayout/TopRow/Sphere Item Backdrop" unique_id=1493782549]
 modulate = Color(0.84313726, 0.61960787, 0.4862745, 1)
 layout_mode = 1
 anchors_preset = -1
@@ -195,11 +196,11 @@ expand_mode = 1
 stretch_mode = 5
 metadata/_edit_use_anchors_ = true
 
-[node name="House Upgrades" type="VBoxContainer" parent="Items/ItemboxLayout/TopRow"]
+[node name="House Upgrades" type="VBoxContainer" parent="Items/ItemboxLayout/TopRow" unique_id=2098049148]
 layout_mode = 2
 size_flags_horizontal = 6
 
-[node name="House Upgrade Icon" type="TextureRect" parent="Items/ItemboxLayout/TopRow/House Upgrades"]
+[node name="House Upgrade Icon" type="TextureRect" parent="Items/ItemboxLayout/TopRow/House Upgrades" unique_id=1061188772]
 layout_mode = 2
 size_flags_vertical = 3
 tooltip_text = "House Level
@@ -208,89 +209,89 @@ texture = ExtResource("17_obj6a")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="House Upgrade Label" type="Label" parent="Items/ItemboxLayout/TopRow/House Upgrades"]
+[node name="House Upgrade Label" type="Label" parent="Items/ItemboxLayout/TopRow/House Upgrades" unique_id=997503005]
 layout_mode = 2
 text = "House Lvl: 1"
 horizontal_alignment = 1
 
-[node name="BurgerLifeCounters" type="VBoxContainer" parent="Items/ItemboxLayout/TopRow"]
+[node name="BurgerLifeCounters" type="VBoxContainer" parent="Items/ItemboxLayout/TopRow" unique_id=170406783]
 layout_mode = 2
 size_flags_horizontal = 0
 
-[node name="LifeCounter" type="HBoxContainer" parent="Items/ItemboxLayout/TopRow/BurgerLifeCounters"]
+[node name="LifeCounter" type="HBoxContainer" parent="Items/ItemboxLayout/TopRow/BurgerLifeCounters" unique_id=1379266498]
 layout_mode = 2
 size_flags_vertical = 3
 tooltip_text = "Extra Life
 Lets you keep your deck when you die."
 
-[node name="LifeIcon" type="TextureRect" parent="Items/ItemboxLayout/TopRow/BurgerLifeCounters/LifeCounter"]
+[node name="LifeIcon" type="TextureRect" parent="Items/ItemboxLayout/TopRow/BurgerLifeCounters/LifeCounter" unique_id=1655479283]
 layout_mode = 2
 size_flags_horizontal = 0
 texture = ExtResource("10_axx4b")
 expand_mode = 3
 stretch_mode = 5
 
-[node name="LifeLabel" type="Label" parent="Items/ItemboxLayout/TopRow/BurgerLifeCounters/LifeCounter"]
+[node name="LifeLabel" type="Label" parent="Items/ItemboxLayout/TopRow/BurgerLifeCounters/LifeCounter" unique_id=457576527]
 layout_mode = 2
 size_flags_horizontal = 0
 text = ": 00"
 
-[node name="Burgounter" type="HBoxContainer" parent="Items/ItemboxLayout/TopRow/BurgerLifeCounters"]
+[node name="Burgounter" type="HBoxContainer" parent="Items/ItemboxLayout/TopRow/BurgerLifeCounters" unique_id=1140538591]
 layout_mode = 2
 size_flags_vertical = 3
 tooltip_text = "Burger"
 
-[node name="Burgicon" type="TextureRect" parent="Items/ItemboxLayout/TopRow/BurgerLifeCounters/Burgounter"]
+[node name="Burgicon" type="TextureRect" parent="Items/ItemboxLayout/TopRow/BurgerLifeCounters/Burgounter" unique_id=1601595910]
 layout_mode = 2
 size_flags_horizontal = 0
 texture = ExtResource("11_btr1u")
 expand_mode = 3
 stretch_mode = 5
 
-[node name="Burgel" type="Label" parent="Items/ItemboxLayout/TopRow/BurgerLifeCounters/Burgounter"]
+[node name="Burgel" type="Label" parent="Items/ItemboxLayout/TopRow/BurgerLifeCounters/Burgounter" unique_id=1448821512]
 layout_mode = 2
 size_flags_horizontal = 0
 text = ":0000"
 
-[node name="IncrementalCounters" type="VBoxContainer" parent="Items/ItemboxLayout/TopRow"]
+[node name="IncrementalCounters" type="VBoxContainer" parent="Items/ItemboxLayout/TopRow" unique_id=406475572]
 layout_mode = 2
 
-[node name="GoldCounter" type="HBoxContainer" parent="Items/ItemboxLayout/TopRow/IncrementalCounters"]
+[node name="GoldCounter" type="HBoxContainer" parent="Items/ItemboxLayout/TopRow/IncrementalCounters" unique_id=994559758]
 layout_mode = 2
 size_flags_vertical = 3
 tooltip_text = "Gold
 Use to buy cards and release cards at shops"
 alignment = 1
 
-[node name="GoldIcon" type="TextureRect" parent="Items/ItemboxLayout/TopRow/IncrementalCounters/GoldCounter"]
+[node name="GoldIcon" type="TextureRect" parent="Items/ItemboxLayout/TopRow/IncrementalCounters/GoldCounter" unique_id=380833760]
 layout_mode = 2
 size_flags_horizontal = 0
 texture = ExtResource("13_svbju")
 expand_mode = 3
 stretch_mode = 5
 
-[node name="GoldLabel" type="Label" parent="Items/ItemboxLayout/TopRow/IncrementalCounters/GoldCounter"]
+[node name="GoldLabel" type="Label" parent="Items/ItemboxLayout/TopRow/IncrementalCounters/GoldCounter" unique_id=1810048535]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 text = ": 0000"
 vertical_alignment = 1
 
-[node name="HintPointCounter" type="HBoxContainer" parent="Items/ItemboxLayout/TopRow/IncrementalCounters"]
+[node name="HintPointCounter" type="HBoxContainer" parent="Items/ItemboxLayout/TopRow/IncrementalCounters" unique_id=1324782144]
 layout_mode = 2
 size_flags_vertical = 3
 tooltip_text = "Hint Points
 The amount of points you have that build to hint stamps"
 alignment = 1
 
-[node name="HintPointIcon" type="TextureRect" parent="Items/ItemboxLayout/TopRow/IncrementalCounters/HintPointCounter"]
+[node name="HintPointIcon" type="TextureRect" parent="Items/ItemboxLayout/TopRow/IncrementalCounters/HintPointCounter" unique_id=818233219]
 layout_mode = 2
 size_flags_horizontal = 0
 texture = ExtResource("9_aknth")
 expand_mode = 3
 stretch_mode = 5
 
-[node name="HintPointLabel" type="Label" parent="Items/ItemboxLayout/TopRow/IncrementalCounters/HintPointCounter"]
+[node name="HintPointLabel" type="Label" parent="Items/ItemboxLayout/TopRow/IncrementalCounters/HintPointCounter" unique_id=585012537]
 custom_minimum_size = Vector2(96, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -298,12 +299,12 @@ size_flags_vertical = 1
 text = ":000/000"
 vertical_alignment = 1
 
-[node name="ColoredGroups" type="Control" parent="Items/ItemboxLayout"]
+[node name="ColoredGroups" type="Control" parent="Items/ItemboxLayout" unique_id=1173208138]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="6ColorBackdrop" type="HBoxContainer" parent="Items/ItemboxLayout/ColoredGroups"]
+[node name="6ColorBackdrop" type="HBoxContainer" parent="Items/ItemboxLayout/ColoredGroups" unique_id=3926397]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -311,43 +312,43 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="RedBackdrop" type="ColorRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorBackdrop"]
+[node name="RedBackdrop" type="ColorRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorBackdrop" unique_id=538425602]
 modulate = Color(1, 1, 1, 0.5019608)
 layout_mode = 2
 size_flags_horizontal = 3
 color = Color(0.78039217, 0.45882353, 0.5019608, 1)
 
-[node name="GreenBackdrop" type="ColorRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorBackdrop"]
+[node name="GreenBackdrop" type="ColorRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorBackdrop" unique_id=773658518]
 modulate = Color(1, 1, 1, 0.5019608)
 layout_mode = 2
 size_flags_horizontal = 3
 color = Color(0.45490196, 0.7529412, 0.45490196, 1)
 
-[node name="VioletBackdrop" type="ColorRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorBackdrop"]
+[node name="VioletBackdrop" type="ColorRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorBackdrop" unique_id=1345133161]
 modulate = Color(1, 1, 1, 0.5019608)
 layout_mode = 2
 size_flags_horizontal = 3
 color = Color(0.7921569, 0.5803922, 0.7607843, 1)
 
-[node name="OrangeBackdrop" type="ColorRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorBackdrop"]
+[node name="OrangeBackdrop" type="ColorRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorBackdrop" unique_id=2138893606]
 modulate = Color(1, 1, 1, 0.5019608)
 layout_mode = 2
 size_flags_horizontal = 3
 color = Color(0.84313726, 0.61960787, 0.4862745, 1)
 
-[node name="BlueBackdrop" type="ColorRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorBackdrop"]
+[node name="BlueBackdrop" type="ColorRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorBackdrop" unique_id=530406054]
 modulate = Color(1, 1, 1, 0.5019608)
 layout_mode = 2
 size_flags_horizontal = 3
 color = Color(0.4627451, 0.49411765, 0.7411765, 1)
 
-[node name="YellowBackdrop" type="ColorRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorBackdrop"]
+[node name="YellowBackdrop" type="ColorRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorBackdrop" unique_id=418078484]
 modulate = Color(1, 1, 1, 0.5019608)
 layout_mode = 2
 size_flags_horizontal = 3
 color = Color(0.9254902, 0.88235295, 0.56078434, 1)
 
-[node name="6ColorItems" type="VBoxContainer" parent="Items/ItemboxLayout/ColoredGroups"]
+[node name="6ColorItems" type="VBoxContainer" parent="Items/ItemboxLayout/ColoredGroups" unique_id=1791882280]
 z_index = 1
 layout_mode = 1
 anchors_preset = 15
@@ -356,10 +357,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Progress" type="HBoxContainer" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems"]
+[node name="Progress" type="HBoxContainer" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems" unique_id=1305281110]
 layout_mode = 2
 
-[node name="Red Discovered" type="ProgressBar" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Progress"]
+[node name="Red Discovered" type="ProgressBar" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Progress" unique_id=228277705]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -368,7 +369,7 @@ step = 1.0
 rounded = true
 show_percentage = false
 
-[node name="Red Released" type="ProgressBar" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Progress/Red Discovered"]
+[node name="Red Released" type="ProgressBar" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Progress/Red Discovered" unique_id=1211913836]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 1
 anchors_preset = 15
@@ -382,7 +383,7 @@ step = 1.0
 rounded = true
 show_percentage = false
 
-[node name="Red Display" type="Label" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Progress/Red Discovered"]
+[node name="Red Display" type="Label" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Progress/Red Discovered" unique_id=149567307]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -401,7 +402,7 @@ script = ExtResource("13_aknth")
 watch_text_change = true
 metadata/_custom_type_script = "uid://d11kfgsd6jgt"
 
-[node name="Green Discovered" type="ProgressBar" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Progress"]
+[node name="Green Discovered" type="ProgressBar" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Progress" unique_id=687021928]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -410,7 +411,7 @@ step = 1.0
 rounded = true
 show_percentage = false
 
-[node name="Green Released" type="ProgressBar" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Progress/Green Discovered"]
+[node name="Green Released" type="ProgressBar" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Progress/Green Discovered" unique_id=2586707]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 1
 anchors_preset = 15
@@ -424,7 +425,7 @@ step = 1.0
 rounded = true
 show_percentage = false
 
-[node name="Green Display" type="Label" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Progress/Green Discovered"]
+[node name="Green Display" type="Label" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Progress/Green Discovered" unique_id=301000147]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -443,7 +444,7 @@ script = ExtResource("13_aknth")
 watch_text_change = true
 metadata/_custom_type_script = "uid://d11kfgsd6jgt"
 
-[node name="Violet Discovered" type="ProgressBar" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Progress"]
+[node name="Violet Discovered" type="ProgressBar" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Progress" unique_id=167185177]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -452,7 +453,7 @@ step = 1.0
 rounded = true
 show_percentage = false
 
-[node name="Violet Released" type="ProgressBar" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Progress/Violet Discovered"]
+[node name="Violet Released" type="ProgressBar" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Progress/Violet Discovered" unique_id=270796638]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 1
 anchors_preset = 15
@@ -466,7 +467,7 @@ step = 1.0
 rounded = true
 show_percentage = false
 
-[node name="Violet Display" type="Label" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Progress/Violet Discovered"]
+[node name="Violet Display" type="Label" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Progress/Violet Discovered" unique_id=1205003031]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -485,7 +486,7 @@ script = ExtResource("13_aknth")
 watch_text_change = true
 metadata/_custom_type_script = "uid://d11kfgsd6jgt"
 
-[node name="Orange Discovered" type="ProgressBar" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Progress"]
+[node name="Orange Discovered" type="ProgressBar" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Progress" unique_id=1174690460]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -494,7 +495,7 @@ step = 1.0
 rounded = true
 show_percentage = false
 
-[node name="Orange Released" type="ProgressBar" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Progress/Orange Discovered"]
+[node name="Orange Released" type="ProgressBar" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Progress/Orange Discovered" unique_id=1831038619]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 1
 anchors_preset = 15
@@ -508,7 +509,7 @@ step = 1.0
 rounded = true
 show_percentage = false
 
-[node name="Orange Display" type="Label" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Progress/Orange Discovered"]
+[node name="Orange Display" type="Label" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Progress/Orange Discovered" unique_id=958598254]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -527,7 +528,7 @@ script = ExtResource("13_aknth")
 watch_text_change = true
 metadata/_custom_type_script = "uid://d11kfgsd6jgt"
 
-[node name="Blue Discovered" type="ProgressBar" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Progress"]
+[node name="Blue Discovered" type="ProgressBar" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Progress" unique_id=2074112737]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -536,7 +537,7 @@ step = 1.0
 rounded = true
 show_percentage = false
 
-[node name="Blue Released" type="ProgressBar" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Progress/Blue Discovered"]
+[node name="Blue Released" type="ProgressBar" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Progress/Blue Discovered" unique_id=1673219582]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 1
 anchors_preset = 15
@@ -550,7 +551,7 @@ step = 1.0
 rounded = true
 show_percentage = false
 
-[node name="Blue Display" type="Label" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Progress/Blue Discovered"]
+[node name="Blue Display" type="Label" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Progress/Blue Discovered" unique_id=1563029910]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -569,7 +570,7 @@ script = ExtResource("13_aknth")
 watch_text_change = true
 metadata/_custom_type_script = "uid://d11kfgsd6jgt"
 
-[node name="Yellow Discovered" type="ProgressBar" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Progress"]
+[node name="Yellow Discovered" type="ProgressBar" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Progress" unique_id=1882443472]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -578,7 +579,7 @@ step = 1.0
 rounded = true
 show_percentage = false
 
-[node name="Yellow Released" type="ProgressBar" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Progress/Yellow Discovered"]
+[node name="Yellow Released" type="ProgressBar" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Progress/Yellow Discovered" unique_id=1253010337]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 1
 anchors_preset = 15
@@ -592,7 +593,7 @@ step = 1.0
 rounded = true
 show_percentage = false
 
-[node name="Yellow Display" type="Label" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Progress/Yellow Discovered"]
+[node name="Yellow Display" type="Label" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Progress/Yellow Discovered" unique_id=1946614417]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -611,14 +612,14 @@ script = ExtResource("13_aknth")
 watch_text_change = true
 metadata/_custom_type_script = "uid://d11kfgsd6jgt"
 
-[node name="ObsLabel" type="Label" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems"]
+[node name="ObsLabel" type="Label" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems" unique_id=1568855145]
 layout_mode = 2
 text = "Obstacle Busters"
 label_settings = SubResource("LabelSettings_dmove")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="DivideLine" type="ColorRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/ObsLabel"]
+[node name="DivideLine" type="ColorRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/ObsLabel" unique_id=1662761232]
 z_index = -1
 layout_mode = 1
 anchors_preset = 15
@@ -628,11 +629,11 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.8627451)
 
-[node name="ObstacleBusters" type="HBoxContainer" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems"]
+[node name="ObstacleBusters" type="HBoxContainer" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems" unique_id=1329115403]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Bottle" type="TextureRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/ObstacleBusters"]
+[node name="Bottle" type="TextureRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/ObstacleBusters" unique_id=168066707]
 modulate = Color(0.5, 0.5, 0.5, 1)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -642,7 +643,7 @@ texture = ExtResource("1_tytll")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Axe" type="TextureRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/ObstacleBusters"]
+[node name="Axe" type="TextureRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/ObstacleBusters" unique_id=684350149]
 modulate = Color(0.5, 0.5, 0.5, 1)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -652,7 +653,7 @@ texture = ExtResource("2_pca7s")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Castle Key" type="TextureRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/ObstacleBusters"]
+[node name="Castle Key" type="TextureRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/ObstacleBusters" unique_id=852432614]
 modulate = Color(0.5, 0.5, 0.5, 1)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -662,7 +663,7 @@ texture = ExtResource("3_7if61")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Pickaxe" type="TextureRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/ObstacleBusters"]
+[node name="Pickaxe" type="TextureRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/ObstacleBusters" unique_id=1193444822]
 modulate = Color(0.5, 0.5, 0.5, 1)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -672,7 +673,7 @@ texture = ExtResource("4_mo3od")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Boat" type="TextureRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/ObstacleBusters"]
+[node name="Boat" type="TextureRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/ObstacleBusters" unique_id=729341737]
 modulate = Color(0.5, 0.5, 0.5, 1)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -682,7 +683,7 @@ texture = ExtResource("5_jokld")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Shovel" type="TextureRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/ObstacleBusters"]
+[node name="Shovel" type="TextureRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/ObstacleBusters" unique_id=1295474517]
 modulate = Color(0.5, 0.5, 0.5, 1)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -692,14 +693,14 @@ texture = ExtResource("6_8t3v3")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="StampsLabel" type="Label" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems"]
+[node name="StampsLabel" type="Label" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems" unique_id=1183774306]
 layout_mode = 2
 text = "Stamps"
 label_settings = SubResource("LabelSettings_dmove")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="DivideLine" type="ColorRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/StampsLabel"]
+[node name="DivideLine" type="ColorRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/StampsLabel" unique_id=379240137]
 z_index = -1
 layout_mode = 1
 anchors_preset = 15
@@ -709,11 +710,11 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.8627451)
 
-[node name="Stamps" type="HBoxContainer" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems"]
+[node name="Stamps" type="HBoxContainer" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems" unique_id=456800675]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Steel Stamp" type="TextureRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Stamps"]
+[node name="Steel Stamp" type="TextureRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Stamps" unique_id=763087668]
 modulate = Color(0.5, 0.5, 0.5, 1)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -723,8 +724,10 @@ Prevents card from auto-releasing"
 texture = ExtResource("7_dmove")
 expand_mode = 1
 stretch_mode = 5
+script = ExtResource("24_tol4c")
+stampType = "Steel"
 
-[node name="Harmony Stamp" type="TextureRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Stamps"]
+[node name="Harmony Stamp" type="TextureRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Stamps" unique_id=933458149]
 modulate = Color(0.5, 0.5, 0.5, 1)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -734,8 +737,10 @@ Adds an enemy card to your deck"
 texture = ExtResource("8_svbju")
 expand_mode = 1
 stretch_mode = 5
+script = ExtResource("24_tol4c")
+stampType = "Harmony"
 
-[node name="Hint Stamp" type="TextureRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Stamps"]
+[node name="Hint Stamp" type="TextureRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Stamps" unique_id=1384165748]
 modulate = Color(0.5, 0.5, 0.5, 1)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -745,8 +750,10 @@ Reveals all information about an enemy or item to the multiworld"
 texture = ExtResource("9_aknth")
 expand_mode = 1
 stretch_mode = 5
+script = ExtResource("24_tol4c")
+stampType = "Hint"
 
-[node name="Ghost Stamp" type="TextureRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Stamps"]
+[node name="Ghost Stamp" type="TextureRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Stamps" unique_id=1199926696]
 modulate = Color(0.5, 0.5, 0.5, 1)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -756,8 +763,10 @@ Makes a released card able to show up in the card pool again"
 texture = ExtResource("10_6nq3p")
 expand_mode = 1
 stretch_mode = 5
+script = ExtResource("24_tol4c")
+stampType = "Ghost"
 
-[node name="Square Stamp" type="TextureRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Stamps"]
+[node name="Square Stamp" type="TextureRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Stamps" unique_id=752336588]
 modulate = Color(0.5, 0.5, 0.5, 1)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -767,8 +776,10 @@ Makes the card always 1 square step higher"
 texture = ExtResource("11_p0s4d")
 expand_mode = 1
 stretch_mode = 5
+script = ExtResource("24_tol4c")
+stampType = "Square"
 
-[node name="Gold Stamp" type="TextureRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Stamps"]
+[node name="Gold Stamp" type="TextureRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/Stamps" unique_id=279273655]
 modulate = Color(0.5, 0.5, 0.5, 1)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -778,17 +789,19 @@ When released, this card starts a treasure event"
 texture = ExtResource("12_obj6a")
 expand_mode = 1
 stretch_mode = 5
+script = ExtResource("24_tol4c")
+stampType = "Gold"
 
-[node name="StampCount" type="HBoxContainer" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems"]
+[node name="StampCount" type="HBoxContainer" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems" unique_id=1638583671]
 layout_mode = 2
 
-[node name="SteelCount" type="Label" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/StampCount"]
+[node name="SteelCount" type="Label" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/StampCount" unique_id=158588811]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "x0"
 horizontal_alignment = 1
 
-[node name="CountBackdrop" type="ColorRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/StampCount/SteelCount"]
+[node name="CountBackdrop" type="ColorRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/StampCount/SteelCount" unique_id=650473096]
 z_index = -1
 layout_mode = 1
 anchors_preset = 15
@@ -798,13 +811,13 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.5019608)
 
-[node name="HarmonyCount" type="Label" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/StampCount"]
+[node name="HarmonyCount" type="Label" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/StampCount" unique_id=441446489]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "x0"
 horizontal_alignment = 1
 
-[node name="CountBackdrop" type="ColorRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/StampCount/HarmonyCount"]
+[node name="CountBackdrop" type="ColorRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/StampCount/HarmonyCount" unique_id=641404230]
 z_index = -1
 layout_mode = 1
 anchors_preset = 15
@@ -814,13 +827,13 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.5019608)
 
-[node name="HintCount" type="Label" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/StampCount"]
+[node name="HintCount" type="Label" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/StampCount" unique_id=1930297352]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "x0"
 horizontal_alignment = 1
 
-[node name="CountBackdrop" type="ColorRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/StampCount/HintCount"]
+[node name="CountBackdrop" type="ColorRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/StampCount/HintCount" unique_id=1491449249]
 z_index = -1
 layout_mode = 1
 anchors_preset = 15
@@ -830,13 +843,13 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.5019608)
 
-[node name="GhostCount" type="Label" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/StampCount"]
+[node name="GhostCount" type="Label" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/StampCount" unique_id=1071021963]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "x0"
 horizontal_alignment = 1
 
-[node name="CountBackdrop" type="ColorRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/StampCount/GhostCount"]
+[node name="CountBackdrop" type="ColorRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/StampCount/GhostCount" unique_id=1239170246]
 z_index = -1
 layout_mode = 1
 anchors_preset = 15
@@ -846,13 +859,13 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.5019608)
 
-[node name="SquareCount" type="Label" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/StampCount"]
+[node name="SquareCount" type="Label" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/StampCount" unique_id=1956166269]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "x0"
 horizontal_alignment = 1
 
-[node name="CountBackdrop" type="ColorRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/StampCount/SquareCount"]
+[node name="CountBackdrop" type="ColorRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/StampCount/SquareCount" unique_id=600269918]
 z_index = -1
 layout_mode = 1
 anchors_preset = 15
@@ -862,13 +875,13 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.5019608)
 
-[node name="GoldCount" type="Label" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/StampCount"]
+[node name="GoldCount" type="Label" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/StampCount" unique_id=1782606054]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "x0"
 horizontal_alignment = 1
 
-[node name="CountBackdrop" type="ColorRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/StampCount/GoldCount"]
+[node name="CountBackdrop" type="ColorRect" parent="Items/ItemboxLayout/ColoredGroups/6ColorItems/StampCount/GoldCount" unique_id=2122015007]
 z_index = -1
 layout_mode = 1
 anchors_preset = 15
@@ -878,14 +891,14 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.5019608)
 
-[node name="EventQueueScrollbox" type="ScrollContainer" parent="."]
+[node name="EventQueueScrollbox" type="ScrollContainer" parent="." unique_id=1961536841]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 offset_bottom = 64.0
 grow_horizontal = 2
 
-[node name="EventQueue" type="HBoxContainer" parent="EventQueueScrollbox"]
+[node name="EventQueue" type="HBoxContainer" parent="EventQueueScrollbox" unique_id=335045900]
 layout_mode = 2
 size_flags_horizontal = 2
 size_flags_vertical = 3

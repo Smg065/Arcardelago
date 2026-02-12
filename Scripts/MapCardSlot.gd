@@ -15,7 +15,9 @@ func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 	if typeof(data) != TYPE_DICTIONARY:
 		return false
 	var dict : Dictionary = data as Dictionary
-	if !dict.has("IsArcardelago"):
+	if not "IsArcardelago" in dict:
+		return false
+	if "Card" != dict["Type"]:
 		return false
 	var cardSource = data["CardUI"].get_parent()
 	if cardSource is CardSlot:
@@ -44,12 +46,14 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 		if inCard.compressedCardData.size() == 0:
 			inCard.shift_parent(self)
 			setup_card(inCard)
+			inCard.set_stack_multi()
 		#Extract a single card and construct a new one to go here
 		else:
 			var newCard : CardUI = cardPrefab.instantiate()
 			add_child(newCard)
 			newCard.build(inCard.extract_data(1)[0])
 			setup_card(newCard)
+			inCard.set_stack_multi()
 	holding_updated.emit(self)
 
 ##Make it fit correctly

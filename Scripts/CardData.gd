@@ -474,9 +474,25 @@ func scout():
 	if !Persist.game.knownLoctions.has(apId):
 		Persist.game.knownLoctions.append(apId)
 	Archipelago.conn.scout(apId, 2, Persist.game.itemHandler.new_known_card)
-##Releases the item in the card to the APWorld
-func release():
+
+##Tries to release the item in the card to the APWorld. Defaults to manual release (bypass steel stamp)
+func release(manual : bool = true):
+	if not manual and "Steel" in stamps:
+		##TODO: Steel Protection Animation
+		return
 	if isDefault or enemyCard:
 		push_error("Cannot Release This Item!")
 	Archipelago.collect_location(apAddress)
 	Persist.lose_card(self)
+
+##Informs you if this card has been hinted
+func is_hinted():
+	for eachHint in Archipelago.conn.hints:
+		if eachHint.item.loc_id == apAddress:
+			return true
+	return false
+
+##Adds a stamp to this card
+func stamp(nType : String):
+	stamps.append(nType)
+	Persist.game.itemHandler.use_item("%s Stamp" % nType)

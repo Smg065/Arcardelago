@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://cjimpmtj3sbr0"]
+
+[ext_resource type="Texture2D" uid="uid://drsb8rknox20d" path="res://icon.svg" id="1_t6548"]
+[ext_resource type="Script" uid="uid://dpn5qtlqf4cvi" path="res://Scripts/UI/StampButton.gd" id="2_q6woa"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0yebn"]
+
+[node name="StampButton" type="Button" unique_id=1735101118]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_0yebn")
+text = " "
+icon = ExtResource("1_t6548")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+script = ExtResource("2_q6woa")

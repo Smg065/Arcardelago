@@ -247,6 +247,7 @@ func clear_cards():
 		expendableCards.append(eachCard)
 	for eachCard in expendableCards:
 		currentCards.erase(eachCard)
+	deck_changed.emit()
 
 ##Put a random card in your current cards
 func gain_random():

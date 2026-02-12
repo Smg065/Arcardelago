@@ -15,6 +15,7 @@ class_name CardUI
 @export var uiCardDamage : AutoSizeLabel
 @export var uiCardCount : AutoSizeLabel
 @export var uiCardAbilities : AutoSizeRichTextLabel
+@export var uiCardStampContainer : HBoxContainer
 
 @export var playerPip : Texture2D
 @export var enemyPip : Texture2D
@@ -62,6 +63,7 @@ func build(nCardData : CardData):
 	
 	name = cardName
 	update_rich_texts()
+	update_stamps()
 	set_stack_multi()
 	check_cleared()
 
@@ -144,6 +146,28 @@ func update_players_display():
 	uiCardGameLabel.tooltip_text = "%s\n%s" % [gameName, playersNames]
 	uiCardGameLabel.do_resize_text()
 
+##Update stamps and stamp effects on this card
+func update_stamps():
+	for eachChild in uiCardStampContainer.get_children():
+		eachChild.queue_free()
+	var stampCounts : Dictionary[String, int]
+	for eachStamp in cardData.stamps:
+		if eachStamp in stampCounts:
+			stampCounts[eachStamp] += 1
+		else:
+			stampCounts[eachStamp] = 1
+	for eachIndex in compressedCardData.size():
+		if partialFiltered[eachIndex]:
+			continue
+		var eachCard := compressedCardData[eachIndex]
+		for eachStamp in eachCard.stamps:
+			if eachStamp in stampCounts:
+				stampCounts[eachStamp] += 1
+			else:
+				stampCounts[eachStamp] = 1
+	for eachStamp in stampCounts:
+		uiCardStampContainer.add_child(StampButton.generate_button(self, eachStamp, stampCounts[eachStamp]))
+
 ##Show how many cards of this type you have
 func update_card_count_display():
 	var totalCards = 1 + compressedCardData.size()
@@ -186,6 +210,7 @@ func try_remove_card(inCard : CardData) -> bool:
 
 ##Update compressed visuals
 func update_compressed_vis():
+	update_stamps()
 	update_region_band()
 	update_players_display()
 	update_card_count_display()
@@ -275,7 +300,7 @@ func _get_drag_data(_at_position: Vector2) -> Variant:
 	cardPreview.pivot_offset = cardPreview.size / 2
 	cardPreview.z_index = 7
 	set_drag_preview(self.duplicate(0))
-	return {"IsArcardelago" : true, "CardUI" : self}
+	return {"IsArcardelago" : true, "Type" : "Card", "CardUI" : self}
 
 ##Changes the cards parent and sets card slots
 func shift_parent(nParent : Node):
@@ -310,12 +335,18 @@ func update_card_slot_mouse():
 		parent.mouse_filter = Control.MOUSE_FILTER_PASS
 
 ##The number of stacks this would have on a card slot
-func stack_size() -> int:
-	return floori(log(partialFiltered.size()) / log(2))
+func stack_size(includeStamps : bool = true) -> int:
+	var bonusStacks : int = 0
+	if includeStamps:
+		bonusStacks += cardData.stamps.count("Square")
+		for eachIndex in compressedCardData.size():
+			if not partialFiltered[eachIndex]:
+				bonusStacks += compressedCardData[eachIndex].stamps.count("Square")
+	return floori(log(partialFiltered.size() + bonusStacks) / log(2))
 
 ##The number of cards needed to up the stack
 func to_next_stack() -> int:
-	var stackSize := stack_size()
+	var stackSize := stack_size(false)
 	var output := roundi(pow(2, stackSize + 1)) - partialFiltered.size()
 	return output
 
@@ -403,3 +434,86 @@ func card_value(useDifficulty : bool = true) -> int:
 	for eachCard in all_card_data():
 		output += eachCard.card_value(useDifficulty)
 	return output
+
+##Check if you're allowed to drop a stamp on this card
+func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
+	#Get the data type
+	if typeof(data) != TYPE_DICTIONARY:
+		return false
+	var dict : Dictionary = data as Dictionary
+	if not "IsArcardelago" in dict:
+		return false
+	if "Stamp" != data["Type"]:
+		return false
+	#Given it's a stamp
+	var stampType : String = data["StampType"]
+	var hasWithoutStamp : bool = false
+	#Hint stamps only care about if there's a hint for the card or not
+	if stampType == "Hint":
+		#TODO: You need enough hint points
+		#And to not already be hinted
+		if cardData.is_hinted():
+			return false
+	#Only hint stamps and harmony stamps can go on enemies. You can use a harmony stamp to bypass this.
+	else:
+		#Check if you have a stamp of that type in your inventory
+		var curInventory := Persist.game.itemHandler.current_inventory()
+		if not "%s Stamp" % stampType in curInventory.items:
+			return false
+		if cardData.enemyCard != ("Harmony" in cardData.stamps or stampType == "Harmony"):
+			return false
+	#Stamps of the same type cannot be stacked
+	for eachCard in all_card_data():
+		if stampType in eachCard.stamps:
+			continue
+		hasWithoutStamp = true
+		break
+	if not hasWithoutStamp:
+		return false
+	return true
+
+##Apply a stamp to this card
+func _drop_data(_at_position: Vector2, data: Variant) -> void:
+	var stampType : String = data["StampType"]
+	if stampType == "Hint":
+		##Call for a hint here
+		return
+	#Stamps of the same type cannot be stacked
+	for eachCard in all_card_data():
+		if stampType in eachCard.stamps:
+			continue
+		eachCard.stamp(stampType)
+		update_stamps()
+		#Harmony stamped cards need to go into your inventory
+		if stampType == "Harmony":
+			Persist.gain_card(self.cardData)
+			queue_free()
+		return
+
+##Calls when you press the gold stamp release button
+func gold_stamp_release():
+	if "Gold" in cardData.stamps:
+		cardData.release()
+		Persist.game.itemHandler.received_item("Treasure")
+		#Do we just delete, or reassign owner and hide?
+		if compressedCardData.size() > 0:
+			build(compressedCardData.pop_back())
+			hide()
+		else:
+			update_card_slot_mouse()
+			queue_free()
+			try_notify_slot_moved(get_parent())
+		return
+	#Stamps of the same type cannot be stacked
+	var toRemove = null
+	for eachIndex in compressedCardData.size():
+		if partialFiltered[eachIndex]:
+			continue
+		if "Gold" in compressedCardData[eachIndex].stamps:
+			toRemove = eachIndex
+			break
+	if toRemove != null:
+		partialFiltered.remove_at(toRemove)
+		compressedCardData[toRemove].release()
+		compressedCardData.remove_at(toRemove)
+		Persist.game.itemHandler.received_item("Treasure")

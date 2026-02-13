@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://bmb3omoxm7f1c"]
+[gd_scene format=3 uid="uid://bmb3omoxm7f1c"]
 
 [ext_resource type="Texture2D" uid="uid://bhg3kt4vjpsks" path="res://Sprites/SetEditorBackdrop.png" id="1_n5704"]
 [ext_resource type="Script" uid="uid://d11kfgsd6jgt" path="res://addons/AutoSizeText/ui/AutoSizeLabel.gd" id="2_qhme0"]
 
-[node name="SetEditorBackdrop" type="TextureRect"]
+[node name="SetEditorBackdrop" type="TextureRect" unique_id=946510845]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -12,14 +12,14 @@ grow_vertical = 2
 texture = ExtResource("1_n5704")
 stretch_mode = 1
 
-[node name="Header" type="Control" parent="."]
+[node name="Header" type="Control" parent="." unique_id=1856660082]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 56.0
 grow_horizontal = 2
 
-[node name="Header Backdrop" type="ColorRect" parent="Header"]
+[node name="Header Backdrop" type="ColorRect" parent="Header" unique_id=428788502]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -28,7 +28,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.66, 0.66, 0.66, 0.6117647)
 
-[node name="HeaderAlignment" type="HBoxContainer" parent="Header"]
+[node name="HeaderAlignment" type="HBoxContainer" parent="Header" unique_id=992953629]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -41,12 +41,12 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="GameLabelColor" type="ColorRect" parent="Header/HeaderAlignment"]
+[node name="GameLabelColor" type="ColorRect" parent="Header/HeaderAlignment" unique_id=746472424]
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
 color = Color(0.8, 0.8, 0.8, 1)
 
-[node name="GameLabel" type="Label" parent="Header/HeaderAlignment/GameLabelColor"]
+[node name="GameLabel" type="Label" parent="Header/HeaderAlignment/GameLabelColor" unique_id=1654687975]
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 1
 anchors_preset = 15
@@ -67,14 +67,14 @@ text_overrun_behavior = 3
 script = ExtResource("2_qhme0")
 metadata/_custom_type_script = "uid://d11kfgsd6jgt"
 
-[node name="SetName" type="LineEdit" parent="Header/HeaderAlignment"]
+[node name="SetName" type="LineEdit" parent="Header/HeaderAlignment" unique_id=846444347]
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
 placeholder_text = "Name Here"
 max_length = 32
 expand_to_text_length = true
 
-[node name="ContentsVisual" type="ColorRect" parent="."]
+[node name="ContentsVisual" type="ColorRect" parent="." unique_id=336150573]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -86,3 +86,11 @@ offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 1, 1, 0.8235294)
+
+[node name="GraphEdit" type="GraphEdit" parent="ContentsVisual" unique_id=1524771329]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

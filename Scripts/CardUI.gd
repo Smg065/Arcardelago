@@ -16,6 +16,7 @@ class_name CardUI
 @export var uiCardCount : AutoSizeLabel
 @export var uiCardAbilities : AutoSizeRichTextLabel
 @export var uiCardStampContainer : HBoxContainer
+@export var uiCardArt : TextureRect
 
 @export var playerPip : Texture2D
 @export var enemyPip : Texture2D
@@ -23,12 +24,21 @@ class_name CardUI
 @export var bossPip : Texture2D
 @export var clearedBossPip : Texture2D
 
+var fadeState : bool
+var cardFade : float = 0
 const PLAYER_NAME_COLOR = "222222"
 
 @export var cardData : CardData
 var cardName : String
 var compressedCardData : Array[CardData]
 var partialFiltered : Array[bool]
+
+func _process(delta: float) -> void:
+	var fadeModi : float = -4
+	if fadeState == Persist.imageByDefault:
+		fadeModi = 4
+	cardFade = clampf(cardFade + (delta * fadeModi), 0, 1)
+	uiCardArt.modulate = Color.WHITE.lerp(Color.TRANSPARENT, cardFade)
 
 func build(nCardData : CardData):
 	cardData = nCardData
@@ -517,3 +527,7 @@ func gold_stamp_release():
 		compressedCardData[toRemove].release()
 		compressedCardData.remove_at(toRemove)
 		Persist.game.itemHandler.received_item("Treasure")
+
+
+func card_art_mouseover(nFadeState : bool) -> void:
+	fadeState = nFadeState

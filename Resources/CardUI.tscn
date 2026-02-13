@@ -36,7 +36,15 @@ colors = PackedColorArray(0, 0, 0, 1)
 resource_local_to_scene = true
 gradient = SubResource("Gradient_njo2f")
 
-[node name="Card" type="AspectRatioContainer" unique_id=1393495476 node_paths=PackedStringArray("uiCardNameLabel", "uiCardItemFlagLabel", "uiCardWordTypesLabel", "uiCardPhoneticsLabel", "uiCardGameLabel", "uiCardBackColor", "uiCardPipColor", "uiCardSetPipColor", "uiCardBandColor", "uiCardHealth", "uiCardDamage", "uiCardCount", "uiCardAbilities", "uiCardStampContainer")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_57p5r"]
+draw_center = false
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(1, 1, 1, 0.5019608)
+
+[node name="Card" type="AspectRatioContainer" unique_id=1393495476 node_paths=PackedStringArray("uiCardNameLabel", "uiCardItemFlagLabel", "uiCardWordTypesLabel", "uiCardPhoneticsLabel", "uiCardGameLabel", "uiCardBackColor", "uiCardPipColor", "uiCardSetPipColor", "uiCardBandColor", "uiCardHealth", "uiCardDamage", "uiCardCount", "uiCardAbilities", "uiCardStampContainer", "uiCardArt")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -56,8 +64,9 @@ uiCardBandColor = NodePath("RenderBox/CardContainer/CardBack/SetColor")
 uiCardHealth = NodePath("RenderBox/CardContainer/HealthIcon/HealthText")
 uiCardDamage = NodePath("RenderBox/CardContainer/DamageIcon/DamageText")
 uiCardCount = NodePath("RenderBox/CardContainer/CardCount")
-uiCardAbilities = NodePath("RenderBox/CardContainer/CardText/EffectsScaler/EffectsText")
+uiCardAbilities = NodePath("RenderBox/CardContainer/CardText/EffectsScaler/MainBody/EffectsText")
 uiCardStampContainer = NodePath("RenderBox/CardContainer/CardText/EffectsScaler/Stamps")
+uiCardArt = NodePath("RenderBox/CardContainer/CardText/EffectsScaler/CardArt")
 playerPip = ExtResource("2_xvg67")
 enemyPip = ExtResource("3_ny8h8")
 clearedEnemyPip = ExtResource("4_57p5r")
@@ -258,29 +267,35 @@ script = ExtResource("6_2n3nw")
 watch_text_change = true
 metadata/_custom_type_script = "uid://leehmvr1x5lu"
 
-[node name="EffectsScaler" type="Control" parent="RenderBox/CardContainer/CardText" unique_id=330815485]
+[node name="EffectsScaler" type="Panel" parent="RenderBox/CardContainer/CardText" unique_id=1477748317]
 layout_mode = 1
+anchors_preset = -1
 anchor_left = 0.051630598
 anchor_top = 0.25925925
 anchor_right = 0.953
 anchor_bottom = 0.753
 mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_57p5r")
 metadata/_edit_use_anchors_ = true
 
-[node name="Stamps" type="HBoxContainer" parent="RenderBox/CardContainer/CardText/EffectsScaler" unique_id=1041927831]
+[node name="MainBody" type="Control" parent="RenderBox/CardContainer/CardText/EffectsScaler" unique_id=1708623994]
 layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.75
-anchor_right = 0.99964565
-anchor_bottom = 1.0
-alignment = 1
+anchor_right = 1.0
+anchor_bottom = 0.75013125
+offset_left = 12.0
+offset_top = 12.0
+offset_right = -12.0
+size_flags_vertical = 3
+mouse_filter = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="EffectsText" type="RichTextLabel" parent="RenderBox/CardContainer/CardText/EffectsScaler" unique_id=947462465]
-layout_mode = 0
-anchor_top = 0.012502188
-anchor_right = 0.99964565
-anchor_bottom = 0.75013125
+[node name="EffectsText" type="RichTextLabel" parent="RenderBox/CardContainer/CardText/EffectsScaler/MainBody" unique_id=947462465]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_vertical = 3
 mouse_filter = 1
 theme_override_font_sizes/normal_font_size = 38
@@ -292,6 +307,32 @@ bbcode_enabled = true
 text = "[color=BLACK]When you"
 script = ExtResource("6_2n3nw")
 metadata/_custom_type_script = "uid://leehmvr1x5lu"
+
+[node name="CardArt" type="TextureRect" parent="RenderBox/CardContainer/CardText/EffectsScaler" unique_id=1289224594]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Stamps" type="HBoxContainer" parent="RenderBox/CardContainer/CardText/EffectsScaler" unique_id=1041927831]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.75
+anchor_right = 0.99964565
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="GameName" type="RichTextLabel" parent="RenderBox/CardContainer/CardText" unique_id=582759939]
@@ -413,3 +454,6 @@ text_overrun_behavior = 3
 script = ExtResource("12_m8awi")
 watch_text_change = true
 metadata/_custom_type_script = "uid://d11kfgsd6jgt"
+
+[connection signal="mouse_entered" from="RenderBox/CardContainer/CardText/EffectsScaler/CardArt" to="." method="card_art_mouseover" binds= [true]]
+[connection signal="mouse_exited" from="RenderBox/CardContainer/CardText/EffectsScaler/CardArt" to="." method="card_art_mouseover" binds= [false]]

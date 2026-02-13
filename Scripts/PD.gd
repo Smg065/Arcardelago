@@ -40,6 +40,8 @@ var apSeed : int
 var game : GameData
 ##Hint Points
 var hintPoints : int
+##If you see the image on the card by default
+var imageByDefault : bool = true
 
 ##Shop items, where the value is the weight that they show up.
 static var shopItemTable : Dictionary[ShopItemInfo, int] = {

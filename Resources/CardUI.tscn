@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://d251snkuc658e" path="res://Sprites/DamagePanel.png" id="11_njo2f"]
 [ext_resource type="Script" uid="uid://d11kfgsd6jgt" path="res://addons/AutoSizeText/ui/AutoSizeLabel.gd" id="12_m8awi"]
 [ext_resource type="Texture2D" uid="uid://dx80tqmn85b78" path="res://Sprites/HeartPanel.png" id="13_pos1q"]
+[ext_resource type="Texture2D" uid="uid://drsb8rknox20d" path="res://icon.svg" id="14_oaued"]
 
 [sub_resource type="Gradient" id="Gradient_2n3nw"]
 resource_local_to_scene = true
@@ -319,6 +320,7 @@ offset_right = -8.0
 offset_bottom = -8.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = ExtResource("14_oaued")
 expand_mode = 1
 stretch_mode = 6
 

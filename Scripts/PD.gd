@@ -34,6 +34,10 @@ var dfsRegions : Dictionary
 var gameDepth : int
 ##The name of the region you spawn from
 var spawnName : String
+##The chance that a trap will auto-release at the end of combat
+var trapReleaseChance : int = 10
+##If the region should require a blocker or not
+var priorityBreakers : Array
 ##The seed of this game
 var apSeed : int
 ##The AP's game data
@@ -178,7 +182,11 @@ func hold_server_data(inData : Dictionary) -> void:
 			spawnSphere = ColorCatagory.YELLOW
 	worldOrder = slotData["world_order"]
 	#The player who determines the final boss
-	#finalBossOrigin = slotData["final_boss_origin"]
+	finalBossOrigin = slotData["final_boss_origin"]
+	#The odds that a trap will self-release
+	trapReleaseChance = slotData["trap_release_chance"]
+	#The odds that a trap will self-release
+	priorityBreakers = slotData["breaker_priority"]
 	#Where you spawn from
 	spawnName = slotData["spawning_sphere"].split(' ')[0]
 	#Get the world order as a depth-first sorted dictionary

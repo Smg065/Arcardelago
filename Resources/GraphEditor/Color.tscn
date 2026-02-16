@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://kih3tnjhhdfj"]
+
+[ext_resource type="Texture2D" uid="uid://bjnhl7r6bylom" path="res://Sprites/Colors/Red.png" id="1_laq4w"]
+[ext_resource type="Texture2D" uid="uid://c54d8fecen5xi" path="res://Sprites/Colors/Green.png" id="2_vu451"]
+[ext_resource type="Texture2D" uid="uid://wpsllg7st5a8" path="res://Sprites/Colors/Violet.png" id="3_88bm6"]
+[ext_resource type="Texture2D" uid="uid://disvgdlmxks6x" path="res://Sprites/Colors/Orange.png" id="4_s5gmf"]
+[ext_resource type="Texture2D" uid="uid://wekbihiyk00s" path="res://Sprites/Colors/Blue.png" id="5_ivoqv"]
+[ext_resource type="Texture2D" uid="uid://v63nifb8rlek" path="res://Sprites/Colors/Yellow.png" id="6_85mi3"]
+
+[node name="Color" type="GraphNode" unique_id=1670069095]
+offset_right = 206.0
+offset_bottom = 156.0
+tooltip_text = "Represents the colors sets have."
+mouse_filter = 1
+title = "Colors"
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = true
+slot/0/right_type = 2
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+
+[node name="ItemList" type="ItemList" parent="." unique_id=1334319368]
+layout_mode = 2
+size_flags_vertical = 3
+select_mode = 2
+auto_width = true
+auto_height = true
+item_count = 6
+max_columns = 2
+same_column_width = true
+fixed_icon_size = Vector2i(16, 16)
+item_0/text = "Red"
+item_0/icon = ExtResource("1_laq4w")
+item_1/text = "Green"
+item_1/icon = ExtResource("2_vu451")
+item_2/text = "Violet"
+item_2/icon = ExtResource("3_88bm6")
+item_3/text = "Orange"
+item_3/icon = ExtResource("4_s5gmf")
+item_4/text = "Blue"
+item_4/icon = ExtResource("5_ivoqv")
+item_5/text = "Yellow"
+item_5/icon = ExtResource("6_85mi3")

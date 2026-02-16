@@ -2,6 +2,12 @@
 
 [ext_resource type="Texture2D" uid="uid://bhg3kt4vjpsks" path="res://Sprites/SetEditorBackdrop.png" id="1_n5704"]
 [ext_resource type="Script" uid="uid://d11kfgsd6jgt" path="res://addons/AutoSizeText/ui/AutoSizeLabel.gd" id="2_qhme0"]
+[ext_resource type="PackedScene" uid="uid://cep44qrgpylnl" path="res://Resources/GraphEditor/ApInfo.tscn" id="3_qhme0"]
+[ext_resource type="PackedScene" uid="uid://ciwvfjnq0mqfm" path="res://Resources/GraphEditor/CardData.tscn" id="4_p1f2x"]
+[ext_resource type="PackedScene" uid="uid://dx537skarxmn8" path="res://Resources/GraphEditor/StringGN.tscn" id="5_62036"]
+[ext_resource type="PackedScene" uid="uid://c6ghd2fn8uppo" path="res://Resources/GraphEditor/IntGN.tscn" id="6_370bj"]
+[ext_resource type="PackedScene" uid="uid://kih3tnjhhdfj" path="res://Resources/GraphEditor/Color.tscn" id="7_2004g"]
+[ext_resource type="PackedScene" uid="uid://durd1o2iwfqnd" path="res://Resources/GraphEditor/Image.tscn" id="8_jdikr"]
 
 [node name="SetEditorBackdrop" type="TextureRect" unique_id=946510845]
 anchors_preset = 15
@@ -87,10 +93,101 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 1, 1, 0.8235294)
 
-[node name="GraphEdit" type="GraphEdit" parent="ContentsVisual" unique_id=1524771329]
+[node name="MenuBar" type="TabContainer" parent="ContentsVisual" unique_id=1221476805]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+current_tab = 0
+
+[node name="Basic Info" type="Control" parent="ContentsVisual/MenuBar" unique_id=1152362179]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="Graph" type="GraphEdit" parent="ContentsVisual/MenuBar" unique_id=1524771329]
+visible = false
+layout_mode = 2
+type_names = {
+0: "AP Info",
+1: "Effects",
+2: "Colors",
+4: "Integer",
+5: "String",
+6: "String Array",
+7: "Image"
+}
+metadata/_tab_index = 1
+
+[node name="ApInfo" parent="ContentsVisual/MenuBar/Graph" unique_id=1455818473 instance=ExtResource("3_qhme0")]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 174.0
+offset_right = 225.0
+offset_bottom = 241.0
+position_offset = Vector2(56, 174)
+
+[node name="CardData" parent="ContentsVisual/MenuBar/Graph" unique_id=152902417 instance=ExtResource("4_p1f2x")]
+layout_mode = 0
+offset_left = 796.0
+offset_top = 17.0
+offset_right = 1009.0
+offset_bottom = 497.0
+position_offset = Vector2(796, 17)
+
+[node name="StringGN" parent="ContentsVisual/MenuBar/Graph" unique_id=968213746 instance=ExtResource("5_62036")]
+layout_mode = 0
+offset_left = 348.0
+offset_top = 387.0
+offset_right = 551.0
+offset_bottom = 496.0
+position_offset = Vector2(348, 387)
+
+[node name="StringGN2" parent="ContentsVisual/MenuBar/Graph" unique_id=555670786 instance=ExtResource("5_62036")]
+layout_mode = 0
+offset_left = 348.0
+offset_top = 514.0
+offset_right = 551.0
+offset_bottom = 623.0
+position_offset = Vector2(348, 514)
+
+[node name="IntGN" parent="ContentsVisual/MenuBar/Graph" unique_id=1029571387 instance=ExtResource("6_370bj")]
+layout_mode = 0
+offset_left = 349.0
+offset_top = 264.0
+offset_right = 470.0
+offset_bottom = 368.0
+position_offset = Vector2(349, 264)
+
+[node name="IntGN2" parent="ContentsVisual/MenuBar/Graph" unique_id=2021649932 instance=ExtResource("6_370bj")]
+layout_mode = 0
+offset_left = 343.0
+offset_top = 143.0
+offset_right = 464.0
+offset_bottom = 247.0
+position_offset = Vector2(343, 143)
+
+[node name="Color" parent="ContentsVisual/MenuBar/Graph" unique_id=1670069095 instance=ExtResource("7_2004g")]
+layout_mode = 0
+offset_left = 61.0
+offset_top = 261.0
+offset_right = 267.0
+offset_bottom = 417.0
+position_offset = Vector2(61, 261)
+
+[node name="Image" parent="ContentsVisual/MenuBar/Graph" unique_id=181610955 instance=ExtResource("8_jdikr")]
+layout_mode = 0
+offset_left = 517.0
+offset_top = 40.999992
+offset_right = 707.0
+offset_bottom = 255.0
+position_offset = Vector2(517, 40.999992)
+
+[node name="Image2" parent="ContentsVisual/MenuBar/Graph" unique_id=1078978804 instance=ExtResource("8_jdikr")]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 446.0
+offset_right = 204.0
+offset_bottom = 660.0
+position_offset = Vector2(14, 446)

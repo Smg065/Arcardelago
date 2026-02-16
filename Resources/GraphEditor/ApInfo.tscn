@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://cep44qrgpylnl"]
+
+[node name="ApInfo" type="GraphNode" unique_id=1455818473]
+offset_left = 64.0
+offset_top = 64.0
+offset_right = 233.0
+offset_bottom = 131.0
+tooltip_text = "The AP ID and Type Flag of the incoming Card"
+mouse_filter = 1
+position_offset = Vector2(64, 64)
+title = "Ap Info"
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = true
+slot/0/right_type = 0
+slot/0/right_color = Color(0.4627451, 0.49411765, 0.7411765, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+
+[node name="Root" type="Control" parent="." unique_id=1594685818]
+layout_mode = 2

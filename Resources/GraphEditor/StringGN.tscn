@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://dx537skarxmn8"]
+
+[node name="StringGN" type="GraphNode" unique_id=968213746]
+offset_right = 203.0
+offset_bottom = 109.0
+tooltip_text = "Text node."
+mouse_filter = 1
+resizable = true
+title = "String"
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = true
+slot/0/right_type = 5
+slot/0/right_color = Color(0.93333334, 0.8901961, 0.5686275, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+
+[node name="TextEdit" type="TextEdit" parent="." unique_id=1233848761]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+size_flags_vertical = 3
+placeholder_text = "Insert Text Here..."

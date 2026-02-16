@@ -1,0 +1,311 @@
+[gd_scene format=3 uid="uid://ciwvfjnq0mqfm"]
+
+[ext_resource type="Texture2D" uid="uid://bjnhl7r6bylom" path="res://Sprites/Colors/Red.png" id="1_dofbq"]
+[ext_resource type="Texture2D" uid="uid://c54d8fecen5xi" path="res://Sprites/Colors/Green.png" id="2_dwaxy"]
+[ext_resource type="Texture2D" uid="uid://wpsllg7st5a8" path="res://Sprites/Colors/Violet.png" id="3_3h6ov"]
+[ext_resource type="Texture2D" uid="uid://disvgdlmxks6x" path="res://Sprites/Colors/Orange.png" id="4_3e8jc"]
+[ext_resource type="Texture2D" uid="uid://wekbihiyk00s" path="res://Sprites/Colors/Blue.png" id="5_6278x"]
+[ext_resource type="Texture2D" uid="uid://v63nifb8rlek" path="res://Sprites/Colors/Yellow.png" id="6_1c4dr"]
+
+[node name="CardData" type="GraphNode" unique_id=152902417]
+offset_right = 240.0
+offset_bottom = 453.0
+tooltip_text = "The information on the final card"
+mouse_filter = 1
+resizable = true
+title = "Card Data"
+slot/0/left_enabled = true
+slot/0/left_type = 0
+slot/0/left_color = Color(0.4627451, 0.49411765, 0.7411765, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = false
+slot/1/left_enabled = true
+slot/1/left_type = 2
+slot/1/left_color = Color(1, 1, 1, 1)
+slot/1/left_icon = null
+slot/1/right_enabled = false
+slot/1/right_type = 0
+slot/1/right_color = Color(1, 1, 1, 1)
+slot/1/right_icon = null
+slot/1/draw_stylebox = true
+slot/2/left_enabled = true
+slot/2/left_type = 4
+slot/2/left_color = Color(0.7882353, 0.45882353, 0.50980395, 1)
+slot/2/left_icon = null
+slot/2/right_enabled = false
+slot/2/right_type = 0
+slot/2/right_color = Color(1, 1, 1, 1)
+slot/2/right_icon = null
+slot/2/draw_stylebox = true
+slot/3/left_enabled = true
+slot/3/left_type = 4
+slot/3/left_color = Color(0.7882353, 0.45882353, 0.50980395, 1)
+slot/3/left_icon = null
+slot/3/right_enabled = false
+slot/3/right_type = 0
+slot/3/right_color = Color(1, 1, 1, 1)
+slot/3/right_icon = null
+slot/3/draw_stylebox = true
+slot/4/left_enabled = true
+slot/4/left_type = 1
+slot/4/left_color = Color(0.45882353, 0.7607843, 0.45490196, 1)
+slot/4/left_icon = null
+slot/4/right_enabled = false
+slot/4/right_type = 0
+slot/4/right_color = Color(1, 1, 1, 1)
+slot/4/right_icon = null
+slot/4/draw_stylebox = true
+slot/5/left_enabled = false
+slot/5/left_type = 6
+slot/5/left_color = Color(0.7882353, 0.5803922, 0.7607843, 1)
+slot/5/left_icon = null
+slot/5/right_enabled = false
+slot/5/right_type = 0
+slot/5/right_color = Color(1, 1, 1, 1)
+slot/5/right_icon = null
+slot/5/draw_stylebox = false
+slot/6/left_enabled = true
+slot/6/left_type = 6
+slot/6/left_color = Color(0.7882353, 0.5803922, 0.7607843, 1)
+slot/6/left_icon = null
+slot/6/right_enabled = false
+slot/6/right_type = 0
+slot/6/right_color = Color(1, 1, 1, 1)
+slot/6/right_icon = null
+slot/6/draw_stylebox = true
+slot/7/left_enabled = true
+slot/7/left_type = 6
+slot/7/left_color = Color(0.7882353, 0.5803922, 0.7607843, 1)
+slot/7/left_icon = null
+slot/7/right_enabled = false
+slot/7/right_type = 0
+slot/7/right_color = Color(1, 1, 1, 1)
+slot/7/right_icon = null
+slot/7/draw_stylebox = true
+slot/8/left_enabled = false
+slot/8/left_type = 0
+slot/8/left_color = Color(1, 1, 1, 1)
+slot/8/left_icon = null
+slot/8/right_enabled = false
+slot/8/right_type = 0
+slot/8/right_color = Color(1, 1, 1, 1)
+slot/8/right_icon = null
+slot/8/draw_stylebox = true
+slot/9/left_enabled = true
+slot/9/left_type = 5
+slot/9/left_color = Color(0.93333334, 0.8901961, 0.5686275, 1)
+slot/9/left_icon = null
+slot/9/right_enabled = false
+slot/9/right_type = 5
+slot/9/right_color = Color(1, 1, 1, 1)
+slot/9/right_icon = null
+slot/9/draw_stylebox = true
+slot/10/left_enabled = true
+slot/10/left_type = 5
+slot/10/left_color = Color(0.93333334, 0.8901961, 0.5686275, 1)
+slot/10/left_icon = null
+slot/10/right_enabled = false
+slot/10/right_type = 0
+slot/10/right_color = Color(1, 1, 1, 1)
+slot/10/right_icon = null
+slot/10/draw_stylebox = true
+slot/11/left_enabled = true
+slot/11/left_type = 7
+slot/11/left_color = Color(0.84705883, 0.627451, 0.49019608, 1)
+slot/11/left_icon = null
+slot/11/right_enabled = false
+slot/11/right_type = 0
+slot/11/right_color = Color(1, 1, 1, 1)
+slot/11/right_icon = null
+slot/11/draw_stylebox = true
+slot/12/left_enabled = true
+slot/12/left_type = 7
+slot/12/left_color = Color(0.84705883, 0.627451, 0.49019608, 1)
+slot/12/left_icon = null
+slot/12/right_enabled = false
+slot/12/right_type = 0
+slot/12/right_color = Color(1, 1, 1, 1)
+slot/12/right_icon = null
+slot/12/draw_stylebox = true
+
+[node name="BasicHeader" type="FoldableContainer" parent="." unique_id=1397156561]
+layout_mode = 2
+tooltip_text = "The AP ID and Flags required to generate this card."
+folded = true
+title = "AP Info"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BasicHeader" unique_id=1167594857]
+visible = false
+layout_mode = 2
+
+[node name="SpinBox" type="SpinBox" parent="BasicHeader/VBoxContainer" unique_id=103369725]
+layout_mode = 2
+tooltip_text = "The APID of this entry."
+min_value = 1.0
+max_value = 9.007199254740991e+15
+value = 1.0
+rounded = true
+prefix = "ID:"
+
+[node name="OptionButton" type="OptionButton" parent="BasicHeader/VBoxContainer" unique_id=1079899583]
+layout_mode = 2
+tooltip_text = "The catagory of the AP Info to use."
+selected = 0
+item_count = 8
+popup/item_0/text = "Any Items"
+popup/item_0/id = 0
+popup/item_1/text = "Location"
+popup/item_1/id = 1
+popup/item_2/text = "Filler"
+popup/item_2/id = 2
+popup/item_3/text = "Useful"
+popup/item_3/id = 3
+popup/item_4/text = "Progression"
+popup/item_4/id = 4
+popup/item_5/text = "Proguseful"
+popup/item_5/id = 5
+popup/item_6/text = "Trap"
+popup/item_6/id = 6
+popup/item_7/text = "Final Boss"
+popup/item_7/id = 7
+
+[node name="ColorText" type="FoldableContainer" parent="." unique_id=762184834]
+layout_mode = 2
+tooltip_text = "The color(s) of the card"
+mouse_filter = 1
+folded = true
+title = "Colors"
+
+[node name="ItemList" type="ItemList" parent="ColorText" unique_id=2004014063]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+select_mode = 2
+auto_width = true
+auto_height = true
+item_count = 6
+max_columns = 2
+same_column_width = true
+fixed_icon_size = Vector2i(16, 16)
+item_0/text = "Red"
+item_0/icon = ExtResource("1_dofbq")
+item_1/text = "Green"
+item_1/icon = ExtResource("2_dwaxy")
+item_2/text = "Violet"
+item_2/icon = ExtResource("3_3h6ov")
+item_3/text = "Orange"
+item_3/icon = ExtResource("4_3e8jc")
+item_4/text = "Blue"
+item_4/icon = ExtResource("5_6278x")
+item_5/text = "Yellow"
+item_5/icon = ExtResource("6_1c4dr")
+
+[node name="PowerHolder" type="HBoxContainer" parent="." unique_id=190682050]
+layout_mode = 2
+tooltip_text = "The base damage this card does when it attacks."
+
+[node name="PowerText" type="Label" parent="PowerHolder" unique_id=938027899]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "The base damage this card does when it attacks."
+mouse_filter = 1
+text = "Power"
+
+[node name="PowerInput" type="SpinBox" parent="PowerHolder" unique_id=1618575147]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 1.0
+max_value = 999.0
+value = 1.0
+
+[node name="HealthHolder" type="HBoxContainer" parent="." unique_id=612894529]
+layout_mode = 2
+tooltip_text = "The base health this card has."
+
+[node name="HealthText" type="Label" parent="HealthHolder" unique_id=340713903]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "The base health this card has."
+mouse_filter = 1
+text = "Health"
+
+[node name="PowerInput" type="SpinBox" parent="HealthHolder" unique_id=2047744757]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 1.0
+max_value = 999.0
+value = 1.0
+
+[node name="EffectsText" type="Label" parent="." unique_id=1293369549]
+layout_mode = 2
+tooltip_text = "The effects this card has."
+mouse_filter = 1
+text = "Effects"
+
+[node name="WordInfoText" type="HSeparator" parent="." unique_id=548207615]
+layout_mode = 2
+mouse_filter = 1
+
+[node name="WordTypesText" type="FoldableContainer" parent="." unique_id=571996782]
+layout_mode = 2
+tooltip_text = "A string array of all word types that appear.
+Duplicates will be rendered as x# next to the entry."
+mouse_filter = 1
+title = "Word Types"
+
+[node name="PhoneticsText" type="FoldableContainer" parent="." unique_id=1467968692]
+layout_mode = 2
+tooltip_text = "A string array of all phonetic symbols that represent pronunciation of this card.
+Duplicates will be rendered as x# next to the entry."
+mouse_filter = 1
+title = "Phonetics"
+
+[node name="DisplayText" type="HSeparator" parent="." unique_id=2072649466]
+layout_mode = 2
+tooltip_text = "Optional overrides to this card's visuals."
+mouse_filter = 1
+
+[node name="NameOverrideHolder" type="FoldableContainer" parent="." unique_id=1833249062]
+layout_mode = 2
+tooltip_text = "An override to the card's display name."
+folded = true
+title = "Name Override"
+
+[node name="TextEdit" type="TextEdit" parent="NameOverrideHolder" unique_id=1178307760]
+visible = false
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+size_flags_vertical = 3
+placeholder_text = "Leave blank for default."
+scroll_fit_content_width = true
+
+[node name="APDescriptionHolder" type="FoldableContainer" parent="." unique_id=1142880569]
+layout_mode = 2
+tooltip_text = "An override to the card's display information when you mouse over the name.
+
+Useful to explain what the AP item would do if released, or what the location is in their world."
+folded = true
+title = "Description"
+
+[node name="TextEdit" type="TextEdit" parent="APDescriptionHolder" unique_id=1966989199]
+visible = false
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+size_flags_vertical = 3
+placeholder_text = "Description goes here."
+
+[node name="ImageText" type="Label" parent="." unique_id=232324515]
+layout_mode = 2
+tooltip_text = "An override to the card's image, which will display over the rules text until moused over."
+mouse_filter = 1
+text = "Image"
+
+[node name="BackdropText" type="Label" parent="." unique_id=6210333]
+layout_mode = 2
+tooltip_text = "An override to the card's background image, which will display instead of the default card backdrop."
+mouse_filter = 1
+text = "Backdrop Override"

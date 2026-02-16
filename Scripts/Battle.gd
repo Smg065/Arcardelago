@@ -305,7 +305,8 @@ func trap_release_proc():
 		#Try to self-release
 		for eachTrap in eachCard.all_card_data():
 			#10% Chance by default
-			if randi_range(1, 100) < Persist.trapReleaseChance:
+			var releaseChanceRolled = randi_range(1, 100)
+			if releaseChanceRolled < Persist.trapReleaseChance:
 				eachTrap.release(false)
 
 ##Earns gold and goes back to the map

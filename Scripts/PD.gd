@@ -37,7 +37,7 @@ var spawnName : String
 ##The chance that a trap will auto-release at the end of combat
 var trapReleaseChance : int = 10
 ##If the region should require a blocker or not
-var priorityBreakers : Array
+var priorityBreakers : Dictionary
 ##The seed of this game
 var apSeed : int
 ##The AP's game data

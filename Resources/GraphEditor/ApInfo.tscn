@@ -1,10 +1,8 @@
 [gd_scene format=3 uid="uid://cep44qrgpylnl"]
 
 [node name="ApInfo" type="GraphNode" unique_id=1455818473]
-offset_left = 64.0
-offset_top = 64.0
-offset_right = 233.0
-offset_bottom = 131.0
+offset_right = 76.0
+offset_bottom = 67.0
 tooltip_text = "The AP ID and Type Flag of the incoming Card"
 mouse_filter = 1
 position_offset = Vector2(64, 64)

@@ -2,12 +2,16 @@
 
 [ext_resource type="Texture2D" uid="uid://bhg3kt4vjpsks" path="res://Sprites/SetEditorBackdrop.png" id="1_n5704"]
 [ext_resource type="Script" uid="uid://d11kfgsd6jgt" path="res://addons/AutoSizeText/ui/AutoSizeLabel.gd" id="2_qhme0"]
-[ext_resource type="PackedScene" uid="uid://cep44qrgpylnl" path="res://Resources/GraphEditor/ApInfo.tscn" id="3_qhme0"]
-[ext_resource type="PackedScene" uid="uid://ciwvfjnq0mqfm" path="res://Resources/GraphEditor/CardData.tscn" id="4_p1f2x"]
-[ext_resource type="PackedScene" uid="uid://dx537skarxmn8" path="res://Resources/GraphEditor/StringGN.tscn" id="5_62036"]
-[ext_resource type="PackedScene" uid="uid://c6ghd2fn8uppo" path="res://Resources/GraphEditor/IntGN.tscn" id="6_370bj"]
-[ext_resource type="PackedScene" uid="uid://kih3tnjhhdfj" path="res://Resources/GraphEditor/Color.tscn" id="7_2004g"]
-[ext_resource type="PackedScene" uid="uid://durd1o2iwfqnd" path="res://Resources/GraphEditor/Image.tscn" id="8_jdikr"]
+[ext_resource type="Texture2D" uid="uid://cl1bq3dhh17fm" path="res://Sprites/MiniPip.png" id="3_qhme0"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_p1f2x"]
+font_color = Color(0, 0, 0, 1)
+outline_size = 2
+
+[sub_resource type="LabelSettings" id="LabelSettings_62036"]
+font_size = 20
+font_color = Color(0, 0, 0, 1)
+outline_size = 6
 
 [node name="SetEditorBackdrop" type="TextureRect" unique_id=946510845]
 anchors_preset = 15
@@ -20,10 +24,13 @@ stretch_mode = 1
 
 [node name="Header" type="Control" parent="." unique_id=1856660082]
 layout_mode = 1
-anchors_preset = 10
+anchors_preset = 12
+anchor_top = 1.0
 anchor_right = 1.0
-offset_bottom = 56.0
+anchor_bottom = 1.0
+offset_top = -69.0
 grow_horizontal = 2
+grow_vertical = 0
 
 [node name="Header Backdrop" type="ColorRect" parent="Header" unique_id=428788502]
 layout_mode = 1
@@ -63,7 +70,7 @@ grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 8
-theme_override_font_sizes/font_size = 28
+theme_override_font_sizes/font_size = 35
 text = "Game:"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -80,15 +87,114 @@ placeholder_text = "Name Here"
 max_length = 32
 expand_to_text_length = true
 
+[node name="ColorBox" type="VBoxContainer" parent="Header/HeaderAlignment" unique_id=1997984367]
+layout_mode = 2
+
+[node name="ColorLabel" type="Label" parent="Header/HeaderAlignment/ColorBox" unique_id=1497594901]
+layout_mode = 2
+text = "Set Color"
+label_settings = SubResource("LabelSettings_p1f2x")
+horizontal_alignment = 1
+
+[node name="ColorButtons" type="HBoxContainer" parent="Header/HeaderAlignment/ColorBox" unique_id=1484948075]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+
+[node name="Red" type="Button" parent="Header/HeaderAlignment/ColorBox/ColorButtons" unique_id=1628805622]
+modulate = Color(0.7882353, 0.45882353, 0.50980395, 1)
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+tooltip_text = "Red"
+icon = ExtResource("3_qhme0")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="Green" type="Button" parent="Header/HeaderAlignment/ColorBox/ColorButtons" unique_id=893572198]
+modulate = Color(0.45882353, 0.7607843, 0.45490196, 1)
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+tooltip_text = "Green"
+icon = ExtResource("3_qhme0")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="Violet" type="Button" parent="Header/HeaderAlignment/ColorBox/ColorButtons" unique_id=1046336514]
+modulate = Color(0.7882353, 0.5803922, 0.7607843, 1)
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+tooltip_text = "Violet"
+icon = ExtResource("3_qhme0")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="Orange" type="Button" parent="Header/HeaderAlignment/ColorBox/ColorButtons" unique_id=717696640]
+modulate = Color(0.84705883, 0.627451, 0.49019608, 1)
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+tooltip_text = "Orange"
+icon = ExtResource("3_qhme0")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="Blue" type="Button" parent="Header/HeaderAlignment/ColorBox/ColorButtons" unique_id=463583771]
+modulate = Color(0.4627451, 0.49411765, 0.7411765, 1)
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+tooltip_text = "Blue"
+icon = ExtResource("3_qhme0")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="Yellow" type="Button" parent="Header/HeaderAlignment/ColorBox/ColorButtons" unique_id=134469220]
+modulate = Color(0.93333334, 0.8901961, 0.5686275, 1)
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+tooltip_text = "Yellow"
+icon = ExtResource("3_qhme0")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="GameLabelColor2" type="ColorRect" parent="Header/HeaderAlignment" unique_id=2042562138]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+color = Color(0.8, 0.8, 0.8, 1)
+
+[node name="Label" type="Label" parent="Header/HeaderAlignment/GameLabelColor2" unique_id=70033151]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Version"
+label_settings = SubResource("LabelSettings_62036")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SetName2" type="LineEdit" parent="Header/HeaderAlignment" unique_id=1504427642]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+placeholder_text = "0.0.0"
+alignment = 1
+max_length = 32
+emoji_menu_enabled = false
+
 [node name="ContentsVisual" type="ColorRect" parent="." unique_id=336150573]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 16.0
-offset_top = 69.00001
+offset_top = 16.0
 offset_right = -16.0
-offset_bottom = -16.0
+offset_bottom = -69.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 1, 1, 0.8235294)
@@ -100,15 +206,16 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-current_tab = 0
+current_tab = 1
 
 [node name="Basic Info" type="Control" parent="ContentsVisual/MenuBar" unique_id=1152362179]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
 [node name="Graph" type="GraphEdit" parent="ContentsVisual/MenuBar" unique_id=1524771329]
-visible = false
 layout_mode = 2
+scroll_offset = Vector2(0, -53)
 type_names = {
 0: "AP Info",
 1: "Effects",
@@ -119,75 +226,3 @@ type_names = {
 7: "Image"
 }
 metadata/_tab_index = 1
-
-[node name="ApInfo" parent="ContentsVisual/MenuBar/Graph" unique_id=1455818473 instance=ExtResource("3_qhme0")]
-layout_mode = 0
-offset_left = 56.0
-offset_top = 174.0
-offset_right = 225.0
-offset_bottom = 241.0
-position_offset = Vector2(56, 174)
-
-[node name="CardData" parent="ContentsVisual/MenuBar/Graph" unique_id=152902417 instance=ExtResource("4_p1f2x")]
-layout_mode = 0
-offset_left = 796.0
-offset_top = 17.0
-offset_right = 1009.0
-offset_bottom = 497.0
-position_offset = Vector2(796, 17)
-
-[node name="StringGN" parent="ContentsVisual/MenuBar/Graph" unique_id=968213746 instance=ExtResource("5_62036")]
-layout_mode = 0
-offset_left = 348.0
-offset_top = 387.0
-offset_right = 551.0
-offset_bottom = 496.0
-position_offset = Vector2(348, 387)
-
-[node name="StringGN2" parent="ContentsVisual/MenuBar/Graph" unique_id=555670786 instance=ExtResource("5_62036")]
-layout_mode = 0
-offset_left = 348.0
-offset_top = 514.0
-offset_right = 551.0
-offset_bottom = 623.0
-position_offset = Vector2(348, 514)
-
-[node name="IntGN" parent="ContentsVisual/MenuBar/Graph" unique_id=1029571387 instance=ExtResource("6_370bj")]
-layout_mode = 0
-offset_left = 349.0
-offset_top = 264.0
-offset_right = 470.0
-offset_bottom = 368.0
-position_offset = Vector2(349, 264)
-
-[node name="IntGN2" parent="ContentsVisual/MenuBar/Graph" unique_id=2021649932 instance=ExtResource("6_370bj")]
-layout_mode = 0
-offset_left = 343.0
-offset_top = 143.0
-offset_right = 464.0
-offset_bottom = 247.0
-position_offset = Vector2(343, 143)
-
-[node name="Color" parent="ContentsVisual/MenuBar/Graph" unique_id=1670069095 instance=ExtResource("7_2004g")]
-layout_mode = 0
-offset_left = 61.0
-offset_top = 261.0
-offset_right = 267.0
-offset_bottom = 417.0
-position_offset = Vector2(61, 261)
-
-[node name="Image" parent="ContentsVisual/MenuBar/Graph" unique_id=181610955 instance=ExtResource("8_jdikr")]
-layout_mode = 0
-offset_left = 517.0
-offset_top = 40.999992
-offset_right = 707.0
-offset_bottom = 255.0
-position_offset = Vector2(517, 40.999992)
-
-[node name="Image2" parent="ContentsVisual/MenuBar/Graph" unique_id=1078978804 instance=ExtResource("8_jdikr")]
-layout_mode = 0
-offset_left = 14.0
-offset_top = 446.0
-offset_right = 204.0
-offset_bottom = 660.0
-position_offset = Vector2(14, 446)

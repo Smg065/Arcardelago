@@ -8,8 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://v63nifb8rlek" path="res://Sprites/Colors/Yellow.png" id="6_1c4dr"]
 
 [node name="CardData" type="GraphNode" unique_id=152902417]
-offset_right = 240.0
-offset_bottom = 453.0
+offset_right = 213.0
+offset_bottom = 480.0
 tooltip_text = "The information on the final card"
 mouse_filter = 1
 resizable = true

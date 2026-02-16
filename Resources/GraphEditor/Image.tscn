@@ -4,8 +4,8 @@
 bg_color = Color(0, 0, 0, 1)
 
 [node name="Image" type="GraphNode" unique_id=181610955]
-offset_right = 190.0
-offset_bottom = 214.0
+offset_right = 98.0
+offset_bottom = 140.0
 tooltip_text = "Imports an image for use on the card."
 mouse_filter = 1
 title = "Image"
@@ -24,6 +24,7 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="Panel" type="Panel" parent="VBoxContainer" unique_id=1547186651]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_bvi8l")

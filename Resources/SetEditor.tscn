@@ -3,6 +3,14 @@
 [ext_resource type="Texture2D" uid="uid://bhg3kt4vjpsks" path="res://Sprites/SetEditorBackdrop.png" id="1_n5704"]
 [ext_resource type="Script" uid="uid://d11kfgsd6jgt" path="res://addons/AutoSizeText/ui/AutoSizeLabel.gd" id="2_qhme0"]
 [ext_resource type="Texture2D" uid="uid://cl1bq3dhh17fm" path="res://Sprites/MiniPip.png" id="3_qhme0"]
+[ext_resource type="Script" uid="uid://n7ebeyo8xxlk" path="res://Scripts/UI/GraphEditor.gd" id="4_62036"]
+[ext_resource type="Script" uid="uid://svncggh8jn0v" path="res://Scripts/GraphRightClickMenu.gd" id="5_i7k8b"]
+[ext_resource type="PackedScene" uid="uid://ciwvfjnq0mqfm" path="res://Resources/GraphEditor/CardData.tscn" id="6_kqqcm"]
+[ext_resource type="PackedScene" uid="uid://kih3tnjhhdfj" path="res://Resources/GraphEditor/Color.tscn" id="7_0vojg"]
+[ext_resource type="PackedScene" uid="uid://durd1o2iwfqnd" path="res://Resources/GraphEditor/Image.tscn" id="8_u2exy"]
+[ext_resource type="PackedScene" uid="uid://c6ghd2fn8uppo" path="res://Resources/GraphEditor/IntGN.tscn" id="9_oewat"]
+[ext_resource type="PackedScene" uid="uid://bgj1ypn5v1iuv" path="res://Resources/GraphEditor/StringArrayGN.tscn" id="10_wcjpb"]
+[ext_resource type="PackedScene" uid="uid://dx537skarxmn8" path="res://Resources/GraphEditor/StringGN.tscn" id="11_hhgxh"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_p1f2x"]
 font_color = Color(0, 0, 0, 1)
@@ -22,7 +30,7 @@ grow_vertical = 2
 texture = ExtResource("1_n5704")
 stretch_mode = 1
 
-[node name="Header" type="Control" parent="." unique_id=1856660082]
+[node name="Footer" type="Control" parent="." unique_id=1856660082]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -32,7 +40,7 @@ offset_top = -69.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="Header Backdrop" type="ColorRect" parent="Header" unique_id=428788502]
+[node name="Header Backdrop" type="ColorRect" parent="Footer" unique_id=428788502]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -41,7 +49,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.66, 0.66, 0.66, 0.6117647)
 
-[node name="HeaderAlignment" type="HBoxContainer" parent="Header" unique_id=992953629]
+[node name="HeaderAlignment" type="HBoxContainer" parent="Footer" unique_id=992953629]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -54,12 +62,12 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="GameLabelColor" type="ColorRect" parent="Header/HeaderAlignment" unique_id=746472424]
+[node name="GameLabelColor" type="ColorRect" parent="Footer/HeaderAlignment" unique_id=746472424]
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
 color = Color(0.8, 0.8, 0.8, 1)
 
-[node name="GameLabel" type="Label" parent="Header/HeaderAlignment/GameLabelColor" unique_id=1654687975]
+[node name="GameLabel" type="Label" parent="Footer/HeaderAlignment/GameLabelColor" unique_id=1654687975]
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 1
 anchors_preset = 15
@@ -80,28 +88,28 @@ text_overrun_behavior = 3
 script = ExtResource("2_qhme0")
 metadata/_custom_type_script = "uid://d11kfgsd6jgt"
 
-[node name="SetName" type="LineEdit" parent="Header/HeaderAlignment" unique_id=846444347]
+[node name="SetName" type="LineEdit" parent="Footer/HeaderAlignment" unique_id=846444347]
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
 placeholder_text = "Name Here"
 max_length = 32
 expand_to_text_length = true
 
-[node name="ColorBox" type="VBoxContainer" parent="Header/HeaderAlignment" unique_id=1997984367]
+[node name="ColorBox" type="VBoxContainer" parent="Footer/HeaderAlignment" unique_id=1997984367]
 layout_mode = 2
 
-[node name="ColorLabel" type="Label" parent="Header/HeaderAlignment/ColorBox" unique_id=1497594901]
+[node name="ColorLabel" type="Label" parent="Footer/HeaderAlignment/ColorBox" unique_id=1497594901]
 layout_mode = 2
 text = "Set Color"
 label_settings = SubResource("LabelSettings_p1f2x")
 horizontal_alignment = 1
 
-[node name="ColorButtons" type="HBoxContainer" parent="Header/HeaderAlignment/ColorBox" unique_id=1484948075]
+[node name="ColorButtons" type="HBoxContainer" parent="Footer/HeaderAlignment/ColorBox" unique_id=1484948075]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 3
 
-[node name="Red" type="Button" parent="Header/HeaderAlignment/ColorBox/ColorButtons" unique_id=1628805622]
+[node name="Red" type="Button" parent="Footer/HeaderAlignment/ColorBox/ColorButtons" unique_id=1628805622]
 modulate = Color(0.7882353, 0.45882353, 0.50980395, 1)
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
@@ -111,7 +119,7 @@ flat = true
 icon_alignment = 1
 expand_icon = true
 
-[node name="Green" type="Button" parent="Header/HeaderAlignment/ColorBox/ColorButtons" unique_id=893572198]
+[node name="Green" type="Button" parent="Footer/HeaderAlignment/ColorBox/ColorButtons" unique_id=893572198]
 modulate = Color(0.45882353, 0.7607843, 0.45490196, 1)
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
@@ -121,7 +129,7 @@ flat = true
 icon_alignment = 1
 expand_icon = true
 
-[node name="Violet" type="Button" parent="Header/HeaderAlignment/ColorBox/ColorButtons" unique_id=1046336514]
+[node name="Violet" type="Button" parent="Footer/HeaderAlignment/ColorBox/ColorButtons" unique_id=1046336514]
 modulate = Color(0.7882353, 0.5803922, 0.7607843, 1)
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
@@ -131,7 +139,7 @@ flat = true
 icon_alignment = 1
 expand_icon = true
 
-[node name="Orange" type="Button" parent="Header/HeaderAlignment/ColorBox/ColorButtons" unique_id=717696640]
+[node name="Orange" type="Button" parent="Footer/HeaderAlignment/ColorBox/ColorButtons" unique_id=717696640]
 modulate = Color(0.84705883, 0.627451, 0.49019608, 1)
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
@@ -141,7 +149,7 @@ flat = true
 icon_alignment = 1
 expand_icon = true
 
-[node name="Blue" type="Button" parent="Header/HeaderAlignment/ColorBox/ColorButtons" unique_id=463583771]
+[node name="Blue" type="Button" parent="Footer/HeaderAlignment/ColorBox/ColorButtons" unique_id=463583771]
 modulate = Color(0.4627451, 0.49411765, 0.7411765, 1)
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
@@ -151,7 +159,7 @@ flat = true
 icon_alignment = 1
 expand_icon = true
 
-[node name="Yellow" type="Button" parent="Header/HeaderAlignment/ColorBox/ColorButtons" unique_id=134469220]
+[node name="Yellow" type="Button" parent="Footer/HeaderAlignment/ColorBox/ColorButtons" unique_id=134469220]
 modulate = Color(0.93333334, 0.8901961, 0.5686275, 1)
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
@@ -161,12 +169,12 @@ flat = true
 icon_alignment = 1
 expand_icon = true
 
-[node name="GameLabelColor2" type="ColorRect" parent="Header/HeaderAlignment" unique_id=2042562138]
+[node name="GameLabelColor2" type="ColorRect" parent="Footer/HeaderAlignment" unique_id=2042562138]
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 color = Color(0.8, 0.8, 0.8, 1)
 
-[node name="Label" type="Label" parent="Header/HeaderAlignment/GameLabelColor2" unique_id=70033151]
+[node name="Label" type="Label" parent="Footer/HeaderAlignment/GameLabelColor2" unique_id=70033151]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -178,7 +186,7 @@ label_settings = SubResource("LabelSettings_62036")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SetName2" type="LineEdit" parent="Header/HeaderAlignment" unique_id=1504427642]
+[node name="SetName2" type="LineEdit" parent="Footer/HeaderAlignment" unique_id=1504427642]
 custom_minimum_size = Vector2(70, 0)
 layout_mode = 2
 placeholder_text = "0.0.0"
@@ -213,16 +221,28 @@ visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
-[node name="Graph" type="GraphEdit" parent="ContentsVisual/MenuBar" unique_id=1524771329]
+[node name="Graph Editor" type="HSplitContainer" parent="ContentsVisual/MenuBar" unique_id=1057637584 node_paths=PackedStringArray("tree", "subGraphContainer", "rightClickMenu")]
 layout_mode = 2
-scroll_offset = Vector2(0, -53)
-type_names = {
-0: "AP Info",
-1: "Effects",
-2: "Colors",
-4: "Integer",
-5: "String",
-6: "String Array",
-7: "Image"
-}
+split_offsets = PackedInt32Array(128)
+split_offset = 128
+script = ExtResource("4_62036")
+tree = NodePath("Tree")
+subGraphContainer = NodePath("SubGraphContainer")
+rightClickMenu = NodePath("SubGraphContainer/GraphRightClickMenu")
 metadata/_tab_index = 1
+
+[node name="Tree" type="Tree" parent="ContentsVisual/MenuBar/Graph Editor" unique_id=922962876]
+layout_mode = 2
+
+[node name="SubGraphContainer" type="MarginContainer" parent="ContentsVisual/MenuBar/Graph Editor" unique_id=449400352]
+layout_mode = 2
+
+[node name="GraphRightClickMenu" type="PopupMenu" parent="ContentsVisual/MenuBar/Graph Editor/SubGraphContainer" unique_id=1936831048]
+oversampling_override = 1.0
+script = ExtResource("5_i7k8b")
+allNodes = Array[PackedScene]([ExtResource("6_kqqcm"), ExtResource("7_0vojg"), ExtResource("8_u2exy"), ExtResource("9_oewat"), ExtResource("10_wcjpb"), ExtResource("11_hhgxh")])
+metadata/_custom_type_script = "uid://svncggh8jn0v"
+
+[connection signal="text_changed" from="Footer/HeaderAlignment/SetName" to="ContentsVisual/MenuBar/Graph Editor" method="set_name_changed"]
+[connection signal="button_clicked" from="ContentsVisual/MenuBar/Graph Editor/Tree" to="ContentsVisual/MenuBar/Graph Editor" method="tree_button_clicked"]
+[connection signal="id_pressed" from="ContentsVisual/MenuBar/Graph Editor/SubGraphContainer/GraphRightClickMenu" to="ContentsVisual/MenuBar/Graph Editor/SubGraphContainer/GraphRightClickMenu" method="on_pressed"]

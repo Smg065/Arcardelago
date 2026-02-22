@@ -37,7 +37,6 @@ settings/gdscript/max_call_stack=2047
 window/size/extend_to_title=true
 window/size/window_width_override=1152
 window/size/window_height_override=648
-window/subwindows/embed_subwindows=false
 window/stretch/aspect="expand"
 window/per_pixel_transparency/allowed=true
 

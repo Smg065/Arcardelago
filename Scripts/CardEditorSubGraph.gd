@@ -25,8 +25,9 @@ func _ready() -> void:
 	}
 	connection_request.connect(connect_node)
 	disconnection_request.connect(disconnect_node)
+	right_disconnects = true
 
-#Either reparents or creates a new subgraph representaion of this
+##Either reparents or creates a new subgraph representaion of this
 func add_subgraph(subGraph : CardEditorSubGraph):
 	if subGraph.rep == null:
 		subGraph.rep = SUBGRAPH_REP.instantiate()

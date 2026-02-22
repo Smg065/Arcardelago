@@ -23,6 +23,8 @@ func _ready() -> void:
 		6: "String Array",
 		7: "Image",
 	}
+	connection_request.connect(connect_node)
+	disconnection_request.connect(disconnect_node)
 
 #Either reparents or creates a new subgraph representaion of this
 func add_subgraph(subGraph : CardEditorSubGraph):
@@ -47,20 +49,3 @@ func build_relay_node(isInput : bool) -> GraphNode:
 		newGN.title = "Output Relay"
 		graphOut = newGN
 	return newGN
-
-func construct_connection(from_node: StringName, from_port: int, to_node: StringName, to_port: int) -> Dictionary:
-	return {
-		"from_node" : from_node,
-		"from_port" : from_port,
-		"to_node" : to_node,
-		"to_port" : to_port,
-		"keep_alive" : false
-	}
-
-func connection_request(from_node: StringName, from_port: int, to_node: StringName, to_port: int) -> void:
-	print("E")
-	connections.append(construct_connection(from_node, from_port, to_node, to_port))
-
-func disconnection_request(from_node: StringName, from_port: int, to_node: StringName, to_port: int) -> void:
-	print("F")
-	connections.erase(construct_connection(from_node, from_port, to_node, to_port))

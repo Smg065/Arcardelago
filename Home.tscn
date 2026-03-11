@@ -1,13 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://26c6es3texj3"]
+[gd_scene format=3 uid="uid://26c6es3texj3"]
 
 [ext_resource type="Script" uid="uid://bpa5rwhixu260" path="res://Scripts/Home.gd" id="1_jmugw"]
 
-[node name="Home" type="CanvasLayer" node_paths=PackedStringArray("grounds", "buttons")]
+[node name="Home" type="CanvasLayer" unique_id=1441644446 node_paths=PackedStringArray("grounds", "buttons")]
 script = ExtResource("1_jmugw")
 grounds = NodePath("Main/Grounds")
 buttons = [NodePath("Main/Bedroom"), NodePath("Main/Kitchen"), NodePath("Main/Lobby"), NodePath("Main/Workspace")]
 
-[node name="Main" type="Control" parent="."]
+[node name="Main" type="Control" parent="." unique_id=388916466]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -15,7 +15,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Grounds" type="TextureRect" parent="Main"]
+[node name="Grounds" type="TextureRect" parent="Main" unique_id=157088504]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -25,7 +25,7 @@ grow_vertical = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Bedroom" type="TextureButton" parent="Main"]
+[node name="Bedroom" type="TextureButton" parent="Main" unique_id=1856488688]
 self_modulate = Color(0.7372549, 0.7372549, 0.7372549, 1)
 layout_mode = 1
 anchors_preset = 15
@@ -36,7 +36,7 @@ grow_vertical = 2
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Kitchen" type="TextureButton" parent="Main"]
+[node name="Kitchen" type="TextureButton" parent="Main" unique_id=936410056]
 self_modulate = Color(0.7372549, 0.7372549, 0.7372549, 1)
 layout_mode = 1
 anchors_preset = 15
@@ -47,7 +47,7 @@ grow_vertical = 2
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Lobby" type="TextureButton" parent="Main"]
+[node name="Lobby" type="TextureButton" parent="Main" unique_id=1232647045]
 self_modulate = Color(0.7372549, 0.7372549, 0.7372549, 1)
 layout_mode = 1
 anchors_preset = 15
@@ -58,7 +58,7 @@ grow_vertical = 2
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Workspace" type="TextureButton" parent="Main"]
+[node name="Workspace" type="TextureButton" parent="Main" unique_id=829120540]
 self_modulate = Color(0.7372549, 0.7372549, 0.7372549, 1)
 layout_mode = 1
 anchors_preset = 15
@@ -69,7 +69,7 @@ grow_vertical = 2
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Bedroom" type="Control" parent="."]
+[node name="Bedroom" type="Control" parent="." unique_id=1781257458]
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -78,7 +78,22 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Kitchen" type="Control" parent="."]
+[node name="SleepButton" type="Button" parent="Bedroom" unique_id=812048699]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Sleep"
+
+[node name="Kitchen" type="Control" parent="." unique_id=1184631365]
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -87,7 +102,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Lobby" type="Control" parent="."]
+[node name="Lobby" type="Control" parent="." unique_id=1866964052]
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -96,7 +111,22 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Workspace" type="Control" parent="."]
+[node name="BossRelease" type="Button" parent="Lobby" unique_id=1713469663]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Boss Release"
+
+[node name="Workspace" type="Control" parent="." unique_id=1648587672]
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -105,7 +135,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Back" type="Button" parent="."]
+[node name="Back" type="Button" parent="." unique_id=724472139]
 visible = false
 anchors_preset = -1
 anchor_left = 0.44500002
@@ -120,7 +150,7 @@ grow_vertical = 0
 text = "Back"
 metadata/_edit_use_anchors_ = true
 
-[node name="Overworld Button" type="Button" parent="."]
+[node name="Overworld Button" type="Button" parent="." unique_id=1453518614]
 anchors_preset = -1
 anchor_left = 0.44500002
 anchor_top = 0.92100006
@@ -137,8 +167,8 @@ metadata/_edit_use_anchors_ = true
 [connection signal="mouse_entered" from="Main/Bedroom" to="Main/Bedroom" method="set_self_modulate" binds= [Color(1, 1, 1, 1)]]
 [connection signal="mouse_exited" from="Main/Bedroom" to="Main/Bedroom" method="set_self_modulate" binds= [Color(0.7372549, 0.7372549, 0.7372549, 1)]]
 [connection signal="pressed" from="Main/Bedroom" to="Main" method="hide"]
-[connection signal="pressed" from="Main/Bedroom" to="Back" method="show"]
 [connection signal="pressed" from="Main/Bedroom" to="Bedroom" method="show"]
+[connection signal="pressed" from="Main/Bedroom" to="Back" method="show"]
 [connection signal="mouse_entered" from="Main/Kitchen" to="Main/Kitchen" method="set_self_modulate" binds= [Color(1, 1, 1, 1)]]
 [connection signal="mouse_exited" from="Main/Kitchen" to="Main/Kitchen" method="set_self_modulate" binds= [Color(0.7372549, 0.7372549, 0.7372549, 1)]]
 [connection signal="pressed" from="Main/Kitchen" to="Main" method="hide"]
@@ -147,17 +177,17 @@ metadata/_edit_use_anchors_ = true
 [connection signal="mouse_entered" from="Main/Lobby" to="Main/Lobby" method="set_self_modulate" binds= [Color(1, 1, 1, 1)]]
 [connection signal="mouse_exited" from="Main/Lobby" to="Main/Lobby" method="set_self_modulate" binds= [Color(0.7372549, 0.7372549, 0.7372549, 1)]]
 [connection signal="pressed" from="Main/Lobby" to="Main" method="hide"]
-[connection signal="pressed" from="Main/Lobby" to="Back" method="show"]
 [connection signal="pressed" from="Main/Lobby" to="Lobby" method="show"]
+[connection signal="pressed" from="Main/Lobby" to="Back" method="show"]
 [connection signal="mouse_entered" from="Main/Workspace" to="Main/Workspace" method="set_self_modulate" binds= [Color(1, 1, 1, 1)]]
 [connection signal="mouse_exited" from="Main/Workspace" to="Main/Workspace" method="set_self_modulate" binds= [Color(0.7372549, 0.7372549, 0.7372549, 1)]]
 [connection signal="pressed" from="Main/Workspace" to="Main" method="hide"]
 [connection signal="pressed" from="Main/Workspace" to="Main/Workspace" method="show"]
 [connection signal="pressed" from="Main/Workspace" to="Back" method="show"]
 [connection signal="pressed" from="Back" to="Main" method="show"]
-[connection signal="pressed" from="Back" to="Kitchen" method="hide"]
-[connection signal="pressed" from="Back" to="Back" method="hide"]
 [connection signal="pressed" from="Back" to="Bedroom" method="hide"]
+[connection signal="pressed" from="Back" to="Kitchen" method="hide"]
 [connection signal="pressed" from="Back" to="Lobby" method="hide"]
 [connection signal="pressed" from="Back" to="Workspace" method="hide"]
+[connection signal="pressed" from="Back" to="Back" method="hide"]
 [connection signal="pressed" from="Overworld Button" to="." method="exit_house"]

@@ -3,8 +3,8 @@ class_name CardEditorSubGraph
 
 @export var rep : SubGraphRepresenation
 const SUBGRAPH_REP = preload("res://Resources/SetEditor/SubgraphRep.tscn")
-@export var graphIn : GraphNode
-@export var graphOut : GraphNode
+@export var graphIn : CEGNBase
+@export var graphOut : CEGNBase
 
 @warning_ignore("unused_signal")
 signal name_changed(thisGraph : CardEditorSubGraph, newName : String)
@@ -31,7 +31,7 @@ func _ready() -> void:
 func add_subgraph(subGraph : CardEditorSubGraph):
 	if subGraph.rep == null:
 		subGraph.rep = SUBGRAPH_REP.instantiate()
-		subGraph.rep.graph = subGraph
+		subGraph.rep.subGraph = subGraph
 		subGraph.build_relay_node(true)
 		subGraph.build_relay_node(false)
 	else:
@@ -40,7 +40,7 @@ func add_subgraph(subGraph : CardEditorSubGraph):
 
 ##Builds an input or output graph node
 func build_relay_node(isInput : bool) -> GraphNode:
-	var newGN = GraphNode.new()
+	var newGN = CEGNBase.new()
 	newGN.resizable = true
 	add_child(newGN)
 	if isInput:

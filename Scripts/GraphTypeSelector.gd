@@ -31,11 +31,11 @@ func set_type(newIndex : int):
 func attach_subgraph_rep(subGraph : SubGraphRepresenation, isInput : bool, sourceGraphType : GraphTypeSelector = null):
 	if sourceGraphType == null:
 		sourceGraphType = self
-	relay_type_options(subGraph.graph)
+	relay_type_options(subGraph.subGraph)
 	removeButton.pressed.connect(subGraph.remove_type_selector.bind(sourceGraphType, isInput))
 	if sourceGraphType == self != isInput:
 		size_flags_horizontal = Control.SIZE_SHRINK_END
-	optionButton.item_selected.connect(subGraph.type_changed)
+	optionButton.item_selected.connect(subGraph.type_changed.bind(sourceGraphType))
 
 ##Attach relay
 func attach_relay(graph : CardEditorSubGraph, isInput : bool):

@@ -1,8 +1,8 @@
-extends GraphNode
+extends CEGNBase
 class_name SubGraphRepresenation
 
-##The graph this node represents
-@export var graph : CardEditorSubGraph
+##The subgraph this representation is a standin for
+var subGraph : CardEditorSubGraph
 ##All the input options
 @export var inputs : Array[GraphTypeSelector]
 ##All the output options
@@ -10,8 +10,6 @@ class_name SubGraphRepresenation
 var graphTypePrefab = load("res://Resources/SetEditor/GraphTypeSelector.tscn")
 
 const TOP_TEXT_SIZE = 3
-const COLOR_BY_TYPE = [Color("767ebd"),Color("75c274"),Color("ffffff"),
-Color("00000000"),Color("c97582"),Color("eee391"),Color("c994c2"),Color("d8a07d")]
 
 ##Create a type selector of the given type
 func create_type_selector(isInput : bool) -> GraphTypeSelector:
@@ -25,7 +23,7 @@ func create_type_selector(isInput : bool) -> GraphTypeSelector:
 		inputs.append(newTypeSelector)
 	else:
 		outputs.append(newTypeSelector)
-	subTypeSelector.attach_relay(graph, isInput)
+	subTypeSelector.attach_relay(subGraph, isInput)
 	move_child(newTypeSelector, newIndex)
 	newTypeSelector.attach_subgraph_rep(self, isInput)
 	subTypeSelector.attach_subgraph_rep(self, isInput, newTypeSelector)
@@ -34,19 +32,27 @@ func create_type_selector(isInput : bool) -> GraphTypeSelector:
 
 ##Removes a type selector of the given type
 func remove_type_selector(toDeleteTypeSelector : GraphTypeSelector, isInput : bool):
+	var portNum : int
+	var delIndex : int = toDeleteTypeSelector.get_index()
 	if isInput:
-		var eraseIndex : int = inputs.find(toDeleteTypeSelector)
+		portNum = inputs.find(toDeleteTypeSelector)
 		inputs.erase(toDeleteTypeSelector)
-		graph.graphIn.get_child(eraseIndex).queue_free()
+		subGraph.graphIn.delete_entry(portNum, portNum)
 	else:
-		var eraseIndex : int = outputs.find(toDeleteTypeSelector)
+		portNum = outputs.find(toDeleteTypeSelector)
 		outputs.erase(toDeleteTypeSelector)
-		graph.graphOut.get_child(eraseIndex).queue_free()
-	toDeleteTypeSelector.queue_free()
+		subGraph.graphOut.delete_entry(portNum, portNum)
+	delete_entry(delIndex, portNum)
 	call_deferred("update_shift_buttons")
 
 ##Updates the typings on items when a new option is selected
-func type_changed(_newType : int):
+func type_changed(_newType : int, source : GraphTypeSelector):
+	if source in inputs:
+		remove_connections(inputs.find(source))
+		subGraph.graphIn.remove_connections(inputs.find(source))
+	if source in outputs:
+		remove_connections(outputs.find(source))
+		subGraph.graphOut.remove_connections(outputs.find(source))
 	update_shift_buttons()
 
 ##Subgraphs
@@ -58,11 +64,11 @@ func update_shift_buttons():
 	for inputIndex in inputSize:
 		var eachInput : GraphTypeSelector = inputs[inputIndex]
 		eachInput.update_shift_buttons(inputIndex, inputSize)
-		graph.graphIn.get_child(inputIndex).update_shift_buttons(inputIndex, inputSize)
+		subGraph.graphIn.get_child(inputIndex).update_shift_buttons(inputIndex, inputSize)
 		var type = eachInput.optionButton.get_selected_id()
 		update_slot_type(self, TOP_TEXT_SIZE + inputIndex, type, true)
-		update_slot_type(graph.graphIn, inputIndex, type, false)
-	graph.graphIn.clear_slot(inputSize)
+		update_slot_type(subGraph.graphIn, inputIndex, type, false)
+	subGraph.graphIn.clear_slot(inputSize)
 	clear_slot(inputSize + 3)
 	clear_slot(inputSize + 4)
 	clear_slot(inputSize + 5)
@@ -71,16 +77,12 @@ func update_shift_buttons():
 	for outputIndex in outputSize:
 		var eachOutput : GraphTypeSelector = outputs[outputIndex]
 		eachOutput.update_shift_buttons(outputIndex, outputSize)
-		graph.graphOut.get_child(outputIndex).update_shift_buttons(outputIndex, outputSize)
+		subGraph.graphOut.get_child(outputIndex).update_shift_buttons(outputIndex, outputSize)
 		var type = eachOutput.optionButton.get_selected_id()
 		update_slot_type(self, outputOffset + outputIndex, type, false)
-		update_slot_type(graph.graphOut, outputIndex, type, true)
-	graph.graphOut.clear_slot(outputSize)
+		update_slot_type(subGraph.graphOut, outputIndex, type, true)
+	subGraph.graphOut.clear_slot(outputSize)
 	clear_slot(outputOffset + outputSize)
 
-##Sets the slot type in a given position
-func update_slot_type(targetGraph : GraphNode, index : int, type : int, isInput : bool):
-	targetGraph.set_slot(index, isInput, type, COLOR_BY_TYPE[type], !isInput, type, COLOR_BY_TYPE[type])
-
 func set_subgroup_name(newText: String) -> void:
-	graph.emit_signal("name_changed", graph, newText)
+	subGraph.emit_signal("name_changed", subGraph, newText)

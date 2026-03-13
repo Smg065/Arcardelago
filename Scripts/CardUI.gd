@@ -147,7 +147,7 @@ func update_players_display():
 	var playersNames : String = ", ".join(allPlayerNames).replace("[", "[lb]")
 	var gameName : String
 	if cardData.isDefault:
-		gameName = "Arcardelago"
+		gameName = "Cardelago"
 		playersNames = Archipelago.conn.slot_data["player_name"]
 	else:
 		gameName = cardData.gameCardset.game
@@ -310,7 +310,7 @@ func _get_drag_data(_at_position: Vector2) -> Variant:
 	cardPreview.pivot_offset = cardPreview.size / 2
 	cardPreview.z_index = 7
 	set_drag_preview(self.duplicate(0))
-	return {"IsArcardelago" : true, "Type" : "Card", "CardUI" : self}
+	return {"IsCardelago" : true, "Type" : "Card", "CardUI" : self}
 
 ##Changes the cards parent and sets card slots
 func shift_parent(nParent : Node):
@@ -451,7 +451,7 @@ func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 	if typeof(data) != TYPE_DICTIONARY:
 		return false
 	var dict : Dictionary = data as Dictionary
-	if not "IsArcardelago" in dict:
+	if not "IsCardelago" in dict:
 		return false
 	if "Stamp" != data["Type"]:
 		return false

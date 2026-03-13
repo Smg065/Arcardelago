@@ -11,6 +11,11 @@
 [ext_resource type="PackedScene" uid="uid://c6ghd2fn8uppo" path="res://Resources/GraphEditor/IntGN.tscn" id="9_oewat"]
 [ext_resource type="PackedScene" uid="uid://bgj1ypn5v1iuv" path="res://Resources/GraphEditor/StringArrayGN.tscn" id="10_wcjpb"]
 [ext_resource type="PackedScene" uid="uid://dx537skarxmn8" path="res://Resources/GraphEditor/StringGN.tscn" id="11_hhgxh"]
+[ext_resource type="PackedScene" uid="uid://dg5ldvxwia4i3" path="res://Resources/GraphEditor/IDDigitFilter.tscn" id="12_kqqcm"]
+[ext_resource type="PackedScene" uid="uid://cva8rgm6gfg3w" path="res://Resources/GraphEditor/IDTypeFilter.tscn" id="13_0vojg"]
+[ext_resource type="PackedScene" uid="uid://dewilhx81vpcl" path="res://Resources/GraphEditor/BoolSplitter.tscn" id="14_u2exy"]
+[ext_resource type="PackedScene" uid="uid://8arlusyrq0yc" path="res://Resources/GraphEditor/LogicGate.tscn" id="15_oewat"]
+[ext_resource type="PackedScene" uid="uid://cgmth1qx3mdse" path="res://Resources/GraphEditor/IDRangeFilter.tscn" id="16_wcjpb"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_p1f2x"]
 font_color = Color(0, 0, 0, 1)
@@ -240,7 +245,7 @@ layout_mode = 2
 [node name="GraphRightClickMenu" type="PopupMenu" parent="ContentsVisual/MenuBar/Graph Editor/SubGraphContainer" unique_id=1936831048]
 oversampling_override = 1.0
 script = ExtResource("5_i7k8b")
-allNodes = Array[PackedScene]([ExtResource("6_kqqcm"), ExtResource("7_0vojg"), ExtResource("8_u2exy"), ExtResource("9_oewat"), ExtResource("10_wcjpb"), ExtResource("11_hhgxh")])
+allNodes = Array[PackedScene]([ExtResource("6_kqqcm"), ExtResource("7_0vojg"), ExtResource("8_u2exy"), ExtResource("9_oewat"), ExtResource("10_wcjpb"), ExtResource("11_hhgxh"), ExtResource("12_kqqcm"), ExtResource("13_0vojg"), ExtResource("14_u2exy"), ExtResource("15_oewat"), ExtResource("16_wcjpb")])
 metadata/_custom_type_script = "uid://svncggh8jn0v"
 
 [connection signal="text_changed" from="Footer/HeaderAlignment/SetName" to="ContentsVisual/MenuBar/Graph Editor" method="set_name_changed"]

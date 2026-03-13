@@ -1,7 +1,7 @@
 extends Resource
 class_name ColorCatagory
 
-##The base colors that Arcardelago has
+##The base colors that Cardelago has
 static var BASE_COLORS : Array[ColorCatagory] = [
 	load("res://Resources/ColorCatagories/RedColorCat.tres") as ColorCatagory,
 	load("res://Resources/ColorCatagories/GreenColorCat.tres") as ColorCatagory,

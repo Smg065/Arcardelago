@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://dewilhx81vpcl"]
+
+[ext_resource type="Script" uid="uid://d0xnk0h4nliso" path="res://Scripts/UI/CardEditorGraphNodeBase.gd" id="1_rleqe"]
+
+[node name="BoolSplitter" type="GraphNode" unique_id=1126659198]
+offset_right = 141.0
+offset_bottom = 213.0
+title = "Splitter"
+ignore_invalid_connection_type = true
+slot/0/left_enabled = true
+slot/0/left_type = 99
+slot/0/left_color = Color(0, 0, 0, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = true
+slot/0/right_type = 99
+slot/0/right_color = Color(0, 0, 0, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+slot/1/left_enabled = true
+slot/1/left_type = 3
+slot/1/left_color = Color(0.6666667, 0.26666668, 0.6, 1)
+slot/1/left_icon = null
+slot/1/right_enabled = true
+slot/1/right_type = 99
+slot/1/right_color = Color(0, 0, 0, 1)
+slot/1/right_icon = null
+slot/1/draw_stylebox = true
+script = ExtResource("1_rleqe")
+metadata/_custom_type_script = "uid://d0xnk0h4nliso"
+
+[node name="TopRow" type="HBoxContainer" parent="." unique_id=682484881]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Input" type="Label" parent="TopRow" unique_id=1185457823]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Input"
+
+[node name="True" type="Label" parent="TopRow" unique_id=832464789]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "True"
+horizontal_alignment = 2
+
+[node name="BottomRow" type="HBoxContainer" parent="." unique_id=568120006]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Bool" type="Label" parent="BottomRow" unique_id=1375138191]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Bool"
+
+[node name="False" type="Label" parent="BottomRow" unique_id=1962375653]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "False"
+horizontal_alignment = 2

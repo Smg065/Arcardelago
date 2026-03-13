@@ -4,8 +4,9 @@ class_name CEGNBase
 ##The graph this is a child of
 var graph : CardEditorSubGraph
 ##The colors of the node typings
-const COLOR_BY_TYPE = [Color("767ebd"),Color("75c274"),Color("ffffff"),
-Color("00000000"),Color("c97582"),Color("eee391"),Color("c994c2"),Color("d8a07d")]
+const COLOR_BY_TYPE = {0:Color("767ebd"),1:Color("75c274"),2:Color("ffffff"),
+3:Color("aa4499"),4:Color("c97582"),5:Color("eee391"),6:Color("c994c2"),
+7:Color("d8a07d"),99:Color.BLACK}
 
 func _ready() -> void:
 	if graph == null:

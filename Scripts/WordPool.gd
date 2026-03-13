@@ -32,7 +32,7 @@ func _ready() -> void:
 	wordsEnglish.append_array(fileLoad.get_as_text().split("\n"))
 	fileLoad.close()
 	#Start AP
-	Archipelago.AP_GAME_NAME = "Arcardelago"
+	Archipelago.AP_GAME_NAME = "Cardelago"
 	Archipelago.set_tags([])
 	Archipelago.ap_connect(ip, port, slot, password)
 	Archipelago.connected.connect(on_connection)

@@ -142,14 +142,12 @@ title = "AP Info"
 visible = false
 layout_mode = 2
 
-[node name="SpinBox" type="SpinBox" parent="BasicHeader/VBoxContainer" unique_id=103369725]
+[node name="SpinBox" type="LineEdit" parent="BasicHeader/VBoxContainer" unique_id=2043707932]
 layout_mode = 2
 tooltip_text = "The APID of this entry."
-min_value = 1.0
-max_value = 9.007199254740991e+15
-value = 1.0
-rounded = true
-prefix = "ID:"
+mouse_filter = 1
+placeholder_text = "ID"
+virtual_keyboard_type = 4
 
 [node name="OptionButton" type="OptionButton" parent="BasicHeader/VBoxContainer" unique_id=1079899583]
 layout_mode = 2

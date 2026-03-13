@@ -19,7 +19,7 @@ var enemyCard : bool
 var fadeAngle : float
 ##If this card has no item attacked.
 @export var isDefault : bool
-##If this card is from your Arcardelago.
+##If this card is from your Cardelago.
 var isLocal : bool
 ##The points this card is worth
 var powerScore : int

@@ -148,7 +148,7 @@ func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 	if typeof(data) != TYPE_DICTIONARY:
 		return false
 	var dict : Dictionary = data as Dictionary
-	if !dict.has("IsArcardelago"):
+	if !dict.has("IsCardelago"):
 		return false
 	if "Card" != dict["Type"]:
 		return false

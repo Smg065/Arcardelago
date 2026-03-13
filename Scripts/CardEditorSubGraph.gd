@@ -14,10 +14,11 @@ var treeElement : TreeItem
 
 func _ready() -> void:
 	type_names = {
+		99: "Any",
 		0: "AP Info",
 		1: "Effect",
 		2: "Color",
-		3: "",
+		3: "Bool",
 		4: "Int",
 		5: "String",
 		6: "String Array",

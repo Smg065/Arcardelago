@@ -6,4 +6,4 @@ class_name InventoryStamp
 func _get_drag_data(_at_position: Vector2) -> Variant:
 	#Disable dragging uninteractable slots
 	set_drag_preview(self.duplicate(0))
-	return {"IsArcardelago" : true, "Type" : "Stamp", "StampType" : stampType}
+	return {"IsCardelago" : true, "Type" : "Stamp", "StampType" : stampType}

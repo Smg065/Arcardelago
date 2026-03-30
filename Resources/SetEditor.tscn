@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://kih3tnjhhdfj" path="res://Resources/GraphEditor/Color.tscn" id="7_0vojg"]
 [ext_resource type="PackedScene" uid="uid://durd1o2iwfqnd" path="res://Resources/GraphEditor/Image.tscn" id="8_u2exy"]
 [ext_resource type="PackedScene" uid="uid://c6ghd2fn8uppo" path="res://Resources/GraphEditor/IntGN.tscn" id="9_oewat"]
-[ext_resource type="PackedScene" uid="uid://bgj1ypn5v1iuv" path="res://Resources/GraphEditor/StringArrayGN.tscn" id="10_wcjpb"]
+[ext_resource type="PackedScene" uid="uid://bgj1ypn5v1iuv" path="res://Resources/GraphEditor/ArrayGN.tscn" id="10_wcjpb"]
 [ext_resource type="PackedScene" uid="uid://dx537skarxmn8" path="res://Resources/GraphEditor/StringGN.tscn" id="11_hhgxh"]
 [ext_resource type="PackedScene" uid="uid://dg5ldvxwia4i3" path="res://Resources/GraphEditor/IDDigitFilter.tscn" id="12_kqqcm"]
 [ext_resource type="PackedScene" uid="uid://cva8rgm6gfg3w" path="res://Resources/GraphEditor/IDTypeFilter.tscn" id="13_0vojg"]

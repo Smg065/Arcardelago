@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://bgj1ypn5v1iuv"]
+
+[ext_resource type="Script" uid="uid://cl6wmuc33o06u" path="res://Scripts/UI/GNStringArray.gd" id="1_85gsf"]
+
+[node name="ArrayGN" type="GraphNode" unique_id=1896546994 node_paths=PackedStringArray("optionButton")]
+offset_right = 335.0
+offset_bottom = 328.0
+mouse_filter = 1
+resizable = true
+title = "Array"
+slot/0/left_enabled = false
+slot/0/left_type = 6
+slot/0/left_color = Color(0.7882353, 0.5803922, 0.7607843, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = true
+slot/0/right_type = 6
+slot/0/right_color = Color(0.7882353, 0.5803922, 0.7607843, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+slot/1/left_enabled = false
+slot/1/left_type = 0
+slot/1/left_color = Color(1, 1, 1, 1)
+slot/1/left_icon = null
+slot/1/right_enabled = false
+slot/1/right_type = 0
+slot/1/right_color = Color(1, 1, 1, 1)
+slot/1/right_icon = null
+slot/1/draw_stylebox = true
+script = ExtResource("1_85gsf")
+optionButton = NodePath("Header/TypeDropdown")
+
+[node name="Header" type="FlowContainer" parent="." unique_id=720534139]
+layout_mode = 2
+
+[node name="TypeLabel" type="Label" parent="Header" unique_id=694727282]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "Type: "
+
+[node name="TypeDropdown" type="OptionButton" parent="Header" unique_id=172607057]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=620689324]
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="ScrollContainer" unique_id=14276884]
+layout_mode = 2
+size_flags_horizontal = 3

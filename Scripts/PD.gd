@@ -47,6 +47,13 @@ var hintPoints : int
 ##If you see the image on the card by default
 var imageByDefault : bool = true
 
+##Connection data w/o being connected
+var filename
+var ip
+var port
+var slot
+var password
+
 ##Shop items, where the value is the weight that they show up.
 static var shopItemTable : Dictionary[ShopItemInfo, int] = {
 	load("res://Resources/ShopItems/BoosterPack.tres") : 4,

@@ -7,7 +7,11 @@
 [ext_resource type="PackedScene" uid="uid://dyp5pgp8cr3j" path="res://Resources/ColorCatagoryCreator.tscn" id="5_7r1g0"]
 [ext_resource type="PackedScene" uid="uid://bmb3omoxm7f1c" path="res://Resources/SetEditor.tscn" id="6_cqjrg"]
 
-[node name="MainMenu" type="Control" unique_id=730132899]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7r1g0"]
+bg_color = Color(0.10374347, 0.103743546, 0.103743516, 1)
+corner_detail = 5
+
+[node name="MainMenu" type="Control" unique_id=730132899 node_paths=PackedStringArray("savesHBox", "filenameBox", "ipBox", "portBox", "slotBox", "passwordBox")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,6 +21,12 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_eiy7p")
 playScene = ExtResource("2_h7a2f")
+savesHBox = NodePath("Connect/VBox/SaveBox/SavePanel/SavesScroll/SavesHBox")
+filenameBox = NodePath("Connect/VBox/NewGameBox/NewGamePanel/NewGame/FilenameEdit")
+ipBox = NodePath("Connect/VBox/NewGameBox/NewGamePanel/NewGame/IPEdit")
+portBox = NodePath("Connect/VBox/NewGameBox/NewGamePanel/NewGame/PortEdit")
+slotBox = NodePath("Connect/VBox/NewGameBox/NewGamePanel/NewGame/UsernameEdit")
+passwordBox = NodePath("Connect/VBox/NewGameBox/NewGamePanel/NewGame/PasswordEdit")
 
 [node name="Root" type="Control" parent="." unique_id=1712046901]
 layout_mode = 1
@@ -182,6 +192,156 @@ size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 32
 text = "Back"
 
+[node name="Connect" type="Control" parent="." unique_id=654027805]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="VBox" type="VBoxContainer" parent="Connect" unique_id=1687791933]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MenuHeader" type="Label" parent="Connect/VBox" unique_id=799828613]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+theme_override_font_sizes/font_size = 37
+text = "PLAY"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 3
+script = ExtResource("1_i26rj")
+metadata/_custom_type_script = "uid://d11kfgsd6jgt"
+
+[node name="SaveBox" type="Control" parent="Connect/VBox" unique_id=436752602]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SavePanel" type="Panel" parent="Connect/VBox/SaveBox" unique_id=1526632995]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_7r1g0")
+
+[node name="SavesLabel" type="Label" parent="Connect/VBox/SaveBox/SavePanel" unique_id=145873445]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_bottom = 35.0
+grow_horizontal = 2
+text = "Saves"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="SavesScroll" type="ScrollContainer" parent="Connect/VBox/SaveBox/SavePanel" unique_id=1026839242]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 43.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SavesHBox" type="HBoxContainer" parent="Connect/VBox/SaveBox/SavePanel/SavesScroll" unique_id=459200483]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="NewGameBox" type="Control" parent="Connect/VBox" unique_id=461389799]
+custom_minimum_size = Vector2(512, 288)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="NewGamePanel" type="Panel" parent="Connect/VBox/NewGameBox" unique_id=765943000]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NewGame" type="VBoxContainer" parent="Connect/VBox/NewGameBox/NewGamePanel" unique_id=1354052518]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NewGameLabel" type="Label" parent="Connect/VBox/NewGameBox/NewGamePanel/NewGame" unique_id=1767347504]
+layout_mode = 2
+text = "New Game"
+horizontal_alignment = 1
+
+[node name="FilenameEdit" type="LineEdit" parent="Connect/VBox/NewGameBox/NewGamePanel/NewGame" unique_id=827715339]
+layout_mode = 2
+placeholder_text = "File Name"
+alignment = 1
+
+[node name="UsernameEdit" type="LineEdit" parent="Connect/VBox/NewGameBox/NewGamePanel/NewGame" unique_id=280971498]
+layout_mode = 2
+placeholder_text = "Username"
+alignment = 1
+
+[node name="IPEdit" type="LineEdit" parent="Connect/VBox/NewGameBox/NewGamePanel/NewGame" unique_id=1841098335]
+layout_mode = 2
+placeholder_text = "IP"
+alignment = 1
+
+[node name="PortEdit" type="LineEdit" parent="Connect/VBox/NewGameBox/NewGamePanel/NewGame" unique_id=773768430]
+layout_mode = 2
+placeholder_text = "Port"
+alignment = 1
+
+[node name="PasswordEdit" type="LineEdit" parent="Connect/VBox/NewGameBox/NewGamePanel/NewGame" unique_id=389896019]
+layout_mode = 2
+placeholder_text = "Password"
+alignment = 1
+
+[node name="Play" type="Button" parent="Connect/VBox/NewGameBox/NewGamePanel/NewGame" unique_id=597448949]
+layout_mode = 2
+text = "Connect"
+
+[node name="BackButton" type="Button" parent="Connect/VBox" unique_id=2048277301]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Back"
+
 [node name="Node" type="Node" parent="." unique_id=1012703825]
 
 [node name="AWC Window" type="Window" parent="Node" unique_id=1262250781]
@@ -214,6 +374,8 @@ visible = false
 [node name="SetEditorBackdrop" parent="Node/Custom Set Window" unique_id=2125039279 instance=ExtResource("6_cqjrg")]
 
 [connection signal="pressed" from="Root/MainButtons/PlayButton" to="." method="play_pressed"]
+[connection signal="pressed" from="Root/MainButtons/PlayButton" to="Root" method="hide"]
+[connection signal="pressed" from="Root/MainButtons/PlayButton" to="Connect" method="show"]
 [connection signal="pressed" from="Root/MainButtons/SettingsButton" to="Root" method="hide"]
 [connection signal="pressed" from="Root/MainButtons/SettingsButton" to="Settings" method="show"]
 [connection signal="pressed" from="Root/MainButtons/YAMLButton" to="." method="yaml_button_pressed"]
@@ -228,6 +390,9 @@ visible = false
 [connection signal="pressed" from="Editors/EditorButtons/Custom Color" to="Node/ColorCat Window" method="show"]
 [connection signal="pressed" from="Editors/EditorButtons/Back" to="Root" method="show"]
 [connection signal="pressed" from="Editors/EditorButtons/Back" to="Editors" method="hide"]
+[connection signal="pressed" from="Connect/VBox/NewGameBox/NewGamePanel/NewGame/Play" to="." method="new_game_connect"]
+[connection signal="pressed" from="Connect/VBox/BackButton" to="Root" method="show"]
+[connection signal="pressed" from="Connect/VBox/BackButton" to="Connect" method="hide"]
 [connection signal="close_requested" from="Node/AWC Window" to="Node/AWC Window" method="hide"]
 [connection signal="close_requested" from="Node/ColorCat Window" to="Node/ColorCat Window" method="hide"]
 [connection signal="close_requested" from="Node/Custom Set Window" to="Node/Custom Set Window" method="hide"]

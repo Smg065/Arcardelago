@@ -34,7 +34,7 @@ func setup_filter():
 	var allPlayers : PackedStringArray
 	for eachPlayer in Archipelago.conn.players:
 		allPlayers.append(eachPlayer.get_name())
-		var gameName := eachPlayer.get_slot().game
+		var gameName : String = eachPlayer.get_slot().game
 		if !allGames.has(gameName):
 			allGames.append(gameName)
 	for eachEntry in allGames:

@@ -62,7 +62,7 @@ static func json_load(saveString : String) -> GameData:
 	gameData.itemHandler.json_load(saveData["usedItems"])
 	return gameData
 
-func save_as_file(ip, port, slot, password):
+func save_as_file():
 	var otherFiles : int = 0
 	var savePath := get_save_path()
 	if DirAccess.dir_exists_absolute(savePath):
@@ -79,12 +79,30 @@ func save_as_file(ip, port, slot, password):
 		print(saveFileAccess.get_error())
 	apSaveData = SaveFile.new()
 	apSaveData.aplock.lock(Archipelago.conn)
-	apSaveData.creds.update(ip, port, slot, password)
+	apSaveData.creds.update(Persist.ip, Persist.port, Persist.slot, Persist.password)
 	apSaveData.write(saveFileAccess)
 	saveFileAccess.store_pascal_string(saveFileString)
 	saveFileAccess.close()
 
-static func find_valid_game(ip, port, slot, password) -> String:
+static func get_all_save_files() -> Array[SaveFile]:
+	var allSaveFiles : Array[SaveFile] = []
+	var savePath := get_save_path()
+	if DirAccess.dir_exists_absolute(savePath):
+		var dir := DirAccess.open(savePath)
+		for eachFile in dir.get_files():
+			if eachFile.ends_with(".json"):
+				var checkSave = SaveFile.new()
+				var filePath = savePath + "/" + eachFile
+				var file := FileAccess.open(filePath, FileAccess.READ)
+				if file == null:
+					print(FileAccess.get_open_error())
+					continue
+				checkSave.read(file)
+				allSaveFiles.append(checkSave)
+				file.close()
+	return allSaveFiles
+
+static func find_valid_game() -> String:
 	var savePath := get_save_path()
 	if DirAccess.dir_exists_absolute(savePath):
 		var dir := DirAccess.open(savePath)
@@ -105,7 +123,7 @@ static func find_valid_game(ip, port, slot, password) -> String:
 					var lockNotifs : Array[String] = checkSave.aplock.lock(Archipelago.conn)
 					for eachWarning in lockNotifs:
 						print(eachWarning)
-					if checkSave.creds.matches(ip, port, slot, password) and lockNotifs.size() <= 0:
+					if checkSave.creds.matches(Persist.ip, Persist.port, Persist.slot, Persist.password) and lockNotifs.size() <= 0:
 						var output = file.get_pascal_string()
 						file.close()
 						return output

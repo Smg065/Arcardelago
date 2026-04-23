@@ -15,10 +15,6 @@ var _initalWordQueueSize : int
 var _secondWordQueueSize : int
 var awaitingDictionaryApi : bool
 @export_category("AP Connection Info")
-@export var ip : String = "localhost"
-@export var port : String = "38281"
-@export var slot : String = "Smg065"
-@export var password : String = ""
 var conn : ConnectionInfo
 var curCard : int = 0
 
@@ -31,16 +27,11 @@ func _ready() -> void:
 	var fileLoad : FileAccess = FileAccess.open("res://Resources/english.txt", FileAccess.READ)
 	wordsEnglish.append_array(fileLoad.get_as_text().split("\n"))
 	fileLoad.close()
-	#Start AP
-	Archipelago.AP_GAME_NAME = "Cardelago"
-	Archipelago.set_tags([])
-	Archipelago.ap_connect(ip, port, slot, password)
-	Archipelago.connected.connect(on_connection)
 
 func on_connection(inConn: ConnectionInfo, json: Dictionary):
 	conn = inConn
 	conn.new_scouts_cached.connect(scouts_updated)
-	var gameInfo = GameData.find_valid_game(ip, port, slot, password)
+	var gameInfo = GameData.find_valid_game()
 	if gameInfo != "":
 		Persist.game = GameData.json_load(gameInfo)
 		Persist.hold_server_data(json)
@@ -254,7 +245,7 @@ func fictional_names_check_existing():
 		save_game_as_new()
 
 func save_game_as_new():
-	Persist.game.save_as_file(ip, port, slot, password)
+	Persist.game.save_as_file()
 	get_tree().change_scene_to_file("res://Gameplay.tscn")
 
 func dictionary_api_delay() -> void:

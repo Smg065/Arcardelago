@@ -41,7 +41,8 @@ func try_connect():
 	Archipelago.connected.connect(on_connection)
 	print("Trying to connect")
 
-func on_connection(conn : ConnectionInfo, json : Dictionary):
+func on_connection(_conn : ConnectionInfo, json : Dictionary):
+	Persist.conJson = json
 	print("Hello world!")
 	start_game()
 

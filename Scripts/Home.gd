@@ -10,6 +10,23 @@ var region : int
 
 @export var grounds : TextureRect
 @export var buttons : Array[TextureButton]
+@export var sleepButton : Button
+@export var sleepTimer : Timer
+@export var bossReleaseSlot : CardSlot
+@export var bossReleaseButton : Button
+@export var bossReleaseIcons : Array[TextureRect]
+@export var bossReleaseTexture : Texture2D
+
+func _ready() -> void:
+	Persist.game.defeated_bosses_updated.connect(update_boss_release_textures)
+
+
+##Updates the textures for the boss releasers
+func update_boss_release_textures() -> void:
+	for eachEntry in Persist.game.defeatedBosses:
+		if eachEntry <= 0:
+			continue
+		bossReleaseIcons[eachEntry].texture = bossReleaseTexture
 
 func set_active(nState : bool, nInfo : Dictionary) -> void:
 	if nState:
@@ -81,5 +98,39 @@ func claim_house_rewards() -> void:
 
 ##Leave the house
 func exit_house() -> void:
+	##Reset the sleep timer once you leave the house
+	if (not sleepTimer.is_stopped()) and sleepButton.disabled:
+		sleepTimer.start()
+	##Leave the house proper
 	var gameRoot : GameRoot = get_parent()
 	gameRoot.switch_scenes()
+
+##Makes you go to sleep
+func sleep() -> void:
+	var gameRoot : GameRoot = get_parent()
+	gameRoot.sleep()
+	##Prevent resleeping to ensure that you don't cycle
+	sleepButton.disabled = true
+
+func boss_release_slot_updated(slot: CardSlot) -> void:
+	#No card means the button shouldn't be enabled
+	var slotCard := slot.get_card()
+	if slotCard == null:
+		bossReleaseButton.disabled = true
+		return
+	#Gather APID's on this card
+	var apIds : PackedInt32Array = []
+	for eachCard in slotCard.all_card_data():
+		apIds.append(eachCard.apId)
+	#Check if any colors aren't part of the bosses
+	for eachBandColor in CardUI.ap_ids_to_band_colors(apIds):
+		if not eachBandColor in Persist.game.defeatedBosses:
+			bossReleaseButton.disabled = true
+			return
+	#If all of them are, you can release for free
+	bossReleaseButton.disabled = false
+
+##When you press the boss release button
+func boss_release_pressed() -> void:
+	bossReleaseSlot.release_card()
+	bossReleaseButton.disabled = true

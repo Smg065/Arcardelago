@@ -164,7 +164,7 @@ func stat_card() -> void:
 	##The RNG used by this card name
 	var rng = RandomNumberGenerator.new()
 	rng.set_seed(hash(nameData.name) + hash(gameCardset.nameData))
-	
+	var isBoss := false
 	#Pick the points you can use next
 	match stringify_item_quality():
 		"Filler":
@@ -178,11 +178,9 @@ func stat_card() -> void:
 		"Trap":
 			powerScore = 24
 		"Location":
-			#Bosses
-			if apItemFlags == 3:
-				powerScore = 30
-			else:
-				powerScore = rng.randi_range(3, 27)
+			powerScore = rng.randi_range(3, 27)
+			#Flag as boss for later stat calculation
+			isBoss = apItemFlags == 3
 	pointsAvailable = powerScore
 	##The points used to modify stats
 	var forStatroll : int = 0
@@ -262,6 +260,25 @@ func stat_card() -> void:
 			continue
 		allTags.append_array(newAbility.get_tags())
 		abilities.append(newAbility)
+	
+	##Boss cards
+	if isBoss:
+		boss_statting()
+
+func boss_statting():
+	var rescaling := powerScore / 30.0
+	baseHealth = ceili(baseHealth * rescaling)
+	baseAttack = ceili(baseAttack * rescaling)
+	var bossDepth := 1
+	var difficultyMod := 1.0
+	match Persist.difficulty:
+		0:
+			difficultyMod = 1.0
+		1:
+			difficultyMod = 1.5
+		2:
+			difficultyMod = 2
+	baseHealth *= ceili(bossDepth * 6 * difficultyMod)
 
 ##Check if the item has been released or the location has been cleared
 func is_cleared() -> bool:

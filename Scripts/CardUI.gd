@@ -121,16 +121,21 @@ func update_region_band():
 	#Partial Filtered APID's
 	if !partialFiltered[-1]:
 		apIds.append(cardData.apId)
-	var colorIds : PackedInt32Array
-	for eachId in apIds:
-		var eachColor : int = floori((eachId - 65000.0) / 100.0)
-		if !colorIds.has(eachColor):
-			colorIds.append(eachColor)
+	var colorIds : PackedInt32Array = ap_ids_to_band_colors(apIds)
 	var bandColors : int = 0
 	for eachEntry in colorIds:
 		bandColors += roundi(pow(2, eachEntry))
 	uiCardBandColor.colors = bandColors
 	uiCardBandColor.build(PI)
+
+##Gets the array of band colors from a collection of APIDs
+static func ap_ids_to_band_colors(apIds : PackedInt32Array) -> PackedInt32Array:
+	var colorIds : PackedInt32Array
+	for eachId in apIds:
+		var eachColor : int = floori((eachId - 65000.0) / 100.0)
+		if !colorIds.has(eachColor):
+			colorIds.append(eachColor)
+	return colorIds
 
 ##Show all the players these cards belong to
 func update_players_display():

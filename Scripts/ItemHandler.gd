@@ -171,7 +171,7 @@ func _init() -> void:
 	receivedItems = ApItemGroup.new()
 	localItems = ApItemGroup.new()
 	for eachItem in Archipelago.conn.received_items:
-		receivedItems.recieved_ap_item(eachItem)
+		receivedItems.received_ap_item(eachItem)
 	if usedItems == null:
 		usedItems = ApItemGroup.new()
 	update_inventory()

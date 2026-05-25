@@ -217,7 +217,7 @@ grow_vertical = 2
 [node name="MenuHeader" type="Label" parent="Connect/VBox" unique_id=799828613]
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
-theme_override_font_sizes/font_size = 37
+theme_override_font_sizes/font_size = 9
 text = "PLAY"
 horizontal_alignment = 1
 vertical_alignment = 1

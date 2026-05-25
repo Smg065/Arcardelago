@@ -27,6 +27,7 @@ func _ready() -> void:
 	var fileLoad : FileAccess = FileAccess.open("res://Resources/english.txt", FileAccess.READ)
 	wordsEnglish.append_array(fileLoad.get_as_text().split("\n"))
 	fileLoad.close()
+	on_connection(Archipelago.conn, Persist.conJson)
 
 func on_connection(inConn: ConnectionInfo, json: Dictionary):
 	conn = inConn
@@ -60,9 +61,10 @@ func build_new_game(json: Dictionary):
 	locationIds.append_array(conn.slot_locations.keys())
 	Persist.hold_server_data(json)
 	build_enemies(json["slot_data"]["enemies"])
-	Archipelago.send_command("LocationScouts", {"locations": locationIds, "create_as_hint": 0})
+	Archipelago.conn.force_scout_all()
 
 func scouts_updated():
+	print(conn._scout_cache.size())
 	if conn._scout_cache.size() == (Persist.cardsPerRegion * 6):
 		conn.new_scouts_cached.disconnect(scouts_updated)
 		scouts_to_cards()

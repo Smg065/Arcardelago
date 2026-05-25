@@ -45,13 +45,23 @@ func visrep(mainMenu : MainMenu) -> Panel:
 	usernameLabel.text = aplock.slot_name
 	ipLabel.text = creds.ip
 	
-	var hBox := HBoxContainer.new()
-	vBox.add_child(hBox)
+	var portIpBox := HBoxContainer.new()
+	portIpBox.alignment = BoxContainer.ALIGNMENT_CENTER
+	var portEdit := LineEdit.new()
+	var portLabel := Label.new()
+	vBox.add_child(portIpBox)
+	portIpBox.add_child(portLabel)
+	portIpBox.add_child(portEdit)
+	portLabel.text = "Port: "
+	portEdit.text = creds.port
+	
+	var playDeleteBox := HBoxContainer.new()
+	vBox.add_child(playDeleteBox)
 	var playButton := Button.new()
 	var deleteButton := Button.new()
-	hBox.add_child(playButton)
+	playDeleteBox.add_child(playButton)
 	playButton.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	hBox.add_child(deleteButton)
+	playDeleteBox.add_child(deleteButton)
 	deleteButton.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	playButton.text = "Play"
 	playButton.pressed.connect(mainMenu.save_connect.bind(self))

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ColorCatagory" load_steps=36 format=3 uid="uid://d2lodvhnq5cer"]
+[gd_resource type="Resource" script_class="ColorCatagory" format=3 uid="uid://d2lodvhnq5cer"]
 
 [ext_resource type="Script" uid="uid://bghb3ehj1t8og" path="res://Scripts/HomeStructure.gd" id="1_7wdv0"]
 [ext_resource type="Script" uid="uid://byt0cotie0pr4" path="res://Scripts/WordWeight.gd" id="1_dsw3l"]

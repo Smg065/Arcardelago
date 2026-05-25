@@ -35,3 +35,9 @@ func die() -> void:
 	screenNodes[ScreenType.WORLD_MAP].reset()
 	#Go home
 	switch_scenes(ScreenType.HOME, screenNodes[ScreenType.WORLD_MAP].homePip.nodeInfo)
+
+##Sleep
+func sleep() -> void:
+	Persist.clear_cards()
+	screenNodes[ScreenType.HOME].highestLevelReward = 0
+	screenNodes[ScreenType.WORLD_MAP].reset()

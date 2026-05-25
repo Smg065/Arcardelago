@@ -36,9 +36,6 @@ func map_pip_logic():
 			#It's not auto
 			if !curPip.defeated:
 				worldMap.pip_activated(curPip)
-			#Revisiting defeated bosses to offload banded cards (?)
-			#elif curPip.mapNodeType == MapPip.MapNodeType.BOSS:
-			#	
 	if Input.is_action_just_pressed("DebugClearNode"):
 		if curPip.defeatable() and curPip.mapNodeType != MapPip.MapNodeType.AUTO:
 			curPip.defeat()

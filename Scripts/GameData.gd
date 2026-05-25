@@ -13,6 +13,9 @@ var existingNames : Dictionary[String, NameData]
 var allCards : Array[CardData]
 ##Locations that have been scouted this game
 var knownLoctions : PackedInt32Array
+##Regions where the boss was defeated
+var defeatedBosses : Array[int]
+signal defeated_bosses_updated
 
 ##The Item Handler for AP data, including save data
 var itemHandler : ItemHandler
@@ -204,3 +207,10 @@ func scout_unknown():
 		toScout.scout()
 	else:
 		Persist.game.itemHandler.increase_overscouts()
+
+##When youi defeat a boss of a region
+func defeated_boss(region : int):
+	if region in defeatedBosses:
+		return
+	defeatedBosses.append(region)
+	defeated_bosses_updated.emit()

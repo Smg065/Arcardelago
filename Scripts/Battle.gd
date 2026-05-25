@@ -173,7 +173,7 @@ func choose_enemy_cards() -> Array[EncounterSlot]:
 					continue
 				@warning_ignore("integer_division")
 				var bossColor = (eachCard.apId - 6500000) / 10000
-				if battleInfo.region != bossColor:
+				if Persist.expected_boss(battleInfo.region, bossColor):
 					continue
 				#Found the boss card!
 				output.append(EncounterSlot.new(eachCard, 0))
@@ -323,6 +323,7 @@ func battle_won():
 			Persist.game.itemHandler.earn(5, earningReport)
 		BattleInfo.BattleType.BOSS:
 			Persist.game.itemHandler.earn(5, earningReport)
+			Persist.game.defeated_boss(battleInfo.region)
 		BattleInfo.BattleType.FINAL_BOSS:
 			Persist.game.itemHandler.earn(50, earningReport)
 	gameRoot.clear_map_pip()

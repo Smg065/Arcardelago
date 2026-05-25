@@ -171,7 +171,9 @@ func _on_locinfo(json: Dictionary) -> void:
 	if startingCached != _scout_cache.size():
 		new_scouts_cached.emit()
 func force_scout_all() -> void: ## Scouts every location into the local cache
-	Archipelago.send_command("LocationScouts", {"locations": slot_locations.keys(), "create_as_hint": 0})
+	var slotLocs := slot_locations.keys()
+	slotLocs.erase(-2)
+	Archipelago.send_command("LocationScouts", {"locations": slotLocs, "create_as_hint": 0})
 
 ## Sends a `Bounce` packet with whatever information you like
 func send_bounce(data: Dictionary, target_games: Array[String], target_slots: Array[String], target_tags: Array[String]) -> void:

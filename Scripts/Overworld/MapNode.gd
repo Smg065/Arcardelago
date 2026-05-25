@@ -299,10 +299,7 @@ func build_info():
 			nodeInfo["Type"] = "Enemy"
 			battleInfo.region = region
 			#If you're the boss of the spawning region, you're the first rival battle
-			if Persist.spawnSphere == ((region - 1) as ColorCatagory.ColorTypes):
-				battleInfo.type = BattleInfo.BattleType.RIVAL
-			#The Final Boss
-			elif region == 0:
+			if region == 0:
 				battleInfo.type = BattleInfo.BattleType.FINAL_BOSS
 			else:
 				battleInfo.type = BattleInfo.BattleType.BOSS

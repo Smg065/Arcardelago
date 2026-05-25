@@ -53,6 +53,7 @@ var ip
 var port
 var slot
 var password
+var conJson
 
 ##Shop items, where the value is the weight that they show up.
 static var shopItemTable : Dictionary[ShopItemInfo, int] = {
@@ -273,3 +274,7 @@ func gain_random():
 		gain_card(currentCardpool.pick_random())
 	else:
 		gain_card(CardData.new_default())
+
+##If it's the expected boss for the region
+func expected_boss(mapRegion : int, bossRegion : int) -> bool:
+	return false

@@ -269,7 +269,8 @@ func boss_statting():
 	var rescaling := powerScore / 30.0
 	baseHealth = ceili(baseHealth * rescaling)
 	baseAttack = ceili(baseAttack * rescaling)
-	var bossDepth := 1
+	var sphereColor : String = ColorCatagory.COLOR_NAMES[roundi(((apId - 6503000) / 10000.0) - 1)]
+	var bossDepth = Persist.expectedOrder.find(sphereColor) - 1
 	var difficultyMod := 1.0
 	match Persist.difficulty:
 		0:

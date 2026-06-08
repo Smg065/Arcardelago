@@ -28,6 +28,10 @@ var spawnSphere : ColorCatagory.ColorTypes
 var finalBossOrigin : String
 ##The order the sphere worlds are in
 var worldOrder : Dictionary
+##The order the sphere worlds are expected to be cleared in
+var expectedOrder : Array[String]
+##If the next region is enforced in logic or not
+var enforcedExpected : Array[bool]
 ##The depth of all regions based on the spawn sphere
 var dfsRegions : Dictionary
 ##The number of gates you must open to directly go from spawn to the final boss.
@@ -189,6 +193,14 @@ func hold_server_data(inData : Dictionary) -> void:
 		"Yellow Sphere":
 			spawnSphere = ColorCatagory.YELLOW
 	worldOrder = slotData["world_order"]
+	#The order the game expects you to go to levels in
+	expectedOrder.clear()
+	for eachEntry in slotData["expected_order"]:
+		expectedOrder.append(eachEntry)
+	#If logic strictly expects this sphere to be logically locked.
+	enforcedExpected.clear()
+	for eachEntry in slotData["enforced_expected"]:
+		enforcedExpected.append(eachEntry)
 	#The player who determines the final boss
 	finalBossOrigin = slotData["final_boss_origin"]
 	#The odds that a trap will self-release
@@ -277,4 +289,9 @@ func gain_random():
 
 ##If it's the expected boss for the region
 func expected_boss(mapRegion : int, bossRegion : int) -> bool:
-	return false
+	if mapRegion == 0:
+		return false
+	var regionIndex : int = expectedOrder.find(REGION_TO_NAME[bossRegion]) - 1
+	if regionIndex < 0:
+		return false
+	return expectedOrder[regionIndex] == REGION_TO_NAME[mapRegion]

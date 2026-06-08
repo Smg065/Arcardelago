@@ -26,7 +26,7 @@ func update_boss_release_textures() -> void:
 	for eachEntry in Persist.game.defeatedBosses:
 		if eachEntry <= 0:
 			continue
-		bossReleaseIcons[eachEntry].texture = bossReleaseTexture
+		bossReleaseIcons[eachEntry - 1].texture = bossReleaseTexture
 
 func set_active(nState : bool, nInfo : Dictionary) -> void:
 	if nState:
@@ -124,7 +124,7 @@ func boss_release_slot_updated(slot: CardSlot) -> void:
 		apIds.append(eachCard.apId)
 	#Check if any colors aren't part of the bosses
 	for eachBandColor in CardUI.ap_ids_to_band_colors(apIds):
-		if not eachBandColor in Persist.game.defeatedBosses:
+		if not (eachBandColor + 1) in Persist.game.defeatedBosses:
 			bossReleaseButton.disabled = true
 			return
 	#If all of them are, you can release for free
@@ -132,5 +132,9 @@ func boss_release_slot_updated(slot: CardSlot) -> void:
 
 ##When you press the boss release button
 func boss_release_pressed() -> void:
-	bossReleaseSlot.release_card()
+	var card := bossReleaseSlot.get_card()
+	if card != null:
+		for eachCard in card.all_card_data():
+			eachCard.release()
+		bossReleaseSlot.release_card()
 	bossReleaseButton.disabled = true

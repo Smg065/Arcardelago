@@ -173,7 +173,7 @@ func choose_enemy_cards() -> Array[EncounterSlot]:
 					continue
 				@warning_ignore("integer_division")
 				var bossColor = (eachCard.apId - 6500000) / 10000
-				if Persist.expected_boss(battleInfo.region, bossColor):
+				if not Persist.expected_boss(battleInfo.region, bossColor):
 					continue
 				#Found the boss card!
 				output.append(EncounterSlot.new(eachCard, 0))

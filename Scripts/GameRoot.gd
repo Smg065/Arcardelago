@@ -16,6 +16,7 @@ func switch_scenes(newScreen : ScreenType = ScreenType.WORLD_MAP, info : Diction
 	screenNodes[curScreen].set_active(false, {})
 	curScreen = newScreen
 	screenNodes[curScreen].set_active(true, info)
+	Persist.game.save_as_file()
 
 ##Marks the node the player is at as clear on the map
 func clear_map_pip():
@@ -35,9 +36,11 @@ func die() -> void:
 	screenNodes[ScreenType.WORLD_MAP].reset()
 	#Go home
 	switch_scenes(ScreenType.HOME, screenNodes[ScreenType.WORLD_MAP].homePip.nodeInfo)
+	Persist.game.save_as_file()
 
 ##Sleep
 func sleep() -> void:
 	Persist.clear_cards()
 	screenNodes[ScreenType.HOME].highestLevelReward = 0
 	screenNodes[ScreenType.WORLD_MAP].reset()
+	Persist.game.save_as_file()

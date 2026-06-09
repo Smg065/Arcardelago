@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://26c6es3texj3"]
 
 [ext_resource type="Script" uid="uid://bpa5rwhixu260" path="res://Scripts/Home.gd" id="1_jmugw"]
+[ext_resource type="Texture2D" uid="uid://becuosakowxiq" path="res://Sprites/BossPipCleared.png" id="2_08a7v"]
 [ext_resource type="PackedScene" uid="uid://dj0bi4scf7x7c" path="res://Resources/Battle/CardSlot.tscn" id="2_hf3nf"]
 [ext_resource type="Texture2D" uid="uid://b8ihd5q3rb3dc" path="res://Sprites/BossPip.png" id="2_maaha"]
 
@@ -10,12 +11,12 @@ grounds = NodePath("Main/Grounds")
 buttons = [NodePath("Main/Bedroom"), NodePath("Main/Kitchen"), NodePath("Main/Lobby"), NodePath("Main/Workspace")]
 sleepButton = NodePath("Bedroom/SleepButton")
 sleepTimer = NodePath("Bedroom/ResleepTimer")
-bossReleaseSlot = NodePath("Lobby/A/BossReleasePanel/BossReleaseHBox/ReleaseSide/BossReleaseSlot")
-bossReleaseButton = NodePath("Lobby/A/BossReleasePanel/BossReleaseHBox/ReleaseSide/BossRelease")
-bossReleaseIcons = [NodePath("Lobby/A/BossReleasePanel/BossReleaseHBox/LeftSideSkulls/RedSkull"), NodePath("Lobby/A/BossReleasePanel/BossReleaseHBox/RightSideSkulls/GreenSkull"), NodePath("Lobby/A/BossReleasePanel/BossReleaseHBox/RightSideSkulls/VioletSkull"), NodePath("Lobby/A/BossReleasePanel/BossReleaseHBox/LeftSideSkulls/OrangeSkull"), NodePath("Lobby/A/BossReleasePanel/BossReleaseHBox/RightSideSkulls/BlueSkull"), NodePath("Lobby/A/BossReleasePanel/BossReleaseHBox/LeftSideSkulls/YellowSkull")]
+bossReleaseSlot = NodePath("Lobby/VBox/LobbyBox/BossReleasePanel/BossReleaseHBox/ReleaseSide/BossReleaseSlot")
+bossReleaseButton = NodePath("Lobby/VBox/LobbyBox/BossReleasePanel/BossReleaseHBox/ReleaseSide/BossRelease")
+bossReleaseIcons = [NodePath("Lobby/VBox/LobbyBox/BossReleasePanel/BossReleaseHBox/LeftSideSkulls/RedSkull"), NodePath("Lobby/VBox/LobbyBox/BossReleasePanel/BossReleaseHBox/RightSideSkulls/GreenSkull"), NodePath("Lobby/VBox/LobbyBox/BossReleasePanel/BossReleaseHBox/RightSideSkulls/VioletSkull"), NodePath("Lobby/VBox/LobbyBox/BossReleasePanel/BossReleaseHBox/LeftSideSkulls/OrangeSkull"), NodePath("Lobby/VBox/LobbyBox/BossReleasePanel/BossReleaseHBox/RightSideSkulls/BlueSkull"), NodePath("Lobby/VBox/LobbyBox/BossReleasePanel/BossReleaseHBox/LeftSideSkulls/YellowSkull")]
+bossReleaseTexture = ExtResource("2_08a7v")
 
 [node name="Main" type="Control" parent="." unique_id=388916466]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -115,6 +116,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Lobby" type="Control" parent="." unique_id=1866964052]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -122,22 +124,31 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="A" type="GridContainer" parent="Lobby" unique_id=37204586]
+[node name="VBox" type="VBoxContainer" parent="Lobby" unique_id=479965048]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.1
+anchor_top = 0.10030864
 anchor_right = 1.0
-anchor_bottom = 0.9
+anchor_bottom = 0.89969134
+offset_left = 48.0
+offset_right = -48.0
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="LobbyBox" type="GridContainer" parent="Lobby/VBox" unique_id=37204586]
+layout_mode = 2
+size_flags_vertical = 3
 columns = 2
 
-[node name="BossReleasePanel" type="Panel" parent="Lobby/A" unique_id=1694430996]
+[node name="BossReleasePanel" type="Panel" parent="Lobby/VBox/LobbyBox" unique_id=1694430996]
+z_index = -1
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="BossReleaseHBox" type="HBoxContainer" parent="Lobby/A/BossReleasePanel" unique_id=1665343388]
+[node name="BossReleaseHBox" type="HBoxContainer" parent="Lobby/VBox/LobbyBox/BossReleasePanel" unique_id=1665343388]
+z_index = 1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -147,12 +158,12 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="LeftSideSkulls" type="VBoxContainer" parent="Lobby/A/BossReleasePanel/BossReleaseHBox" unique_id=1236854745]
+[node name="LeftSideSkulls" type="VBoxContainer" parent="Lobby/VBox/LobbyBox/BossReleasePanel/BossReleaseHBox" unique_id=1236854745]
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
 alignment = 1
 
-[node name="RedSkull" type="TextureRect" parent="Lobby/A/BossReleasePanel/BossReleaseHBox/LeftSideSkulls" unique_id=229802277]
+[node name="RedSkull" type="TextureRect" parent="Lobby/VBox/LobbyBox/BossReleasePanel/BossReleaseHBox/LeftSideSkulls" unique_id=229802277]
 modulate = Color(0.7882353, 0.45882353, 0.50980395, 1)
 layout_mode = 2
 size_flags_vertical = 3
@@ -160,7 +171,7 @@ texture = ExtResource("2_maaha")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="YellowSkull" type="TextureRect" parent="Lobby/A/BossReleasePanel/BossReleaseHBox/LeftSideSkulls" unique_id=1385454754]
+[node name="YellowSkull" type="TextureRect" parent="Lobby/VBox/LobbyBox/BossReleasePanel/BossReleaseHBox/LeftSideSkulls" unique_id=1385454754]
 modulate = Color(0.93333334, 0.8901961, 0.5686275, 1)
 layout_mode = 2
 size_flags_vertical = 3
@@ -168,7 +179,7 @@ texture = ExtResource("2_maaha")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="OrangeSkull" type="TextureRect" parent="Lobby/A/BossReleasePanel/BossReleaseHBox/LeftSideSkulls" unique_id=1026379414]
+[node name="OrangeSkull" type="TextureRect" parent="Lobby/VBox/LobbyBox/BossReleasePanel/BossReleaseHBox/LeftSideSkulls" unique_id=1026379414]
 modulate = Color(0.84705883, 0.627451, 0.49019608, 1)
 layout_mode = 2
 size_flags_vertical = 3
@@ -176,27 +187,27 @@ texture = ExtResource("2_maaha")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="ReleaseSide" type="VBoxContainer" parent="Lobby/A/BossReleasePanel/BossReleaseHBox" unique_id=1308736075]
+[node name="ReleaseSide" type="VBoxContainer" parent="Lobby/VBox/LobbyBox/BossReleasePanel/BossReleaseHBox" unique_id=1308736075]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="BossReleaseSlot" parent="Lobby/A/BossReleasePanel/BossReleaseHBox/ReleaseSide" unique_id=1475762746 instance=ExtResource("2_hf3nf")]
+[node name="BossReleaseSlot" parent="Lobby/VBox/LobbyBox/BossReleasePanel/BossReleaseHBox/ReleaseSide" unique_id=1475762746 instance=ExtResource("2_hf3nf")]
 layout_mode = 2
 playerInteractable = true
 squarable = true
 
-[node name="BossRelease" type="Button" parent="Lobby/A/BossReleasePanel/BossReleaseHBox/ReleaseSide" unique_id=1713469663]
+[node name="BossRelease" type="Button" parent="Lobby/VBox/LobbyBox/BossReleasePanel/BossReleaseHBox/ReleaseSide" unique_id=1713469663]
 layout_mode = 2
 size_flags_horizontal = 4
 disabled = true
 text = "Boss Release"
 
-[node name="RightSideSkulls" type="VBoxContainer" parent="Lobby/A/BossReleasePanel/BossReleaseHBox" unique_id=1660952768]
+[node name="RightSideSkulls" type="VBoxContainer" parent="Lobby/VBox/LobbyBox/BossReleasePanel/BossReleaseHBox" unique_id=1660952768]
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
 alignment = 1
 
-[node name="VioletSkull" type="TextureRect" parent="Lobby/A/BossReleasePanel/BossReleaseHBox/RightSideSkulls" unique_id=102372915]
+[node name="VioletSkull" type="TextureRect" parent="Lobby/VBox/LobbyBox/BossReleasePanel/BossReleaseHBox/RightSideSkulls" unique_id=102372915]
 modulate = Color(0.7882353, 0.5803922, 0.7607843, 1)
 layout_mode = 2
 size_flags_vertical = 3
@@ -204,7 +215,7 @@ texture = ExtResource("2_maaha")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="BlueSkull" type="TextureRect" parent="Lobby/A/BossReleasePanel/BossReleaseHBox/RightSideSkulls" unique_id=1397389778]
+[node name="BlueSkull" type="TextureRect" parent="Lobby/VBox/LobbyBox/BossReleasePanel/BossReleaseHBox/RightSideSkulls" unique_id=1397389778]
 modulate = Color(0.4627451, 0.49411765, 0.7411765, 1)
 layout_mode = 2
 size_flags_vertical = 3
@@ -212,7 +223,7 @@ texture = ExtResource("2_maaha")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="GreenSkull" type="TextureRect" parent="Lobby/A/BossReleasePanel/BossReleaseHBox/RightSideSkulls" unique_id=757151484]
+[node name="GreenSkull" type="TextureRect" parent="Lobby/VBox/LobbyBox/BossReleasePanel/BossReleaseHBox/RightSideSkulls" unique_id=757151484]
 modulate = Color(0.45882353, 0.7607843, 0.45490196, 1)
 layout_mode = 2
 size_flags_vertical = 3
@@ -220,10 +231,16 @@ texture = ExtResource("2_maaha")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Panel" type="Panel" parent="Lobby/A" unique_id=722246045]
+[node name="Panel" type="Panel" parent="Lobby/VBox/LobbyBox" unique_id=722246045]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="Back Button" type="Button" parent="Lobby/VBox" unique_id=2123226585]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = " Back "
 
 [node name="Workspace" type="Control" parent="." unique_id=1648587672]
 visible = false
@@ -285,8 +302,10 @@ metadata/_edit_use_anchors_ = true
 [connection signal="pressed" from="Main/Workspace" to="Back" method="show"]
 [connection signal="pressed" from="Bedroom/SleepButton" to="." method="sleep"]
 [connection signal="timeout" from="Bedroom/ResleepTimer" to="Bedroom/SleepButton" method="set_disabled" binds= [false]]
-[connection signal="holding_updated" from="Lobby/A/BossReleasePanel/BossReleaseHBox/ReleaseSide/BossReleaseSlot" to="." method="boss_release_slot_updated"]
-[connection signal="pressed" from="Lobby/A/BossReleasePanel/BossReleaseHBox/ReleaseSide/BossRelease" to="." method="boss_release_pressed"]
+[connection signal="holding_updated" from="Lobby/VBox/LobbyBox/BossReleasePanel/BossReleaseHBox/ReleaseSide/BossReleaseSlot" to="." method="boss_release_slot_updated"]
+[connection signal="pressed" from="Lobby/VBox/LobbyBox/BossReleasePanel/BossReleaseHBox/ReleaseSide/BossRelease" to="." method="boss_release_pressed"]
+[connection signal="pressed" from="Lobby/VBox/Back Button" to="Main" method="show"]
+[connection signal="pressed" from="Lobby/VBox/Back Button" to="Lobby" method="hide"]
 [connection signal="pressed" from="Back" to="Main" method="show"]
 [connection signal="pressed" from="Back" to="Bedroom" method="hide"]
 [connection signal="pressed" from="Back" to="Kitchen" method="hide"]

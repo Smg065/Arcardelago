@@ -43,7 +43,6 @@ func try_connect():
 
 func on_connection(_conn : ConnectionInfo, json : Dictionary):
 	Persist.conJson = json
-	print("Hello world!")
 	start_game()
 
 func confirm_delete(saveFile : SaveFile):

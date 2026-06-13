@@ -295,3 +295,10 @@ func expected_boss(mapRegion : int, bossRegion : int) -> bool:
 	if regionIndex < 0:
 		return false
 	return expectedOrder[regionIndex] == REGION_TO_NAME[mapRegion]
+
+##Find a card by matching IDs
+func get_card_by_ids(cardId : int, cardAddress : int, cardEnemy : bool, cardOwner : String) -> CardData:
+	for eachCard in game.allCards:
+		if eachCard.apId == cardId and eachCard.apAddress == cardAddress and cardOwner == eachCard.playerName and cardEnemy == eachCard.enemyCard:
+			return eachCard
+	return null

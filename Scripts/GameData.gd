@@ -15,6 +15,8 @@ var allCards : Array[CardData]
 var knownLoctions : PackedInt32Array
 ##Regions where the boss was defeated
 var defeatedBosses : Array[int]
+##Gates that have been opened
+var openedGates : Array[int]
 signal defeated_bosses_updated
 
 ##The Item Handler for AP data, including save data
@@ -28,7 +30,10 @@ func json_save() -> String:
 		"fictionalWords" : {},
 		"existingNames" : {},
 		"allCards" : [],
-		"usedItems" : {}
+		"usedItems" : {},
+		"defeatedBosses" : defeatedBosses,
+		"openedGates" : openedGates,
+		"currentCards" : [0]
 	}
 	if itemHandler != null:
 		saveData["usedItems"] = itemHandler.json_save()
@@ -43,7 +48,16 @@ func json_save() -> String:
 		saveData["existingNames"][eachExistingName] = existingNames[eachExistingName].json_save()
 	for eachCard in allCards:
 		saveData["allCards"].append(eachCard.json_save())
-	
+	for eachCard in Persist.currentCards:
+		if eachCard.isDefault:
+			saveData["currentCards"][0] += 1
+		else:
+			saveData["currentCards"].append({
+				"adr" : eachCard.apAddress,
+				"enemy" : eachCard.enemyCard,
+				"id" : eachCard.apId,
+				"own" : eachCard.playerName
+			})
 	#Return it as a JSON string
 	return JSON.stringify(saveData, "\t")
 
@@ -61,8 +75,21 @@ static func json_load(saveString : String) -> GameData:
 		gameData.gameCardsets[eachGameCardset] = GameCardset.json_load(saveData["gameCardsets"][eachGameCardset], gameData)
 	for eachCard in saveData["allCards"]:
 		gameData.allCards.append(CardData.json_load(eachCard, gameData))
+	gameData.defeatedBosses = saveData["defeatedBosses"]
+	gameData.openedGates = saveData["openedGates"]
 	gameData.itemHandler = ItemHandler.new()
 	gameData.itemHandler.json_load(saveData["usedItems"])
+	#Get the cards you currently own
+	for eachCardIndex in saveData["currentCards"].size():
+		var cardData = saveData["currentCards"][eachCardIndex]
+		#Default cards
+		if eachCardIndex == 0:
+			for eachDefault in cardData:
+				Persist.currentCards.append(CardData.new_default())
+		#Actual cards
+		else:
+			var eachCard = Persist.get_card_by_ids(cardData["id"], cardData["adr"], cardData["enemy"], cardData["own"])
+			Persist.gain_card(eachCard)
 	return gameData
 
 func save_as_file():

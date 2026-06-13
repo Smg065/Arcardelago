@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dp7hihr25b70y"]
+[gd_scene format=3 uid="uid://dp7hihr25b70y"]
 
 [ext_resource type="PackedScene" uid="uid://d0amflih465nl" path="res://WorldMap.tscn" id="1_inlal"]
 [ext_resource type="Script" uid="uid://bt5dbsbv315ql" path="res://Scripts/GameRoot.gd" id="1_k2aq1"]
@@ -13,7 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://cifjnmtp52uco" path="res://Resources/CardScrollbox.tscn" id="10_c8c3f"]
 [ext_resource type="PackedScene" uid="uid://b0alo1cixtioe" path="res://Resources/InventoryUI.tscn" id="11_vhwld"]
 
-[node name="Game" type="Node" node_paths=PackedStringArray("screenNodes", "boosterPack", "scrollBox")]
+[node name="Game" type="Node" unique_id=624117451 node_paths=PackedStringArray("screenNodes", "boosterPack", "scrollBox")]
 script = ExtResource("1_k2aq1")
 screenNodes = {
 0: NodePath("World Map"),
@@ -28,37 +28,37 @@ screenNodes = {
 boosterPack = NodePath("Booster Pack")
 scrollBox = NodePath("Supermenu/DeckSelection/ScrollContainer")
 
-[node name="World Map" parent="." instance=ExtResource("1_inlal")]
+[node name="World Map" parent="." unique_id=1854774136 instance=ExtResource("1_inlal")]
 visible = false
 follow_viewport_enabled = true
 
-[node name="Battlescreen" parent="." instance=ExtResource("2_vrd06")]
+[node name="Battlescreen" parent="." unique_id=1906810230 instance=ExtResource("2_vrd06")]
 visible = false
 
-[node name="Shop" parent="." instance=ExtResource("4_wnni2")]
+[node name="Shop" parent="." unique_id=816735558 instance=ExtResource("4_wnni2")]
 visible = false
 
-[node name="Treasure" parent="." instance=ExtResource("5_c8c3f")]
+[node name="Treasure" parent="." unique_id=1306529723 instance=ExtResource("5_c8c3f")]
 visible = false
 
-[node name="Releaser" parent="." instance=ExtResource("6_vhwld")]
+[node name="Releaser" parent="." unique_id=951028111 instance=ExtResource("6_vhwld")]
 visible = false
 
-[node name="Event" parent="." instance=ExtResource("7_83vju")]
+[node name="Event" parent="." unique_id=563764645 instance=ExtResource("7_83vju")]
 visible = false
 
-[node name="Home" parent="." instance=ExtResource("8_824mg")]
+[node name="Home" parent="." unique_id=462514487 instance=ExtResource("8_824mg")]
 visible = false
 
-[node name="Cutscene" parent="." instance=ExtResource("9_ies6u")]
+[node name="Cutscene" parent="." unique_id=42951926 instance=ExtResource("9_ies6u")]
 visible = false
 
-[node name="Booster Pack" parent="." instance=ExtResource("10_83vju")]
+[node name="Booster Pack" parent="." unique_id=1962419586 instance=ExtResource("10_83vju")]
 visible = false
 
-[node name="Supermenu" type="CanvasLayer" parent="."]
+[node name="Supermenu" type="CanvasLayer" parent="." unique_id=37000453]
 
-[node name="DeckSelection" type="ReferenceRect" parent="Supermenu"]
+[node name="DeckSelection" type="ReferenceRect" parent="Supermenu" unique_id=1158816249]
 anchors_preset = -1
 anchor_left = 0.75
 anchor_top = 0.25
@@ -72,10 +72,10 @@ grow_vertical = 2
 border_width = 8.0
 metadata/_edit_use_anchors_ = true
 
-[node name="ScrollContainer" parent="Supermenu/DeckSelection" instance=ExtResource("10_c8c3f")]
+[node name="ScrollContainer" parent="Supermenu/DeckSelection" unique_id=1919987687 instance=ExtResource("10_c8c3f")]
 layout_mode = 1
 
-[node name="Inventory" type="ReferenceRect" parent="Supermenu"]
+[node name="Inventory" type="ReferenceRect" parent="Supermenu" unique_id=289836592]
 anchors_preset = -1
 anchor_top = 0.5
 anchor_right = 0.25
@@ -87,5 +87,5 @@ grow_vertical = 0
 border_color = Color(1, 0.9666667, 0, 1)
 border_width = 8.0
 
-[node name="InventoryMenu" parent="Supermenu/Inventory" instance=ExtResource("11_vhwld")]
+[node name="InventoryMenu" parent="Supermenu/Inventory" unique_id=497431185 instance=ExtResource("11_vhwld")]
 layout_mode = 1

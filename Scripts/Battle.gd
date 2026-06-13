@@ -326,6 +326,8 @@ func battle_won():
 			Persist.game.defeated_boss(battleInfo.region)
 		BattleInfo.BattleType.FINAL_BOSS:
 			Persist.game.itemHandler.earn(50, earningReport)
+			#Victory!
+			Archipelago.set_client_status(AP.ClientStatus.CLIENT_GOAL)
 	gameRoot.clear_map_pip()
 	gameRoot.switch_scenes()
 

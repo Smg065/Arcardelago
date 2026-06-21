@@ -75,8 +75,12 @@ static func json_load(saveString : String) -> GameData:
 		gameData.gameCardsets[eachGameCardset] = GameCardset.json_load(saveData["gameCardsets"][eachGameCardset], gameData)
 	for eachCard in saveData["allCards"]:
 		gameData.allCards.append(CardData.json_load(eachCard, gameData))
-	gameData.defeatedBosses = saveData["defeatedBosses"]
-	gameData.openedGates = saveData["openedGates"]
+	gameData.defeatedBosses.clear()
+	for eachBoss in saveData["defeatedBosses"]:
+		gameData.defeatedBosses.append(eachBoss)
+	gameData.openedGates.clear()
+	for eachBoss in saveData["openedGates"]:
+		gameData.openedGates.append(eachBoss)
 	gameData.itemHandler = ItemHandler.new()
 	gameData.itemHandler.json_load(saveData["usedItems"])
 	#Get the cards you currently own
@@ -88,21 +92,15 @@ static func json_load(saveString : String) -> GameData:
 				Persist.currentCards.append(CardData.new_default())
 		#Actual cards
 		else:
-			var eachCard = Persist.get_card_by_ids(cardData["id"], cardData["adr"], cardData["enemy"], cardData["own"])
+			var eachCard = Persist.get_card_by_ids(gameData, cardData["id"], cardData["adr"], cardData["enemy"], cardData["own"])
 			Persist.gain_card(eachCard)
 	return gameData
 
 func save_as_file():
-	var otherFiles : int = 0
 	var savePath := get_save_path()
 	if DirAccess.dir_exists_absolute(savePath):
-		var dir := DirAccess.open(savePath)
-		for eachFile in dir.get_files():
-			if eachFile.ends_with(".json"):
-				otherFiles += 1
-	else:
 		DirAccess.make_dir_absolute(savePath)
-	var saveFilePath : String = "%s/save%d.json" % [savePath, otherFiles]
+	var saveFilePath : String = "%s/%s.json" % [savePath, Persist.filename]
 	var saveFileString : String = json_save()
 	var saveFileAccess := FileAccess.open(saveFilePath, FileAccess.WRITE)
 	if saveFileAccess == null:
